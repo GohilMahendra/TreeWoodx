@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "832773687133",
+    "project_id": "treewoodx",
+    "storage_bucket": "treewoodx.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832773687133:android:5572421516a5ccd8b7cab4",
+        "android_client_info": {
+          "package_name": "com.treewoodx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832773687133-1nhf4578dbc7f6ku9e9ekc7n96llskjc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4KEG8vySMd_eQmhAm8oEnQFxuoyWXo4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832773687133-1nhf4578dbc7f6ku9e9ekc7n96llskjc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
