@@ -18,7 +18,7 @@ import { Item } from "react-native-paper/lib/typescript/components/List/List";
 import { set } from "react-native-reanimated";
 import LinearGradient from "react-native-linear-gradient";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
-   
+
 const Home_screen=({navigation})=>
 {
     const {height,width}=Dimensions.get('screen')

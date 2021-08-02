@@ -15,6 +15,9 @@ import { useEffect } from "react/cjs/react.development";
 import  auth, { firebase }  from "@react-native-firebase/auth";
 import  database  from "@react-native-firebase/database"
 import firestore from "@react-native-firebase/firestore";
+import { fonts } from "../constants/fonts";
+import { Card } from "react-native-elements/dist/card/Card";
+import CartCard from "../components/CartCard";
 
 const {height,width}=Dimensions.get('screen')
  const Cart=({navigation})=>
@@ -102,59 +105,22 @@ const [tot,settot]=useState(0)
         return(
      
           <Swipeable>         
-          <TouchableOpacity 
-        
-         
-           style={{width:width,borderRadius:20,backgroundColor:'#fff',
-marginLeft:10,height:200,elevation:5,
-           marginBottom:20}}>
-            
-           <View style={{flexDirection:'row',borderRadius:20}}>
+                 
+                 <CartCard
+                 
+                 item={item}
+                 navigation={navigation}
+                 >
 
-            <Image
-            source={{uri:item.img1}}
-            style={{borderRadius:20,height:200,width:width/2.5,alignSelf:'center'}}
-            >
-
-            </Image>
-                     
-            <View style={{justifyContent:'space-evenly',
-            borderRadius:20,alignSelf:'center',alignItems:"center"}}>
-
-
-            <Text style={{textAlign:'center',width:width/2,
-            fontFamily:'Orbitron-Black',
-            fontWeight:'bold',
-            fontSize:18}}> {item.pname}</Text>
-            <Text style={{fontSize:18,color:'gray',fontFamily:'Orbitron-Black'}}>seller :{item.brand}</Text>            
-            <View style={{flexDirection:'row',justifyContent:'space-evenly',height:30}}>
-
-
-            <Text style={{fontWeight:'bold',marginRight:20,marginLeft:20,fontSize:15}}>RS {org_price*item.quantity}</Text>
-            <Text style={{fontWeight:'bold',color:'gray',textDecorationLine:'line-through',fontSize:15}}>RS {item.quantity*item.price}</Text>
-            </View>
-            <Text style={{color:'green'}}>{item.discount} % OFF</Text>
-        
-            <TouchableOpacity
-              onPress={()=>remove(item.key)}
-            style={{width:'100%',alignItems:'center',borderRadius:20,backgroundColor:'#a40606'}}
-            >
-              <Text style={{color:'#fff'}}>REMOVE</Text>
-            </TouchableOpacity>
-            </View>
-         
-           </View>
-          
-          
-           </TouchableOpacity>
-          
+                 </CartCard>
            </Swipeable> 
          )
 
      }
 
     return(
-  <View style={{flex:1}}>
+       
+        <View style={{flex:1,backgroundColor:"#E3E8F0"}}>
   <View style={{flex:1}}>
         <View style={{marginTop:10,flex:1,width:width-20}}>
         <Text style={{alignSelf:'center',fontFamily:'Orbitron-Black',

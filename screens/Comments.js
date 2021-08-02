@@ -9,6 +9,8 @@ import AddStar from "../components/Addstar";
 import { load } from "npm";
 import { ActivityIndicator,ProgressBar } from "react-native-paper";
 import { Dimensions } from "react-native";
+import ReviewRatings from "../components/ReviewRatings";
+import ReviewCard from "../components/reviewCard";
 
 const Comments=()=>
 {
@@ -30,7 +32,7 @@ const Comments=()=>
             four:0,
             five:0,
             avg:0,
-            total:0
+            total:1
         }
     )
     
@@ -44,27 +46,13 @@ const Comments=()=>
       
         console.log(item)
         return(
-        <View style={{marginHorizontal:20,width:width-40,borderRadius:30,alignSelf:"center",backgroundColor:"pink"}}>
-        <View style={{flexDirection:"row"}}>
-  
-  
-  
-        <AddStar
-        star={item.star}
-        />
-        <Text>{item.date}</Text>
-       
       
-      
-       
-        </View>
-        <Text style={{fontSize:20,marginHorizontal:20,fontWeight:'bold'}}>{item.email}</Text>
-       
-  
-  
-  
-       <Text style={{fontSize:15,marginHorizontal:20}}>{item.review}</Text>
-        </View>
+            <ReviewCard
+            
+            rev={item}
+            >
+
+            </ReviewCard>
         )
     }
   
@@ -213,58 +201,20 @@ const Comments=()=>
         <View style={{flex:1}}>
 
 
-            <View>
-            {/* <ProgressBar
-            style={{width:width-80,marginBottom:10,borderRadius:30,marginHorizontal:20,height:30}}
-            progress={avg.one/avg.total}
-            color={"black"}
-            />
-            <ProgressBar
-            style={{width:width-80,marginBottom:10,borderRadius:30,marginHorizontal:20,height:30}}
-            progress={avg.two/avg.total}
-            color={"black"}
-            >
-
-            </ProgressBar>
-            <ProgressBar
-            style={{width:width-80,marginBottom:10,borderRadius:30,marginHorizontal:20,height:30}}
-            progress={avg.two/avg.total}
-            color={"black"}
-            >
-
-            </ProgressBar>
-            <ProgressBar
-            style={{width:width-80,marginBottom:10,borderRadius:30,marginHorizontal:20,height:30}}
-            progress={avg.three/avg.total}
-            color={"black"}
-            >
-
-            </ProgressBar>
-            <ProgressBar
-            style={{width:width-80,marginBottom:10,borderRadius:30,borderRadius:30,marginHorizontal:20,height:30}}
-            progress={avg.four/avg.total}
-
-            
-            
-            color={"black"}
-            >
-
-            </ProgressBar>
-            <ProgressBar
-            style={{width:width-80,marginBottom:10,borderRadius:30,marginHorizontal:20,height:30}}
-            progress={avg.five}
-            color={"black"}
-            >
-
-            </ProgressBar> */}
-          
-            </View> 
     
+
+
+            <ReviewRatings
+            
+            avg={avg}
+            >
+
+            </ReviewRatings>
             
             
             <FlatList
             data={rev}
-            style={{width:'100%',height:150,backgroundColor:'pink'}}
+            style={{flex:1}}
             
             scrollEnabled={true}
             renderItem={itembuilder}

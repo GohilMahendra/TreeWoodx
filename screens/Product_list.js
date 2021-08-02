@@ -13,6 +13,8 @@ import { useNavigation, useRoute } from "@react-navigation/core";
 import Animated from "react-native-reanimated";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import { Slider } from "react-native-elements/dist/slider/Slider";
+import { Searchbar } from "react-native-paper";
+import { Card } from "react-native-elements/dist/card/Card";
 
 const Product_list=()=>
 {
@@ -126,26 +128,43 @@ const Product_list=()=>
             shadowOffset:{height:-15,width:15},
             shadowColor:'#FFF8DC'
             ,justifyContent:'center',
+            alignItems:"center",
             shadowRadius:25,
             elevation:15,
           
+            
             width:width/2-40,
-            height:250,
-            backgroundColor:"blue",
+            
+           // backgroundColor:"blue",
             marginBottom:20,
-            backgroundColor:'white'}}>
+            }}>
               
               <View style={{flex:1}}>
 
               <Image
               
-              style={{marginHorizontal:10,width:'100%',height:150}}
+              style={{width:width/2-40-10,height:200}}
               source={{uri:item.pimage}}
 
 
               />
               <Text>{item.pname}</Text>
+              <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-evenly"}}>
+                <Text style={{textDecorationLine:"line-through"}}>{item.pprice}</Text>
+                <Text>{item.pprice-item.pdisc*item.pprice/100}</Text>
               </View>
+              <Text>
+                {
+              item.pbrand
+                }
+              </Text>
+              <Card
+              
+              >
+
+              </Card>
+              </View>
+
             </TouchableOpacity>
           
         )
@@ -200,37 +219,42 @@ const Product_list=()=>
         
       
        
-       <View style={{justifyContent:"center",
-       marginTop:50,backgroundColor:'#fff',
-       flexDirection:'row',
-       borderWidth:1,
-       borderRadius:20,
-       alignSelf:'center',
-       height:50,
-       width:width-40}}>
-       <FontAwesome5Icon
-       
-       name="search"
-       style={{alignSelf:"center",marginLeft:10}}
-
-       color='gray'
-       size={20}
+       <View style={
+         {
+           flexDirection:"row",
+           marginHorizontal:10,
+           justifyContent:"space-between"
+         }
+       }>
     
-       >
-           
-       </FontAwesome5Icon>
-       <TextInput
-
-
+      <Searchbar
+      
       value={search}
 
-        onChangeText={value=>setserach(value)}
-       placeholder="search here......."
-       style={{borderRadius:20,width:width-60}}
-       ></TextInput>
-      </View>
       
-      <Modal isVisible={visible}
+      style={
+        {
+          width:'80%',
+          borderRadius:20
+        }
+      }
+      >
+
+      </Searchbar>
+      <TouchableOpacity
+      style={
+        {
+          backgroundColor:"black",
+          borderRadius:20
+        }
+      }
+      >
+        <FontAwesome5Icon name="filter"
+        style={{margin:10}}
+        size={30} color={"#fff"}></FontAwesome5Icon>
+      </TouchableOpacity>
+      </View>
+      <Modal isVisible={false}
       
       onBackdropPress={()=>setvisible(false)}
       >
@@ -246,6 +270,7 @@ const Product_list=()=>
         <Text style={{alignSelf:"flex-end",
         fontFamily:"Quicksand-Medium",
         fontSize:18,
+        
         color:"#0198E1",
         marginRight:20}}>RESET FILTERS</Text>
         </TouchableOpacity> 
@@ -265,36 +290,13 @@ const Product_list=()=>
         </View>
       </Modal>
     
-      <View style={{flexDirection:"row",margin:20,justifyContent:'space-between',backgroundColor:"#fff",
-      height:50,width:width-40,marginLeft:20,marginRight:20}}>
-      <TouchableOpacity 
-      onPress={()=>setvisible(true)}
-      style={{borderRadius:1,
-              borderRadius:20,
-              alignItems:"center",
-              borderWidth:1,
-              backgroundColor:'black',
-              justifyContent:"center",
-              height:50,
-              borderColor:'black'}}
-      >
-          <Text style={{width:width/2-20,color:"#fff",textAlign:"center",textAlignVertical:"center",fontSize:25}}>SORT</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={{width:width/2-20,backgroundColor:"black",
-        
-        borderRadius:30,borderWidth:1}}
-      >
-          <Text style={{fontSize:25,width:width/2-20,height:50,
-            textAlignVertical:"center",color:'#fff',textAlign:"center"}}>FILTER</Text>
-        </TouchableOpacity>
-
-      </View>
+     
         <FlatList
         
 
 
         
-        style={{flex:1,marginHorizontal:20}}
+        style={{flex:1,marginHorizontal:10}}
         data={product}
         numColumns={2}
         keyExtractor={item=>item.key}

@@ -23,7 +23,7 @@ const Admin_editProd=({navigation})=>
          
                 snapshot.forEach(function(child) {
             
-                    console.log(child)
+                    // console.log(child)
             
               
                    

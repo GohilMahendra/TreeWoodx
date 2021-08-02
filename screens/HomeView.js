@@ -33,7 +33,7 @@ const newnav=createStackNavigator()
         screenOptions=
         {
             {
-                headerTransparent:true
+                headerTransparent:false
             }
         }
      
@@ -65,8 +65,9 @@ const newnav=createStackNavigator()
         <newnav.Screen
         
         options={{
-          headerTitleAlign:'center'
-         ,headerShown:false}}
+          headerTitleAlign:'center',
+          
+         }}
         
         name="Comments"
         component={Comments}

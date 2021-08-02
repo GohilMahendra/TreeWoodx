@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import {View,Text,Image, ScrollView, ActivityIndicator, TextInput, Dimensions, FlatList, ImageBackground, VirtualizedList  } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import auth from "@react-native-firebase/auth";
 
 import { useState } from "react/cjs/react.development";
@@ -11,6 +12,11 @@ import { useState } from "react/cjs/react.development";
 import firestore from "@react-native-firebase/firestore";
 import AddStar from "../components/Addstar";
 import Modal from "react-native-modal";
+import Samebrand from "../components/Samebrand";
+import { listenerCount } from "npm";
+import SimilarItems from "../components/SimilarItems";
+import { StyleSheet } from "react-native";
+import { $CombinedState } from "redux";
 const product=({navigation})=>
 
 
@@ -27,6 +33,12 @@ const product=({navigation})=>
   const {height,width}=Dimensions.get('screen')
 
 
+
+
+  //const [samebrandsta,setsamebrand]=useState()
+  const [similar,setsimilar]=useState()
+
+  const [success,setsuccess]=useState(false)
   
   const [showModel,setShowModel]=useState(true)
 
@@ -58,6 +70,16 @@ const product=({navigation})=>
   const addRate=async()=>
   {
     
+
+
+
+    if(review.review=="" || review.review==undefined)
+    {
+      alert('please add review and then try your thoughts are valueable to US')
+      return
+    }
+
+
 
     const ifAlready=await firestore()
     .collection('reviews')
@@ -161,6 +183,13 @@ const product=({navigation})=>
       err=>console.log(err)
     )
 
+    firestore().collection('products').doc(p.params.item.key).update
+    (
+      {
+        //prod.rate
+        
+      }
+    )
     
   }
   const addTOcart=()=>
@@ -178,11 +207,6 @@ const product=({navigation})=>
       sub_cat:prod.sub_cat,
       img1:prod.img1,
       discount:prod.discount}).catch((e)=>console.log(e))
-
-
-
-
-      
   }
  
  
@@ -219,37 +243,31 @@ useEffect
 )
 
 
-useEffect
-  (
 
+useEffect(()=>{ 
 
     
-    
-    ()=>{ 
         firestore().collection('products').doc(p.params.item.key).onSnapshot((snapshot)=> {
 
-     
-      setprod(snapshot.data().prod)
+        
+        setsuccess(true)
+        setprod(snapshot.data().prod)
 
-     setload(false)
+        setload(false)
+
      
-  //      console.log(JSON.stringify(prod)+'pro')
-      
   });
 
 
 
 }
-    ,[prod,setprod]
+    ,[prod]
   )
   
   
 
    
-  const [prod,setprod]=React.useState(
-
-   
-  )
+  const [prod,setprod]=React.useState([])
   const [revdata,setrevdata]=useState({total:0,avg:5})
   const [cart,setcart]=React.useState()
   const [load,setload]=React.useState(true)
@@ -413,7 +431,10 @@ useEffect
       
       <View style={{flex:1,margin:20,marginBottom:0,justifyContent:"space-evenly",flexDirection:'row',
       bottom:20}}> 
-      <TouchableOpacity style={{backgroundColor:'black',justifyContent:'center',
+      <TouchableOpacity 
+      
+      onPress={()=>navigation.push("Product",p.params?.item.key)}
+      style={{backgroundColor:'black',justifyContent:'center',
       height:50,width:70,borderRadius:20,borderWidth:1}}>
         <Text style={{textAlignVertical:'center',justifyContent:'center',
         textAlign:'center',color:'#fff'}}>AR</Text>
@@ -524,31 +545,60 @@ tintColor="#455fff"
     <TouchableOpacity
 
     onPress={()=>addRate()}
-    style={{width:width/4,justifyContent:"center",
-    alignItems:"center",margin:20,height:50,borderRadius:20
-    ,backgroundColor:'black'}}>
-    <Text style={{color:'#fff'}}>Add</Text>
+    style={styles.addbtnReview}>
+    <Text style={styles.addbtnReviewText}>Add</Text>
     </TouchableOpacity>
       </View>
       <TouchableOpacity
       onPress={()=>navigation.navigate('Comments',{"key":p.params.item.key})}
       
       >
-      <View style={{marginHorizontal:20,width:width-40,borderRadius:30,alignSelf:"center",backgroundColor:"pink"}}>
-      <View style={{flexDirection:"row"}}>
+      <View style={{marginHorizontal:20,
+        width:width-40,
+        borderRadius:15,
+        alignSelf:"center",
+        borderTopWidth:1,
+        borderBottomWidth:1,
+        backgroundColor:"transparent"}}>
+       
+    
+        <MaterialIcons
+        
+        style={
+          {
+            alignSelf:"flex-end",
+
+          }
+        }
+        name={"read-more"}
+        size={30}
+        >
+
+        </MaterialIcons>
+      
+      <View style={{flexDirection:"row",
+      alignItems:"center",
+      justifyContent:"space-between"}}>
 
 
 
       <AddStar
       star={rev.star}
       />
-      <Text>{rev.date}</Text>
+      <Text style={{
+        textAlign:'center',
+        marginHorizontal:20,
+        textAlignVertical:'center'
+      }}>{rev.date}</Text>
      
     
     
      
       </View>
-      <Text style={{fontSize:20,marginHorizontal:20,fontWeight:'bold'}}>{rev.email}</Text>
+      <Text style={{
+        fontSize:20,
+        marginHorizontal:20,
+        fontWeight:'bold'}}>{rev.email}</Text>
      
 
 
@@ -558,6 +608,33 @@ tintColor="#455fff"
       </TouchableOpacity>
     </View>
      
+
+    
+
+
+   
+
+    
+
+    <View>
+    <SimilarItems
+    
+    category={prod.cat}
+    navigation={navigation}
+    
+    >
+
+    </SimilarItems>
+  
+  <Samebrand
+  
+  brand={prod.brand}
+  navigation={navigation}
+
+  >
+
+  </Samebrand>
+  </View>
     </ScrollView>
 
 
@@ -568,3 +645,26 @@ tintColor="#455fff"
 
 }
 export default product
+
+const styles=StyleSheet.create
+(
+  {
+    addbtnReview:
+    {
+      justifyContent:"center",
+      alignItems:"center",
+      marginTop:20,
+      height:50,
+     width:70,
+      borderRadius:20,
+      backgroundColor:'black'
+    },
+    addbtnReviewText:
+
+    {
+      color:"#fff",
+      
+
+    }
+  }
+)

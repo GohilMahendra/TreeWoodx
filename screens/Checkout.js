@@ -19,8 +19,8 @@ const Checkout=({navigation})=>
 
   const {height,width}=Dimensions.get('screen')
   const [search,setserach]=useState("")
-  const [long,setlong]=useState(72.5714)
-  const [lat,setlat]=useState(23.0225)
+  const [long,setlong]=useState(23.0225)
+  const [lat,setlat]=useState(72.5714)
   const [res,setres]=useState({})
 
 
@@ -255,8 +255,24 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
           
 
             onSelected={()=>showMessege()}
-            draggable={true}
+            draggable={false}
             coordinate={[lat,long]}
+            />
+            
+            <MapboxGL.PointAnnotation 
+            
+          
+           // ref={anonationref}
+
+          //  onDrag={()=>ChangeLatLongONDrag(e)}
+            id="market settle up2"
+            title="hotel"
+          
+
+            onSelected={()=>showMessege()}
+           draggable={false}
+            coordinate={[lat+0.0005,long+0.0005
+            ]}
             />
             
 
@@ -299,7 +315,7 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
             </MapboxGL.UserLocation> */}
             
           </MapboxGL.Camera>
-            
+        
 
         </MapboxGL.MapView>
        

@@ -147,6 +147,8 @@ position:'absolute',top:70,right:50}}>
         <TextInput
         placeholder="Enter Email HERE..."
         onChangeText={setuname}
+
+        onSubmitEditing={()=>console.log("submit called")}
         
         style={{margin:20,borderRadius:20,backgroundColor:'#f2f3f4'}}
        />
@@ -178,7 +180,7 @@ position:'absolute',top:70,right:50}}>
    
       {loading &&  <ActivityIndicator
       
-      style={{position:'absolute',alignSelf:'center',backgroundColor:'white',borderRadius:30,justifyContent:"center"}}
+      style={{position:'absolute',top:height/2,alignSelf:'center',backgroundColor:'white',borderRadius:30,justifyContent:"center"}}
       size={"large"}
       color="green"
     
@@ -192,7 +194,13 @@ position:'absolute',top:70,right:50}}>
         onPress={()=>onSignin(uname,upassword)}
        
       >
-            <Text style={{color:"white",fontSize:18}}>SIGN IN</Text>
+
+            
+            <Text style={{color:"white",fontSize:18}}>SIGN IN
+            
+            
+            
+            </Text>
 
         </TouchableOpacity>
     </View>

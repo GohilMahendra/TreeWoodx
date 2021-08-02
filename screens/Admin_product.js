@@ -56,6 +56,7 @@ const Admin_product=({navigation})=>
   
     setprod(obj)
 
+    console.log(prod)
   
   
     
@@ -139,6 +140,7 @@ const Admin_product=({navigation})=>
     return(
         <View style={{flex:1,alignItems:'center',alignContent:'center',justifyContent:'center'}}>
          
+       
          <ScrollView style={{flex:1}}>
       
          <TextInput
@@ -169,30 +171,36 @@ const Admin_product=({navigation})=>
         
         <View style={{flexDirection:'row',justifyContent:'center'}}>
         <TextInput
-         value={prod.dimensions.height}
+         
+        value={prod.dimensions.height.toString()}
         style={{width:100,height:50,borderRadius:20,borderWidth:1,textAlign:'center',marginLeft:20}}
         onChangeText={val=>setdimentions({...dimensions,height:val})}
         placeholder="height"
         ></TextInput>
         <TextInput
+         value={prod.dimensions.width.toString()}
           style={{width:100,height:50,borderRadius:20,borderWidth:1,textAlign:'center',marginLeft:20}}
         placeholder="width"
         ></TextInput>
         <TextInput
+        value={prod.dimensions.depth.toString()}
           style={{width:100,height:50,borderRadius:20,borderWidth:1,textAlign:'center',marginLeft:20}}
         placeholder="depth"
         ></TextInput>
         </View> 
            <TextInput
+           value={prod.price.toString()}
        style={{width:width-40,margin:20,alignItems:'center',
        alignContent:"center",height:50,borderRadius:20,borderWidth:1}}
        placeholder="enter price"
          />
            <TextInput
+             value={prod.discount.toString()}
        style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
        placeholder="enter discount"
          />
            <TextInput
+             value={prod.img1}
        style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
        placeholder="Enter img1"
          />
@@ -202,11 +210,13 @@ const Admin_product=({navigation})=>
          />
 
 <TextInput
+value={prod.img2}
        style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
        placeholder="Enter img3"
          />
       
       <TextInput
+      value={prod.img3}
        style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
        placeholder="Enter stock"
          />
