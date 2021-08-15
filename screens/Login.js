@@ -47,11 +47,11 @@ const Login=({navigation})=>
         {
           
     
-          navigation.navigate("Home")
+          navigation.navigate("Admin")
         }
       })
 
-      return subcription
+      return ()=>subcription()
     },[]
 
   )
@@ -72,6 +72,9 @@ const Login=({navigation})=>
       {
         setloading(false)
         console.log(result)
+
+
+
         navigation.navigate("Home")
       }
       ).catch(err=>
@@ -95,7 +98,8 @@ const Login=({navigation})=>
 
         auth().sendPasswordResetEmail(uname).then(function(user)
         {
-          alert('link is in your email')
+         
+          alert('link is in your email SIR')
         }).catch(function(err)
         {
           

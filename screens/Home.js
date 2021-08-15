@@ -87,13 +87,16 @@ useEffect(
                   
                     {
                     
-                     
                       
+
                       tabBarIcon:({size,focused,color})=>   
                         <FontAwesome5 style={{justifyContent:'flex-end',
                         alignItems:'flex-start'}} size={size}  color={color} name="shopping-cart">
                           <Badge value={badge}></Badge>
                         </FontAwesome5>
+                    
+
+
                     }
                     
                   }

@@ -9,6 +9,7 @@ import MapboxGL from "@react-native-mapbox-gl/maps";
 import axios from "axios";
 import { Dimensions } from "react-native";
 import { Marker } from "react-native-svg";
+import { Searchbar } from "react-native-paper";
 
 const Checkout=({navigation})=>
 {
@@ -76,12 +77,12 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
     //  console.log(JSON.stringify(item)+"item")
 
     return(
-     <TouchableOpacity style={{marginHorizontal:20,height:50}}
+     <TouchableOpacity style={{marginHorizontal:20,height:50,marginVertical:10}}
      
      onPress={()=>changeLocation(item)}
      >
        <Text>{item.place_name}</Text>
-       <Text>testing</Text>
+     
      </TouchableOpacity>
     )
 
@@ -195,20 +196,20 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
         <View style={{flex:1,backgroundColor:'white',justifyContent:'center'}}>
   
 
-      <TextInput
+      <Searchbar
    
 
       onTouchStart={()=>ShowFlatlist()}
       value={search}
-      style={{height:50,margin:0,backgroundColor:"grey"}}
+      style={{height:50,margin:0,backgroundColor:"#fff"}}
       onChangeText={text=>setQuary(text)}
       >
 
-      </TextInput>
+      </Searchbar>
 
       {showSearchList &&  <FlatList
         
-        style={{height:height/2,backgroundColor:"blue"}}
+        style={{height:height/2,backgroundColor:"silver"}}
         
 
         data={res}

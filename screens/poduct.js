@@ -17,6 +17,7 @@ import { listenerCount } from "npm";
 import SimilarItems from "../components/SimilarItems";
 import { StyleSheet } from "react-native";
 import { $CombinedState } from "redux";
+import { fonts } from "../constants/fonts";
 const product=({navigation})=>
 
 
@@ -413,46 +414,55 @@ useEffect(()=>{
       </View>
       <Text style={{margin:20,fontFamily:"Federo-Regular",fontSize:18}}>{prod.discription}</Text>
     
-    <View style={{flexDirection:'row',margin:20}}>
+    <View style={{flexDirection:'row',justifyContent:"center"}}>
       <Text style={{fontSize:20,fontWeight:'bold',fontFamily:"Orbitron-Black"}}>Material :</Text>
-      <Text style={{marginLeft:20,fontStyle:'italic',fontSize:20,color:'#fff',
-      backgroundColor:'black',borderRadius:20}}>  {prod.material}  </Text>
+      <Text style={{elevation:15,marginHorizontal:20,
+      fontSize:20,color:"black",
+      fontFamily:fonts.Federo_Regular,
+      backgroundColor:'#fff',borderRadius:20}}>  {prod.material}  </Text>
       </View>
       </View>
     
-      <View style={{flexDirection:'row',marginTop:0,margin:20,justifyContent:'space-evenly'}}
+      <View style={{flexDirection:'row',
+      justifyContent:'space-evenly',marginVertical:10}}
       
       >
         
-        <Text style={{fontSize:20,width:100,height:50,textAlignVertical:'center',backgroundColor:'black',color:'#fff',textAlign:'center',borderRadius:20}} >{prod.cat}</Text>
-        <Text style={{fontSize:20,width:100,height:50,textAlignVertical:'center',backgroundColor:'black',color:'#fff',textAlign:'center',borderRadius:20}} >{prod.sub_cat}</Text>
+        <Text style={{fontSize:20,width:100,height:50,
+          textAlignVertical:'center',
+          backgroundColor:'#fff',
+          fontFamily:fonts.Federo_Regular,
+          elevation:25,color:"black"
+          ,textAlign:'center',borderRadius:20}} >{prod.cat}</Text>
+        <Text style={{fontSize:20,
+          height:50,
+          textAlignVertical:'center',
+          fontFamily:fonts.Federo_Regular,
+          backgroundColor:'#fff',color:'black',
+          marginHorizontal:20,
+          textAlign:'center',borderRadius:20,
+          elevation:25}} >{prod.sub_cat}</Text>
         
       </View>
-      
-      <View style={{flex:1,margin:20,marginBottom:0,justifyContent:"space-evenly",flexDirection:'row',
-      bottom:20}}> 
-      <TouchableOpacity 
-      
-      onPress={()=>navigation.push("Product",p.params?.item.key)}
-      style={{backgroundColor:'black',justifyContent:'center',
-      height:50,width:70,borderRadius:20,borderWidth:1}}>
-        <Text style={{textAlignVertical:'center',justifyContent:'center',
-        textAlign:'center',color:'#fff'}}>AR</Text>
-      </TouchableOpacity>
+     
+     
       <TouchableOpacity
       
       onPress={()=>addTOcart()}
       style={{flexDirection:'row',alignContent:'center',
-      justifyContent:"space-evenly",alignItems:'center',
+      justifyContent:"space-evenly",alignSelf:'center',alignItems:'center',
       backgroundColor:'black',
-      height:50,marginLeft:20,width:'70%',borderRadius:20,borderWidth:1}}>
+      elevation:25,
+      height:50,width:'70%',borderRadius:20,
+      borderWidth:1}}>
         <Text style={{textAlignVertical:'center',
+        fontFamily:fonts.Federo_Regular,
         justifyContent:'center',textAlign:'center',color:'#fff'}}>ADD TO CART</Text>
-        <FontAwesome5Icon name="shopping-cart" color='#fff'></FontAwesome5Icon>
+        <FontAwesome5Icon
+        size={20}
+        name="shopping-cart" color='#fff'></FontAwesome5Icon>
       </TouchableOpacity>
       
-
-      </View>
 
       <View style={{alignContent:"center",
       alignItems:'center',margin:20}}>
@@ -621,6 +631,7 @@ tintColor="#455fff"
     
     category={prod.cat}
     navigation={navigation}
+    curruntID={p.params.item.key}
     
     >
 
@@ -630,6 +641,7 @@ tintColor="#455fff"
   
   brand={prod.brand}
   navigation={navigation}
+  curruntID={p.params.item.key}
 
   >
 
@@ -665,6 +677,13 @@ const styles=StyleSheet.create
       color:"#fff",
       
 
+    },
+    elevatedtext:
+    {
+      elevation:25,
+      backgroundColor:'#fff',
+      color:"black",
+      margin:20
     }
   }
 )

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View,Text,Alert, TextInput, Button, Dimensions, Image, ActivityIndicator } from "react-native";
+import { View,Text,Alert, Button,TextInput, Dimensions, Image, ActivityIndicator } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Value } from "react-native-reanimated";
 
@@ -8,6 +8,10 @@ import database from "@react-native-firebase/database"
 import firestore from "@react-native-firebase/firestore";
 import { FirebaseDatabaseTypes } from "@react-native-firebase/database";
 import { NavigationContainer } from "@react-navigation/native";
+import { KeyboardAvoidingView } from "react-native";
+import { ImageBackground } from "react-native";
+import { fonts } from "../constants/fonts";
+import { StyleSheet } from "react-native";
 
 const Sign_Up=({navigation})=>
 {
@@ -54,14 +58,21 @@ const Sign_Up=({navigation})=>
           return
         }
         setloading(true)
-        await auth().createUserWithEmailAndPassword(email,password).then((result) =>
+        auth().createUserWithEmailAndPassword(email,password).then((result) =>
         {firestore().collection('users').doc(auth().currentUser.uid).set
         (
           {
             name:uname,
-            email:uemail
+            email:uemail,
           }
         )
+
+         auth().currentUser.updateProfile(
+          {
+          displayName:name
+          }
+        )
+
         setloading(false)
         navigation.navigate("Login")
    
@@ -85,49 +96,66 @@ const Sign_Up=({navigation})=>
     const [uemail,setuemail]=useState("")
     const [upassword,setupassword]=useState("")
 
+    const [startText,setstartText]=useState(false)
     const [loadin,setloading]=useState(false)
   
     return(
 
-      <View style={{flex:1,backgroundColor:'silver'}}>
-      <Image
-      style={{position:'absolute',resizeMode:'cover',height:'100%',width:'100%'}}
+      <View style={{flex:1,backgroundColor:'silver'}}
+      
+      >
+      <ImageBackground
+      blurRadius={25}
+      style={{resizeMode:'cover',
+      justifyContent:'flex-end',
+      flex:1}}
       source={require('../assets/modern.jpg')}
       >
 
-      </Image>
-      <View style={{position:'absolute',top:height/5,alignSelf:'center'}}>
-        <Text style={{fontWeight:'bold',fontSize:30,color:'#fff',textShadowOffset:{height:5,width:5},textShadowRadius:20
-      ,textShadowColor:'silver',shadowOpacity:1}}>REGISTER</Text>
-        <Text  style={{fontWeight:'bold',fontSize:20,color:'#fff',textShadowOffset:{height:5,width:5},textShadowRadius:20
-      ,textShadowColor:'silver',shadowOpacity:1}}>TO THE LARGEST MODERN FURNITURE PROVIDER</Text>
-      </View>
-  {loadin &&    <ActivityIndicator
-      style={{backgroundColor:'#fff',borderRadius:30,position:'absolute',left:width/2,top:height/3}}
-      size={'large'}
-      color={'silver'}
-      ></ActivityIndicator>}
-    <View style={{top:height/2-50,backgroundColor:'transparent',borderRadius:30}}>
+    
       
+    <View 
+     // behavior={Platform.OS === "ios" ? "padding" : "height"}
+    style={{backgroundColor:'transparent',borderRadius:30}}>
+      
+
+      <Text
+      style={
+        {
+          alignSelf:"center",
+          color:"#fff",
+          fontSize:25,
+          fontFamily:fonts.Federo_Regular
+
+        }
+      }
+      >SIGN UP</Text>
 
       
       <TextInput
-        placeholder="Enter Name HERE..."
+      
+     
+     
+      placeholderTextColor="#fff"  
+      placeholder="Enter Name HERE..."
         onChangeText={setuname}
-        style={{margin:20,backgroundColor:"#F5F5F5",borderRadius:20,borderWidth:1}}
+        style={styles.textinputstyle}
        />
       
         <TextInput
-        placeholder="Enter Email HERE..."
+         placeholderTextColor="#fff"
+       placeholder="Enter Email HERE..."
+       textContentType="emailAddress"
         onChangeText={setuemail}
-        style={{margin:20,color:"#fff",backgroundColor:"#F5F5F5",borderRadius:20,borderWidth:1}}
+        style={styles.textinputstyle}
        />
        
         <TextInput
         placeholder="Enter Password HERE..."
        
+        placeholderTextColor="#fff"
         textContentType={"password"}
-        style={{margin:20,color:"#fff",backgroundColor:"#F5F5F5",borderRadius:20,borderWidth:1}}
+        style={styles.textinputstyle}
         onChangeText={setupassword}
       >
 
@@ -143,15 +171,65 @@ const Sign_Up=({navigation})=>
         <TouchableOpacity
 
         onPress={()=>onsignup(uname,uemail,upassword)}
-        style={{margin:20,height:50,bottom:10,width:200,alignSelf:'center',justifyContent:'center',
-        alignItems:'center',backgroundColor:'skyblue',borderTopLeftRadius:20,borderBottomRightRadius:20}}
-     
+        style={styles.signUPbtn}
+    
        
       >
-            <Text>SIGN Up</Text>
+            {loadin?
+            <ActivityIndicator
+            style={styles.activityIndicator}
+            size={'large'}
+            color={'black'}
+            ></ActivityIndicator>
+            :
 
+            <Text>SIGN Up</Text>
+            }
         </TouchableOpacity>
         </View>
-    </View>)
+        </ImageBackground>
+    </View>
+    
+    )
 }
 export default Sign_Up
+
+const styles=StyleSheet.create
+
+(
+  
+  {
+    textinputstyle:
+    {
+    margin:20,
+    borderColor:"silver",
+    fontFamily:fonts.Merienda_Regular,
+    alignItems:'center',
+    textAlign:"center",
+    backgroundColor:"transparent",
+    color:"#fff",
+    borderRadius:20,
+    borderWidth:1}
+  ,
+  signUPbtn:
+  {
+    margin:20,
+    height:50,
+    bottom:10,
+    width:200,
+    alignSelf:'center',
+    justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:'skyblue',
+        borderTopLeftRadius:20,
+        borderBottomRightRadius:20
+  },
+  activityIndicator:
+  {
+  color:'black',
+  
+  borderRadius:30,
+ 
+  }
+}
+  )

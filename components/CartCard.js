@@ -9,6 +9,10 @@ import AddStar from "./Addstar";
 
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Image } from "react-native";
+import { fonts } from "../constants/fonts";
+
+import  auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
 const {height,width}=Dimensions.get(
     'screen'
 )
@@ -17,7 +21,9 @@ const {height,width}=Dimensions.get(
 const CartCard=(props)=>
 {
 
-    const {item,navigation}=props
+
+    
+    const {item,navigation,onRemovePress,changeQuantity}=props
 
 
     const {height,width}=Dimensions.get('screen')
@@ -26,19 +32,24 @@ const CartCard=(props)=>
    
     
 
+
+    
+
+
+    
+    const [quantity,setquantity]=React.useState(1)
  return(
     <View>
-    <TouchableOpacity
-  
-    
-    >
+ 
      
      <View
      style=
      {
          {
              flexDirection:"row",
-             marginHorizontal:20
+             marginLeft:20,
+             backgroundColor:"#fff",
+             borderRadius:10
          }
      }
      >
@@ -47,7 +58,8 @@ const CartCard=(props)=>
      source={{uri:item.img1}}
      style={
          {
-             width:(width/2),
+             width:'35%',
+             height:'80%',
              height:150,
              borderRadius:15
          }
@@ -61,7 +73,9 @@ const CartCard=(props)=>
          {
              flexWrap:"wrap",
              flex:1,
-            alignItems:'center'   
+             marginLeft:10,
+            alignItems:'center',
+            justifyContent:'center'
          }
      }
      >
@@ -70,7 +84,10 @@ const CartCard=(props)=>
          
          style={
              {
-                fontSize:15   
+                fontSize:20,
+
+
+                fontFamily:fonts.Federo_Regular
              }
          }>{item.pname}</Text>
          <Text 
@@ -89,23 +106,88 @@ const CartCard=(props)=>
                 fontSize:15   
              }
          }>{item.price}</Text>
-         <View
-         style=
-         {
+        
+         <TouchableOpacity
+         onPress={()=>onRemovePress(item.key)}
+         style={
              {
-                 flexDirection:"row"
+                 borderWidth:1,
+                 justifyContent:'flex-end',
+                 alignItems:"flex-end",
+                 alignSelf:'flex-end',
+                 borderRightColor:'red',
+                 borderLeftColor:'red'
+                 
+
              }
          }
          >
-             <TouchableOpacity><Text>+</Text></TouchableOpacity>
+             <Text
+             style={
+                 {
+                     marginHorizontal:20,
+                     alignSelf:"flex-end"
+                 }
+             }
+             >REMOVE</Text>
+         </TouchableOpacity>
+     </View>
+     <View
+         style=
+         {
+             {
+                width:"10%",
+                 justifyContent:"space-evenly"
+             }
+         }
+         >
+             <TouchableOpacity
+
+            
+             onPress={
+                 
+                 ()=>  { changeQuantity(quantity-1,item.key) ,setquantity(quantity-1)}
+                 
+             }
+
+             disabled={(quantity==1)?true:false}
+             ><Text
+             style={
+                 {
+                     fontSize:25
+                 }
+             }
+             >-</Text></TouchableOpacity>
+             <Text
+              style={
+                {
+                    fontSize:20
+                }
+            }
+             >{quantity}</Text>
+             <TouchableOpacity
+             onPress={()=>
+                
+                {
+                
+                
+                changeQuantity(quantity+1,item.key),setquantity(quantity+1)
+            }
+            }
              
-             <TouchableOpacity><Text>+</Text></TouchableOpacity>
+             disabled={(quantity==5)?true:false}
+             ><Text
+              style={
+                {
+                    fontSize:25
+                    
+                }
+            }
+             >+</Text></TouchableOpacity>
 
          </View>
      </View>
-     </View>
 
-    </TouchableOpacity>
 
     </View> 
 

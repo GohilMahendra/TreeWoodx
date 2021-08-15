@@ -33,7 +33,7 @@ const newnav=createStackNavigator()
         screenOptions=
         {
             {
-                headerTransparent:false
+                headerTransparent:true
             }
         }
      
@@ -54,8 +54,9 @@ const newnav=createStackNavigator()
         <newnav.Screen
         
         options={{
-          headerTitleAlign:'center'
-         ,headerShown:false}}
+          headerTitle:'',
+          
+         }}
         
         name="product"
         component={product}

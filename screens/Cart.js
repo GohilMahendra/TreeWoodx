@@ -26,16 +26,45 @@ const {height,width}=Dimensions.get('screen')
 
 
 
+  const changeQuantity=(quantity,pid)=>
+    {
+  
+  
+      firestore().collection('cart').doc(auth().currentUser.uid).collection('products').doc(pid).update
+      (
+        {
+  
+          quantity:quantity
+        }
+      ).catch
+      (
+        err=>console.log(err)
+      )
+    }
+
+
    
   const remove=async(pid)=>
 
   {
 
-  await firestore().collection('cart').doc(auth().currentUser.uid).collection('products').doc(pid).delete()
-  }
+    try
+    {
+ const result=  await firestore().collection('cart').doc(auth().currentUser.uid).collection('products').doc(pid).delete()
+  
+console.log(result)
+    }
+    catch(err)
+    {
+      console.log(err)
+    }
+}
     
 
-    
+
+  
+ 
+
 useEffect
 (
   ()=>{ 
@@ -45,6 +74,7 @@ useEffect
 
     var list=[]
   
+    var total=0
 
    // console.log(snapshot.
     snapshot.forEach(function(child) {
@@ -56,9 +86,11 @@ useEffect
       {
         console.log(child.data())
       }
-     settot(tot+child.data().price)
-
+    
      
+
+      var pricex= child.data().price- child.data().price* child.data().discount/100
+      total+=child.data().quantity*pricex
      
         list.push({
             key: child.id,
@@ -67,19 +99,20 @@ useEffect
             price: child.data().price,
             discount:child.data().discount,
             img1:child.data().img1,
-            brand:child.data().brand
+            brand:child.data().brand,
+            
           })
     });
    
     setcart(list)  
 
    
-    var total=0
-    for(var i=0;i<list.length;i++)
-    {
-      var price=list[i].price-list[i].price*list[i].discount/100
-      total+=Math.floor(price)
-    }
+    // var total=0
+    // for(var i=0;i<list.length;i++)
+    // {
+    //   var price=list[i].price-list[i].price*list[i].discount/100
+    //   total+=Math.floor(price)
+    // }
     settot(total)
 
 
@@ -104,16 +137,25 @@ const [tot,settot]=useState(0)
 
         return(
      
-          <Swipeable>         
+          
+            <View
+            style={
+            {
+              marginVertical:10
+            }
+            }
+            >
                  
                  <CartCard
                  
                  item={item}
                  navigation={navigation}
+                 onRemovePress={remove}
+                 changeQuantity={changeQuantity}
                  >
 
                  </CartCard>
-           </Swipeable> 
+                 </View>
          )
 
      }
@@ -123,10 +165,10 @@ const [tot,settot]=useState(0)
         <View style={{flex:1,backgroundColor:"#E3E8F0"}}>
   <View style={{flex:1}}>
         <View style={{marginTop:10,flex:1,width:width-20}}>
-        <Text style={{alignSelf:'center',fontFamily:'Orbitron-Black',
-        fontSize:30,margin:20}}>cart</Text>
+        <Text style={{alignSelf:'center',fontFamily:fonts.Federo_Regular,
+        fontSize:30,margin:20}}>MY CART</Text>
         <FlatList 
-        style={{flex:0.5}}
+        style={{flex:1}}
         data={cart}
         renderItem={itemBuilder}
             keyExtractor={item=>item.key}
@@ -137,27 +179,37 @@ const [tot,settot]=useState(0)
 
         </FlatList>
         </View>
-        <View style={{marginTop:10,borderRadius:30,backgroundColor:'#fff',
+        <View style={{marginTop:10,borderRadius:30,
         shadowOffset:{height:5,width:5},
         shadowOpacity:1,shadowRadius:20,
-        borderRadius:30,bottom:10}}>
-               <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                <Text style={{margin:20,fontSize:25}}>Total  </Text>
-                <Text style={{margin:20,fontSize:25,alignSelf:'flex-end',fontFamily:'Orbitron-Black'}}>
+        borderRadius:30,bottom:10,alignItems:'flex-end'}}>
+               
+                <Text style={{marginHorizontal:20,fontSize:25,fontFamily:fonts.Quicksand_Medium}}>Total  </Text>
+                <Text style={{marginHorizontal:20,fontWeight:"bold",fontSize:25,fontFamily:fonts.Quicksand_Medium}}>
                   RS {tot}</Text>
-                  </View>
+                
                 <TouchableOpacity
 
 
                 onPress={()=>navigation.navigate("Checkout")}
                 style={{height:50,backgroundColor:"blue",
-                borderRadius:30,flexDirection:'row',width:width-40,margin:20,justifyContent:'space-evenly',alignItems:'center'}}
+                borderRadius:15,
+                flexDirection:'row',
+                width:width-40,
+                margin:20,
+                justifyContent:'space-evenly'
+                ,
+                alignItems:'center'}}
                 >
                     <LinearGradient
-                 style={{height:50,borderRadius:30,width:width-40}}
-                 colors={["#2c3e50","#000000"]}
+                 style={{height:50,
+                  borderRadius:15,
+                  width:width-40,
+                  alignItems:'center',
+                  justifyContent:"center"}}
+                 colors={["#09c6f9","#2a2a72"]}
                     >                 
-                   <Text style={{right:20,textAlign:'center',
+                   <Text style={{textAlign:'center',
                    fontSize:20,alignSelf:'center'
                     ,color:'#fff',textAlignVertical:'center'}}>PROCEED TO CHECKOUT
                      

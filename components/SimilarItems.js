@@ -11,7 +11,7 @@ import firestore from "@react-native-firebase/firestore";
 import { FlatList } from "react-native-gesture-handler";
 import {fonts} from "../constants/fonts";
 
- const SimilarItems=({category,navigation})=>
+ const SimilarItems=({category,navigation,curruntID})=>
  {
 
 
@@ -19,6 +19,39 @@ import {fonts} from "../constants/fonts";
     if(category==undefined)
     return
 
+    
+    const emptyScreen=()=>
+    {
+        return(
+
+            <View
+            style=
+            {
+                {
+                    
+                   
+                    height:200,
+                    justifyContent:"center",
+                    alignItems:"center"
+                }
+            }
+            >
+
+            <Text
+            style={
+                {
+                    borderWidth:1,
+                    width:width-60,
+                    alignSelf:"center",
+                    textAlign:"center",
+                    
+                }
+            }
+            >NO SiMILAR ITEMS FOUND</Text>
+
+            </View>
+        )
+        }
     useEffect
     (
         ()=>
@@ -52,6 +85,7 @@ import {fonts} from "../constants/fonts";
     });
 
    
+    li=li.filter(obj=>obj.key!=curruntID)
     setproducts(li)
    // console.log(JSON.stringify(products)+ "similar item dtaa")
     
@@ -184,10 +218,14 @@ catch(err)
             <TouchableOpacity
             style={
                 {
+                    
                     backgroundColor:"black",
                     borderRadius:10
                 }
+
+            
             }
+            disabled={(products!=undefined && products.length>0)?false:true}
             >
                 <Text
                 style={
@@ -209,6 +247,7 @@ catch(err)
     horizontal
     data={products}
 
+    emptyScreen={emptyScreen}
    keyExtractor={(item)=>item.key}
 
     renderItem={SimilerItemBuilder}

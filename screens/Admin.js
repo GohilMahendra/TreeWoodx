@@ -7,6 +7,12 @@ import Admin_addSales from "./Admin_addsales";
 import Admin_product from "./Admin_product";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Admin_editProd from "./Admin_editProd";
+import Admin_addOffer from "./Admin_addOffer";
+
+import {
+
+
+  } from "react-native-paper";
 const bottomTab=createBottomTabNavigator();
 const Admin=({navigation})=>
 {
@@ -18,14 +24,14 @@ const Admin=({navigation})=>
             {
               showLabel:false,
               style:{
-        backgroundColor:'transparent',margin:20,
+        margin:20,
               }
             }
           }
-        initialRouteName="Admin_order"
+        initialRouteName="Admin_addOffer"
         >
             <bottomTab.Screen
-            name={"Admin_order"}
+            name={"Admin_addOffer"}
             options={
                 {
                 
@@ -40,7 +46,7 @@ const Admin=({navigation})=>
                 }
                 
               }
-            component={Admin_order}
+            component={Admin_addOffer}
             >
 
             </bottomTab.Screen>

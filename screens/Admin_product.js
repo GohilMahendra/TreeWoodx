@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
-import { Dimensions,Text, ScrollView, TextInput, View } from "react-native";
+import { Dimensions,Text, ScrollView, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Value } from "react-native-reanimated";
 import { useState } from "react/cjs/react.development";
 import firestore from "@react-native-firebase/firestore";
 import { useRoute } from "@react-navigation/core";
+
+import {  TextInput} from "react-native-paper";
+import {Input  } from "react-native-elements";
 const Admin_product=({navigation})=>
 {
 
@@ -138,7 +141,8 @@ const Admin_product=({navigation})=>
 
   
     return(
-        <View style={{flex:1,alignItems:'center',alignContent:'center',justifyContent:'center'}}>
+        <View style={{flex:1,alignItems:'center',
+        alignContent:'center',marginHorizontal:20,justifyContent:'center'}}>
          
        
          <ScrollView style={{flex:1}}>
@@ -153,8 +157,9 @@ const Admin_product=({navigation})=>
              <TextInput
 
       value={prod.brand}
-       style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
-       placeholder="Enter brand"
+       onChangeText={val=>setprod({...prd,pname:val})}
+      label="brand"
+       mode="outlined"
        
          />
              <TextInput

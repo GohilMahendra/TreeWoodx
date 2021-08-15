@@ -10,15 +10,53 @@ import {
 import firestore from "@react-native-firebase/firestore";
 import { FlatList } from "react-native-gesture-handler";
 import {fonts} from "../constants/fonts";
+import { Dimensions } from "react-native";
 
- const SimilarItems=({brand,navigation})=>
+ const SimilarItems=({brand,navigation,curruntID})=>
  {
 
 
+    const{height,width}=Dimensions.get(
+        'screen'
+    )
+    console.log(curruntID+'currunt ID')
 
     if(brand==undefined)
     return
 
+
+    const emptyScreen=()=>
+    {
+        return(
+
+            <View
+            style=
+            {
+                {
+                    
+                   
+                    height:200,
+                    justifyContent:"center",
+                    alignItems:"center"
+                }
+            }
+            >
+
+            <Text
+            style={
+                {
+                    borderWidth:1,
+                    width:width-60,
+                    alignSelf:"center",
+                    textAlign:"center",
+                    
+                }
+            }
+            >NO RELETED BRANDS FOUND</Text>
+
+            </View>
+        )
+        }
     useEffect
     (
         ()=>
@@ -52,6 +90,7 @@ import {fonts} from "../constants/fonts";
     });
 
    
+    li=li.filter(obj=>obj.key!=curruntID)
     setproducts(li)
     console.log(JSON.stringify(products)+ "similar item dtaa")
     
@@ -83,8 +122,7 @@ catch(err)
     {
 
 
-        if(item==undefined)
-        return
+     
         console.log(item.key)
         return(
           <TouchableOpacity
@@ -193,6 +231,7 @@ catch(err)
                     borderRadius:10
                 }
             }
+           disabled={(products!=undefined && products.length>0)?false:true}
             >
                 <Text
                 style={
@@ -213,6 +252,8 @@ catch(err)
 
     horizontal
     data={products}
+
+    ListEmptyComponent={emptyScreen}
 
    keyExtractor={(item)=>item.key}
 
