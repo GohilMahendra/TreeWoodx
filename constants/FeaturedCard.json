@@ -1,0 +1,69 @@
+
+[
+    {
+
+       
+        "font_headline_color":"yellow",
+        "font_brand_color":"gold",
+        "font_focus_color":"yellows",
+        "font_headline_fontstyle":"Federo_Regular",
+        "font_brand_fontstyle":"Federo_Regular",
+        "font_focus_fontstyle":"Federo_Regular",
+        "background_color":"black",
+        "background_color_2":"silver",
+        "imageleftRadios":10,
+        "imageRIghtRadios":10,
+        "imageopacity":0.7
+
+    },
+    
+        {
+    
+          
+            "font_headline_color":"yellow",
+            "font_brand_color":"gold",
+            "font_focus_color":"black",
+            "font_headline_fontstyle":"Federo_Regular",
+            "font_brand_fontstyle":"Federo_Regular",
+            "font_focus_fontstyle":"Federo_Regular",
+            "background_color":"blue",
+            "background_color_2":"silver",
+            "imageleftRadios":10,
+            "imageRIghtRadios":10,
+            "imageopacity":0.7
+        },
+        
+            {
+        
+             
+                "font_headline_color":"yellow",
+                "font_brand_color":"gold",
+                "font_focus_color":"yellows",
+                "font_headline_fontstyle":"Federo_Regular",
+                "font_brand_fontstyle":"Federo_Regular",
+                "font_focus_fontstyle":"Federo_Regular",
+                "background_color":"red",
+                "background_color_2":"pink",
+                "imageleftRadios":10,
+                "imageRIghtRadios":10,
+                "imageopacity":0.7
+            },
+
+            {
+    
+          
+                "font_headline_color":"yellow",
+                "font_brand_color":"white",
+                "font_focus_color":"black",
+                "font_headline_fontstyle":"Federo_Regular",
+                "font_brand_fontstyle":"Federo_Regular",
+                "font_focus_fontstyle":"Federo_Regular",
+                "background_color":"black",
+                "background_color_2":"silver",
+                "imageleftRadios":10,
+                "imageRIghtRadios":10,
+                "imageopacity":0.7
+            }
+    
+    
+]

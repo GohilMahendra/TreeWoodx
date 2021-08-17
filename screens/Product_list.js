@@ -15,6 +15,8 @@ import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import { Slider } from "react-native-elements/dist/slider/Slider";
 import { Searchbar } from "react-native-paper";
 import { Card } from "react-native-elements/dist/card/Card";
+import { fonts } from "../constants/fonts";
+import ProductCard from "../components/Product_list/ProductCard";
 
 const Product_list=()=>
 {
@@ -120,52 +122,16 @@ const Product_list=()=>
      return(
 
       
-            <TouchableOpacity
-            onPress={()=>navigation.navigate("product",{item:item})}
-            style={{margin:10,
-            borderRadius:20,
-            shadowOpacity:0.5,
-            shadowOffset:{height:-15,width:15},
-            shadowColor:'#FFF8DC'
-            ,justifyContent:'center',
-            alignItems:"center",
-            shadowRadius:25,
-            elevation:15,
+      <ProductCard
+      navigation={navigation}
+      item={item}
+      index={index}
+      height={height}
+      width={width}
+      >
+
+      </ProductCard>
           
-            
-            width:width/2-40,
-            
-           // backgroundColor:"blue",
-            marginBottom:20,
-            }}>
-              
-              <View style={{flex:1}}>
-
-              <Image
-              
-              style={{width:width/2-40-10,height:200}}
-              source={{uri:item.pimage}}
-
-
-              />
-              <Text>{item.pname}</Text>
-              <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-evenly"}}>
-                <Text style={{textDecorationLine:"line-through"}}>{item.pprice}</Text>
-                <Text>{item.pprice-item.pdisc*item.pprice/100}</Text>
-              </View>
-              <Text>
-                {
-              item.pbrand
-                }
-              </Text>
-              <Card
-              
-              >
-
-              </Card>
-              </View>
-
-            </TouchableOpacity>
           
         )
     }
@@ -178,7 +144,7 @@ const Product_list=()=>
         searchProd()
 
       },
-      [filters]
+      [search]
     )
     useEffect
     (   ()=>{ firestore().collection('products').onSnapshot(
@@ -214,7 +180,7 @@ const Product_list=()=>
     const [loading,setloading]=React.useState(false)
     const [product,setproduct]=React.useState()
     return(
-    <View style={{flex:1,backgroundColor:'#fff'}}>
+    <View style={{flex:1,alignItems:"center",backgroundColor:'#fff'}}>
      
         
       
@@ -222,15 +188,15 @@ const Product_list=()=>
        <View style={
          {
            flexDirection:"row",
-           marginHorizontal:10,
+          
            justifyContent:"space-between"
          }
        }>
     
       <Searchbar
       
-      value={search}
 
+      onChangeText={setserach}
       
       style={
         {
@@ -296,7 +262,7 @@ const Product_list=()=>
 
 
         
-        style={{flex:1,marginHorizontal:10}}
+        style={{flex:1}}
         data={product}
         numColumns={2}
         keyExtractor={item=>item.key}

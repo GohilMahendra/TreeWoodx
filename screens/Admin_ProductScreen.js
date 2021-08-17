@@ -6,6 +6,11 @@ import { Alert } from "react-native";
 
 import { fonts } from "../constants/fonts";
 import { colorsArray } from "../constants/colors";
+import { FAB } from "react-native-paper";
+import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import CustomFab from "../components/Admin_Product/CustomFab";
+
+
 
 const Admin_editProd=({navigation})=>
 {
@@ -19,7 +24,9 @@ const Admin_editProd=({navigation})=>
 
         ()=>
         {
-        firestore().collection('products').onSnapshot
+    
+    
+         const subscriber=   firestore().collection('products').onSnapshot
         (
             (snapshot)=>
             {
@@ -47,14 +54,18 @@ const Admin_editProd=({navigation})=>
             }
             )
 
+            return ()=>subscriber()
         },
-        [data,setdata]
+        []
     )
     
 
     const deleteProd=(productID)=>
     {
-        firestore().collection('products').doc(productID).delete().then(
+
+        
+        firestore().collection('products').doc(productID).delete().
+        then(
             suc=>
             {
                 console.log("DELETED SUCCESSFULLY!!YEY")
@@ -76,20 +87,33 @@ const Admin_editProd=({navigation})=>
         return(
             
             <View style={{width:width-40,margin:20,height:300,
+                elevation:20,
             backgroundColor:"#fff",borderRadius:20}}>
             <View style={{height:200,justifyContent:'center',flexDirection:"row"}}>
 
                 <Image
                 source={{uri:item.pimage}}
-                style={{height:150,alignItems:'center',alignSelf:'center',width:150}}
+                style={{height:150,borderRadius:20
+                    ,alignItems:'center',
+                    
+                    alignSelf:'center',
+                    width:150}}
                 >
 
                 </Image>
                 <View style={{flex:1,alignContent:"center",alignItems:'center',justifyContent:'center'}}>
 
-                <Text>{item.pname}</Text>
+                <Text
+                style={
+                    {
+                        fontFamily:fonts.Federo_Regular,
+                        fontSize:20,
+                    }
+                }
+                >{item.pname}</Text>
                 <View style={{flexDirection:"row"}}>
-                <Text style={{textDecorationLine:"line-through",marginRight:20}}>RS {item.pprice}</Text>
+                <Text style={{textDecorationLine:"line-through",
+                marginRight:20}}>RS {item.pprice}</Text>
                 <Text>RS {price_after_disc}</Text>
                 </View>
                 <View style={{flexDirection:'row'}}>
@@ -124,7 +148,11 @@ const Admin_editProd=({navigation})=>
             </View>
             <TouchableOpacity
          onPress={
-            ()=> console.log(item)
+            ()=>navigation.navigate(
+                'Admin_features_edit',{
+                    item:item
+                }
+            )
          }
            >
                 <Text>ADD To FEATURED</Text>
@@ -137,16 +165,20 @@ const Admin_editProd=({navigation})=>
 
     return(
         <View style={{flex:1}}>
+        
+        
         <FlatList
-        
-        
         data={data}
-        
         renderItem={prodBuilder}
         keyExtractor={item=>item.key}
         >
-
         </FlatList>
+       
+       <CustomFab
+       navigation={navigation}
+       >
+
+       </CustomFab>
         </View>
     )
 }

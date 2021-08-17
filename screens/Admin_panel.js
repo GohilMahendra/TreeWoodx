@@ -1,6 +1,7 @@
 import React from "react";
 import { View,Dimensions ,Text, ScrollView} from "react-native";
 import {PieChart,LineChart ,ProgressChart } from "react-native-chart-kit";
+import { fonts } from "../constants/fonts";
 const Admin_panel=()=>
 {
     const {height,width}=Dimensions.get('screen')
@@ -19,7 +20,7 @@ const Admin_panel=()=>
         labels: ["January", "February", "March", "April", "May", "June"],
         datasets: [
           {
-            data: [0, 0, 0, 3, 0, 0],
+            data: [0, 0, 0, 8, 0, 0],
             color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
             strokeWidth: 2 // optional
           }
@@ -84,13 +85,13 @@ const Admin_panel=()=>
   data={{  labels: ["Bed", "Chair", "Tv Unit"], // optional
   data: [0.4, 0.6, 0.0]}}
   width={width}
-  height={220}
+  height={300}
   strokeWidth={16}
   radius={32}
   chartConfig={chartConfig}
   hideLegend={false}
 />
-           <Text style={{fontFamily:'Orbitron-Black'}}>
+           <Text style={{fontFamily:fonts.Federo_Regular}}>
 
          
 

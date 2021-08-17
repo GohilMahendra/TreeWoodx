@@ -50,27 +50,7 @@ const Admin=({navigation})=>
             >
 
             </bottomTab.Screen>
-            <bottomTab.Screen
-            name={"Admin_product"}
-            options={
-                {
-                
-                    tabBarLabel:'ADD',
-                 
-                  tabBarIcon:({size,focused,color})=>   
-                  
-                    <FontAwesome5 size={size}  color={color} name="home">
-         
-                    </FontAwesome5>
-                  
-                }
-                
-              }
-            component={Admin_product}
-            >
-
-            </bottomTab.Screen>
-            <bottomTab.Screen
+         <bottomTab.Screen
             name={"Admin_editProd"}
             options={
                 {

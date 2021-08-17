@@ -18,6 +18,7 @@ import firestore from "@react-native-firebase/firestore";
 import { fonts } from "../constants/fonts";
 import { Card } from "react-native-elements/dist/card/Card";
 import CartCard from "../components/CartCard";
+import EmptyCartScreen from "../components/EmptyCartScreen";
 
 const {height,width}=Dimensions.get('screen')
  const Cart=({navigation})=>
@@ -170,6 +171,7 @@ const [tot,settot]=useState(0)
         <FlatList 
         style={{flex:1}}
         data={cart}
+        ListEmptyComponent={EmptyCartScreen}
         renderItem={itemBuilder}
             keyExtractor={item=>item.key}
         
@@ -188,7 +190,9 @@ const [tot,settot]=useState(0)
                 <Text style={{marginHorizontal:20,fontWeight:"bold",fontSize:25,fontFamily:fonts.Quicksand_Medium}}>
                   RS {tot}</Text>
                 
-                <TouchableOpacity
+               {
+               (tot>0) &&
+               <TouchableOpacity
 
 
                 onPress={()=>navigation.navigate("Checkout")}
@@ -207,16 +211,17 @@ const [tot,settot]=useState(0)
                   width:width-40,
                   alignItems:'center',
                   justifyContent:"center"}}
-                 colors={["#09c6f9","#2a2a72"]}
+                 colors={["black","silver"]}
                     >                 
                    <Text style={{textAlign:'center',
                    fontSize:20,alignSelf:'center'
+                   ,fontFamily:fonts.Federo_Regular
                     ,color:'#fff',textAlignVertical:'center'}}>PROCEED TO CHECKOUT
                      
                     </Text>
                 </LinearGradient>
 
-                </TouchableOpacity>
+                </TouchableOpacity>}
             </View>
             </View>
         </View>

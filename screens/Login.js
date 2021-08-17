@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { View,Text, TextInput, Button, Image, Dimensions, ActivityIndicator,ActivityIndicatorBase, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { set, useAnimatedGestureHandler, Value } from "react-native-reanimated";
 
 import auth from "@react-native-firebase/auth";
-import { useDispatch } from "react-redux";
-import { Alert } from "react-native";
-
 
 
 const Login=({navigation})=>
-{
-
-
-
-
-  
- 
+{ 
   const {height,width}=Dimensions.get('screen')
   const validateCred=(uname,password)=>
   {
@@ -31,10 +21,7 @@ const Login=({navigation})=>
     return re.test(String(uname).toLowerCase());
    
   }
-
-  
-
-  
+ 
   useEffect
   (
     ()=>{
@@ -72,9 +59,6 @@ const Login=({navigation})=>
       {
         setloading(false)
         console.log(result)
-
-
-
         navigation.navigate("Home")
       }
       ).catch(err=>
@@ -111,29 +95,13 @@ const Login=({navigation})=>
     const [upassword,setupassword]=useState("")
     return(
     <View>
-      
-
-
-  
-     
-     
+    
       <Image
       
       style={{position:'absolute',resizeMode:'stretch',height:height,width:width}}
       source={require('../assets/login.jpg')}
       />
-      {/* <View style={{backgroundColor:'orange',height:200,width:250,position:'absolute',top:50,left:50}}>
-
-      </View>
-      <View style={{backgroundColor:'red',height:height/3,width:width/2,position:'absolute',top:100,right:100}}>
-
-</View>
-<View style={{backgroundColor:'#d3003f',height:height/3,width:width/2-50,
-position:'absolute',top:70,right:50}}>
-
-</View> */}
-
-
+    
   <View style={{position:'absolute',top:height/20,shadowColor:'black',shadowOffset:{height:5,width:5},
   alignSelf:'flex-start',shadowOpacity:1,elevation:5,margin:30}}>
   <Text style={{fontSize:25,color:'#fff',shadowOpacity:1,
@@ -198,14 +166,8 @@ position:'absolute',top:70,right:50}}>
         onPress={()=>onSignin(uname,upassword)}
        
       >
-
-            
-            <Text style={{color:"white",fontSize:18}}>SIGN IN
-            
-            
-            
+            <Text style={{color:"white",fontSize:18}}>SIGN IN     
             </Text>
-
         </TouchableOpacity>
     </View>
     </View>

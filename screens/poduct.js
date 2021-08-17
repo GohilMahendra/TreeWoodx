@@ -311,7 +311,7 @@ useEffect(()=>{
     { load && <ActivityIndicator
       size={"large"}
       color="green"
-      style={{position:'absolute',top:50,left:100}}
+      style={{position:'absolute',top:'50%',left:'50%'}}
       >
 
       </ActivityIndicator>  
@@ -559,10 +559,17 @@ tintColor="#455fff"
     <Text style={styles.addbtnReviewText}>Add</Text>
     </TouchableOpacity>
       </View>
+     
+     {
+
+       (rev.email!="")
+       &&
       <TouchableOpacity
       onPress={()=>navigation.navigate('Comments',{"key":p.params.item.key})}
       
       >
+     
+     
       <View style={{marginHorizontal:20,
         width:width-40,
         borderRadius:15,
@@ -616,6 +623,8 @@ tintColor="#455fff"
      <Text style={{fontSize:15,marginHorizontal:20}}>{rev.review}</Text>
       </View>
       </TouchableOpacity>
+
+}
     </View>
      
 
