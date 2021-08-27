@@ -19,8 +19,13 @@ import auth from "@react-native-firebase/auth"
 import { set } from "react-native-reanimated";
 import Cart from "./Cart";
 import User_profile from "./User_profile";
+import { useDispatch, useSelector } from "react-redux";
+import { stat } from "react-native-fs";
+import { fetchCartproducts } from "../redux/Actions/CartActions";
+import { State } from "react-native-gesture-handler";
 const bottomTab=createBottomTabNavigator()
 //console.log(wooddata)
+
 
 
 const height=Dimensions.get('screen').height
@@ -29,17 +34,20 @@ const width=Dimensions.get('screen').width
  {
 //  var badge=0
 
-useEffect(
-    ()=>
-    {
-        firestore().collection('cart').doc(auth().currentUser.uid).collection('products').onSnapshot
-        
-        (
-          (snapshot)=>setbadge(snapshot.docs.length)
-        )
-    },[badge,setbadge]
-)
+const dispatch=useDispatch()
+const count=useSelector(state=>state.Cart.total)
+
+console.log(count+'cart')
+
   
+useEffect
+(
+  ()=>
+  {
+    dispatch(fetchCartproducts())
+  }
+  ,[]
+)
 
     const [badge,setbadge]=React.useState(0)
 
@@ -92,7 +100,7 @@ useEffect(
                       tabBarIcon:({size,focused,color})=>   
                         <FontAwesome5 style={{justifyContent:'flex-end',
                         alignItems:'flex-start'}} size={size}  color={color} name="shopping-cart">
-                          <Badge value={badge}></Badge>
+                          <Badge value={count}></Badge>
                         </FontAwesome5>
                     
 

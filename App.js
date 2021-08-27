@@ -38,7 +38,10 @@ const App=()=>
   
 
   return(
-   
+
+    
+
+    <Provider store={store}>
     <NavigationContainer>
     <stack.Navigator
     initialRouteName="Login"
@@ -105,7 +108,9 @@ component={PayView}
   ></stack.Screen>
     </stack.Navigator>
     </NavigationContainer>
+    </Provider>
   
   )
+  
 }
 export default App;

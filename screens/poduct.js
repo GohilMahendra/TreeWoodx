@@ -18,12 +18,15 @@ import SimilarItems from "../components/SimilarItems";
 import { StyleSheet } from "react-native";
 import { $CombinedState } from "redux";
 import { fonts } from "../constants/fonts";
+import { useDispatch } from "react-redux";
+import { AddToCart } from "../redux/Actions/CartActions";
 const product=({navigation})=>
 
 
 {
 
  
+  const dispatch=useDispatch()
 
   const date=new Date()
 
@@ -197,17 +200,11 @@ const product=({navigation})=>
   {
 
 
-   
-   firestore().collection('cart').doc(auth().currentUser.uid).collection('products').doc(p.params.item.key).set({ 
-      pname:prod.pname,
-      brand:prod.brand,
-      price:prod.price,
-      stock:prod.stock,
-      cat:prod.cat,
-      quantity:1,
-      sub_cat:prod.sub_cat,
-      img1:prod.img1,
-      discount:prod.discount}).catch((e)=>console.log(e))
+    dispatch(AddToCart(prod))
+
+  
+    
+  
   }
  
  

@@ -19,6 +19,8 @@ import { fonts } from "../constants/fonts";
 import ProductCard from "../components/Product_list/ProductCard";
 
 const Product_list=()=>
+
+
 {
     const navigation=useNavigation()
 

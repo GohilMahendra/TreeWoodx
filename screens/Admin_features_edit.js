@@ -25,40 +25,46 @@ const Admin_features_edit=()=>
     const route=useRoute()
     const item=route.params.item
     
+
     const [headline,setheadline]=useState('Enter headline Here !!!')
    
+
+    useEffect
+    (
+        ()=>
+        {
     const changeData=()=>
     {
-        const data={
-            key: item.key,
-            pbrand: item.pbrand,
-             pdisc: item.pdisc, 
+ 
+
+        console.log(index)
+        console.log(Featureddata[index].background_color_2)
+        setdata({...data,
+          
             
-              pimage: item.pimage, 
-              pname: item.pname, 
-              pprice: item.pprice,
-              
-              headline:'Get exiting deals ON',
-              focus:'discount',
-              font_headline_color:Featureddata[index].font_headline_color,
-              font_brand_color:Featureddata[index].font_brand_color,
-              font_focus_color:Featureddata[index].font_focus_color,
-              font_headline_fontstyle:Featureddata[index].font_headline_fontstyle,
-              font_brand_fontstyle:Featureddata[index].font_brand_fontstyle,
-              font_focus_fontstyle:Featureddata[index].font_focus_fontstyle,
-              background_color:Featureddata[index].background_color,
-              background_color_2:Featureddata[index].background_color_2,
-              imageleftRadios:Featureddata[index].imageleftRadios,
-                imageRIghtRadios:Featureddata[index].imageRIghtRadios,
-                imageopacity:Featureddata[index].imageopacity
-
-        }
-
-
-        setdata(data)
+            font_headline_color:Featureddata[index].font_headline_color,
+            font_brand_color:Featureddata[index].font_brand_color,
+            font_focus_color:Featureddata[index].font_focus_color,
+            font_headline_fontstyle:Featureddata[index].font_headline_fontstyle,
+            font_brand_fontstyle:Featureddata[index].font_brand_fontstyle,
+            font_focus_fontstyle:Featureddata[index].font_focus_fontstyle,
+            background_color:Featureddata[index].background_color,
+            background_color_2:Featureddata[index].background_color_2,
+            imageleftRadios:Featureddata[index].imageleftRadios,
+              imageRIghtRadios:Featureddata[index].imageRIghtRadios,
+              imageopacity:Featureddata[index].imageopacity
+       
+           
+         
+        })
 
     
+        
     }
+    changeData()
+    },
+    [index]
+    )
    
     const [data,setdata]=useState(
        { 
@@ -71,30 +77,26 @@ const Admin_features_edit=()=>
           pprice: item.pprice, 
           headline:'Get exiting deals ON',
           focus:'discount',
-          font_headline_color:Featureddata[index].font_headline_color,
-          font_brand_color:Featureddata[index].font_brand_color,
-          font_focus_color:Featureddata[index].font_focus_color,
-          font_headline_fontstyle:Featureddata[index].font_headline_fontstyle,
-          font_brand_fontstyle:Featureddata[index].font_brand_fontstyle,
-          font_focus_fontstyle:Featureddata[index].font_focus_fontstyle,
-          background_color:Featureddata[index].background_color,
-          background_color_2:Featureddata[index].background_color_2,
-          imageleftRadios:Featureddata[index].imageleftRadios,
-            imageRIghtRadios:Featureddata[index].imageRIghtRadios,
-            imageopacity:Featureddata[index].imageopacity
+          font_headline_color:Featureddata[0].font_headline_color,
+          font_brand_color:Featureddata[0].font_brand_color,
+          font_focus_color:Featureddata[0].font_focus_color,
+          font_headline_fontstyle:Featureddata[0].font_headline_fontstyle,
+          font_brand_fontstyle:Featureddata[0].font_brand_fontstyle,
+          font_focus_fontstyle:Featureddata[0].font_focus_fontstyle,
+          background_color:Featureddata[0].background_color,
+          background_color_2:Featureddata[0].background_color_2,
+          imageleftRadios:Featureddata[0].imageleftRadios,
+            imageRIghtRadios:Featureddata[0].imageRIghtRadios,
+            imageopacity:Featureddata[0].imageopacity
 
 
     }
     )
 
    
-        const changeHeadLine=()=>
+        const changeHeadLine=(value)=>
     {
-        setdata(data=>(
-            {
-                ...data,headline:headline
-            }
-        ))
+        setdata({...data,headline:value})
     }
    
     const itembuilder=({item,index})=>
@@ -103,7 +105,8 @@ const Admin_features_edit=()=>
 
             <TouchableOpacity
             onPress={
-                ()=>{setindex(index),changeData()}
+                ()=>setindex(index)
+                    
             }
             >
             <View
@@ -186,6 +189,9 @@ const Admin_features_edit=()=>
             }
         }
 
+
+        onPress=
+        {()=> setdata({...data,focus:'price'})}
       
         >
             <Text
@@ -193,7 +199,7 @@ const Admin_features_edit=()=>
             ={
             {
                 margin:20,
-                color:offerOn?'#fff':'black'
+                color:data.focus?'#fff':'black'
             }
             }
             >ON PRICE</Text>
@@ -212,15 +218,17 @@ const Admin_features_edit=()=>
             }
         }
         
-        onPress={
-            ()=>setOfferOn('discount')
-        }
+       
+        onPress=
+        {()=> setdata({...data,focus:'discount'})}
+        
         >
             <Text
             style
             ={
             {
-                margin:20
+                margin:20,
+                color:data.focus?'#fff':'black'
             }
             }
             >ON PRICE</Text>

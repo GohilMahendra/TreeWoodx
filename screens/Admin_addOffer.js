@@ -30,11 +30,18 @@ import {Snackbar  } from "react-native-paper";
 import LinearGradient from "react-native-linear-gradient";
 import { ImageBackground } from "react-native";
 import FeaturedCard from "../components/FeaturedCard";
+import { useDispatch } from "react-redux";
+
+import {  
+    ADD_TO_CART_REQUEST
+} from "../redux/Types/CartTypes";
+import { fetchCartproducts } from "../redux/Actions/CartActions";
 
 const Admin_addOffer=()=>
 {
 
 
+    const dispatch=useDispatch()
 
     const bottomsheetref=useRef()
     
@@ -46,6 +53,16 @@ const Admin_addOffer=()=>
 
 
   
+    useEffect
+    (
+        ()=>
+        {
+
+           dispatch(fetchCartproducts())
+            
+        },
+        []
+    )
 
     const {height,width}=Dimensions.get('screen')
     return(

@@ -15,8 +15,10 @@ import { TouchableOpacity } from "react-native";
 import {Snackbar  } from "react-native-paper";
 import LinearGradient from "react-native-linear-gradient";
 import { ImageBackground } from "react-native";
+import { Item } from "react-native-paper/lib/typescript/components/List/List";
 
-const FeaturedCard=(props)=>
+
+const FeaturedCard=(props,{forshow=false})=>
 {
 
 
@@ -47,11 +49,23 @@ const FeaturedCard=(props)=>
                 
             }
         }
+
+        onPress={
+            
+            ()=>{    navigation.navigate('poduct',{
+                item:{
+                    key:data.key
+                }
+            })}
+            
+        }
+        disabled={forshow?false:true}
         >
      
     
 
-        <LinearGradient
+
+         <LinearGradient
         style={
             {
                 flex:1,
@@ -102,8 +116,8 @@ const FeaturedCard=(props)=>
                 {
                    
                     marginVertical:10,
-                    color:"#fff",
-                    fontFamily:fonts.Quicksand_Medium,
+                    color:data.font_headline_color,
+                    fontFamily:data.font_headline_fontstyle,
                     fontSize:18
                 }
             }
@@ -115,17 +129,31 @@ const FeaturedCard=(props)=>
                     color:data.font_brand_color,
                     fontFamily:fonts.Federo_Regular,
                     
-                    marginHorizontal:10,
+                    margin:10,
+
                     fontSize:20
                 }
             }
             >{data.pbrand} 'S {data.pname}</Text>
-           {(data.focus=='discount') ? <Text
+           {(data.focus=='discount') ?
+           
+           <View
+           style={
+               {
+                   backgroundColor:"transparent",
+                   borderWidth:1,
+                   margin:10
+                  
+               }
+           }
+           >
+           <Text
              style={
                 {
-                    marginVertical:10,
-                    color:"#fff",
-                    fontFamily:fonts.Federo_Regular,
+                    marginHorizontal:10,
+                    color:"black",
+
+                    fontFamily:data.font_focus_fontstyle,
                     
                     fontSize:25
                 }
@@ -133,6 +161,7 @@ const FeaturedCard=(props)=>
             >
                 {data.pdisc} % OFF
             </Text>
+            </View>
             :<View
             
             style={
@@ -146,7 +175,7 @@ const FeaturedCard=(props)=>
                 {
                     marginVertical:10,
                     color:data.focus_color,
-                    fontFamily:fonts.Merienda_Regular,
+                    fontFamily:data.font_focus_fontstyle,
                     
                     fontSize:25
                 }
@@ -159,9 +188,9 @@ const FeaturedCard=(props)=>
                 {
                     marginVertical:10,
                     color:"#fff",
-                    fontFamily:fonts.Federo_Regular,
+                    fontFamily:data.font_focus_fontstyle,
                    alignSelf:'center',
-                   color:"silver", 
+                    color:"silver", 
                     fontSize:18,
                     textDecorationLine:"line-through",
                     textDecorationStyle:"dotted"
@@ -199,9 +228,9 @@ const FeaturedCard=(props)=>
                         opacity:0.65
                         ,
                         
-                        backgroundColor:data.backgroundColor
-
-                        
+                        backgroundColor:data.backgroundColor,
+                        borderTopLeftRadius:data.imageleftRadios,
+                        borderBottomRightRadius:data.imageRIghtRadios
 
                     }
                 }
@@ -214,9 +243,10 @@ const FeaturedCard=(props)=>
         </View>
 
      
-        </LinearGradient> 
+        </LinearGradient>   
 
         </TouchableOpacity>
+        
         
 
     )

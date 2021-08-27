@@ -3,16 +3,16 @@
     {
 
        
-        "font_headline_color":"yellow",
-        "font_brand_color":"gold",
+        "font_headline_color":"#fff",
+        "font_brand_color":"silver",
         "font_focus_color":"yellows",
         "font_headline_fontstyle":"Federo_Regular",
         "font_brand_fontstyle":"Federo_Regular",
         "font_focus_fontstyle":"Federo_Regular",
         "background_color":"black",
         "background_color_2":"silver",
-        "imageleftRadios":10,
-        "imageRIghtRadios":10,
+        "imageleftRadios":25,
+        "imageRIghtRadios":50,
         "imageopacity":0.7
 
     },
@@ -20,17 +20,17 @@
         {
     
           
-            "font_headline_color":"yellow",
-            "font_brand_color":"gold",
-            "font_focus_color":"black",
-            "font_headline_fontstyle":"Federo_Regular",
-            "font_brand_fontstyle":"Federo_Regular",
-            "font_focus_fontstyle":"Federo_Regular",
-            "background_color":"blue",
-            "background_color_2":"silver",
-            "imageleftRadios":10,
-            "imageRIghtRadios":10,
-            "imageopacity":0.7
+            "font_headline_color":"#fff",
+            "font_brand_color":"silver",
+            "font_focus_color":"pink",
+            "font_headline_fontstyle":"Quicksand-Medium",
+            "font_brand_fontstyle":"Quicksand-Medium",
+            "font_focus_fontstyle":"Quicksand-Medium",
+            "background_color":"#000428",
+            "background_color_2":"#004e92",
+            "imageleftRadios":55,
+            "imageRIghtRadios":25,
+            "imageopacity":1
         },
         
             {
@@ -42,8 +42,8 @@
                 "font_headline_fontstyle":"Federo_Regular",
                 "font_brand_fontstyle":"Federo_Regular",
                 "font_focus_fontstyle":"Federo_Regular",
-                "background_color":"red",
-                "background_color_2":"pink",
+                "background_color":"#614385",
+                "background_color_2":"#516395",
                 "imageleftRadios":10,
                 "imageRIghtRadios":10,
                 "imageopacity":0.7
@@ -58,8 +58,8 @@
                 "font_headline_fontstyle":"Federo_Regular",
                 "font_brand_fontstyle":"Federo_Regular",
                 "font_focus_fontstyle":"Federo_Regular",
-                "background_color":"black",
-                "background_color_2":"silver",
+                "background_color":"#2193b0",
+                "background_color_2":"#6dd5ed",
                 "imageleftRadios":10,
                 "imageRIghtRadios":10,
                 "imageopacity":0.7

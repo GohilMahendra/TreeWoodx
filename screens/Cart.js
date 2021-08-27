@@ -19,6 +19,7 @@ import { fonts } from "../constants/fonts";
 import { Card } from "react-native-elements/dist/card/Card";
 import CartCard from "../components/CartCard";
 import EmptyCartScreen from "../components/EmptyCartScreen";
+import { useSelector } from "react-redux";
 
 const {height,width}=Dimensions.get('screen')
  const Cart=({navigation})=>
@@ -26,7 +27,13 @@ const {height,width}=Dimensions.get('screen')
 
 
 
+  
 
+  const cart=useSelector((state)=>state.Cart.Cart)
+
+  const total=useSelector((state)=>state.Cart.totalprice)
+
+ 
   const changeQuantity=(quantity,pid)=>
     {
   
@@ -66,65 +73,65 @@ console.log(result)
   
  
 
-useEffect
-(
-  ()=>{ 
+// useEffect
+// (
+//   ()=>{ 
     
     
-   firestore().collection('cart').doc(auth().currentUser.uid).collection('products').onSnapshot((snapshot)=> {
+//    firestore().collection('cart').doc(auth().currentUser.uid).collection('products').onSnapshot((snapshot)=> {
 
-    var list=[]
+//     var list=[]
   
-    var total=0
+//     var total=0
 
-   // console.log(snapshot.
-    snapshot.forEach(function(child) {
+//    // console.log(snapshot.
+//     snapshot.forEach(function(child) {
 
   
 
 
-      if(child && child.exists)
-      {
-        console.log(child.data())
-      }
+//       if(child && child.exists)
+//       {
+//         console.log(child.data())
+//       }
     
      
 
-      var pricex= child.data().price- child.data().price* child.data().discount/100
-      total+=child.data().quantity*pricex
+//       var pricex= child.data().price- child.data().price* child.data().discount/100
+//       total+=child.data().quantity*pricex
      
-        list.push({
-            key: child.id,
-            quantity:child.data().quantity,
-            pname:child.data().pname,
-            price: child.data().price,
-            discount:child.data().discount,
-            img1:child.data().img1,
-            brand:child.data().brand,
+//         list.push({
+//             key: child.id,
+//             quantity:child.data().quantity,
+//             pname:child.data().pname,
+//             price: child.data().price,
+//             discount:child.data().discount,
+//             img1:child.data().img1,
+//             brand:child.data().brand,
             
-          })
-    });
+//           })
+//     });
    
-    setcart(list)  
+//     setcart(list)  
 
    
-    // var total=0
-    // for(var i=0;i<list.length;i++)
-    // {
-    //   var price=list[i].price-list[i].price*list[i].discount/100
-    //   total+=Math.floor(price)
-    // }
-    settot(total)
+//     // var total=0
+//     // for(var i=0;i<list.length;i++)
+//     // {
+//     //   var price=list[i].price-list[i].price*list[i].discount/100
+//     //   total+=Math.floor(price)
+//     // }
+//     settot(total)
 
 
-    setload(false)
-})
-},[cart,setcart]
-)
+//     setload(false)
+// })
+// },[cart,setcart]
+// )
 
      
-const [tot,settot]=useState(0)
-    const [cart,setcart]=useState()
+const [tot,settot]=useState(1)
+  
     const [price,setprice]=useState()
 
     const [load
@@ -188,10 +195,10 @@ const [tot,settot]=useState(0)
                
                 <Text style={{marginHorizontal:20,fontSize:25,fontFamily:fonts.Quicksand_Medium}}>Total  </Text>
                 <Text style={{marginHorizontal:20,fontWeight:"bold",fontSize:25,fontFamily:fonts.Quicksand_Medium}}>
-                  RS {tot}</Text>
+                  RS {total}</Text>
                 
                {
-               (tot>0) &&
+               (total>0) &&
                <TouchableOpacity
 
 
