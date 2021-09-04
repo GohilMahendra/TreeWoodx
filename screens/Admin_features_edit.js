@@ -13,6 +13,9 @@ import { useRoute } from "@react-navigation/native";
 
 import Featureddata from "../constants/FeaturedCard.json";
 import { ImageBackground } from "react-native";
+import { firebase } from "@react-native-firebase/auth";
+import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
+import firestore from "@react-native-firebase/firestore";
 const Admin_features_edit=()=>
 {
 
@@ -20,15 +23,33 @@ const Admin_features_edit=()=>
 
 
 
-    const [index,setindex]=useState(0)
+    const [ind,setind]=useState(0)
     
     const route=useRoute()
     const item=route.params.item
     
 
+  
     const [headline,setheadline]=useState('Enter headline Here !!!')
    
 
+
+
+ 
+
+    const onsubmitFeatured=async()=>
+    {
+
+
+        await firestore().
+                   collection('featured').
+                   doc(item.key).set
+                   (
+                       
+                           data
+                       
+                   )
+    }
     useEffect
     (
         ()=>
@@ -37,24 +58,26 @@ const Admin_features_edit=()=>
     {
  
 
-        console.log(index)
-        console.log(Featureddata[index].background_color_2)
+        console.log(ind)
+        console.log(Featureddata[ind].background_color_2)
         setdata({...data,
           
             
-            font_headline_color:Featureddata[index].font_headline_color,
-            font_brand_color:Featureddata[index].font_brand_color,
-            font_focus_color:Featureddata[index].font_focus_color,
-            font_headline_fontstyle:Featureddata[index].font_headline_fontstyle,
-            font_brand_fontstyle:Featureddata[index].font_brand_fontstyle,
-            font_focus_fontstyle:Featureddata[index].font_focus_fontstyle,
-            background_color:Featureddata[index].background_color,
-            background_color_2:Featureddata[index].background_color_2,
-            imageleftRadios:Featureddata[index].imageleftRadios,
-              imageRIghtRadios:Featureddata[index].imageRIghtRadios,
-              imageopacity:Featureddata[index].imageopacity
+            font_headline_color:Featureddata[ind].font_headline_color,
+            font_brand_color:Featureddata[ind].font_brand_color,
+            font_focus_color:Featureddata[ind].font_focus_color,
+            font_headline_fontstyle:Featureddata[ind].font_headline_fontstyle,
+            font_brand_fontstyle:Featureddata[ind].font_brand_fontstyle,
+            font_focus_fontstyle:Featureddata[ind].font_focus_fontstyle,
+            background_color:Featureddata[ind].background_color,
+            background_color_2:Featureddata[ind].background_color_2,
+            imageleftRadios:Featureddata[ind].imageleftRadios,
+              imageRIghtRadios:Featureddata[ind].imageRIghtRadios,
+              imageopacity:Featureddata[ind].imageopacity,
+
        
-           
+           focus_background_color:Featureddata[ind].focus_background_color,
+        border_radius:Featureddata[ind].border_radius,
          
         })
 
@@ -63,7 +86,7 @@ const Admin_features_edit=()=>
     }
     changeData()
     },
-    [index]
+    [ind]
     )
    
     const [data,setdata]=useState(
@@ -87,7 +110,10 @@ const Admin_features_edit=()=>
           background_color_2:Featureddata[0].background_color_2,
           imageleftRadios:Featureddata[0].imageleftRadios,
             imageRIghtRadios:Featureddata[0].imageRIghtRadios,
-            imageopacity:Featureddata[0].imageopacity
+            imageopacity:Featureddata[0].imageopacity,
+            focus_background_color:Featureddata[0].focus_background_color,
+            border_radius:Featureddata[0].border_radius,
+             
 
 
     }
@@ -104,8 +130,9 @@ const Admin_features_edit=()=>
         return(
 
             <TouchableOpacity
+            
             onPress={
-                ()=>setindex(index)
+                ()=>setind(index)
                     
             }
             >
@@ -113,9 +140,10 @@ const Admin_features_edit=()=>
             style={
                 {
                     marginHorizontal:20,
-                    backgroundColor:"black",
+                    backgroundColor:(ind==index)?'black':"#fff",
                     height:50,
                     width:100,
+                    borderRadius:20,
                     alignItems:'center',
                     justifyContent:"center"
                 }
@@ -124,7 +152,7 @@ const Admin_features_edit=()=>
                 <Text
                 style={
                     {
-                        color:"#fff"
+                        color:(ind==index)?'#fff':"black"
                     }
                 }
                 >{item.name}</Text>
@@ -184,6 +212,7 @@ const Admin_features_edit=()=>
                 backgroundColor:data.focus=='price'?"black":'#fff',
                 
                 margin:10,
+            borderRadius:20
                 
                 
             }
@@ -199,7 +228,7 @@ const Admin_features_edit=()=>
             ={
             {
                 margin:20,
-                color:data.focus?'#fff':'black'
+                color:data.focus=='price'?'#fff':'black'
             }
             }
             >ON PRICE</Text>
@@ -212,8 +241,9 @@ const Admin_features_edit=()=>
         <TouchableOpacity
         style={
             {
-                backgroundColor:"black",
-                margin:10
+                backgroundColor:data.focus=='discount'?'black':'#fff',
+                margin:10,
+                borderRadius:20
                 
             }
         }
@@ -228,10 +258,10 @@ const Admin_features_edit=()=>
             ={
             {
                 margin:20,
-                color:data.focus?'#fff':'black'
+                color:data.focus=='discount'?'#fff':'black'
             }
             }
-            >ON PRICE</Text>
+            >ON discount</Text>
         </TouchableOpacity>
         <TouchableOpacity>
             
@@ -247,6 +277,32 @@ const Admin_features_edit=()=>
             </FlatList>
 
        
+       <TouchableOpacity
+       
+       onPress={()=>onsubmitFeatured()}
+       style={
+           {
+              
+               backgroundColor:"black",
+               height:30,
+               justifyContent:'center',
+               alignItems:'center'
+           }
+       }
+       >
+           <Text
+           style={
+               {
+                   color:"#fff",
+                   alignSelf:'center',
+                   textAlign:'center',
+                   textAlignVertical:'center'
+               }
+           }
+           >SUBMIT</Text>
+       </TouchableOpacity>
+
+ 
         </View>
     )
 

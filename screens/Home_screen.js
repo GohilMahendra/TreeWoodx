@@ -2,32 +2,29 @@
 import React from "react";
 import { 
 View,Text,StyleSheet,Image,SafeAreaView, FlatList, TouchableOpacity, Dimensions, TextInput, ScrollView, ActivityIndicator
-
+,RefreshControl
  } from "react-native";
 
 import  FontAwesome5  from "react-native-vector-icons/FontAwesome5";
 import { categories } from "../data/categories";
-import { chairdata } from "../data/chairdata";
-import { beddata } from "../data/beddata";
 
 import { useState } from "react/cjs/react.development";
 import { useEffect } from "react";
-import database from "@react-native-firebase/database";
 import firestore from "@react-native-firebase/firestore";
-import { Item } from "react-native-paper/lib/typescript/components/List/List";
-import { set } from "react-native-reanimated";
-import LinearGradient from "react-native-linear-gradient";
-import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
-import { Searchbar } from "react-native-paper";
+
+import { Appbar, Searchbar } from "react-native-paper";
 import { StatusBar } from "react-native";
-import {fonts  } from "../constants/fonts";
 import ProductCard from "../components/HomeScreen/ProductCard";
+import FeaturedCard from "../components/FeaturedCard";
+import FeaturedList from "../components/FeaturedList";
 
 const Home_screen=({navigation})=>
 {
     const {height,width}=Dimensions.get('screen')
 
 
+
+//fetch categories
 
 const chairFetcher=(name)=>
 {
@@ -68,7 +65,21 @@ const chairFetcher=(name)=>
 
 
 }
-    
+ 
+
+
+// //debuging watcher function 
+// useEffect
+// (
+//     ()=>
+//     {
+//         console.log(featured+"featured data")
+
+//     },
+//     [featured]
+// )
+
+
 
 
 useEffect
@@ -116,6 +127,7 @@ useEffect
         const [chair,setchair]=React.useState([])
 
 
+       
         const [arrivel,setarrival]=useState()
  
         const [ind,setind]=useState(0)
@@ -166,19 +178,24 @@ useEffect
             )
 
         }
+
+       
         const catbuilder=({item,index})=>
         {
             return(
                 <TouchableOpacity
                 
                 onPress={()=>{setind(index),chairFetcher(item.name)}}
-                style={{height:50,width:(ind==index)?200:90
-                    ,flexDirection:'row',
+                style={{height:100
+                    ,
+                    width:100,
                     elevation:12,borderRadius:20
                     ,justifyContent:'center',
+                    alignItems:'center',
                 backgroundColor:(ind==index)?'black':'white',
                 marginRight:20,borderWidth:1,borderRadius:20}}>
       
+                   
                     <Text 
                     style={{marginRight:20,
                     textAlignVertical:"center",
@@ -198,69 +215,36 @@ useEffect
         
             
            
-           <StatusBar
-           hidden={true}
-           showHideTransition={true}
-          
-           >
-
-           </StatusBar>
-        
-
+       
+       
          <ScrollView 
-         >
+        >
+
+            <TouchableOpacity
+            onPress={
+                ()=>navigation.navigate('Search')
+            }
+            >
               <Searchbar
+
+            
+            editable={false}
             style={{width:'80%',alignSelf:"center",height:50,borderWidth:1,
                 borderRadius:15,margin:20}}
             placeholder="search......"
 
-            onTouchStart={
-                ()=>navigation.navigate('Search')
-            }
+            disableFullscreenUI={true}
+         
             
            />
-  
-            <TouchableOpacity>
-               
-                <View 
-                style={{width:width-40,
-                margin:20,
-                borderRadius:30,
-                height:height/3}}>
-                <LinearGradient
-                colors={['black','gray']}
-                style={{flex:1,borderRadius:30}}
-                >
-
-                <View style={{flexDirection:'row',flex:1,borderRadius:30}}>
-                <View style={{borderWidth:1,height:'50%',
-                width:'50%',alignSelf:'center',margin:10,borderColor:'#fff'}}>
-                <Text 
-                style={{fontSize:20,
-                color:'#fff'}}>
-                    GET EXCITING DEALS ON SOFAS
-                </Text>
-                <Text 
-                style={{alignSelf:'center',
-                fontSize:35,
-                color:"#fff",
-                fontWeight:'bold'}}>50% OFF</Text>
-                   </View>
-                <Image
-                source={{uri:'https://thumbs.dreamstime.com/b/white-sofa-black-background-insulated-1652176.jpg'}}
-                style={{backgroundColor:'#fff',
-                height:'50%',
-                width:'40%',
-                alignSelf:'center'}}
-                >
-
-                </Image>
-                </View>
-       
-                </LinearGradient>
-                </View>                    
-            </TouchableOpacity>
+     </TouchableOpacity>
+         
             
+
+            <FeaturedList>
+                
+            </FeaturedList>
+          
             <FlatList
             horizontal
             style={{marginLeft:20,marginRight:20}}

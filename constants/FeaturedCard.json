@@ -5,7 +5,7 @@
        
         "font_headline_color":"#fff",
         "font_brand_color":"silver",
-        "font_focus_color":"yellows",
+        "font_focus_color":"black",
         "font_headline_fontstyle":"Federo_Regular",
         "font_brand_fontstyle":"Federo_Regular",
         "font_focus_fontstyle":"Federo_Regular",
@@ -13,7 +13,10 @@
         "background_color_2":"silver",
         "imageleftRadios":25,
         "imageRIghtRadios":50,
-        "imageopacity":0.7
+        "imageopacity":0.7,
+        "focus_background_color":"#fff",
+        "border_radius":0
+
 
     },
     
@@ -30,7 +33,9 @@
             "background_color_2":"#004e92",
             "imageleftRadios":55,
             "imageRIghtRadios":25,
-            "imageopacity":1
+            "imageopacity":1,
+            "focus_background_color":"#fff",
+        "border_radius":0
         },
         
             {
@@ -38,7 +43,7 @@
              
                 "font_headline_color":"yellow",
                 "font_brand_color":"gold",
-                "font_focus_color":"yellows",
+                "font_focus_color":"yellow",
                 "font_headline_fontstyle":"Federo_Regular",
                 "font_brand_fontstyle":"Federo_Regular",
                 "font_focus_fontstyle":"Federo_Regular",
@@ -46,7 +51,9 @@
                 "background_color_2":"#516395",
                 "imageleftRadios":10,
                 "imageRIghtRadios":10,
-                "imageopacity":0.7
+                "imageopacity":0.7,
+                "focus_background_color":"#fff",
+        "border_radius":0
             },
 
             {
@@ -62,7 +69,9 @@
                 "background_color_2":"#6dd5ed",
                 "imageleftRadios":10,
                 "imageRIghtRadios":10,
-                "imageopacity":0.7
+                "imageopacity":0.7,
+                "focus_background_color":"#fff",
+        "border_radius":0
             }
     
     

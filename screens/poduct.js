@@ -85,122 +85,15 @@ const product=({navigation})=>
 
 
 
-    const ifAlready=await firestore()
-    .collection('reviews')
-    .doc(p.params.item.key).collection('review').doc(auth().currentUser.uid).get()
-
-
-
-    console.log(ifAlready)
-
-    
-    
-    const avrage= await firestore()
-    .collection('reviews')
-    .doc(p.params.item.key).get()
-
-    console.log(avrage)
-
-    var avg={}
-    if(avrage!="")
-    {
-      avg=avrage.data()
-
-      console.log(avrage+'avg')
-    }
-    if(ifAlready.exists)
-    {
-      const oldReview=ifAlready
-
-      
-      const newData=oldReview.data()
-
-
-      console.log(newData+'newdata')
-     
-      if(newData.star==1)
-      {
-        avg.one--
-      }
-      
-      if(newData.star==2)
-      {
-        avg.two--
-      }
-      
-      if(newData.star==3)
-      {
-        avg.three--
-      }
-      
-      if(newData.star==4)
-      {
-        avg.four--
-      }
-      
-      if(newData.star==5)
-      {
-        avg.five--
-      }
-
-      console.log(avg.avg)
-      avg.avg=(avg.avg*avg.total)-newData.star
-      avg.total--
-   
-      avg.avg=(avg.total>0)?(Math.abs(avg.avg/avg.total)/2) *10:0
-
-      console.log(avg.avg+'avg_newData')
-    }
-    
-    (review.rate==1)?avg.one++:(review.rate==2)?avg.two++:(review.rate==3)?avg.three++:
-
-
-    (review.rate==4)?avg.four++:avg.five++
-
-    
-    avg.total++
-    avg.avg=(((avg.avg*(avg.total-1))+review.rate)/avg.total)/2
-
-    console.log(avg)
-
-
-     firestore()
-    .collection('reviews')
-    .doc(p.params.item.key).set
-    (
-      avg
-    )
-
-
-    firestore().collection('reviews').doc(p.params.item.key).collection('review').doc(auth().currentUser.uid).set(
-      {
-
-
-
-        
-          date:todaysdate,
-          email:auth().currentUser.email
-          ,star:review.rate,
-          review:review.review
-      }
-    ).then(suc=>alert('review added')).catch(
-      err=>console.log(err)
-    )
-
-    firestore().collection('products').doc(p.params.item.key).update
-    (
-      {
-        //prod.rate
-        
-      }
-    )
-    
   }
   const addTOcart=()=>
   {
 
 
-    dispatch(AddToCart(prod))
+
+
+    
+   dispatch(AddToCart(prod,p.params.item.key))
 
   
     
@@ -237,7 +130,7 @@ useEffect
      
     return subscriber
   }
-  ,[rev,setrev]
+  ,[rev]
 )
 
 

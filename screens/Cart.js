@@ -19,35 +19,26 @@ import { fonts } from "../constants/fonts";
 import { Card } from "react-native-elements/dist/card/Card";
 import CartCard from "../components/CartCard";
 import EmptyCartScreen from "../components/EmptyCartScreen";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
+import { changeCartQuantity, removeFromCart } from "../redux/Actions/CartActions";
 const {height,width}=Dimensions.get('screen')
  const Cart=({navigation})=>
  {
 
 
 
+  const dispatch=useDispatch()
+
   
-
-  const cart=useSelector((state)=>state.Cart.Cart)
-
-  const total=useSelector((state)=>state.Cart.totalprice)
-
- 
-  const changeQuantity=(quantity,pid)=>
+  const cart=useSelector(state=>state.Cart.Cart)
+  const tot=useSelector(state=>state.Cart.totalPrice)
+  
+  const changeQuantity=async(quantity,pid)=>
     {
   
-  
-      firestore().collection('cart').doc(auth().currentUser.uid).collection('products').doc(pid).update
-      (
-        {
-  
-          quantity:quantity
-        }
-      ).catch
-      (
-        err=>console.log(err)
-      )
+      dispatch(changeCartQuantity(quantity,pid))
+      
     }
 
 
@@ -56,16 +47,7 @@ const {height,width}=Dimensions.get('screen')
 
   {
 
-    try
-    {
- const result=  await firestore().collection('cart').doc(auth().currentUser.uid).collection('products').doc(pid).delete()
-  
-console.log(result)
-    }
-    catch(err)
-    {
-      console.log(err)
-    }
+    dispatch(removeFromCart(pid))
 }
     
 
@@ -126,16 +108,18 @@ console.log(result)
 
 //     setload(false)
 // })
-// },[cart,setcart]
+// },[]
 // )
 
-     
-const [tot,settot]=useState(1)
-  
-    const [price,setprice]=useState()
 
-    const [load
-    ,setload]=useState(true)
+// const [cart,setcart]=useState([])
+     
+//     const [tot,settot]=useState(0)
+  
+//     const [price,setprice]=useState()
+
+//     const [load
+//     ,setload]=useState(true)
      const itemBuilder=({item,index})=>
      
      {
@@ -143,8 +127,12 @@ const [tot,settot]=useState(1)
         const org_price=Math.floor(item.price-item.price*item.discount/100)
 
 
+        console.log(JSON.stringify(item)+"item")
+
         return(
      
+
+
           
             <View
             style={
@@ -191,14 +179,23 @@ const [tot,settot]=useState(1)
         <View style={{marginTop:10,borderRadius:30,
         shadowOffset:{height:5,width:5},
         shadowOpacity:1,shadowRadius:20,
+        backgroundColor:'#fff',
         borderRadius:30,bottom:10,alignItems:'flex-end'}}>
                
-                <Text style={{marginHorizontal:20,fontSize:25,fontFamily:fonts.Quicksand_Medium}}>Total  </Text>
+               <View
+               style={
+                 {
+                  backgroundColor:'#fff',
+                 }
+               }
+               >
+                <Text style={{marginHorizontal:20,fontSize:25,fontFamily:fonts.Quicksand_Medium}}>TOTAL </Text>
                 <Text style={{marginHorizontal:20,fontWeight:"bold",fontSize:25,fontFamily:fonts.Quicksand_Medium}}>
-                  RS {total}</Text>
+                  RS {tot}</Text>
+                </View>
                 
                {
-               (total>0) &&
+               (tot>0) &&
                <TouchableOpacity
 
 

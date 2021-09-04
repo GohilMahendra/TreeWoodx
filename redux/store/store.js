@@ -10,10 +10,12 @@ createStore
 
  import CartReducer from "../reducers/CartReducer";
 import thunk from "redux-thunk";
+import CommentReducer from "../reducers/CommentReducer";
  const rootReducer=combineReducers
  (
      {
-         Cart:CartReducer
+         Cart:CartReducer,
+         Comment:CommentReducer
      }
  )
  

@@ -116,16 +116,30 @@ export default class Paypal extends Component {
         const { approvalUrl } = this.state
         return (
             <View style={{ flex: 1 }}>
+              
+    
                 {
                     approvalUrl ? <WebView
-                        style={{ height: 400, width: 300 }}
+                        style={{
+                            flex:1
+                        }}
                         source={{ uri: approvalUrl }}
                         onNavigationStateChange={this._onNavigationStateChange}
                         javaScriptEnabled={true}
                         domStorageEnabled={true}
                         startInLoadingState={false}
                         style={{ marginTop: 20 }}
-                    /> : <ActivityIndicator />
+                    /> : <ActivityIndicator
+                    
+                    size={"large"}
+                    style={
+                        {
+                            position:'absolute',
+                            left:'50%',
+                            top:'50%'
+                        }
+                    }
+                    />
                 }
             </View>
         )

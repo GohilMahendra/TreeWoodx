@@ -179,7 +179,8 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
    // item.push(add)
    
   
-    // navigation.navigate('PayView')
+
+     navigation.navigate('PayView')
 
   }
   const [add,setadd]=useState(
@@ -193,7 +194,7 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
     return(
 
     
-        <View style={{flex:1,backgroundColor:'white',justifyContent:'center'}}>
+        <View style={{flex:1,backgroundColor:'white',justifyContent:'center',position:'relative'}}>
   
 
       <Searchbar
@@ -207,23 +208,35 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
 
       </Searchbar>
 
-      {showSearchList &&  <FlatList
-        
-        style={{height:height/2,backgroundColor:"silver"}}
-        
+      
+      {showSearchList &&
 
+
+        <FlatList
         data={res}
-
-
+        keyExtractor={res.id}
         renderItem={itemLoader}
+        style={
+          {
+            height:'40%'
+          }
+        }
+        >
 
-        keyExtractor={res=>res.id}
+        </FlatList>
 
 
+}
+     
 
-        
-        />
-      }
+     <View
+     style={
+       {
+         flex:1
+       }
+     }
+     >
+    
         <MapboxGL.MapView
         style={{flex:1}}
   
@@ -260,21 +273,6 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
             coordinate={[lat,long]}
             />
             
-            <MapboxGL.PointAnnotation 
-            
-          
-           // ref={anonationref}
-
-          //  onDrag={()=>ChangeLatLongONDrag(e)}
-            id="market settle up2"
-            title="hotel"
-          
-
-            onSelected={()=>showMessege()}
-           draggable={false}
-            coordinate={[lat+0.0005,long+0.0005
-            ]}
-            />
             
 
              <MapboxGL.Camera
@@ -319,18 +317,65 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
         
 
         </MapboxGL.MapView>
-       
+        </View>
+      
+     
       
        
+        <View
+            style={
+              {
+                position:"absolute",
+                backgroundColor:"#007FFF",
+                height:70,
+                width:70,
+                borderRadius:70,
+                right:10,
+                bottom:150
+              
+              }
+            }
+            >
+              <TouchableOpacity
+              style=
+              {
+                {
+                  height:70,
+                  width:70,
+                  borderRadius:70,
+                  alignItems:'center',
+                  justifyContent:"center"
+                }
+              }
+              >
+            <FontAwesome5Icon
+            name="location-arrow"
+            size={35}
+            color="#fff"
+            >
+
+            </FontAwesome5Icon>
+          </TouchableOpacity>
+            </View>
           <TouchableOpacity
           onPress={()=>gopay()}
-          style={{bottom:10,height:50,margin:20,flexDirection:'row',
-          justifyContent:'space-around',alignItems:"center",
-          backgroundColor:'#5438DC',borderRadius:20,borderWidth:1}}>
+          style={{bottom:10,
+            height:50,margin:20,flexDirection:'row',
+          justifyContent:'space-around',
+          alignItems:"center",
+          position:"relative",
+          backgroundColor:'#5438DC',
+          borderRadius:20,borderWidth:1}}>
             
             <Text style={{color:'#fff',alignSelf:'center',fontSize:20}}>Payment here</Text>
             <FontAwesome5Icon size={30} name={"angle-right"} color="#fff"></FontAwesome5Icon>
           </TouchableOpacity>
+
+
+
+
+     
+
          
         </View>
     )

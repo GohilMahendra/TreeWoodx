@@ -48,7 +48,9 @@ const PayView=()=>
             }
         )
             .then(response => {
-                console.log(response)
+                console.log(response
+                    +
+                    "__AUTH RESPONSE")
                 settoken(response.data.access_token)
 
                 axios.post('https://api.sandbox.paypal.com/v1/payments/payment?', dataDetail,
@@ -61,7 +63,7 @@ const PayView=()=>
                 )
                     .then(response => {
 
-                        console.log(response)
+                        console.log(response+"__BEARER TOKEN RESPONSE")
                         const { id, links } = response.data
                         const Url = links.find(data => data.rel == "approval_url")
 
@@ -78,7 +80,7 @@ const PayView=()=>
               
               }).catch((err)=>console.log( err.response))
     }
- ,[token,settoken] )
+ ,[] )
      
 const onNavigationStateChange = (webViewState) => {
 
@@ -97,7 +99,7 @@ const onNavigationStateChange = (webViewState) => {
             }
         )
             .then(response => {
-                console.log(response)
+                console.log(response+"__PAYMENT STATUS RESPONSE")
 
             }).catch(err => {
                 console.log({ ...err })
@@ -111,7 +113,7 @@ const onNavigationStateChange = (webViewState) => {
             <View style={{ flex: 1 }}>
                 {
                     approvalUrl ? <WebView
-                        style={{ height: 400, width: 300 }}
+                        style={{ flex:1}}
                         source={{ uri: approvalUrl }}
                     onNavigationStateChange={onNavigationStateChange}
                         javaScriptEnabled={true}
@@ -121,6 +123,11 @@ const onNavigationStateChange = (webViewState) => {
                     /> : <ActivityIndicator
                     size={"large"}
 
+                    style={
+                        {
+                            position:'absolute'
+                        }
+                    }
                     
                     />
                 }

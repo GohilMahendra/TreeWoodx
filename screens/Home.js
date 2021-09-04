@@ -28,6 +28,7 @@ const bottomTab=createBottomTabNavigator()
 
 
 
+
 const height=Dimensions.get('screen').height
 const width=Dimensions.get('screen').width
  const Home=()=>
@@ -35,21 +36,63 @@ const width=Dimensions.get('screen').width
 //  var badge=0
 
 const dispatch=useDispatch()
-const count=useSelector(state=>state.Cart.total)
 
-console.log(count+'cart')
+const badge=useSelector(cart=>cart.Cart.total)
 
+//console.log(JSON.stringify(cartDetails)+"cart Details")
+
+
+
+
+const fetchBadge=()=>
+{
+    firestore().collection('cart').doc(auth().currentUser.uid).collection('products').onSnapshot
+    (
+      (snapshot)=>
+      {
+
+        setbadge(snapshot.docs.length)
+
+      }
+    )
+
+  }
   
 useEffect
 (
   ()=>
   {
+
+
     dispatch(fetchCartproducts())
+  // const subscription=fetchBadge()
+
+
+  // return ()=>subscription()
+
   }
+
   ,[]
 )
 
-    const [badge,setbadge]=React.useState(0)
+// useEffect
+// (
+//   ()=>
+//   {
+
+ 
+//     dispatch(fetchCartproducts())
+
+//   }
+
+//   ,[]
+// )
+
+
+
+
+
+  //  const [badge,setbadge]=React.useState(0)
 
      return(
         <SafeAreaView style={{flex:1,height:height,backgroundColor:"white"}}>
@@ -100,7 +143,7 @@ useEffect
                       tabBarIcon:({size,focused,color})=>   
                         <FontAwesome5 style={{justifyContent:'flex-end',
                         alignItems:'flex-start'}} size={size}  color={color} name="shopping-cart">
-                          <Badge value={count}></Badge>
+                          <Badge value={badge}></Badge>
                         </FontAwesome5>
                     
 

@@ -32,12 +32,13 @@ const CartReducer=(state=initialstate,action)=>
     switch(action.type)
     {
         case FETCH_CART_REQUEST:
-            return {...state}
+           return{...state}
         case FETCH_CART_SUCCESS:
              const data=action.payload
             
-             console.log({Cart:data.Cart,total:data.total,totalPrice:data.totalPrice})
-             return {Cart:data.Cart,total:data.total,totalPrice:data.totalPrice}
+           //  console.log(JSON.stringify(data)+'data')
+            // console.log({Cart:data.Cart,total:data.total,totalPrice:data.totalprice})
+             return Object.assign({},state,{Cart:data.Cart,total:data.total,totalPrice:data.totalprice})
         case FETCH_CART_FAILED:
             console.log(action.payload)
         case ADD_TO_CART_REQUEST:
@@ -46,7 +47,7 @@ const CartReducer=(state=initialstate,action)=>
             console.log(action.payload+"SUCCED PAYLOAD")
             
         case ADD_TO_CART_FAILED:
-            console.log(action.payload+"Cart add ERROR")
+            console.log(JSON.stringify(action.payload)+"Cart add ERROR")
 
             
         default:
