@@ -26,27 +26,28 @@ const Admin_editProd=({navigation})=>
         {
     
     
-         const subscriber=   firestore().collection('products').onSnapshot
+         const subscriber=   firestore().collection('products').limit(5).onSnapshot
         (
             (snapshot)=>
             {
+                
                 var list=[]
          
                 snapshot.forEach(function(child) {
             
                     // console.log(child)
             
-              
-                   
+                    if(!child.exists)
+                    return
                     list.push({
                         key: child.id,
-                        pname:child.data().prod.pname,
-                        pprice: child.data().prod.price,
-                        pdisc:child.data().prod.discount,
-                        pimage:child.data().prod.img1,
-                        pbrand:child.data().prod.brand,
-                        pstock:child.data().prod.stock,
-                        pdiscount:child.data().prod.discount
+                        pname:child.data().pname,
+                        pprice: child.data().price,
+                        pdisc:child.data().discount,
+                        pimage:child.data().img1,
+                        pbrand:child.data().brand,
+                        pstock:child.data().stock,
+                        pdiscount:child.data().discount
                       })
 
                     })

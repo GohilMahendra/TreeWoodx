@@ -14,8 +14,6 @@ import { fonts } from "../constants/fonts";
 import { TouchableOpacity } from "react-native";
 import {Snackbar  } from "react-native-paper";
 import LinearGradient from "react-native-linear-gradient";
-import { ImageBackground } from "react-native";
-import { Item } from "react-native-paper/lib/typescript/components/List/List";
 
 
 const {height,width}=Dimensions.get('screen')

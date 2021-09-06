@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { stat } from "react-native-fs";
 import { fetchCartproducts } from "../redux/Actions/CartActions";
 import { State } from "react-native-gesture-handler";
+import { LoadInitialProducts } from "../redux/Actions/ProductActions";
 const bottomTab=createBottomTabNavigator()
 //console.log(wooddata)
 
@@ -58,6 +59,8 @@ const fetchBadge=()=>
 
   }
   
+
+
 useEffect
 (
   ()=>

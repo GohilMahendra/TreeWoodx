@@ -13,15 +13,17 @@ const Admin_product=({navigation})=>
 
 
 
+  date=new Date()
+
   const p=useRoute()
 
 
 
-
+  const todaysdate=date.getDate()+'/'+date.getUTCMonth()+'/'+date.getFullYear()
   const fetch_Initials=()=>
   {
 
-    if(p.params==null)
+    if(p.params==undefined)
     {
       return
     }
@@ -30,30 +32,30 @@ const Admin_product=({navigation})=>
  
     const obj=
          {
-          pname:snapshot.data().prod.pname,
-          brand:snapshot.data().prod.brand,
-          cat:snapshot.data().prod.cat,
-          sub_cat:snapshot.data().prod.sub_cat,
-          material:snapshot.data().prod.material,
+          pname:snapshot.data().pname,
+          brand:snapshot.data().brand,
+          cat:snapshot.data().cat,
+          sub_cat:snapshot.data().sub_cat,
+          material:snapshot.data().material,
   
         
-          price:snapshot.data().prod.price,
-          discount:snapshot.data().prod.discount,
+          price:snapshot.data().price,
+          discount:snapshot.data().discount,
           dimensions:{
 
-              height:snapshot.data().prod.dimensions.height,
-              width:snapshot.data().prod.dimensions.width,
-              depth:snapshot.data().prod.dimensions.depth
+              height:snapshot.data().dimensions.height,
+              width:snapshot.data().dimensions.width,
+              length:snapshot.data().dimensions.length
           },
-         warranty:snapshot.data().prod.warranty,
-          discription:snapshot.data().prod.discription,
-          date:snapshot.data().prod.date,
-          stock:snapshot.data().prod.stock,
-          img1:snapshot.data().prod.img1,
-          img2:snapshot.data().prod.img2,
-          img3:snapshot.data().prod.img3,
-          img3d:snapshot.data().prod.img3d,
-          rate:snapshot.data().prod.rate
+         warranty:snapshot.data().warranty,
+          discription:snapshot.data().discription,
+          date:snapshot.data().date,
+          stock:snapshot.data().stock,
+          img1:snapshot.data().img1,
+          img2:snapshot.data().img2,
+          img3:snapshot.data().img3,
+          img4:snapshot.data().img4,
+        
           }
    
   
@@ -73,38 +75,51 @@ const Admin_product=({navigation})=>
 
   fetch_Initials()
 
-  },[prod,setprod]
+  },[]
   )
 
-    const uploadOnFirestore=()=>
+    const uploadOnFirestore=async()=>
     {
 
 
+
+      try
+
+      {
+
+        let res=""
       if(p.params!=null)
       {
-        firestore().collection('products').doc(p.params.item).set(
-          {
+        res =await firestore().collection('products').doc(p.params.item).set(
+          
               prod
-          }
+          
       )
 
+      console.log(res)
       }
       else
       {
 
-        firestore().collection('products').add(
-            {
+        res =await firestore().collection('products').add(
+            
                 prod
-            }
+            
         )
 
+        console.log(res)
         }
+      }
+      catch(err)
+      {
+        console.log(err)
+      }
     }
     const [dimensions,setdimentions]=useState
     ({
         height:50,
         width:50,
-        depth:50
+        length:50
     })
     const {height,width}=Dimensions.get('screen')
     const [prod,setprod]=useState
@@ -119,23 +134,25 @@ const Admin_product=({navigation})=>
             material:"Wood",
     
           
+
+            priceafterdisc:0,
             price:12500,
             discount:64,
             dimensions:{
 
                 height:36,
                 width:60,
-                depth:28
+                length:28
             },
            warranty:36,
             discription:"It’s all wood. Crafted from high-grade mango wood, the Duetto bed makes for the perfect unwind zone. Its sleek frame and minimalist design exude a contemporary flavour and blend in seamlessly with various styles of decor. A gently curving headboard supports your back, letting you sit up to read, watch TV or simply have a conversation. Layer the bed with plush quilts and fluffy pillows for a warm, cosy nook you’ll never want to leave.",
-            date:"10/04/2021",
+            date:todaysdate,
             stock:5,
             img1:"https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRdhvKeVWU27wW7t-pvkK-5f_nmot0QJ1HvyeM0qMojAKn069kTwyZUzTrrqHK0c3JbLqKZKfLx_Bg&usqp=CAc",
             img2:"",
             img3:"",
-            img3d:"",
-            rate:5
+            img4:"",
+          
         }
     )
 
@@ -172,7 +189,7 @@ const Admin_product=({navigation})=>
        style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
        placeholder="Enter sub category(eg. Queen,King,Office)"
          />
-        <Text style={{marginLeft:20,marginBottom:20}}>Enter Dimentions in inches(height,width,depth)</Text>
+        <Text style={{marginLeft:20,marginBottom:20}}>Enter Dimentions in inches(height,width,length)</Text>
         
         <View style={{flexDirection:'row',justifyContent:'center'}}>
         <TextInput
@@ -188,9 +205,9 @@ const Admin_product=({navigation})=>
         placeholder="width"
         ></TextInput>
         <TextInput
-        value={prod.dimensions.depth.toString()}
+        value={prod.dimensions.length.toString()}
           style={{width:100,height:50,borderRadius:20,borderWidth:1,textAlign:'center',marginLeft:20}}
-        placeholder="depth"
+        placeholder="length"
         ></TextInput>
         </View> 
            <TextInput

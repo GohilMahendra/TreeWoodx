@@ -7,10 +7,11 @@ import { FlatList } from "react-native";
 
 import AddStar from "../components/Addstar";
 import { load } from "npm";
-import { ActivityIndicator,ProgressBar } from "react-native-paper";
+import { ActivityIndicator,Appbar,ProgressBar } from "react-native-paper";
 import { Dimensions } from "react-native";
 import ReviewRatings from "../components/ReviewRatings";
 import ReviewCard from "../components/reviewCard";
+import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 
 const Comments=()=>
 {
@@ -141,9 +142,13 @@ const Comments=()=>
         .limit(1)
         .onSnapshot((snapshot)=> {
     
+
+            
             var li=[]
         snapshot.docs.forEach((docs) =>
           {
+              if(!docs.exists)
+              return
            
 
             
@@ -183,6 +188,45 @@ const Comments=()=>
     
 
         <View style={{flex:1}}>
+       
+{/*        
+       <Appbar
+       style={
+           {
+               backgroundColor:"blue",
+               
+           }
+       }
+    
+       >
+           <View
+           style={
+               {
+                   flexDirection:'row',
+                   alignItems:"center",
+                   justifyContent:'space-between'
+
+                  
+               }
+           }
+           >
+           <FontAwesome5Icon
+           name="chevron-left"
+           size={25}
+           ></FontAwesome5Icon>
+
+           <Text
+           style={
+               {
+                   alignSelf:'center'
+               }
+           }
+           >
+               COMMENTS
+           </Text>
+           </View>
+        </Appbar> */}
+
         {
 
             (loading ) &&
@@ -233,7 +277,7 @@ const Comments=()=>
             
            
             
-             onEndReached={()=>retriveMore()}
+            // onEndReached={()=>retriveMore()}
             keyExtractor={item=>item.email}
             >
 

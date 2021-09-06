@@ -17,6 +17,9 @@ import { StatusBar } from "react-native";
 import ProductCard from "../components/HomeScreen/ProductCard";
 import FeaturedCard from "../components/FeaturedCard";
 import FeaturedList from "../components/FeaturedList";
+import { useDispatch, useSelector } from "react-redux";
+import { LoadInitialProducts } from "../redux/Actions/ProductActions";
+import { stat } from "react-native-fs";
 
 const Home_screen=({navigation})=>
 {
@@ -24,44 +27,20 @@ const Home_screen=({navigation})=>
 
 
 
+
+
+
+    const chair=useSelector(state=>state.Products.HomeProducts)
+
+    console.log(chair)
+    const dispatch=useDispatch()
 //fetch categories
 
 const chairFetcher=(name)=>
 {
-    setload(true)
-
-    const quary=(name=="All")?  firestore().collection('products') :firestore().collection('products').where("prod.cat",'==',name)
 
 
-  quary.onSnapshot(
-        snapshot=>
-        {
-        var list=[]
-      
-        snapshot.forEach(function(child) {
-    
-    
-            list.push({
-                key: child.id,
-                pname:child.data().prod.pname,
-                pprice: child.data().prod.price,
-                pdisc:child.data().prod.discount,
-                pimage:child.data().prod.img1,
-                pbrand:child.data().prod.brand
-              })
-        });
-        list.reverse()
-       
-      
-        setload(false)
-    
-        setchair(list)
-        console.log(chair+"chair")
-       
-  });
-    
-
-    
+    dispatch(LoadInitialProducts(name))
 
 
 }
@@ -99,10 +78,10 @@ useEffect
             list.push({
                 key: child.id,
                 pname:child.data().pname,
-                pprice: child.data().prod.price,
-                pdisc:child.data().prod.discount,
-                pimage:child.data().prod.img1,
-                pbrand:child.data().prod.brand
+                pprice: child.data().price,
+                pdisc:child.data().discount,
+                pimage:child.data().img1,
+                pbrand:child.data().brand
               })
         }
         );
@@ -122,9 +101,7 @@ useEffect
   ,[]
 )
 
-//  const [chair,setchair]=React.useState()
-
-        const [chair,setchair]=React.useState([])
+       // const [chair,setchair]=React.useState([])
 
 
        
@@ -222,7 +199,7 @@ useEffect
 
             <TouchableOpacity
             onPress={
-                ()=>navigation.navigate('Search')
+                ()=>navigation.navigate('Product_list',{item:'search'})
             }
             >
               <Searchbar
@@ -309,12 +286,29 @@ useEffect
         >
 
         </FlatList>
+
+        <Image
+        source={
+            {
+                uri:"https://www.ikea.com/in/en/images/products/lagkapten-adils-desk-black-brown-black__0977217_pe813462_s5.jpg?f=xl"
+            }
+        }
+        style={
+            {
+                height:500,
+                width:500,
+                backgroundColor:'blue'
+            }
+        }
+        >
+
+        </Image>
          </ScrollView>
         {load && <ActivityIndicator
          style={{alignSelf:"center",top:"50%",left:"50%",position:'absolute'}}
         
          size='large'
-         color="green"
+         colo11111111r="green"
          >
 
          </ActivityIndicator>}

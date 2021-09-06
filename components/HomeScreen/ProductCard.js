@@ -8,7 +8,7 @@ View,Text,StyleSheet,Image,SafeAreaView, FlatList, TouchableOpacity, Dimensions,
      fonts
   } from "../../constants/fonts";
 
-
+import FastImage from "react-native-fast-image";
 
 const ProductCard=(props)=>
 {
@@ -28,14 +28,13 @@ const ProductCard=(props)=>
          
 
         <View style={styles.ViewContainer}>
-        <Image
-        source={{uri:item.pimage}}
+        <FastImage
+        source={{uri:item.pimage, priority: FastImage.priority.normal}}
         style={styles.image}
 
-        resizeMode={
-            "cover"
-        }
-        ></Image> 
+        resizeMode={FastImage.resizeMode.contain}
+        
+        ></FastImage> 
         <View 
         style={styles.TextConatainer}>
         <Text 
@@ -74,8 +73,9 @@ const styles=StyleSheet.create
         image:
         {
             borderRadius:20,
-            flex:1,
-            
+          
+
+          flex:1,
             margin:10
          },
          ViewContainer:
@@ -99,8 +99,7 @@ const styles=StyleSheet.create
          },
          TouchConatainer:
          {
-            height:'100%',
-            width:'100%',
+            flex:1,
             marginTop:20,
             marginBottom:20,
             width:200,

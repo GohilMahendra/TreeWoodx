@@ -51,6 +51,12 @@ import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
         }
     }
 
+    onPress={
+
+        ()=>navigation.navigate(
+            'Admin_product'
+        )
+    }
  
     >
    
@@ -83,6 +89,8 @@ import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
         }
     }
     >
+    <View>
+    
     <FontAwesome5Icon
     name="plus"
     color="#fff"
@@ -91,6 +99,7 @@ import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 
     </FontAwesome5Icon>
 
+    </View>
     </TouchableOpacity>
   }
     <TouchableOpacity

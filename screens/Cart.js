@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { 
 
     Dimensions,
-    Text,TouchableOpacity,View,Image, TextInput
+    Text,TouchableOpacity,View,Image, TextInput, ActivityIndicator
  } from "react-native";
 import { FlatList, Swipeable } from "react-native-gesture-handler";
 import { Value } from "react-native-reanimated";
@@ -33,7 +33,8 @@ const {height,width}=Dimensions.get('screen')
   
   const cart=useSelector(state=>state.Cart.Cart)
   const tot=useSelector(state=>state.Cart.totalPrice)
-  
+
+  const loading=useSelector(state=>state.Cart.loading)
   const changeQuantity=async(quantity,pid)=>
     {
   
@@ -163,8 +164,9 @@ const {height,width}=Dimensions.get('screen')
         <View style={{marginTop:10,flex:1,width:width-20}}>
         <Text style={{alignSelf:'center',fontFamily:fonts.Federo_Regular,
         fontSize:30,margin:20}}>MY CART</Text>
-        <FlatList 
+       <FlatList 
         style={{flex:1}}
+       
         data={cart}
         ListEmptyComponent={EmptyCartScreen}
         renderItem={itemBuilder}
@@ -175,6 +177,7 @@ const {height,width}=Dimensions.get('screen')
     
 
         </FlatList>
+ 
         </View>
         <View style={{marginTop:10,borderRadius:30,
         shadowOffset:{height:5,width:5},

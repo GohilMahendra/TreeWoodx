@@ -166,6 +166,8 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
   }
     ,[]
    )
+
+   
    useEffect
    (
      ()=>

@@ -14,8 +14,7 @@ import {fonts} from "../constants/fonts";
  const SimilarItems=({category,navigation,curruntID})=>
  {
 
-
-
+     
     if(category==undefined)
     return
 
@@ -76,11 +75,11 @@ import {fonts} from "../constants/fonts";
   
         li.push({
             key: child.id,
-            pname:child.data().prod.pname,
-            pprice: child.data().prod.price,
-            pdisc:child.data().prod.discount,
-            pimage:child.data().prod.img1,
-            pbrand:child.data().prod.brand
+            pname:child.data().pname,
+            pprice: child.data().price,
+            pdisc:child.data().discount,
+            pimage:child.data().img1,
+            pbrand:child.data().brand
         })
     });
 
@@ -225,6 +224,14 @@ catch(err)
 
             
             }
+
+            onPress={()=>navigation.navigate("SimilarProducts",
+            {
+                categoryname:category,
+                by:"category",
+                name:"similar category"
+            }
+            )}
             disabled={(products!=undefined && products.length>0)?false:true}
             >
                 <Text
@@ -254,7 +261,7 @@ catch(err)
 
 
 
-    style={{marginHorizontal:10,flex:1}}
+    style={{marginHorizontal:10,height:200,flex:1}}
 
     >
 

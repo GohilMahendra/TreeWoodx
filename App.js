@@ -24,9 +24,8 @@ import Cart from "./screens/Cart";
 import Admin from "./screens/Admin";
 
 import Checkout from './screens/Checkout';
-import PayView from './screens/PayView';
+
 import Sign_Up from './screens/Sign_Up';
-import Paypal from './screens/Paypal';
 import { Provider } from 'react-redux';
 import store from './redux/store/store';
 const stack=createStackNavigator()
@@ -64,13 +63,6 @@ component={Admin}
 ></stack.Screen>
 
 <stack.Screen
-name="Paypal"
-options={{
-  headerShown:false
-}}
-component={Paypal}
-></stack.Screen>
-<stack.Screen
 name="Sign_Up"
 options={{
   headerShown:false
@@ -84,15 +76,6 @@ options={{
   headerShown:false
 }}
 component={Home}
->
-
-</stack.Screen>
-<stack.Screen
-name="PayView"
-options={{
-  headerShown:false
-}}
-component={PayView}
 >
 
 </stack.Screen>

@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Dimensions,Picker, Image,Button, Pressable, Text,TextInput,View } from "react-native"
 ;
 
@@ -17,6 +17,9 @@ import { Searchbar } from "react-native-paper";
 import { Card } from "react-native-elements/dist/card/Card";
 import { fonts } from "../constants/fonts";
 import ProductCard from "../components/Product_list/ProductCard";
+import { useDispatch, useSelector } from "react-redux";
+import { LoadProducts, searchProd } from "../redux/Actions/ProductActions";
+import Search from "./Search";
 
 const Product_list=()=>
 
@@ -26,7 +29,12 @@ const Product_list=()=>
 
     
 
+    const searchRef=useRef()
 
+
+    const product=useSelector(state=>state.Products.products)
+
+    const dispatch=useDispatch()
     const [search,setserach]=useState('')
     const [filters,setfilters]=useState(
       {
@@ -38,81 +46,38 @@ const Product_list=()=>
 
     
     const p=useRoute()
-    var item
-    if(p.params.item!=null)
-    {
-     item=p.params.item
-    }
+    var item=p.params.item
     
+
+    const [category,setcategory]=useState(item==undefined?null:item)
     const [visible,setvisible]=useState(true)
     const {height,width}=Dimensions.get('screen')
 
-    const searchProd=()=>
+
+
+
+
+    // useEffect
+    // (
+    //   ()=>
+    //   {
+
+    //     if(item=="search")
+    //     searchRef.current.focus() 
+    //   },
+    //   []
+    // )
+    const searchProduct=()=>
     {
        
 
 
+     dispatch(searchProd(search))
 
 
-      if(search=="")
-      return
-
-      let ser=""
-      if(filters.price!=0)
-      {
-        console.log("price quary selected")
-         ser=firestore().collection('products').where('prod.price',">=",filters.price) 
-      }
-      else
-      {
-         ser=firestore().collection('products').where('prod.pname', '>=', search).where('prod.pname', '<=', search+ '\uf8ff')
-      }
-        ser.onSnapshot(
-            (snapshot)=> {
     
-            var list=[]
-         
-            snapshot.forEach(function(child) {
-        
-                console.log(child)
-        
-          
-               
-                list.push({
-                    key: child.id,
-                    pname:child.data().prod.pname,
-                    pprice: child.data().prod.price,
-                    pdisc:child.data().prod.discount,
-                    pimage:child.data().prod.img1,
-                    pbrand:child.data().prod.brand
-                  })
-            }
-            );
-            list.reverse()
-            setproduct(list)
-        })
     }
 
-
-    const del=()=>
-    {
-
-        console.log('calldd')
-    }
-    const leftdelete=(progress,dragX)=>
-    {
-      
-      return(
-      
-    
-        <View style={{flex:1,marginLeft:0,marginTop:20,
-        borderRadius:30,justifyContent:'center',
-        backgroundColor:'#ff0010'}}>
-          <Animated.Text  style={{color:'#fff',marginLeft:45,fontSize:25}}>DELETE</Animated.Text>
-          <FontAwesome5Icon></FontAwesome5Icon>
-        </View>
-      )
-    }
     const itembuilder=({item,index})=>
 
     {
@@ -143,44 +108,22 @@ const Product_list=()=>
     (
       ()=>
       {
-        searchProd()
+        searchProduct()
 
       },
       [search]
     )
     useEffect
-    (   ()=>{ firestore().collection('products').onSnapshot(
-        (snapshot)=> {
+    (   ()=>{ 
+      dispatch(LoadProducts(category))
+      setcategory(null)
 
-        var list=[]
-     
-        snapshot.forEach(function(child) {
-    
-    
-      
-           
-            list.push({
-                key: child.id,
-                pname:child.data().prod.pname,
-                pprice: child.data().prod.price,
-                pdisc:child.data().prod.discount,
-                pimage:child.data().prod.img1,
-                pbrand:child.data().prod.brand
-              })
-        }
-        );
-        list.reverse()
-        setproduct(list)
-    
-    })}
-      ,[product,setproduct]
+    }
+      ,[]
     )
 
 
-   // const [search,setsearch]=useState('')
 
-    const [loading,setloading]=React.useState(false)
-    const [product,setproduct]=React.useState()
     return(
     <View style={{flex:1,alignItems:"center",backgroundColor:'#fff'}}>
      
@@ -197,6 +140,7 @@ const Product_list=()=>
     
       <Searchbar
       
+      ref={searchRef}
 
       onChangeText={setserach}
       
@@ -258,6 +202,9 @@ const Product_list=()=>
         </View>
       </Modal>
     
+
+
+      
      
         <FlatList
         

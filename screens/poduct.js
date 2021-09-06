@@ -20,6 +20,9 @@ import { $CombinedState } from "redux";
 import { fonts } from "../constants/fonts";
 import { useDispatch } from "react-redux";
 import { AddToCart } from "../redux/Actions/CartActions";
+import { AddComment, test } from "../redux/Actions/CommentActions";
+import { average } from "@tensorflow/tfjs-layers/dist/exports_layers";
+import ImageSwiper from "../components/ImageSwiper";
 const product=({navigation})=>
 
 
@@ -36,53 +39,16 @@ const product=({navigation})=>
 
   const {height,width}=Dimensions.get('screen')
 
-
-
-
-  //const [samebrandsta,setsamebrand]=useState()
-  const [similar,setsimilar]=useState()
-
   const [success,setsuccess]=useState(false)
-  
-  const [showModel,setShowModel]=useState(true)
 
   const p=useRoute()
-  // if(auth().currentUser.uid=="")
-  // {
-  //   navigation.navigate('Login')
-  // }
-
-  // async function processImage(localPath) {
-  //   const labels = await ml().cloudImageLabelerProcessImage(localPath);
-  
-  //   labels.forEach(label => {
-  //     console.log('Service labelled the image: ', label.text);
-  //     console.log('Confidence in the label: ', label.confidence);
-  //   });
-  // }
-  
-  // // Local path to file on the device
-  // const localFile = `${utils.FilePath.PICTURES_DIRECTORY}/images.jpeg`;
-  // processImage(localFile).then(() => console.log('Finished processing file.'));
-
-
-
-  
-
-
-  
-  const addRate=async()=>
+ 
+  const addRate=()=>
   {
     
 
 
-
-    if(review.review=="" || review.review==undefined)
-    {
-      alert('please add review and then try your thoughts are valueable to US')
-      return
-    }
-
+    dispatch(AddComment(review,p.params.item.key,todaysdate))
 
 
   }
@@ -142,7 +108,7 @@ useEffect(()=>{
 
         
         setsuccess(true)
-        setprod(snapshot.data().prod)
+        setprod(snapshot.data())
 
         setload(false)
 
@@ -152,15 +118,14 @@ useEffect(()=>{
 
 
 }
-    ,[prod]
+    ,[]
   )
   
   
 
    
   const [prod,setprod]=React.useState([])
-  const [revdata,setrevdata]=useState({total:0,avg:5})
-  const [cart,setcart]=React.useState()
+
   const [load,setload]=React.useState(true)
   const [rev,setrev]=useState( {date:todaysdate,
     email:""
@@ -173,22 +138,7 @@ useEffect(()=>{
     }
   )
 
-
- 
-    const reviewBuilder=(item,index)=>
-    {
-      console.log('called')
-      console.log(item+'item')
-      return(
-        <View style={{width:width-40,margin:20}}>
-          <Text>{item.star}</Text>
-        </View>
-      )
-    }
- 
-   // const org_price=prod.price-prod.price*prod.discount/100
-//    console.log(item)
-    return(
+   return(
         <View 
         style={{flex:1,backgroundColor:'#E3E8F0'}}
 
@@ -228,21 +178,10 @@ useEffect(()=>{
       borderBottomRightRadius:40}}>
 
 </View>
-       <ImageBackground
-      
-      source={{uri:prod.img1}}
-      style={{height:height/2,width:width,  shadowColor: '#fff',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.8,
-      shadowRadius: 2,
-    width:width}}
-
-
->
-  
-
-      
-      </ImageBackground>
+    <ImageSwiper
+    
+    data={[prod.img1,prod.img2,prod.img3,prod.img4]}
+    />
   
      
 
@@ -297,7 +236,11 @@ useEffect(()=>{
       <Text style={{alignSelf:'center',fontSize:20,fontWeight:'bold'}} >{prod.brand}</Text>
       <View style={{flexDirection:'row',justifyContent:'space-evenly'}}
       >
-        <Text style={{fontSize:20}} >RS{Math.floor(prod.price-prod.price*prod.discount/100)}</Text>
+        {/*RS{Math.floor(prod.price-prod.price*prod.discount/100)} */}
+        <Text style={{fontSize:20}} >
+        {prod.priceafterdisc}       
+          
+        </Text>
         <Text style={{textDecorationLine:'line-through',fontSize:20}} >RS{prod.price}</Text>
         <Text  style={{color:"green",fontSize:20}}>{prod.discount} % OFF</Text>
         
@@ -359,47 +302,6 @@ useEffect(()=>{
       <Text style={{margin:20,fontFamily:"Federo-Regular",
       fontSize:30}}>REVIEWS</Text>
     
-
-   
-
-   {/* <Modal
-   isVisible={showModel}
-
-
-   
-   >
-
-
-        <TouchableOpacity 
-        
-        onPres={()=>setShowModel(false)}
-        style={{height:100,width:100,backgroundColor:"#fff"}}>
-
-        </TouchableOpacity>
-     <Text>HU</Text>
-     <FlatList
-     
-     
-     
-     >
-
-     </FlatList>
-
-   </Modal> */}
-
-
-      {/* <Rating
-  type='star'
-
-tintColor="#455fff"
-  ratingBackgroundColor="#455fff"
-  ratingColor="#455fff"
-  ratingCount={5}
-  jumpValue={0.5}
-  imageSize={60}
-  showRating
-  
-/> */}
 
   <View style={{flexDirection:'row',margin:20,marginTop:0}}> 
 
@@ -505,7 +407,7 @@ tintColor="#455fff"
       <Text style={{
         fontSize:20,
         marginHorizontal:20,
-        fontWeight:'bold'}}>{rev.email}</Text>
+        fontWeight:'bold'}}>{rev.username}</Text>
      
 
 
@@ -525,7 +427,13 @@ tintColor="#455fff"
 
     
 
-    <View>
+    <View
+    style={
+      {
+        height:600
+      }
+    }
+    >
     <SimilarItems
     
     category={prod.cat}

@@ -21,6 +21,9 @@ import Product_list from "./Product_list";
 import Comments from "./Comments";
 import Search from "./Search";
 import VisionSearch from "./VisionSearch";
+import SimilarProducts from "./SimilarProducts";
+import SimilarItems from "../components/SimilarItems";
+import SimilarBrands from "./SimilarBrands";
 const newnav=createStackNavigator()
    const HomeView=({navigation})=>
 {
@@ -30,13 +33,7 @@ const newnav=createStackNavigator()
         <newnav.Navigator
         initialRouteName="Homescreen"
       
-        screenOptions=
-        {
-            {
-                headerTransparent:true
-            }
-        }
-     
+       
         >
         <newnav.Screen
         
@@ -54,7 +51,9 @@ const newnav=createStackNavigator()
         <newnav.Screen
         
         options={{
-          headerTitle:'',
+          headerTitleAlign:"center",
+          headerTitle:'product',
+          headerTransparent:true
           
          }}
         
@@ -65,8 +64,23 @@ const newnav=createStackNavigator()
         </newnav.Screen>
         <newnav.Screen
         
+      
+        options={({ route }) => ({ title: route.params.name })}
+        name="SimilarProducts"
+        component={SimilarProducts}
+        />
+        <newnav.Screen
+        
+      
+        options={({ route }) => ({ title: route.params.name })}
+        name="SimilarBrands"
+        component={SimilarBrands}
+        />
+        <newnav.Screen
+        
         options={{
           headerTitleAlign:'center',
+          
           
          }}
         
@@ -100,8 +114,8 @@ const newnav=createStackNavigator()
         <newnav.Screen
          options={{
              headerShown:true,
-            headerTitleAlign:'center'
-            ,headerTitle:'shop'
+
+           
           }}
         name="Product_list"
         component={Product_list}
