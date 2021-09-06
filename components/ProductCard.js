@@ -6,7 +6,7 @@ View,Text,StyleSheet,Image,SafeAreaView, FlatList, TouchableOpacity, Dimensions,
 
  import { 
      fonts
-  } from "../../constants/fonts";
+  } from "../constants/fonts";
 
 import FastImage from "react-native-fast-image";
 
@@ -30,7 +30,7 @@ const ProductCard=(props)=>
         
         <TouchableOpacity 
         
-        onPress={()=>navigation.navigate("product",{item:item,name:item.pname})}
+        onPress={()=>navigation.push("product",{item:item})}
         style={styles.TouchConatainer}>
          
 

@@ -50,12 +50,11 @@ const newnav=createStackNavigator()
   />
         <newnav.Screen
         
-        options={{
-          headerTitleAlign:"center",
-          headerTitle:'product',
-          headerTransparent:true
-          
-         }}
+        options={
+    
+          ({ route }) => ({ title: route.params.name,headerTransparent:true,headerTitleAlign:"center" })
+         
+     }
         
         name="product"
         component={product}

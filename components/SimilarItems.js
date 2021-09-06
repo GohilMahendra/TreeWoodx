@@ -9,8 +9,15 @@ import {
  } from "react-native";
 import firestore from "@react-native-firebase/firestore";
 import { FlatList } from "react-native-gesture-handler";
-import {fonts} from "../constants/fonts";
+import { 
+    fonts
+ } from "../constants/fonts";
 
+import ProductCard from "./ProductCard";
+import { useDispatch, useSelector } from "react-redux";
+import { stat } from "react-native-fs";
+
+import { FetchSimilarProducts } from "../redux/Actions/SimilarActions";
  const SimilarItems=({category,navigation,curruntID})=>
  {
 
@@ -18,7 +25,7 @@ import {fonts} from "../constants/fonts";
     if(category==undefined)
     return
 
-    
+    const dispatch=useDispatch()
     const emptyScreen=()=>
     {
         return(
@@ -55,63 +62,16 @@ import {fonts} from "../constants/fonts";
     (
         ()=>
         {
-         
- 
-
-
-            try
-            {
-     setloading(true)
-    firestore().collection('products').where('prod.cat',"==",category).limit(5).onSnapshot((snapshot)=> {
-
         
-//    setsuccess(true)
- // console.log(snapshot.docs)
-
-
-    var li=[]
-    snapshot.forEach(function(child) {
-
-  
-        li.push({
-            key: child.id,
-            pname:child.data().pname,
-            pprice: child.data().price,
-            pdisc:child.data().discount,
-            pimage:child.data().img1,
-            pbrand:child.data().brand
-        })
-    });
-
-   
-    li=li.filter(obj=>obj.key!=curruntID)
-    setproducts(li)
-   // console.log(JSON.stringify(products)+ "similar item dtaa")
-    
-   setloading(false)
-
-  })
-}
-catch(err)
-{
-    setError(true)
-    console.log(err)
-}
-},
-
-
         
+            dispatch(FetchSimilarProducts(category))
+        },
         []
     )
 
-    const [products,setproducts]=useState([])
+   const products=useSelector(state=>state.Similar.similarProducts)
 
-    const [loading,setloading]=useState(false)
-
-    const [Error,setError]=useState(false)
-
-    console.log("BrandName Recived As "+JSON.stringify(category))
-
+    
     const SimilerItemBuilder=({item,index})=>
     {
 
@@ -120,83 +80,12 @@ catch(err)
         return
         console.log(item.key)
         return(
-          <TouchableOpacity
-          
-          onPress=
-          {
-                  ()=>navigation.push("product",{item:{
+      
+            <ProductCard
+            item={item}
+            >
 
-                    "key":item.key
-                  }})
-          }
-          style={{
-              backgroundColor:"transparent",
-              borderRadius:10,
-              width:150,
-
-              marginHorizontal:10,
-              justifyContent:"center"
-          }}
-          >
-              <Image
-              style
-              ={
-                  {
-                    
-                    borderRadius:10,
-
-                    height:120,
-                   
-                  }
-              }
-              source={{uri:item.pimage}}
-              >
-
-              </Image>
-              <Text
-              style=
-              {
-                  {
-                    fontFamily:fonts.Orbitron_Black,
-                      alignSelf:"center"
-                  }
-              }
-              >{item.pname}</Text>
-              <View style={{flexDirection:'row',
-              justifyContent:"space-around"}}>
-
-              <Text
-              style={
-                  {
-                    fontFamily:fonts.Merienda_Regular,
-                      textDecorationLine:"line-through"
-                  }
-              }
-              >RS .{item.pprice}</Text>
-              <Text
-              style={
-                  {
-                    fontFamily:fonts.Merienda_Regular
-                  }
-              }
-              >RS .{item.pprice-(item.pdisc*item.pprice/100)}</Text>
-              
-              </View>
-              <Text style={
-                  {
-                      color:'green',
-                      alignSelf:'center',
-                      fontFamily:fonts.Merienda_Regular
-                  }
-              }>{item.pdisc} %OFF</Text>
-               <Text style={
-                  {
-                      color:'grey',
-                      alignSelf:'center',
-                      fontFamily:fonts.Merienda_Regular
-                  }
-              }>{item.pbrand}</Text>
-          </TouchableOpacity>
+            </ProductCard>
         )
     }
     return(
@@ -245,7 +134,7 @@ catch(err)
 
             </TouchableOpacity>
        </View>
-        {(!loading)&&
+      
             <View style={{flex:1}}>
 
 <FlatList
@@ -261,7 +150,7 @@ catch(err)
 
 
 
-    style={{marginHorizontal:10,height:200,flex:1}}
+    style={{marginHorizontal:10,height:350}}
 
     >
 
@@ -270,7 +159,7 @@ catch(err)
 
             </View>
 
-        }
+        
         </View>
     )
  }

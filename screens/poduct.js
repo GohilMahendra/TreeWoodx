@@ -428,11 +428,7 @@ useEffect(()=>{
     
 
     <View
-    style={
-      {
-        height:600
-      }
-    }
+   
     >
     <SimilarItems
     

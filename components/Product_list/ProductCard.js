@@ -10,7 +10,7 @@ const ProductCard=(props)=>
     return(
         
         <TouchableOpacity
-        onPress={()=>navigation.navigate("product",{item:item})}
+        onPress={()=>navigation.push("product",{item:item,name:item.pname})}
       
       
         style={
@@ -41,6 +41,7 @@ const ProductCard=(props)=>
           alignSelf:"center"
         }
         }
+        resizeMode="cover"
         >
 
         </Image>

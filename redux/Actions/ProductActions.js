@@ -161,11 +161,7 @@ export const LoadProducts=(category)=>
 
         try
         {
-        const quary=(name=="All")?  firestore().collection('products') :firestore().collection('products').where("prod.cat",'==',name)
-
-
-        
-
+        const quary=(name=="All")?  firestore().collection('products') :firestore().collection('products').where("cat",'==',name)
         quary.onSnapshot(
         snapshot=>
         {

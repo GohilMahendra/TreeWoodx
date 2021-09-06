@@ -11,7 +11,7 @@ import firestore from "@react-native-firebase/firestore";
 import { FlatList } from "react-native-gesture-handler";
 import {fonts} from "../constants/fonts";
 import { Dimensions } from "react-native";
-import ProductCard from "./HomeScreen/ProductCard";
+import ProductCard from "./ProductCard";
 
  const Samebrand=({brand,navigation,curruntID})=>
  {
@@ -126,96 +126,12 @@ catch(err)
      
 
        
-        console.log(item.key)
+       // console.log(item.key)
         return(
-
-
-            <ProductCard
-            item={item}
-            >
-
-            </ProductCard>
-        //   <TouchableOpacity
-          
-        //   onPress=
-        //   {
-        //           ()=>navigation.push("product",{item:{
-
-        //             "key":item.key
-        //           }})
-        //   }
-        //   style={{
-        //       backgroundColor:"transparent",
-        //       borderRadius:10,
-        //       width:150,
-
-        //       marginHorizontal:10,
-        //       justifyContent:"center"
-        //   }}
-        //   >
-        //       <Image
-        //       style
-        //       ={
-        //           {
-                    
-        //             borderRadius:10,
-
-        //             height:130,
-                   
-        //           }
-        //       }
-        //       source={{uri:item.pimage}}
-        //       >
-
-        //       </Image>
-        //       <Text
-        //       style=
-        //       {
-        //           {
-                    
-        //             fontFamily:fonts.Orbitron_Black,
-        //               alignSelf:"center"
-        //           }
-        //       }
-        //       >{item.pname}</Text>
-        //       <View style={{flexDirection:'row',
-        //       justifyContent:"space-around"}}>
-
-        //      <Text
-        //       style={
-        //           {
-        //             fontWeight:"bold",
-        //             fontFamily:fonts.Merienda_Regular
-
-        //           }
-        //       }
-        //       >RS .{item.pprice-(item.pdisc*item.pprice/100)}</Text>
-              
-        //       <Text
-        //       style={
-        //           {
-        //             fontFamily:fonts.Merienda_Regular,
-        //               textDecorationLine:"line-through"
-        //           }
-        //       }
-        //       >RS .{item.pprice}</Text>
-            
-        //       </View>
-        //       <Text style={
-        //           {
-        //               color:'green',
-        //               alignSelf:'center',
-        //               fontFamily:fonts.Merienda_Regular
-        //           }
-        //       }>{item.pdisc} %OFF</Text>
-        //        <Text style={
-        //           {
-        //               color:'grey',
-        //               alignSelf:'center',
-        //               fontFamily:fonts.Merienda_Regular
-        //           }
-        //       }>{item.pbrand}</Text>
-        //   </TouchableOpacity>
+<ProductCard
+item={item}
+></ProductCard>
+       
         )
     }
     return(
@@ -230,15 +146,22 @@ catch(err)
                     fontSize:20,
                     textTransform:'uppercase',
                     textAlignVertical:"center",
-                    textAlign:"center"
+                   
+                    width:'70%'
+                    
+                    
                 }
             }
+            
+            
             >MORE FROM {brand}</Text>
             <TouchableOpacity
             style={
                 {
                     backgroundColor:"black",
-                    borderRadius:10
+                    borderRadius:10,
+                    justifyContent:'center',
+                    alignItems:"center"
                 }
             }
             onPress={()=>navigation.navigate("SimilarBrands",
@@ -254,7 +177,8 @@ catch(err)
                 style={
                     {
                         color:"white",
-                        margin:10
+                        margin:10,
+                        textAlignVertical:'center'
                     }
                 }
                 >VIEW MORE</Text>
@@ -278,7 +202,7 @@ catch(err)
 
 
 
-    style={{marginHorizontal:10,flex:1}}
+    style={{marginHorizontal:10,height:350}}
 
     >
 
