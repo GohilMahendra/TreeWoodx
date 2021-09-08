@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect ,useState} from "react";
 import { View,Dimensions ,Image,Text, ScrollView} from "react-native";
 import { FlatList, TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import firestore from "@react-native-firebase/firestore";
@@ -9,7 +9,8 @@ import { colorsArray } from "../constants/colors";
 import { FAB } from "react-native-paper";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import CustomFab from "../components/Admin_Product/CustomFab";
-
+import { useDispatch, useSelector } from "react-redux";
+import { DeleteProduct, LoadProducts } from "../redux/Actions/ProductActions";
 
 
 const Admin_editProd=({navigation})=>
@@ -17,74 +18,36 @@ const Admin_editProd=({navigation})=>
 
     console.log(colorsArray[Math.floor((Math.random()*colorsArray.length))])
 
+    const dispatch=useDispatch()
     const {height,width}=Dimensions.get('screen')
 
     useEffect
     (
-
         ()=>
         {
-    
-    
-         const subscriber=   firestore().collection('products').limit(5).onSnapshot
-        (
-            (snapshot)=>
-            {
-                
-                var list=[]
-         
-                snapshot.forEach(function(child) {
-            
-                    // console.log(child)
-            
-                    if(!child.exists)
-                    return
-                    list.push({
-                        key: child.id,
-                        pname:child.data().pname,
-                        pprice: child.data().price,
-                        pdisc:child.data().discount,
-                        pimage:child.data().img1,
-                        pbrand:child.data().brand,
-                        pstock:child.data().stock,
-                        pdiscount:child.data().discount
-                      })
-
-                    })
-                    setdata(list)
-            }
-            )
-
-            return ()=>subscriber()
+            dispatch(LoadProducts(null))
         },
         []
     )
     
-
+    
     const deleteProd=(productID)=>
     {
 
-        
-        firestore().collection('products').doc(productID).delete().
-        then(
-            suc=>
-            {
-                console.log("DELETED SUCCESSFULLY!!YEY")
-            }
-        ).catch(err=>console.log(err))
-
+     dispatch(DeleteProduct(productID))   
+     
     }
 
     const configuation=(productID)=>
     {
        deleteProd(productID)
     }
-    const [data,setdata]=React.useState()
+    const data=useSelector(state=>state.Products.products)
 
     const prodBuilder=({item,index})=>
     {
 
-        const price_after_disc=Math.floor(item.pprice-item.pprice*item.pdiscount/100)
+    
         return(
             
             <View style={{width:width-40,margin:20,height:300,
@@ -115,17 +78,31 @@ const Admin_editProd=({navigation})=>
                 <View style={{flexDirection:"row"}}>
                 <Text style={{textDecorationLine:"line-through",
                 marginRight:20}}>RS {item.pprice}</Text>
-                <Text>RS {price_after_disc}</Text>
+                <Text>RS {item.priceafterdisc}</Text>
                 </View>
                 <View style={{flexDirection:'row'}}>
                 <Text style={{marginRight:20}}>stock {item.pstock}</Text>
-                <Text>disc {item.pdiscount} %</Text>
+                <Text>disc {item.pdisc} %</Text>
+
+
                 </View>
                 </View>
 
 
             </View>
-            
+
+            <View
+            style={
+                {
+                    flexDirection:'row'
+                }
+            }
+            >
+                <TextInput>
+
+                </TextInput>
+
+            </View>
             <View style={{flexDirection:'row',alignSelf:"center",justifyContent:"space-evenly"}}>
 
             <TouchableOpacity

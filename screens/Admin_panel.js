@@ -1,33 +1,58 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import { View,Dimensions ,Text, ScrollView} from "react-native";
 import {PieChart,LineChart ,ProgressChart } from "react-native-chart-kit";
+
+
 import { fonts } from "../constants/fonts";
+import firestore from "@react-native-firebase/firestore";
+import { TouchableOpacity } from "react-native-gesture-handler";
 const Admin_panel=()=>
 {
     const {height,width}=Dimensions.get('screen')
 
-    const chartConfig = {
-        backgroundGradientFrom: "#1E2923",
-        backgroundGradientFromOpacity: 0,
-        backgroundGradientTo: "#08130D",
-        backgroundGradientToOpacity: 0.5,
-        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-        strokeWidth: 2, // optional, default 3
-        barPercentage: 0.5,
-        useShadowColorFromDataset: false // optional
-      };
-    const data = {
-        labels: ["January", "February", "March", "April", "May", "June"],
-        datasets: [
+    const [orderData,setOrderData]=useState()
+    const date=new Date()
+   
+    const month=date.getUTCDate()+date.getUTCMonth()
+// console.log(month)
+    const year=date.getFullYear()
+    const fetchChartData=(fetchBy)=>
+    {
+      
+  
+      const quary=firestore().collection('Orders').where('date','>','15/09/2021')
+        quary.onSnapshot
+        (
+          (snapshot)=>
           {
-            data: [0, 0, 0, 8, 0, 0],
-            color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-            strokeWidth: 2 // optional
-          }
-        ],
-        legend: ["Total Sales(no)"] // optional
-      };
+            snapshot.forEach
+            (
+            function(child)
+            {
 
+              console.log(child.data().date)
+
+            }
+            )
+          }
+        )
+
+  
+    }
+    useEffect
+
+    (
+      ()=>
+      {
+
+        fetchChartData(fetchBy)
+      },
+    [fetchBy]
+    )
+
+
+    const [fetchBy,setFetchBy]=useState("month")
+ 
     return(
         <View style={{flex:1,backgroundColor:'black'}}>
         <ScrollView>
@@ -50,7 +75,7 @@ const Admin_panel=()=>
     width={Dimensions.get("window").width} // from react-native
     height={height/3}
     yAxisLabel="RS"
-    yAxisSuffix="k"
+    yAxisSuffix=""
     yAxisInterval={1} // optional, defaults to 1
     chartConfig={{
       backgroundColor: "#e26a00",
@@ -74,29 +99,23 @@ const Admin_panel=()=>
       borderRadius: 16
     }}
   />
-  <LineChart
-  data={data}
-  width={width}
-  height={220}
-  chartConfig={chartConfig}
-/>
 
-<ProgressChart
-  data={{  labels: ["Bed", "Chair", "Tv Unit"], // optional
-  data: [0.4, 0.6, 0.0]}}
-  width={width}
-  height={300}
-  strokeWidth={16}
-  radius={32}
-  chartConfig={chartConfig}
-  hideLegend={false}
-/>
            <Text style={{fontFamily:fonts.Federo_Regular}}>
 
          
 
                 </Text>
                 
+                <TouchableOpacity
+                style={
+                  {
+                    backgroundColor:"blue"
+                  }
+                }
+                onPress={()=>setFetchBy('month')}
+                >
+                  <Text>FIND BY MONTH</Text>
+                </TouchableOpacity>
                 </ScrollView>
                 </View>
     )

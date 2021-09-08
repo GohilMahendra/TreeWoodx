@@ -24,7 +24,9 @@ const Admin=({navigation})=>
             {
               showLabel:false,
               style:{
-        margin:20,
+        marginHorizontal:20,
+        borderRadius:30,
+        backgroundColor:'black'
               }
             }
           }

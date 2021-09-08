@@ -36,9 +36,9 @@ const FeaturedCard=(props)=>
         style={
             {
                 
-            
-                height:height/4,
-                width:width-20,
+          
+
+              flex:1,
                 borderRadius:15,
 
                 borderRadius:15,

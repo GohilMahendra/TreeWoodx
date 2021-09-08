@@ -66,12 +66,13 @@ const FeaturedList=()=>
                     {
                         item:{
                             key:item.key
-                        }
+                        },
+                        name:item.pname
                     })
                 }
                 style={
                     {
-                        height:height/3,
+                        height:height/3.5,
                         width:'100%'
                     }
                 }
@@ -91,10 +92,11 @@ const FeaturedList=()=>
            
 
 
-           layout="stack"
+           layout="tinder"
+           layoutCardOffset={18}
            
            ref={featuredRef}
-           itemHeight={300}
+           itemHeight={250}
            itemWidth={width-20}
            sliderWidth={width-20}
             data={featured}

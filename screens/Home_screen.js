@@ -42,7 +42,6 @@ const chairFetcher=(name)=>
 
     dispatch(LoadInitialProducts(name))
 
-
 }
  
 
@@ -224,9 +223,17 @@ useEffect
          
             
 
-            <FeaturedList>
-                
-            </FeaturedList>
+            
+            <View
+            style={
+                {
+                    height:300
+                }
+            }
+            >
+            <FeaturedList/>
+            </View>                
+            
           
             <FlatList
             horizontal

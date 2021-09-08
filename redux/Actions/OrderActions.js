@@ -69,7 +69,7 @@ export const makeOrder=(cart,price,address,paymentDetails)=>
     try
     {
     dispatch({type:MAKE_ORDER_REQUEST})
-    const {inStock,childName}=await checkIFinStock(cart)
+    let {inStock,childName}=await checkIFinStock(cart)
     console.log(inStock)
 
 
@@ -101,10 +101,15 @@ export const makeOrder=(cart,price,address,paymentDetails)=>
 
 
   
+
+
    
+
+
 
     const order= {
         
+        date:todaysdate,
         userid:auth().currentUser.uid,
         email:auth().currentUser.email,
         name:auth().currentUser.displayName,
@@ -114,8 +119,12 @@ export const makeOrder=(cart,price,address,paymentDetails)=>
         address:address,
 
 
+
         paymentDetails:paymentDetails
     }
+
+
+
 
     const success=await firestore().collection('Orders').add
     (

@@ -14,6 +14,20 @@ import { LOAD_HOME_PRODUCTS_FAILED,
 
 
 
+export const DeleteProduct=(pid)=>
+{
+    return async(dispatch)=>
+    {
+        firestore().collection('products').doc(productID).delete().
+        then(
+            suc=>
+            {
+                console.log("DELETED SUCCESSFULLY!!YEY")
+            }
+        ).catch(err=>console.log(err))
+
+    }
+}
 export const AddProduct=(key,prod)=>
 {
     return async(dispatch)=>
@@ -70,6 +84,7 @@ export const searchProd=(search)=>
                     pprice: child.data().price,
                     priceafterdisc:child.data().priceafterdisc,
                     pdisc:child.data().discount,
+                    pstock:child.data().stock,
                     pimage:child.data().img1,
                     pbrand:child.data().brand
                   })
@@ -123,6 +138,7 @@ export const LoadProducts=(category)=>
                     pprice: child.data().price,
                     priceafterdisc:child.data().priceafterdisc,
                     pdisc:child.data().discount,
+                    pstock:child.data().stock,
                     pimage:child.data().img1,
                     pbrand:child.data().brand
                   })

@@ -13,6 +13,8 @@ import { fonts } from "../constants/fonts";
 
 import  auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
+import { useDispatch } from "react-redux";
+import { changeCartQuantity } from "../redux/Actions/CartActions";
 const {height,width}=Dimensions.get(
     'screen'
 )
@@ -22,8 +24,9 @@ const CartCard=(props)=>
 {
 
 
+    const dispatch=useDispatch()
     
-    const {item,navigation,onRemovePress,changeQuantity}=props
+    const {item,navigation,onRemovePress}=props
 
 
     const {height,width}=Dimensions.get('screen')
@@ -31,6 +34,13 @@ const CartCard=(props)=>
     console.log(item.key)
    
     
+
+    const changeQuantity=(qty,pid)=>
+    {
+
+        dispatch(changeCartQuantity(qty,pid))
+        
+    }
 
 
     

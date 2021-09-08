@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
-import { Dimensions,Text, ScrollView, View } from "react-native";
+import { Dimensions,Text,StyleSheet,TextInput, ScrollView, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Value } from "react-native-reanimated";
 import { useState } from "react/cjs/react.development";
 import firestore from "@react-native-firebase/firestore";
 import { useRoute } from "@react-navigation/core";
 
-import {  TextInput} from "react-native-paper";
-import {Input  } from "react-native-elements";
+const {height,width}=Dimensions.get('screen')
 const Admin_product=({navigation})=>
 {
 
@@ -107,7 +106,7 @@ const Admin_product=({navigation})=>
             
         )
 
-        console.log(res)
+       // console.log(res)
         }
       }
       catch(err)
@@ -121,7 +120,7 @@ const Admin_product=({navigation})=>
         width:50,
         length:50
     })
-    const {height,width}=Dimensions.get('screen')
+   // const {height,width}=Dimensions.get('screen')
     const [prod,setprod]=useState
     (
         
@@ -140,9 +139,9 @@ const Admin_product=({navigation})=>
             discount:64,
             dimensions:{
 
-                height:36,
-                width:60,
-                length:28
+                height:dimensions.height,
+                width:dimensions.width,
+                length:dimensions.length
             },
            warranty:36,
             discription:"It’s all wood. Crafted from high-grade mango wood, the Duetto bed makes for the perfect unwind zone. Its sleek frame and minimalist design exude a contemporary flavour and blend in seamlessly with various styles of decor. A gently curving headboard supports your back, letting you sit up to read, watch TV or simply have a conversation. Layer the bed with plush quilts and fluffy pillows for a warm, cosy nook you’ll never want to leave.",
@@ -159,19 +158,32 @@ const Admin_product=({navigation})=>
   
     return(
         <View style={{flex:1,alignItems:'center',
-        alignContent:'center',marginHorizontal:20,justifyContent:'center'}}>
+        alignContent:'center',justifyContent:'center'}}>
          
        
          <ScrollView style={{flex:1}}>
       
+
+        <View
+        style={
+          {
+            justifyContent:'center',
+            alignItems:'center',
+           alignContent:"center"
+          }
+        }
+        >
+         
          <TextInput
-       style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
+       style={styles.inputText}
 
      value={prod.pname}
        onChangeText={val=>setprod({...prd,pname:val})}
        placeholder="Enter pname"
          />
              <TextInput
+
+        style={styles.inputText}
 
       value={prod.brand}
        onChangeText={val=>setprod({...prd,pname:val})}
@@ -181,88 +193,94 @@ const Admin_product=({navigation})=>
          />
              <TextInput
          value={prod.cat}
-        style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
+        style={styles.inputText}
        placeholder="Enter category(eg . Chair ,Bed ,Cabinet)"
          />
              <TextInput
          value={prod.sub_cat}
-       style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
+       style={styles.inputText}
        placeholder="Enter sub category(eg. Queen,King,Office)"
          />
         <Text style={{marginLeft:20,marginBottom:20}}>Enter Dimentions in inches(height,width,length)</Text>
         
-        <View style={{flexDirection:'row',justifyContent:'center'}}>
+        <View style={{flexDirection:'row',alignSelf:"center",right:20,justifyContent:'space-around'}}>
         <TextInput
          
         value={prod.dimensions.height.toString()}
-        style={{width:100,height:50,borderRadius:20,borderWidth:1,textAlign:'center',marginLeft:20}}
+        style={styles.inputTextNumbers}
         onChangeText={val=>setdimentions({...dimensions,height:val})}
         placeholder="height"
         ></TextInput>
         <TextInput
          value={prod.dimensions.width.toString()}
-          style={{width:100,height:50,borderRadius:20,borderWidth:1,textAlign:'center',marginLeft:20}}
+          style={styles.inputTextNumbers}
         placeholder="width"
         ></TextInput>
         <TextInput
         value={prod.dimensions.length.toString()}
-          style={{width:100,height:50,borderRadius:20,borderWidth:1,textAlign:'center',marginLeft:20}}
+          style={styles.inputTextNumbers}
         placeholder="length"
         ></TextInput>
         </View> 
            <TextInput
            value={prod.price.toString()}
-       style={{width:width-40,margin:20,alignItems:'center',
-       alignContent:"center",height:50,borderRadius:20,borderWidth:1}}
+       style={styles.inputText}
        placeholder="enter price"
          />
            <TextInput
              value={prod.discount.toString()}
-       style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
+       style={styles.inputText}
        placeholder="enter discount"
          />
            <TextInput
              value={prod.img1}
-       style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
+       style={{margin:20,height:50,borderRadius:20,borderWidth:1}}
        placeholder="Enter img1"
          />
            <TextInput
-       style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
+           value={prod.img2}
+       style={styles.inputText}
        placeholder="Enter img2"
          />
 
 <TextInput
-value={prod.img2}
-       style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
+value={prod.img3}
+       style={styles.inputText}
        placeholder="Enter img3"
          />
       
       <TextInput
-      value={prod.img3}
-       style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
+      value={prod.img4}
+       style={styles.inputText}
        placeholder="Enter stock"
          />
 
       <TextInput
-       style={{width:width-40,margin:20,height:50,borderRadius:20,borderWidth:1}}
-       multiline={true}
-       numberOfLines={7}
+       style={styles.inputTextNumbers}
+     
+       value={prod.discount}
        placeholder="Enter discount"
          />
         
     <TextInput
-     style={{width:width-40,margin:20,height:200,borderRadius:20,borderWidth:1}}
+      value={prod.discription}
+     style={{width:width-60,alignSelf:"center",right:20,height:200,borderRadius:20,borderWidth:1}}
      placeholder="Enter Discription"
+      multiline={true}
+      numberOfLines={7}
     >
 
     </TextInput>
 
 
+</View>
+
 </ScrollView>
+
 <TouchableOpacity
 
-onPress={()=>uploadOnFirestore()}
-style={{width:width-60,margin:20,backgroundColor:'red',height:50,justifyContent:'center',
+//onPress={()=>uploadOnFirestore()}
+style={{width:width-60,margin:20,marginBottom:0,backgroundColor:'red',height:50,justifyContent:'center',
 alignItems:'center',borderRadius:30}}
 >
 
@@ -271,4 +289,26 @@ alignItems:'center',borderRadius:30}}
                 </View>
     )
 }
+
+const styles=StyleSheet.create
+(
+  {
+     inputText:
+     {
+      // marginHorizontal:10,
+       marginVertical:10,
+       height:50,
+       width:width-40,
+       right:20,
+       alignSelf:"center",
+       borderRadius:20,
+       borderWidth:1,
+       textAlign:'center'
+
+     },
+     inputTextNumbers:
+     {width:100,margin:20,height:50,borderRadius:20,borderWidth:1}
+  }
+)
+
 export default Admin_product
