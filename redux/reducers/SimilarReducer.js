@@ -69,11 +69,12 @@ const SimilarReducer=(state=initialstate,action)=>
             
             console.log("LOAD MORE SUCCESS")
             console.log(length)
+            console.log(lastKeyProduct)
             return {...state,similarProducts:[...state.similarProducts,...action.payload.Cart],
             lastKeyProduct:action.payload.lastKey
             }
-        // case LOAD_MORE_SIMILAR_BY_PRODUCTS_FAILED:
-        //     return {...state}
+        case LOAD_MORE_SIMILAR_BY_PRODUCTS_FAILED:
+            return {...state}
          default:
             return state
 

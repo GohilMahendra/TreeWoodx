@@ -13,7 +13,7 @@ import {fonts} from "../constants/fonts";
 import { Dimensions } from "react-native";
 import ProductCard from "./ProductCard";
 
- const Samebrand=({brand,navigation,curruntID})=>
+ const Samebrand=({brand,curruntID})=>
  {
 
 
@@ -128,9 +128,19 @@ catch(err)
        
        // console.log(item.key)
         return(
-<ProductCard
-item={item}
-></ProductCard>
+            <TouchableOpacity 
+        
+            onPress={()=>navigation.push("product",{item:item,name:item.pname})}
+          >
+                    <ProductCard
+                    
+                    
+                    item={item}
+                    
+                    >
+    
+                    </ProductCard>
+                    </TouchableOpacity>
        
         )
     }

@@ -181,19 +181,8 @@ export const LoadProducts=(category)=>
                 
               })
         });
-      
-
-      console.log(list+"INTIAL LOAD")
-
         dispatch({type:LOAD_HOME_PRODUCTS_SUCCESS,payload:list})
-
-
          });
-
-         
-              
-
-
 
         }
         catch(err)

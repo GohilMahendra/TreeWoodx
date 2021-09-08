@@ -24,7 +24,7 @@ import Cart from "./screens/Cart";
 import Admin from "./screens/Admin";
 
 import Checkout from './screens/Checkout';
-
+import Payment from "./screens/Payment";
 import Sign_Up from './screens/Sign_Up';
 import { Provider } from 'react-redux';
 import store from './redux/store/store';
@@ -89,6 +89,14 @@ component={Home}
   component={Checkout}
   
   ></stack.Screen>
+  
+<stack.Screen
+name="Payment"
+options={{
+  headerShown:false
+}}
+component={Payment}
+></stack.Screen>
     </stack.Navigator>
     </NavigationContainer>
     </Provider>

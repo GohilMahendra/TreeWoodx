@@ -23,6 +23,9 @@ import { AddToCart } from "../redux/Actions/CartActions";
 import { AddComment, test } from "../redux/Actions/CommentActions";
 import { average } from "@tensorflow/tfjs-layers/dist/exports_layers";
 import ImageSwiper from "../components/ImageSwiper";
+import DimentionsView from "../components/Product/DimentionsView";
+
+const {height,width}=Dimensions.get('screen')
 const product=({navigation})=>
 
 
@@ -37,7 +40,7 @@ const product=({navigation})=>
 
   console.log(todaysdate)
 
-  const {height,width}=Dimensions.get('screen')
+  
 
   const [success,setsuccess]=useState(false)
 
@@ -140,7 +143,7 @@ useEffect(()=>{
 
    return(
         <View 
-        style={{flex:1,backgroundColor:'#E3E8F0'}}
+        style={styles.Container}
 
 
 
@@ -177,55 +180,26 @@ useEffect(()=>{
       backgroundColor:'gray',borderBottomLeftRadius:40,
       borderBottomRightRadius:40}}>
 
-</View>
+    </View>
+
+    {/**image courousel for product*/}
     <ImageSwiper
     
     data={[prod.img1,prod.img2,prod.img3,prod.img4]}
     />
   
-     
 
-    <View style={{flexDirection:'row',
-    justifyContent:"space-evenly",
-    width:width,marginTop:20}}>
 
+    <DimentionsView
     
-    <View style={{height:100,
-    borderRadius:20,width:100,
-      
-      justifyContent:'center',alignItems:'center',
-      backgroundColor:'#fff', 
-        shadowOffset: {width:10, height: 6},
-      shadowOpacity:1,shadowColor:'#455fff',
-      shadowRadius:20,elevation:30}}>
+    productHeight={prod.dimensions.height}
+    productWidth={prod.dimensions.width}
+    productLength={prod.dimensions.length}
+
+    />
 
 
-    <Text>Height</Text>
-    <Text>{prod.dimensions.height}</Text>
-
-    </View>
-
-    <View style={{height:100, shadowOffset: 
-    {width:20, height: -60},
-      shadowOpacity:1,shadowColor:'#455fff',
-      shadowRadius:30,elevation:10,
-      justifyContent:'center',
-      alignItems:'center',borderRadius:20,width:100,
-      backgroundColor:'#fff'}}>
-
-    <Text>width</Text>
-    <Text>{prod.dimensions.width}</Text>
-</View>
-<View style={{height:100, shadowOffset: {width:10, height: 6},
-      shadowOpacity:1,shadowColor:'#fbffff',
-
-      shadowRadius:6,elevation:30,justifyContent:'center',
-      alignItems:'center',borderRadius:20,width:100,backgroundColor:'#fff'}}>
-<Text>depth</Text>
-    <Text>{prod.dimensions.depth}</Text>
-    </View>
-    </View>
-      <View style={{backgroundColor:'transparent',opacity:0.7,margin:20,borderRadius:20}}>
+      <View style={styles.productDetailsContainer}>
       <Text style={{
       alignSelf:'center',
       fontFamily:"Merienda-Regular",
@@ -261,20 +235,13 @@ useEffect(()=>{
       
       >
         
-        <Text style={{fontSize:20,width:100,height:50,
-          textAlignVertical:'center',
-          backgroundColor:'#fff',
-          fontFamily:fonts.Federo_Regular,
-          elevation:25,color:"black"
-          ,textAlign:'center',borderRadius:20}} >{prod.cat}</Text>
-        <Text style={{fontSize:20,
-          height:50,
-          textAlignVertical:'center',
-          fontFamily:fonts.Federo_Regular,
-          backgroundColor:'#fff',color:'black',
-          marginHorizontal:20,
-          textAlign:'center',borderRadius:20,
-          elevation:25}} >{prod.sub_cat}</Text>
+        <View>
+        <Text 
+         style={styles.productCategoryText} >{prod.cat}</Text>
+        </View>
+        <View>
+        <Text style={styles.productCategoryText} >{prod.sub_cat}</Text>
+          </View>
         
       </View>
      
@@ -282,55 +249,48 @@ useEffect(()=>{
       <TouchableOpacity
       
       onPress={()=>addTOcart()}
-      style={{flexDirection:'row',alignContent:'center',
-      justifyContent:"space-evenly",alignSelf:'center',alignItems:'center',
-      backgroundColor:'black',
-      elevation:25,
-      height:50,width:'70%',borderRadius:20,
-      borderWidth:1}}>
-        <Text style={{textAlignVertical:'center',
-        fontFamily:fonts.Federo_Regular,
-        justifyContent:'center',textAlign:'center',color:'#fff'}}>ADD TO CART</Text>
+      style={styles.AddToCartButtonContainer}>
+        <Text style={styles.AddToCartText}>ADD TO CART</Text>
         <FontAwesome5Icon
         size={20}
         name="shopping-cart" color='#fff'></FontAwesome5Icon>
       </TouchableOpacity>
       
 
-      <View style={{alignContent:"center",
-      alignItems:'center',margin:20}}>
+      <View style={styles.addReviewContainer}>
       <Text style={{margin:20,fontFamily:"Federo-Regular",
       fontSize:30}}>REVIEWS</Text>
     
 
-  <View style={{flexDirection:'row',margin:20,marginTop:0}}> 
+           {/**custom made review star component */}
+        <View style={{flexDirection:'row',margin:20,marginTop:0}}> 
 
-  <TouchableOpacity
-  onPress={()=>setreview({...review,rate:1})}
-  >
-  <FontAwesome5Icon name="star" size={30} solid={(review.rate>=1)?true:false}></FontAwesome5Icon>
-  </TouchableOpacity>
-  <TouchableOpacity
-   onPress={()=>setreview({...review,rate:2})}>
-  <FontAwesome5Icon name="star" size={30}  solid={(review.rate>=2)?true:false}></FontAwesome5Icon>
-  </TouchableOpacity>
-  <TouchableOpacity
-  onPress={()=>setreview({...review,rate:3})}
-  >
-  <FontAwesome5Icon name="star" size={30}  solid={(review.rate>=3)?true:false}></FontAwesome5Icon>
-  </TouchableOpacity>
-  
-  <TouchableOpacity
-  onPress={()=>setreview({...review,rate:4})}
-  >
-  <FontAwesome5Icon name="star" size={30}  solid={(review.rate>=4)?true:false}></FontAwesome5Icon>
-  </TouchableOpacity>
-  <TouchableOpacity
-  onPress={()=>setreview({...review,rate:5})}
-  >
-  <FontAwesome5Icon name="star" size={30}  solid={(review.rate>=5)?true:false}></FontAwesome5Icon>
-  </TouchableOpacity>
-  </View>
+        <TouchableOpacity
+        onPress={()=>setreview({...review,rate:1})}
+        >
+        <FontAwesome5Icon name="star" size={30} solid={(review.rate>=1)?true:false}></FontAwesome5Icon>
+        </TouchableOpacity>
+        <TouchableOpacity
+        onPress={()=>setreview({...review,rate:2})}>
+        <FontAwesome5Icon name="star" size={30}  solid={(review.rate>=2)?true:false}></FontAwesome5Icon>
+        </TouchableOpacity>
+        <TouchableOpacity
+        onPress={()=>setreview({...review,rate:3})}
+        >
+        <FontAwesome5Icon name="star" size={30}  solid={(review.rate>=3)?true:false}></FontAwesome5Icon>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+        onPress={()=>setreview({...review,rate:4})}
+        >
+        <FontAwesome5Icon name="star" size={30}  solid={(review.rate>=4)?true:false}></FontAwesome5Icon>
+        </TouchableOpacity>
+        <TouchableOpacity
+        onPress={()=>setreview({...review,rate:5})}
+        >
+        <FontAwesome5Icon name="star" size={30}  solid={(review.rate>=5)?true:false}></FontAwesome5Icon>
+        </TouchableOpacity>
+        </View>
 
       <TextInput
       
@@ -352,6 +312,8 @@ useEffect(()=>{
     </TouchableOpacity>
       </View>
      
+
+      {/**single review */}
      {
 
        (rev.email!="")
@@ -362,13 +324,7 @@ useEffect(()=>{
       >
      
      
-      <View style={{marginHorizontal:20,
-        width:width-40,
-        borderRadius:15,
-        alignSelf:"center",
-        borderTopWidth:1,
-        borderBottomWidth:1,
-        backgroundColor:"transparent"}}>
+      <View style={styles.reviewContainer}>
        
     
         <MaterialIcons
@@ -420,36 +376,32 @@ useEffect(()=>{
     </View>
      
 
-    
-
-
-   
-
-    
-
     <View
    
     >
+
+    {/**similar products */}
     <SimilarItems
     
     category={prod.cat}
-    navigation={navigation}
+  
     curruntID={p.params.item.key}
     
     >
 
     </SimilarItems>
   
-  <Samebrand
+   {/**similar Brands */}
+    <Samebrand
+    
+    brand={prod.brand}
   
-  brand={prod.brand}
-  navigation={navigation}
-  curruntID={p.params.item.key}
+    curruntID={p.params.item.key}
 
-  >
+    >
 
-  </Samebrand>
-  </View>
+    </Samebrand>
+    </View>
     </ScrollView>
 
 
@@ -464,22 +416,83 @@ export default product
 const styles=StyleSheet.create
 (
   {
+    Container:
+    {
+      flex:1,
+      backgroundColor:'#E3E8F0'
+    },
+
+    productDetailsContainer:
+    {
+      backgroundColor:'transparent',
+      opacity:0.7,
+      margin:20,
+      borderRadius:20},
+      reviewContainer:
+      {
+        marginHorizontal:20,
+          width:width-40,
+          borderRadius:15,
+          alignSelf:"center",
+          borderTopWidth:1,
+          borderBottomWidth:1,
+          backgroundColor:"transparent"
+      },
+
     addbtnReview:
     {
       justifyContent:"center",
       alignItems:"center",
       marginTop:20,
       height:50,
-     width:70,
+      width:70,
       borderRadius:20,
       backgroundColor:'black'
     },
-    addbtnReviewText:
-
+    AddToCartButtonContainer:
     {
-      color:"#fff",
-      
+      flexDirection:'row',
+      alignContent:'center',
+      justifyContent:"space-evenly",
+      alignSelf:'center',
+      alignItems:'center',
+      backgroundColor:'black',
+      elevation:25,
+      height:50,
+      width:'70%',
+      borderRadius:20,
+      borderWidth:1
+    },
+    productCategoryText:
+    {
+      fontSize:20,height:50,
+      textAlignVertical:'center',
+      backgroundColor:'#fff',
+      fontFamily:fonts.Federo_Regular,
+      elevation:25,
+      color:"black",
+      textAlign:'center',
+      borderRadius:20
+    },
+    addReviewContainer:
+    {
+      alignContent:"center",
+      alignItems:'center',
+      margin:20
+    },
 
+    AddToCartText:
+    {
+      textAlignVertical:'center',
+      fontFamily:fonts.Federo_Regular,
+      justifyContent:'center',
+      textAlign:'center',
+      color:'#fff'
+    },
+
+    addbtnReviewText:
+    {
+      color:"#fff",  
     },
     elevatedtext:
     {

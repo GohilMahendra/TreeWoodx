@@ -1,91 +1,48 @@
-
-
 import auth from "@react-native-firebase/auth";
+
 import firestore from "@react-native-firebase/firestore";
-import { categories } from "../../data/categories";
-const FetchSimilarProducts=(category)=>
+import { LOAD_COMMENTS_FAILED } from "../Types/CommentTypes";
+
+
+import {
+    LOAD_FEATURED_REQUEST,
+    LOAD_FEATURED_SUCCESS,
+    LOAD_FEATURED_FAILED
+  } from "../Types/FeaturedTypes";
+export const fetchFeaturedProducts=()=>
 {
+
     return async(dispatch)=>
     {
 
-        const quary=firestore().collection('products').where('prod.cat',"==",category).limit(10)
+        dispatch({type:LOAD_FEATURED_REQUEST})
 
-        const similarProducts=await quary.get()
+        try
+        {
+    
+  
+        const quary=firestore().collection('featured')
 
-        list=[]
-        similarProducts.forEach
-        (
-            function(child)
-            {
-                list.push({
-                    key: child.id,
-                    quantity:child.data().quantity,
-                    pname:child.data().pname,
-                    price: child.data().price,
-                    discount:child.data().discount,
-                    img1:child.data().img1,
-                    brand:child.data().brand,
-                  
-                    
-                  })
-        
-            }
-        )
+        const featured=await quary.get()
 
-
-        console.log(list)
-    }
-}
-
-const FetchMoreSimilarProducts=()=>
-{
-    return async(dispatch)=>
-    {
-        
-    }
-}
-
-export const FetchSimilarBrands=(brand)=>
-{
-    return async(dispatch)=>
-    {
-        const quary=firestore().collection('products').where('prod.brand',"==",brand).limit(10)
-
-        const similarProducts=await quary.get()
-
-        list=[]
-
-        console.log(similarProducts.docs)
-        similarProducts.forEach
+        var list=[]
+        featured.forEach
         (
             function(child)
             {
 
-                console.log(child)
-                 
-                list.push({
-                    key: child.id,
-                    pname:child.data().prod.pname,
-                    pprice: child.data().prod.price,
-                    pdisc:child.data().prod.discount,
-                    pimage:child.data().prod.img1,
-                    pbrand:child.data().prod.brand
-                  })
-        
+                list.push(child.data())
+
+                
             }
         )
 
+        dispatch({type:LOAD_FEATURED_SUCCESS,payload:list})   
+        }
+        catch(err)
+        {
+            dispatch({type:LOAD_COMMENTS_FAILED,payload:"There is Some Problem in Featured"})
 
-        console.log(list)
-
-
-    }
-}
-
-const FetchMoreSimilarBrands=()=>
-{
-    return async(dispatch)=>
-    {
-        
+        }
     }
 }

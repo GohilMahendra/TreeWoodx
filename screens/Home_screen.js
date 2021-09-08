@@ -14,7 +14,7 @@ import firestore from "@react-native-firebase/firestore";
 
 import { Appbar, Searchbar } from "react-native-paper";
 import { StatusBar } from "react-native";
-import ProductCard from "../components/HomeScreen/ProductCard";
+import ProductCard from "../components/ProductCard";
 import FeaturedCard from "../components/FeaturedCard";
 import FeaturedList from "../components/FeaturedList";
 import { useDispatch, useSelector } from "react-redux";
@@ -116,14 +116,20 @@ useEffect
           
             return(
                
+                   
+        <TouchableOpacity 
+        
+        onPress={()=>navigation.navigate("product",{item:item,name:item.pname})}
+      >
                 <ProductCard
                 
                 
                 item={item}
-                navigation={navigation}
+                
                 >
 
                 </ProductCard>
+                </TouchableOpacity>
             )
         }
 

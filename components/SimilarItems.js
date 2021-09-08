@@ -5,7 +5,7 @@ import { Button,Image, TouchableOpacity } from "react-native";
 import { ActivityIndicator } from "react-native";
 import { 
 
-    View,Text
+  StyleSheet,  View,Text
  } from "react-native";
 import firestore from "@react-native-firebase/firestore";
 import { FlatList } from "react-native-gesture-handler";
@@ -15,16 +15,18 @@ import {
 
 import ProductCard from "./ProductCard";
 import { useDispatch, useSelector } from "react-redux";
-import { stat } from "react-native-fs";
 
 import { FetchSimilarProducts } from "../redux/Actions/SimilarActions";
- const SimilarItems=({category,navigation,curruntID})=>
+import { useNavigation } from "@react-navigation/core";
+ const SimilarItems=({category,curruntID})=>
  {
 
      
     if(category==undefined)
     return
 
+
+    const navigation=useNavigation()
     const dispatch=useDispatch()
     const emptyScreen=()=>
     {
@@ -33,25 +35,13 @@ import { FetchSimilarProducts } from "../redux/Actions/SimilarActions";
             <View
             style=
             {
-                {
-                    
-                   
-                    height:200,
-                    justifyContent:"center",
-                    alignItems:"center"
-                }
+              styles.emptyViewContainer
             }
             >
 
             <Text
             style={
-                {
-                    borderWidth:1,
-                    width:width-60,
-                    alignSelf:"center",
-                    textAlign:"center",
-                    
-                }
+             styles.emptyScreenText
             }
             >NO SiMILAR ITEMS FOUND</Text>
 
@@ -62,45 +52,38 @@ import { FetchSimilarProducts } from "../redux/Actions/SimilarActions";
     (
         ()=>
         {
-        
-        
-            dispatch(FetchSimilarProducts(category))
+            dispatch(FetchSimilarProducts(category,curruntID))
         },
         []
     )
+
 
    const products=useSelector(state=>state.Similar.similarProducts)
 
     
     const SimilerItemBuilder=({item,index})=>
     {
-
-
         if(item==undefined)
         return
         console.log(item.key)
         return(
-      
-            <ProductCard
-            item={item}
+            <TouchableOpacity 
+        onPress={()=>navigation.push("product",{item:item,name:item.pname})}
             >
-
-            </ProductCard>
+                <ProductCard
+                item={item}
+                >
+                </ProductCard>
+            </TouchableOpacity>
         )
     }
     return(
         <View style={{margin:20}}>
-            <View style={{flexDirection:"row",marginVertical:10,justifyContent:"space-between"}}>
+            <View style={styles.similarContainer}>
             <Text
             style=
             {
-                {
-                    fontFamily:fonts.Quicksand_Medium,
-                    fontWeight:"bold",
-                    fontSize:20,
-                    textAlignVertical:"center",
-                    textAlign:"center"
-                }
+               styles.similarText
             }
             >SIMILAR PRODUCTS</Text>
             <TouchableOpacity
@@ -114,14 +97,16 @@ import { FetchSimilarProducts } from "../redux/Actions/SimilarActions";
             
             }
 
-            onPress={()=>navigation.navigate("SimilarProducts",
+            onPress={()=>navigation.push("SimilarProducts",
             {
                 categoryname:category,
                 by:"category",
-                name:"similar category"
+                name:"similar category for "+category
             }
             )}
-            disabled={(products!=undefined && products.length>0)?false:true}
+            disabled={
+                (products!=undefined && products.length>0)
+                ?false:true}
             >
                 <Text
                 style={
@@ -137,24 +122,19 @@ import { FetchSimilarProducts } from "../redux/Actions/SimilarActions";
       
             <View style={{flex:1}}>
 
-<FlatList
-    
+            <FlatList
+            
+            horizontal
+            data={products}
 
-    horizontal
-    data={products}
+            emptyScreen={emptyScreen}
+            keyExtractor={(item)=>item.key}
+            renderItem={SimilerItemBuilder}
+            style={{marginHorizontal:10,height:350}}
 
-    emptyScreen={emptyScreen}
-   keyExtractor={(item)=>item.key}
+            >
 
-    renderItem={SimilerItemBuilder}
-
-
-
-    style={{marginHorizontal:10,height:350}}
-
-    >
-
-    </FlatList>
+            </FlatList>
 
 
             </View>
@@ -164,4 +144,46 @@ import { FetchSimilarProducts } from "../redux/Actions/SimilarActions";
     )
  }
 
+
+ 
+ const styles=StyleSheet.create
+ (
+     {
+         emptyViewContainer:
+         {
+            height:200,
+            justifyContent:"center",
+            alignItems:"center"
+         },
+         similarContainer:
+         {
+            flexDirection:"row",
+            marginVertical:10,
+            justifyContent:"space-between"
+            
+
+        },
+        similarText:
+        {
+            fontFamily:fonts.Quicksand_Medium,
+            fontWeight:"bold",
+            fontSize:20,
+            textAlignVertical:"center",
+            textAlign:"center"
+        },
+        emptyScreenText:
+        {
+            
+            fontFamily:fonts.Quicksand_Medium,
+            fontWeight:"bold",
+            fontSize:20,
+            textAlignVertical:"center",
+            textAlign:"center"
+            
+        }
+
+
+
+     }
+ )
  export default SimilarItems

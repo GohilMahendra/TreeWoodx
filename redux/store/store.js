@@ -13,13 +13,15 @@ import thunk from "redux-thunk";
 import CommentReducer from "../reducers/CommentReducer";
 import ProductReducer from "../reducers/ProductReducer";
 import SimilarReducer from "../reducers/SimilarReducer";
+import FeaturedReducer from "../reducers/FeaturedReducer";
  const rootReducer=combineReducers
  (
      {
          Cart:CartReducer,
          Comment:CommentReducer,
          Products:ProductReducer,
-         Similar:SimilarReducer
+         Similar:SimilarReducer,
+         Featured:FeaturedReducer
      }
  )
  

@@ -20,12 +20,6 @@ const {height,width}=Dimensions.get('screen')
 const ImageSwiper=({data})=>
 {
 
-
-
-
-
-
-    
     const [activeIndex, setActiveIndex] = useState(0);
     const ref = useRef(null);
 
@@ -40,7 +34,7 @@ const ImageSwiper=({data})=>
 
         style={
             {
-                height:height/2,
+                height:350,
                 width:width-20,
                 borderRadius:15,
                 backgroundColor:"#fff",
@@ -58,10 +52,10 @@ const ImageSwiper=({data})=>
     style={
         {
            flex:1,
-            borderRadius:20
+            borderRadius:15
         }
     }
-    resizeMode="cover"
+    resizeMode="stretch"
 
 
             >

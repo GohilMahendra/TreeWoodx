@@ -1,5 +1,5 @@
 import { useRoute } from "@react-navigation/core";
-import React,{useEffect, useRef} from "react";
+import React,{useEffect, useRef,useMemo,useCallback} from "react";
 import {View,Text,PermissionsAndroid, TextInput, Alert } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { Item } from "react-native-paper/lib/typescript/components/List/List";
@@ -24,12 +24,19 @@ const Checkout=({navigation})=>
   const [lat,setlat]=useState(72.5714)
   const [res,setres]=useState({})
 
+  const [pincode,setpincode]=useState("")
+  const [addressline,setaddressline]=useState("")
+
+
+
+  const [address,setaddress]=useState(null)
 
   const [showSearchList,setshowSearchList]=useState(false)
 
   const [permissionLocation,setpermissionLocation]=useState(false)
 
-useEffect
+
+  useEffect
 (()=>{
   PermissionsAndroid.requestMultiple(
     [PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -48,14 +55,28 @@ setpermissionLocation(true)
 console.warn(err);
 });
 })
-  
-MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNzMndwaGZqZnB2aWJiIn0.hUfo_Ii9qcCmUzNekkLs3Q");
+   
+  MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNzMndwaGZqZnB2aWJiIn0.hUfo_Ii9qcCmUzNekkLs3Q");
 
 
    var item=[]
   
   
 
+   const getPincode=async(name)=>
+   {
+
+    const pincode=await axios.get(`https://api.postalpincode.in/postoffice/${name}`)
+
+
+    if(pincode.data[0].PostOffice==null)
+    {
+    alert("Enable to locate pincode please enter Manually")
+    return
+    }
+
+    setpincode(pincode.data[0].PostOffice[0].Pincode)
+   }
 
    const changeLocation=(item)=>
    {
@@ -79,7 +100,7 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
     return(
      <TouchableOpacity style={{marginHorizontal:20,height:50,marginVertical:10}}
      
-     onPress={()=>changeLocation(item)}
+     onPress={()=>{changeLocation(item),setaddress(item)}}
      >
        <Text>{item.place_name}</Text>
      
@@ -131,7 +152,7 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
      
 
    }
-   const getMapdata=()=>
+   const getMapdata=async()=>
    {
 
     //const place=search
@@ -140,19 +161,21 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
     if(search=="")
     return
 
-    console.log("called")
-    console.log('https://api.mapbox.com/geocoding/v5/mapbox.places/'+encodeURI(search)+'.json?access_token=pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNzMndwaGZqZnB2aWJiIn0.hUfo_Ii9qcCmUzNekkLs3Q&autocomplete=true')
-     axios.get('https://api.mapbox.com/geocoding/v5/mapbox.places/'+encodeURI(search)+'.json?access_token=pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNzMndwaGZqZnB2aWJiIn0.hUfo_Ii9qcCmUzNekkLs3Q&autocomplete=true&country=in')
-     .then
+    try
+    {
+    const res=await axios.get('https://api.mapbox.com/geocoding/v5/mapbox.places/'+encodeURI(search)+'.json?access_token=pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNzMndwaGZqZnB2aWJiIn0.hUfo_Ii9qcCmUzNekkLs3Q&autocomplete=true&country=in')
+     
+      setres(res.data.features)
+     //  console.log(res)
 
-     (
-       res=>setres(res.data.features),
-       console.log(res)
-
+    }
+    catch(err)
+    {
+      console.log(err)
+    }
        
 
 
-     ).catch(err=>console.log(err))
 
    }
 
@@ -178,12 +201,35 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
    const gopay=()=>
   {
     
-   // item.push(add)
+ 
+
+    if(pincode=="" || address==null)
+    {
+    alert((pincode=="")?"pincode is not valid/null":"Address is not provided")
+    return
+    }
+
+
+    let add={}
+    
+    address.context.map(
+      (addressx)=>
+      {
+     
+        add[addressx.id.split(".")[0]]=addressx.text
    
-  
+      }
+    )
+ 
+    const AddressDetails={
 
-     navigation.navigate('PayView')
+     AddressLine:addressline,pincode:pincode,address:add
+    }
 
+
+    console.log(AddressDetails)
+
+    navigation.navigate("Payment",{address:AddressDetails})
   }
   const [add,setadd]=useState(
     {
@@ -211,25 +257,6 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
       </Searchbar>
 
       
-      {showSearchList &&
-
-
-        <FlatList
-        data={res}
-        keyExtractor={res.id}
-        renderItem={itemLoader}
-        style={
-          {
-            height:'40%'
-          }
-        }
-        >
-
-        </FlatList>
-
-
-}
-     
 
      <View
      style={
@@ -265,7 +292,7 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
           
             ref={anonationref}
 
-            onDrag={()=>ChangeLatLongONDrag(e)}
+         
             id="market settle up"
             title="hotel"
           
@@ -299,7 +326,7 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
           
           
           >
-     {/* <MapboxGL.UserLocation
+      <MapboxGL.UserLocation
          
          animated={true}
         //  ref={(location) => {console.log(location)}} 
@@ -313,7 +340,7 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
         // zoom={18}
           >
            
-            </MapboxGL.UserLocation> */}
+            </MapboxGL.UserLocation> 
             
           </MapboxGL.Camera>
         
@@ -321,6 +348,39 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
         </MapboxGL.MapView>
         </View>
       
+        {showSearchList &&
+
+
+          
+          <View
+          style={
+            {
+              top:50,
+              backgroundColor:"#fff",
+              width:"100%",
+              position:"absolute",
+             
+            }
+          }
+          >
+          <FlatList
+          data={res}
+          keyExtractor={res.id}
+          renderItem={itemLoader}
+          style={
+            {
+            flex:1
+
+            
+            }
+          }
+          >
+
+          </FlatList>
+          </View>
+
+
+          }
      
       
        
@@ -333,7 +393,7 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
                 width:70,
                 borderRadius:70,
                 right:10,
-                bottom:150
+                bottom:50
               
               }
             }
@@ -359,20 +419,141 @@ MapboxGL.setAccessToken("pk.eyJ1IjoibWFoZW5kcmFnb2hpbCIsImEiOiJja3EwZnV0Ym8wNGNz
             </FontAwesome5Icon>
           </TouchableOpacity>
             </View>
-          <TouchableOpacity
-          onPress={()=>gopay()}
-          style={{bottom:10,
-            height:50,margin:20,flexDirection:'row',
-          justifyContent:'space-around',
-          alignItems:"center",
-          position:"relative",
-          backgroundColor:'#5438DC',
-          borderRadius:20,borderWidth:1}}>
-            
-            <Text style={{color:'#fff',alignSelf:'center',fontSize:20}}>Payment here</Text>
-            <FontAwesome5Icon size={30} name={"angle-right"} color="#fff"></FontAwesome5Icon>
-          </TouchableOpacity>
 
+
+
+            {address!=null
+
+&&
+        <View
+        style={
+          {
+            position:'absolute',
+            backgroundColor:'#fff',
+            alignSelf:"center",
+            
+            width:width-40,
+            bottom:50,
+            borderRadius:30
+
+          }
+        }
+        >
+        
+        <TouchableOpacity
+        onPress={()=>{setaddress(null),setpincode("")}}
+        >
+         <Text
+         style=
+         {
+          {
+            textAlign:"right",
+            margin:20
+          }
+         }
+         >
+           X
+           </Text>
+           </TouchableOpacity>
+           
+          <Text>ADDRESS LINE </Text>
+          <TextInput
+       
+       
+         value={addressline}
+         onChangeText={text=>setaddressline(text)}
+
+          multiline={true}
+          style={
+            {
+              borderWidth:0.5,
+              margin:10
+            }
+
+          }
+          >
+
+          </TextInput>
+
+          <Text>Address</Text>
+          <View
+          style={
+            {
+              flexDirection:"row",
+              justifyContent:'space-between',
+              marginHorizontal:10,
+              height:50,
+              alignItems:"center"
+            }
+          }
+          >
+          <TouchableOpacity
+          style={{
+            backgroundColor:"blue",
+
+
+          }}
+          onPress={()=>getPincode(address.context[0].text)}
+          >
+            <Text
+            style={{
+              
+            }}
+            >GETPINCODE</Text>
+            </TouchableOpacity>
+
+            <TextInput
+            
+            style={
+              {
+                borderRadius:20,
+                width:"50%",
+                alignItems:"center",
+                textAlign:'center',
+                borderWidth:0.5
+              }
+            }
+            value={pincode}
+            onChangeText={text=>setpincode(text)}
+
+
+
+            >
+
+            </TextInput>
+          </View>
+         {address!=null && 
+
+         address.context.map(
+           (address)=>
+           {
+             return(
+               <View
+               style={
+                 {
+                   flexDirection:"row",
+                   justifyContent:"space-around",
+                   alignItems:'center'
+                 }
+               }
+               >
+               <Text>{address.id.split(".")[0]}</Text>
+               <Text>{address.text}</Text>
+              </View>
+             )
+           }
+         )
+          }
+          <TouchableOpacity
+          onPress={
+           ()=>gopay()
+          }
+          >
+
+              <Text>PROCCED TO PAYMENT</Text>
+          </TouchableOpacity>
+        </View>
+}
 
 
 

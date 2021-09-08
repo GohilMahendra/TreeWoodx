@@ -18,22 +18,13 @@ const ProductCard=(props)=>
 {
    
 
-    navigation=useNavigation()
+   
     const {item}=props
     const disc_price=Math.floor(item.pprice-item.pprice*item.pdisc/100)
 
 
     return(
         <View style={styles.container}>
-
-
-        
-        <TouchableOpacity 
-        
-        onPress={()=>navigation.push("product",{item:item})}
-        style={styles.TouchConatainer}>
-         
-
         <View style={styles.ViewContainer}>
         <FastImage
         source={{uri:item.pimage, priority: FastImage.priority.normal}}
@@ -61,7 +52,7 @@ const ProductCard=(props)=>
        alignSelf:'center'}}>{item.brand}</Text>
         </View>   
         </View>
-        </TouchableOpacity>
+       
        </View>
     )
 }
@@ -75,7 +66,9 @@ const styles=StyleSheet.create
         container:
         {
             height:300,
-            alignItems:'center'
+            alignItems:'center',
+            margin:20,
+            marginLeft:0
         },
         image:
         {
@@ -104,14 +97,7 @@ const styles=StyleSheet.create
             
             elevation: 7
          },
-         TouchConatainer:
-         {
-            flex:1,
-            marginTop:20,
-            marginBottom:20,
-            width:200,
-            marginRight:20
-         },
+       
          texts:
          {
             alignSelf:'center',

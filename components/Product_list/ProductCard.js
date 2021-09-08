@@ -84,7 +84,7 @@ const ProductCard=(props)=>
          }
        }
        >
-         RS {item.pprice}
+         RS {item.priceafterdisc}
        </Text>
        </View>
        <View
@@ -102,7 +102,11 @@ const ProductCard=(props)=>
          <Text
          style={
            {
-             marginHorizontal:10
+             marginHorizontal:10,
+             marginVertical:5,
+             
+             fontSize:15,
+             fontFamily:fonts.Federo_Regular
            }
          }
          >{item.pdisc} % OFF</Text>
