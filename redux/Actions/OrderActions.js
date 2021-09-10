@@ -1,7 +1,9 @@
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
-import { MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST, MAKE_ORDER_SUCCESS } from "../Types/OrderReducer";
+import { LOAD_ORDERS_FAILED, LOAD_ORDERS_REQUEST, LOAD_ORDERS_SUCCESS, MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST, MAKE_ORDER_SUCCESS } from "../Types/OrderReducer";
 import { ActionSheetIOS } from "react-native";
+import OrderReducer from "../reducers/OrderReducer";
+import { listenerCount } from "npm";
 
 
 
@@ -54,6 +56,45 @@ const checkIFinStock=async(cart)=>
 
 
 
+
+export const getOrders=()=>
+{
+
+    return async(dispatch)=>
+    {
+        try
+        {
+        dispatch({type:LOAD_ORDERS_REQUEST})
+        const quary=firestore().collection('Orders').where('userid','==',auth().currentUser.uid)
+
+        const orders=await quary.get()
+
+        list=[]
+
+        orders.forEach
+        (
+            function(child)
+            {
+                
+                const key=child.id
+
+                list.push({...key,...child.data()})
+                
+            }
+        )
+
+        dispatch({type:LOAD_ORDERS_SUCCESS,payload:list})
+        }
+        catch(err)
+        {
+            dispatch({type:LOAD_ORDERS_FAILED,payload:"SOME ERROR IN LOADING ERROR"})
+
+        }
+
+    }
+
+
+}
 export const makeOrder=(cart,price,address,paymentDetails)=>
 {
 
@@ -98,14 +139,6 @@ export const makeOrder=(cart,price,address,paymentDetails)=>
     
 
     await firestore().collection('cart').doc(auth().currentUser.uid).delete()
-
-
-  
-
-
-   
-
-
 
     const order= {
         

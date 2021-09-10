@@ -20,7 +20,7 @@ const Checkout = ({ navigation }) => {
 
 
 
-  const locationRef=useRef()
+  const locationRef = useRef()
   const cameraRef = useRef()
 
   const { height, width } = Dimensions.get('screen')
@@ -251,7 +251,7 @@ const Checkout = ({ navigation }) => {
             coordinate={[lat, long]}
           />
 
-            {/* 
+          {/* 
 
 
                       
@@ -406,12 +406,12 @@ const Checkout = ({ navigation }) => {
           </TouchableOpacity>
 
           <Text
-          style={
-            {
-              fontFamily:fonts.Orbitron_Black,
-              alignSelf:"center"
+            style={
+              {
+                fontFamily: fonts.Orbitron_Black,
+                alignSelf: "center"
+              }
             }
-          }
           >ADDRESS LINE </Text>
           <TextInput
 
@@ -424,7 +424,7 @@ const Checkout = ({ navigation }) => {
             style={
               {
                 borderWidth: 0.5,
-                borderRadius:50,
+                borderRadius: 50,
                 margin: 10
               }
 
@@ -434,12 +434,12 @@ const Checkout = ({ navigation }) => {
           </TextInput>
 
           <Text
-          style={
-            {
-              alignSelf:'center',
-              fontFamily:fonts.Orbitron_Black
+            style={
+              {
+                alignSelf: 'center',
+                fontFamily: fonts.Orbitron_Black
+              }
             }
-          }
           >Address</Text>
           <View
             style={
@@ -455,8 +455,8 @@ const Checkout = ({ navigation }) => {
             <TouchableOpacity
               style={{
                 backgroundColor: "#E6E6FA",
-                borderRadius:20,
-                elevation:5
+                borderRadius: 20,
+                elevation: 5
 
 
               }}
@@ -471,12 +471,12 @@ const Checkout = ({ navigation }) => {
 
             <TextInput
 
-            placeholder="000000"
+              placeholder="000000"
               style={
                 {
                   borderRadius: 20,
                   width: "50%",
-                  height:40,
+                  height: 40,
                   alignItems: "center",
                   textAlign: 'center',
                   borderWidth: 0.5
@@ -513,17 +513,17 @@ const Checkout = ({ navigation }) => {
             )
           }
           <TouchableOpacity
-            
+
             style={
               {
-                backgroundColor:"#E6E6FA",
-                elevation:10,
-                margin:10,
-                height:50,
-                alignItems:'center',
-                justifyContent:'center',
-                borderRadius:20,
-                elevation:10
+                backgroundColor: "#E6E6FA",
+                elevation: 10,
+                margin: 10,
+                height: 50,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 20,
+                elevation: 10
               }
             }
             onPress={
@@ -533,7 +533,7 @@ const Checkout = ({ navigation }) => {
 
             <Text>PROCCED TO PAYMENT</Text>
           </TouchableOpacity>
-        
+
         </View>
       }
 

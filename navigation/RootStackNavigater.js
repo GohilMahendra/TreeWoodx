@@ -26,58 +26,58 @@ const RootStackNavigator=()=>
     initialRouteName="Login"
     
     >
-<stack.Screen
-name="Login"
-options={{
-  headerShown:false
-}}
-component={Login}
-></stack.Screen>
+        <stack.Screen
+        name="Login"
+        options={{
+        headerShown:false
+        }}
+        component={Login}
+        ></stack.Screen>
 
-<stack.Screen
-name="Admin"
-options={{
-  headerShown:false
-}}
-component={Admin}
-></stack.Screen>
+        <stack.Screen
+        name="Admin"
+        options={{
+        headerShown:false
+        }}
+        component={Admin}
+        ></stack.Screen>
 
-<stack.Screen
-name="Sign_Up"
-options={{
-  headerShown:false
-}}
-component={Sign_Up}
-></stack.Screen>
+        <stack.Screen
+        name="Sign_Up"
+        options={{
+        headerShown:false
+        }}
+        component={Sign_Up}
+        ></stack.Screen>
 
-<stack.Screen
-name="Home"
-options={{
-  headerShown:false
-}}
-component={Home}
->
+        <stack.Screen
+        name="Home"
+        options={{
+        headerShown:false
+        }}
+        component={Home}
+        >
 
-</stack.Screen>
+        </stack.Screen>
 
 
-<stack.Screen
-  name="Checkout"
-  options={{
-    headerShown:false
-  }}
-  component={Checkout}
-  
-  ></stack.Screen>
-  
-<stack.Screen
-name="Payment"
-options={{
-  headerShown:false
-}}
-component={Payment}
-></stack.Screen>
-    </stack.Navigator>
+        <stack.Screen
+        name="Checkout"
+        options={{
+            headerShown:false
+        }}
+        component={Checkout}
+        
+        ></stack.Screen>
+        
+        <stack.Screen
+        name="Payment"
+        options={{
+        headerShown:false
+        }}
+        component={Payment}
+        ></stack.Screen>
+            </stack.Navigator>
     </NavigationContainer>
     )
 }

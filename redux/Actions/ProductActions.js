@@ -102,7 +102,7 @@ export const searchProd=(search)=>
    
         try
         {
-        ser=firestore().collection('products').where('prod.pname', '>=', search).where('prod.pname', '<=', search+ '\uf8ff').limit(20)
+        ser=firestore().collection('products').where('pname', '>=', search).where('pname', '<=', search+ '\uf8ff').limit(20)
       
         const products=await ser.get()
     

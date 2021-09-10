@@ -12,10 +12,6 @@ import User_profile from "../screens/User_profile";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartproducts } from "../redux/Actions/CartActions";
 const bottomTab=createBottomTabNavigator()
-//console.log(wooddata)
-
-
-
 
 const HomeTabNavigator=()=>
 {

@@ -1,16 +1,16 @@
 
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { 
+import {
     View,
     Text,
-    StyleSheet  
- } from "react-native";
+    StyleSheet
+} from "react-native";
 
- import { 
+import {
 
     FlatList
-  } from "react-native-gesture-handler";
+} from "react-native-gesture-handler";
 
 import { Dimensions } from "react-native";
 
@@ -25,114 +25,111 @@ import { fetchFeaturedProducts } from "../redux/Actions/FeaturedActions";
 import Carousel from "react-native-snap-carousel";
 
 
-const {height,width}=Dimensions.get('screen')
-const FeaturedList=()=>
-{
+const { height, width } = Dimensions.get('screen')
+const FeaturedList = () => {
 
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
 
-    const featuredRef=useRef()
-    const navigation=useNavigation()
-    const featured=useSelector(state=>state.Featured.featuredProducts)
+    const featuredRef = useRef()
+    const navigation = useNavigation()
+    const featured = useSelector(state => state.Featured.featuredProducts)
 
-  const load=useSelector(state=>state.Featured.featuredLoading)
-  const Error=useSelector(state=>state.Featured.featuredError)
-
-  
+    const load = useSelector(state => state.Featured.featuredLoading)
+    const Error = useSelector(state => state.Featured.featuredError)
 
 
-        useEffect
+
+
+    useEffect
         (
-            ()=>
-            {
+            () => {
 
                 dispatch(fetchFeaturedProducts())
-               
+
             },
             []
         )
 
-        const FeaturedBuilder=({item,index})=>
-        {
+    const FeaturedBuilder = ({ item, index }) => {
 
 
-            console.log(item.pname)
+        console.log(item.pname)
         // console.log(JSON.stringify(item)+'featured item')
-            return(
-                <TouchableOpacity
-                
+        return (
+            <TouchableOpacity
+
                 onPress={
-                    ()=>navigation.navigate('product',
-                    {
-                        item:{
-                            key:item.key
-                        },
-                        name:item.pname
-                    })
+                    () => navigation.navigate('product',
+                        {
+                            item: {
+                                key: item.key
+                            },
+                            name: item.pname
+                        })
                 }
                 style={
                     {
-                        height:height/3.5,
-                        width:'100%'
+                        height: height / 3.5,
+                        width: '100%'
                     }
                 }
-                >
-                    <FeaturedCard
+            >
+                <FeaturedCard
                     data={item}
-                    >
+                >
 
-                    </FeaturedCard>
-                </TouchableOpacity>
-            )
-        }
-  return(
+                </FeaturedCard>
+            </TouchableOpacity>
+        )
+    }
+    return (
 
-      <View>
+        <View>
             <Carousel
-           
 
 
-           layout="tinder"
-           layoutCardOffset={18}
-           
-           ref={featuredRef}
-           itemHeight={250}
-           itemWidth={width-20}
-           sliderWidth={width-20}
-            data={featured}
-            renderItem={FeaturedBuilder}
+
+                layout="tinder"
+                layoutCardOffset={18}
+
+                ref={featuredRef}
+                itemHeight={250}
+                itemWidth={width - 20}
+                sliderWidth={width - 20}
+                data={featured}
+                renderItem={FeaturedBuilder}
             //keyExtractor={item=>item.key}
             >
 
             </Carousel>
 
-           {load && <ActivityIndicator
-            style={
-               styles.loadingCircle
-            }
-            animating={true}
-            size={"large"}
-            color={"black"}
+            {load && <ActivityIndicator
+                style={
+                    styles.loadingCircle
+                }
+                animating={true}
+                size={"large"}
+                color={"black"}
             >
 
             </ActivityIndicator>}
 
-      </View>
-  )
-            
-    
+        </View>
+    )
+
+
 }
 
-const styles=StyleSheet.create
-(
-    {
-        loadingCircle:
+const styles = StyleSheet.create
+    (
         {
-            position:"absolute",
-            alignSelf:'center',
-            top:'40%'
-        }
+            loadingCircle:
+            {
+                position: "absolute",
+                alignSelf: 'center',
+                top: '40%'
+            }
 
-    }
-)
+        }
+    )
 export default FeaturedList

@@ -1,7 +1,7 @@
 import React from "react";
 import AdminTabNavigator from "../navigation/AdminTabNavigator";
 
-const Admin=({navigation})=>
+const Admin=()=>
 {
     return(
         
