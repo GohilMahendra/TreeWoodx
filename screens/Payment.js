@@ -51,7 +51,7 @@ const Payment=()=>
    
           {
             cart.map(
-              (item)=>
+              function(item)
               {
                 return(
                   <View>

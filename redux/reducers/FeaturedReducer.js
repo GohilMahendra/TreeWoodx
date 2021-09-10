@@ -1,4 +1,4 @@
-import { LOAD_FEATURED_FAILED, LOAD_FEATURED_REQUEST, LOAD_FEATURED_SUCCESS } from "../Types/FeaturedTypes"
+import { DELETE_FEATURED_FAILED, DELETE_FEATURED_REQUEST, DELETE_FEATURED_SUCCESS, LOAD_FEATURED_FAILED, LOAD_FEATURED_REQUEST, LOAD_FEATURED_SUCCESS } from "../Types/FeaturedTypes"
 
 
 
@@ -10,11 +10,7 @@ const initialstate={
 
     featuredLoading:false,
 
-
-
-    featuredError:null
-
-    
+    featuredError:null,
  
     
 }
@@ -34,6 +30,11 @@ const FeaturedReducer=(state=initialstate,action)=>
             return {...state,featuredProducts:action.payload,featuredLoading:false}
         case LOAD_FEATURED_FAILED:
             return {...state,featuredLoading:false,featuredError:action.payload}
+    
+        case DELETE_FEATURED_REQUEST:
+        case DELETE_FEATURED_SUCCESS:
+        case DELETE_FEATURED_FAILED:
+        
         default:
             return state
 

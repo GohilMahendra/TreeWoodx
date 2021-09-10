@@ -18,7 +18,7 @@ export const DeleteProduct=(pid)=>
 {
     return async(dispatch)=>
     {
-        firestore().collection('products').doc(productID).delete().
+        firestore().collection('products').doc(pid).delete().
         then(
             suc=>
             {
@@ -42,19 +42,52 @@ export const AddProduct=(key,prod)=>
 
     }
 }
-export const AddStock=(pid)=>
+export const AddStock=(pid,stk)=>
 {
     return async(dispatch)=>
     {
+        console.log("Add stock called")
 
+        try
+        {
+        const res=await firestore().collection('products').doc(pid).update
+        (
+            {
+                stock:stk
+            }
+        )
+
+        console.log(res)
+        }
+        catch(err)
+        {
+            
+            console.log(err)
+
+        }
+    
     }
 
 }
 
-export const ChangeDiscount=(pid)=>
+export const ChangeDiscount=(pid,disc)=>
 {
     return async(dispatch)=>
     {
+        try
+        {
+        const res=await firestore().collection('products').doc(pid).update
+        (
+            {
+                discount:disc
+            }
+        )
+
+        }
+        catch(err)
+        {
+
+        }
 
     }
     

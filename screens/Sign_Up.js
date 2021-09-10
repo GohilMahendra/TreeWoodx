@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View,Text,Alert, Button,TextInput, Dimensions, Image, ActivityIndicator } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { Value } from "react-native-reanimated";
 
 import auth from "@react-native-firebase/auth";
@@ -12,6 +12,8 @@ import { KeyboardAvoidingView } from "react-native";
 import { ImageBackground } from "react-native";
 import { fonts } from "../constants/fonts";
 import { StyleSheet } from "react-native";
+import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import LinearGradient from "react-native-linear-gradient";
 
 const Sign_Up=({navigation})=>
 {
@@ -104,30 +106,42 @@ const Sign_Up=({navigation})=>
       <View style={{flex:1,backgroundColor:'silver'}}
       
       >
-      <ImageBackground
-      blurRadius={25}
-      style={{resizeMode:'cover',
-      justifyContent:'flex-end',
-      flex:1}}
-      source={require('../assets/modern.jpg')}
-      >
 
     
+    <ImageBackground
+    source={require('../assets/modern.jpg')
+
+    }
+    style={
+      {
+        flex:1,
+        justifyContent:'center'
+      }
+    }
+    >
+
       
     <View 
      // behavior={Platform.OS === "ios" ? "padding" : "height"}
-    style={{backgroundColor:'transparent',borderRadius:30}}>
-      
+    style={{
+    borderTopRightRadius:45,
+    elevation:10,
+   
+    borderBottomLeftRadius:45,
+    backgroundColor:'transparent',
+    margin:10}}>
+
+      <FontAwesome5Icon
+      name="user"
+      size={70}
+      style={styles.signUPLogo}
+      solid={true}
+      color="#fff"
+      />
 
       <Text
       style={
-        {
-          alignSelf:"center",
-          color:"#fff",
-          fontSize:25,
-          fontFamily:fonts.Federo_Regular
-
-        }
+       styles.signUPText
       }
       >SIGN UP</Text>
 
@@ -136,14 +150,14 @@ const Sign_Up=({navigation})=>
       
      
      
-      placeholderTextColor="#fff"  
+      placeholderTextColor="black"  
       placeholder="Enter Name HERE..."
         onChangeText={setuname}
         style={styles.textinputstyle}
        />
       
         <TextInput
-         placeholderTextColor="#fff"
+         placeholderTextColor="black"
        placeholder="Enter Email HERE..."
        textContentType="emailAddress"
         onChangeText={setuemail}
@@ -152,8 +166,8 @@ const Sign_Up=({navigation})=>
        
         <TextInput
         placeholder="Enter Password HERE..."
-       
-        placeholderTextColor="#fff"
+    
+        placeholderTextColor="black"
         textContentType={"password"}
         style={styles.textinputstyle}
         onChangeText={setupassword}
@@ -161,7 +175,13 @@ const Sign_Up=({navigation})=>
 
         </TextInput>
       <View style={{margin:20,alignSelf:'center',flexDirection:'row'}}
-      ><Text>Already HAVE A ACCOUNT ?</Text>
+      ><Text
+      style={
+        {
+          color:'#fff'
+        }
+      }
+      >Already HAVE A ACCOUNT ?</Text>
       <TouchableOpacity
       onPress={()=>navigation.navigate("Login")}
       >
@@ -186,7 +206,9 @@ const Sign_Up=({navigation})=>
             <Text>SIGN Up</Text>
             }
         </TouchableOpacity>
+    
         </View>
+     
         </ImageBackground>
     </View>
     
@@ -202,11 +224,12 @@ const styles=StyleSheet.create
     textinputstyle:
     {
     margin:20,
+    opacity:0.8,
     borderColor:"silver",
     fontFamily:fonts.Merienda_Regular,
     alignItems:'center',
     textAlign:"center",
-    backgroundColor:"transparent",
+    backgroundColor:"#fff",
     color:"#fff",
     borderRadius:20,
     borderWidth:1}
@@ -230,6 +253,27 @@ const styles=StyleSheet.create
   
   borderRadius:30,
  
-  }
+  },
+  signUPText:
+  {
+    alignSelf:"center",
+    color:"#fff",
+    fontSize:25,
+    marginTop:15,
+
+    fontFamily:fonts.Orbitron_Black
+
+  },
+  signUPLogo:
+  {
+    alignSelf:"center",
+    color:"#fff",
+    position:"absolute",
+    marginTop:15,
+    top:0,
+    transform:[{translateY:-70}],
+ fontFamily:fonts.Federo_Regular
+
+  },
 }
   )

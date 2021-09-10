@@ -1,123 +1,121 @@
 import React, { useEffect,useState } from "react";
-import { View,Dimensions ,Text, ScrollView} from "react-native";
-import {PieChart,LineChart ,ProgressChart } from "react-native-chart-kit";
+import { View,Dimensions ,Text,StyleSheet,ScrollView} from "react-native";
+import {PieChart,BarChart,LineChart ,ProgressChart } from "react-native-chart-kit";
 
 
 import { fonts } from "../constants/fonts";
 import firestore from "@react-native-firebase/firestore";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import { CommonActions } from "@react-navigation/routers";
+import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import { VISITOR_KEYS } from "@babel/types";
+
+const {height,width}=Dimensions.get('screen')
 const Admin_panel=()=>
 {
-    const {height,width}=Dimensions.get('screen')
-
-    const [orderData,setOrderData]=useState()
-    const date=new Date()
-   
-    const month=date.getUTCDate()+date.getUTCMonth()
-// console.log(month)
-    const year=date.getFullYear()
-    const fetchChartData=(fetchBy)=>
-    {
-      
-  
-      const quary=firestore().collection('Orders').where('date','>','15/09/2021')
-        quary.onSnapshot
-        (
-          (snapshot)=>
-          {
-            snapshot.forEach
-            (
-            function(child)
-            {
-
-              console.log(child.data().date)
-
-            }
-            )
-          }
-        )
-
-  
-    }
-    useEffect
-
-    (
-      ()=>
-      {
-
-        fetchChartData(fetchBy)
-      },
-    [fetchBy]
-    )
-
-
-    const [fetchBy,setFetchBy]=useState("month")
- 
     return(
-        <View style={{flex:1,backgroundColor:'black'}}>
-        <ScrollView>
-            <LineChart
-    data={{
-      labels: ["January", "February", "March", "April", "May", "June"],
-      datasets: [
+
+
+      <View
+      style={
         {
-          data: [
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100
-          ]
+          backgroundColor:"#1a1f71",
+          flex:1
         }
-      ]
-    }}
-    width={Dimensions.get("window").width} // from react-native
-    height={height/3}
-    yAxisLabel="RS"
-    yAxisSuffix=""
-    yAxisInterval={1} // optional, defaults to 1
-    chartConfig={{
-      backgroundColor: "#e26a00",
-      backgroundGradientFrom: "#a480ff",
-      backgroundGradientTo: "#ff4525",
-      decimalPlaces: 2, // optional, defaults to 2dp
-      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      style: {
-        borderRadius: 16
-      },
-      propsForDots: {
-        r: "6",
-        strokeWidth: "2",
-        stroke: "#ffa726"
       }
-    }}
-    bezier
-    style={{
-      marginVertical: 8,
-      borderRadius: 16
-    }}
-  />
+      >
 
-           <Text style={{fontFamily:fonts.Federo_Regular}}>
 
-         
 
-                </Text>
-                
-                <TouchableOpacity
-                style={
-                  {
-                    backgroundColor:"blue"
-                  }
-                }
-                onPress={()=>setFetchBy('month')}
-                >
-                  <Text>FIND BY MONTH</Text>
-                </TouchableOpacity>
-                </ScrollView>
-                </View>
+        <View
+        style={
+          {
+            position:"absolute",
+            width:'100%',
+            backgroundColor:'#fff',
+            borderRadius:25,
+            top:height/3,
+            
+          }
+        }
+        >
+        <Text
+        style={
+          {
+            margin:20,
+            alignSelf:"center"
+          }
+        }
+        >ADD NEW ADMIN</Text>
+        <TextInput
+        placeholder="user Name"
+        style={styles.textInput}
+        >
+
+        </TextInput>
+        <TextInput
+        placeholder="email"
+        style={styles.textInput}
+        >
+
+        </TextInput>
+        <TextInput
+        placeholder="password"
+        style={styles.textInput}
+        >
+
+        </TextInput>
+        <TouchableOpacity
+        style={
+         styles.addBtn
+        }
+        >
+          <FontAwesome5Icon
+          name="plus"
+          size={25}
+          color="#FFF"
+          >
+
+          </FontAwesome5Icon>
+          <Text
+          style={{
+            fontSize:25,
+            color:'#fff'
+          }}
+          >ADD</Text>
+        </TouchableOpacity>
+        </View>
+
+      </View>
     )
 }
+
+const styles=StyleSheet.create
+(
+  {
+    textInput:
+    {
+      
+        borderWidth:1,
+        borderRadius:20,
+        margin:10,
+        textAlign:'center',
+        textAlignVertical:'center',
+        height:50
+      
+
+    },
+    addBtn:
+    {
+      flexDirection:"row",
+      backgroundColor:"#00356B",
+      justifyContent:"center",
+      alignItems:"center",
+      width:100,
+      alignSelf:'center',
+      borderRadius:50
+    }
+
+  }
+)
 export default Admin_panel

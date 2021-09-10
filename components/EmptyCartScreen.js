@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Image } from "react-native";
+import { Image,StyleSheet } from "react-native";
 
 import { View,Text } from "react-native";
 
@@ -15,11 +15,7 @@ const EmptyCartScreen=()=>
     return(
         <View
         style={
-            {
-                
-                justifyContent:"center",
-                alignItems:"center"
-            }
+          styles.Container
         }
         >
             
@@ -35,4 +31,17 @@ const EmptyCartScreen=()=>
 
     )
 }
+
+const styles=StyleSheet.create
+(
+    {
+        Container:
+        {
+                
+            justifyContent:"center",
+            alignItems:"center",
+            flex:1
+        }
+    }
+)
 export default EmptyCartScreen

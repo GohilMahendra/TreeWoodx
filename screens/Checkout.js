@@ -10,6 +10,7 @@ import axios from "axios";
 import { Dimensions } from "react-native";
 import { Marker } from "react-native-svg";
 import { Searchbar } from "react-native-paper";
+import { fonts } from "../constants/fonts";
 
 const Checkout = ({ navigation }) => {
 
@@ -19,6 +20,7 @@ const Checkout = ({ navigation }) => {
 
 
 
+  const locationRef=useRef()
   const cameraRef = useRef()
 
   const { height, width } = Dimensions.get('screen')
@@ -26,17 +28,11 @@ const Checkout = ({ navigation }) => {
   const [long, setlong] = useState(23.0225)
   const [lat, setlat] = useState(72.5714)
   const [res, setres] = useState({})
-
   const [pincode, setpincode] = useState("")
   const [addressline, setaddressline] = useState("")
   const [address, setaddress] = useState(null)
-
   const [showSearchList, setshowSearchList] = useState(false)
-
   const [permissionLocation, setpermissionLocation] = useState(false)
-
-
-
 
   const setUpUserLocation = () => {
     if (permissionLocation == false) {
@@ -235,11 +231,7 @@ const Checkout = ({ navigation }) => {
 
           userTrackingMode={MapboxGL.UserTrackingModes.FollowWithHeading}
           zoomEnabled={true}
-
           focusable={true}
-
-
-
 
         >
 
@@ -259,7 +251,25 @@ const Checkout = ({ navigation }) => {
             coordinate={[lat, long]}
           />
 
+            {/* 
 
+
+                      
+                      <MapboxGL.UserLocation
+
+                      animated={true}
+                      ref={(location) => {console.log(location)}} 
+                      showsUserHeadingIndicator={true}
+                      visible={true}
+
+                      renderMode="normal"
+
+
+                      androidRenderMode="normal"
+                      // zoom={18}
+                      >
+
+            </MapboxGL.UserLocation> */}
 
           <MapboxGL.Camera
             // followUserLocation={true}
@@ -278,21 +288,6 @@ const Checkout = ({ navigation }) => {
 
 
           >
-            <MapboxGL.UserLocation
-
-              animated={true}
-              //  ref={(location) => {console.log(location)}} 
-              showsUserHeadingIndicator={true}
-              visible={true}
-
-              renderMode="normal"
-
-
-              androidRenderMode="normal"
-            // zoom={18}
-            >
-
-            </MapboxGL.UserLocation>
 
           </MapboxGL.Camera>
 
@@ -410,10 +405,18 @@ const Checkout = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
 
-          <Text>ADDRESS LINE </Text>
+          <Text
+          style={
+            {
+              fontFamily:fonts.Orbitron_Black,
+              alignSelf:"center"
+            }
+          }
+          >ADDRESS LINE </Text>
           <TextInput
 
 
+            placeholder="Enter Proper address here (eg .street/block/no)"
             value={addressline}
             onChangeText={text => setaddressline(text)}
 
@@ -421,6 +424,7 @@ const Checkout = ({ navigation }) => {
             style={
               {
                 borderWidth: 0.5,
+                borderRadius:50,
                 margin: 10
               }
 
@@ -429,12 +433,19 @@ const Checkout = ({ navigation }) => {
 
           </TextInput>
 
-          <Text>Address</Text>
+          <Text
+          style={
+            {
+              alignSelf:'center',
+              fontFamily:fonts.Orbitron_Black
+            }
+          }
+          >Address</Text>
           <View
             style={
               {
                 flexDirection: "row",
-                justifyContent: 'space-between',
+                justifyContent: 'space-evenly',
                 marginHorizontal: 10,
                 height: 50,
                 alignItems: "center"
@@ -443,7 +454,9 @@ const Checkout = ({ navigation }) => {
           >
             <TouchableOpacity
               style={{
-                backgroundColor: "blue",
+                backgroundColor: "#E6E6FA",
+                borderRadius:20,
+                elevation:5
 
 
               }}
@@ -458,10 +471,12 @@ const Checkout = ({ navigation }) => {
 
             <TextInput
 
+            placeholder="000000"
               style={
                 {
                   borderRadius: 20,
                   width: "50%",
+                  height:40,
                   alignItems: "center",
                   textAlign: 'center',
                   borderWidth: 0.5
@@ -498,6 +513,19 @@ const Checkout = ({ navigation }) => {
             )
           }
           <TouchableOpacity
+            
+            style={
+              {
+                backgroundColor:"#E6E6FA",
+                elevation:10,
+                margin:10,
+                height:50,
+                alignItems:'center',
+                justifyContent:'center',
+                borderRadius:20,
+                elevation:10
+              }
+            }
             onPress={
               () => gopay()
             }

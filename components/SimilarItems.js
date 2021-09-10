@@ -1,189 +1,185 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Button,Image, TouchableOpacity } from "react-native";
+import { Button, Image, TouchableOpacity } from "react-native";
 import { ActivityIndicator } from "react-native";
-import { 
+import {
 
-  StyleSheet,  View,Text
- } from "react-native";
+    StyleSheet, View, Text
+} from "react-native";
 import firestore from "@react-native-firebase/firestore";
 import { FlatList } from "react-native-gesture-handler";
-import { 
+import {
     fonts
- } from "../constants/fonts";
+} from "../constants/fonts";
 
 import ProductCard from "./ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 
 import { FetchSimilarProducts } from "../redux/Actions/SimilarActions";
 import { useNavigation } from "@react-navigation/core";
- const SimilarItems=({category,curruntID})=>
- {
-
-     
-    if(category==undefined)
-    return
+const SimilarItems = ({ category, curruntID }) => {
 
 
-    const navigation=useNavigation()
-    const dispatch=useDispatch()
-    const emptyScreen=()=>
-    {
-        return(
+    if (category == undefined)
+        return
+
+
+    const navigation = useNavigation()
+    const dispatch = useDispatch()
+    const emptyScreen = () => {
+        return (
 
             <View
-            style=
-            {
-              styles.emptyViewContainer
-            }
+                style=
+                {
+                    styles.emptyViewContainer
+                }
             >
 
-            <Text
-            style={
-             styles.emptyScreenText
-            }
-            >NO SiMILAR ITEMS FOUND</Text>
+                <Text
+                    style={
+                        styles.emptyScreenText
+                    }
+                >NO SiMILAR ITEMS FOUND</Text>
 
             </View>
         )
-        }
+    }
     useEffect
-    (
-        ()=>
-        {
-            dispatch(FetchSimilarProducts(category,curruntID))
-        },
-        []
-    )
+        (
+            () => {
+                dispatch(FetchSimilarProducts(category, curruntID))
+            },
+            []
+        )
 
 
-   const products=useSelector(state=>state.Similar.similarProducts)
+    const products = useSelector(state => state.Similar.similarProducts)
 
-    
-    const SimilerItemBuilder=({item,index})=>
-    {
-        if(item==undefined)
-        return
+
+    const SimilerItemBuilder = ({ item, index }) => {
+        if (item == undefined)
+            return
         console.log(item.key)
-        return(
-            <TouchableOpacity 
-        onPress={()=>navigation.push("product",{item:item,name:item.pname})}
+        return (
+            <TouchableOpacity
+                onPress={() => navigation.push("product", { item: item, name: item.pname })}
             >
                 <ProductCard
-                item={item}
+                    item={item}
                 >
                 </ProductCard>
             </TouchableOpacity>
         )
     }
-    return(
-        <View style={{margin:20}}>
+    return (
+        <View style={{ margin: 20 }}>
             <View style={styles.similarContainer}>
-            <Text
-            style=
-            {
-               styles.similarText
-            }
-            >SIMILAR PRODUCTS</Text>
-            <TouchableOpacity
-            style={
-                {
-                    
-                    backgroundColor:"black",
-                    borderRadius:10
-                }
-
-            
-            }
-
-            onPress={()=>navigation.push("SimilarProducts",
-            {
-                categoryname:category,
-                by:"category",
-                name:"similar category for "+category
-            }
-            )}
-            disabled={
-                (products!=undefined && products.length>0)
-                ?false:true}
-            >
                 <Text
-                style={
+                    style=
                     {
-                        color:"white",
-                        margin:10
+                        styles.similarText
                     }
-                }
-                >VIEW MORE</Text>
+                >SIMILAR PRODUCTS</Text>
+                <TouchableOpacity
+                    style={
+                        {
 
-            </TouchableOpacity>
-       </View>
-      
-            <View style={{flex:1}}>
+                            backgroundColor: "black",
+                            borderRadius: 10
+                        }
 
-            <FlatList
-            
-            horizontal
-            data={products}
 
-            emptyScreen={emptyScreen}
-            keyExtractor={(item)=>item.key}
-            renderItem={SimilerItemBuilder}
-            style={{marginHorizontal:10,height:350}}
+                    }
 
-            >
+                    onPress={() => navigation.push("SimilarProducts",
+                        {
+                            categoryname: category,
+                            by: "category",
+                            name: "similar category for " + category
+                        }
+                    )}
+                    disabled={
+                        (products != undefined && products.length > 0)
+                            ? false : true}
+                >
+                    <Text
+                        style={
+                            {
+                                color: "white",
+                                margin: 10
+                            }
+                        }
+                    >VIEW MORE</Text>
 
-            </FlatList>
+                </TouchableOpacity>
+            </View>
+
+            <View style={{ flex: 1 }}>
+
+                <FlatList
+
+                    horizontal
+                    data={products}
+
+                    emptyScreen={emptyScreen}
+                    keyExtractor={(item) => item.key}
+                    renderItem={SimilerItemBuilder}
+                    style={{ marginHorizontal: 10, height: 350 }}
+
+                >
+
+                </FlatList>
 
 
             </View>
 
-        
+
         </View>
     )
- }
+}
 
 
- 
- const styles=StyleSheet.create
- (
-     {
-         emptyViewContainer:
-         {
-            height:200,
-            justifyContent:"center",
-            alignItems:"center"
-         },
-         similarContainer:
-         {
-            flexDirection:"row",
-            marginVertical:10,
-            justifyContent:"space-between"
-            
 
-        },
-        similarText:
+const styles = StyleSheet.create
+    (
         {
-            fontFamily:fonts.Quicksand_Medium,
-            fontWeight:"bold",
-            fontSize:20,
-            textAlignVertical:"center",
-            textAlign:"center"
-        },
-        emptyScreenText:
-        {
-            
-            fontFamily:fonts.Quicksand_Medium,
-            fontWeight:"bold",
-            fontSize:20,
-            textAlignVertical:"center",
-            textAlign:"center"
-            
+            emptyViewContainer:
+            {
+                height: 200,
+                justifyContent: "center",
+                alignItems: "center"
+            },
+            similarContainer:
+            {
+                flexDirection: "row",
+                marginVertical: 10,
+                justifyContent: "space-between"
+
+
+            },
+            similarText:
+            {
+                fontFamily: fonts.Quicksand_Medium,
+                fontWeight: "bold",
+                fontSize: 20,
+                textAlignVertical: "center",
+                textAlign: "center"
+            },
+            emptyScreenText:
+            {
+
+                fontFamily: fonts.Quicksand_Medium,
+                fontWeight: "bold",
+                fontSize: 20,
+                textAlignVertical: "center",
+                textAlign: "center"
+
+            }
+
+
+
         }
-
-
-
-     }
- )
- export default SimilarItems
+    )
+export default SimilarItems

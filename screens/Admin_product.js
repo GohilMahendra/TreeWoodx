@@ -139,9 +139,9 @@ const Admin_product=({navigation})=>
             discount:64,
             dimensions:{
 
-                height:dimensions.height,
-                width:dimensions.width,
-                length:dimensions.length
+                height:50,
+                width:50,
+                length:50
             },
            warranty:36,
             discription:"It’s all wood. Crafted from high-grade mango wood, the Duetto bed makes for the perfect unwind zone. Its sleek frame and minimalist design exude a contemporary flavour and blend in seamlessly with various styles of decor. A gently curving headboard supports your back, letting you sit up to read, watch TV or simply have a conversation. Layer the bed with plush quilts and fluffy pillows for a warm, cosy nook you’ll never want to leave.",

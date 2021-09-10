@@ -58,40 +58,6 @@ const chairFetcher=(name)=>
 // )
 
 
-
-
-useEffect
-(
-
-    ()=>{
-        firestore().collection('products').onSnapshot(
-        (snapshot)=> {
-
-        var list=[]
-     
-        snapshot.forEach(function(child) {
-    
-    
-      
-           
-            list.push({
-                key: child.id,
-                pname:child.data().pname,
-                pprice: child.data().price,
-                pdisc:child.data().discount,
-                pimage:child.data().img1,
-                pbrand:child.data().brand
-              })
-        }
-        );
-        list.reverse()
-        setarrival(list)
-    
-        console.log(chair)
-    });}
-      ,[arrivel,setarrival]
-)
-
 useEffect
 (
   ()=>{   
@@ -99,12 +65,6 @@ useEffect
 }
   ,[]
 )
-
-       // const [chair,setchair]=React.useState([])
-
-
-       
-        const [arrivel,setarrival]=useState()
  
         const [ind,setind]=useState(0)
       
@@ -121,7 +81,7 @@ useEffect
         onPress={()=>navigation.navigate("product",{item:item,name:item.pname})}
       >
                 <ProductCard
-                
+            
                 
                 item={item}
                 
@@ -168,9 +128,9 @@ useEffect
                 <TouchableOpacity
                 
                 onPress={()=>{setind(index),chairFetcher(item.name)}}
-                style={{height:100
+                style={{height:50
                     ,
-                    width:100,
+                    width:150,
                     elevation:12,borderRadius:20
                     ,justifyContent:'center',
                     alignItems:'center',
@@ -211,8 +171,7 @@ useEffect
 
             
             editable={false}
-            style={{width:'80%',alignSelf:"center",height:50,borderWidth:1,
-                borderRadius:15,margin:20}}
+            style={Homestyles.searchBar}
             placeholder="search......"
 
             disableFullscreenUI={true}
@@ -227,7 +186,8 @@ useEffect
             <View
             style={
                 {
-                    height:300
+                    height:250,
+
                 }
             }
             >
@@ -237,9 +197,10 @@ useEffect
           
             <FlatList
             horizontal
-            style={{marginLeft:20,marginRight:20}}
+            style={Homestyles.catList}
             renderItem={catbuilder}
             data={categories}
+            showsHorizontalScrollIndicator={false}
             keyExtractor={item=>item.id.toString()}
             >
 
@@ -250,10 +211,10 @@ useEffect
             marginBottom:0,
             justifyContent:'space-between',
             margin:20}}>
-            <Text style={{fontSize:20}}>
+            <Text style={{fontSize:20,fontWeight:"bold"}}>
 
             
-            browse more {categories[ind].name}
+            BROWSE MORE {categories[ind].name}
             </Text>
 
             <TouchableOpacity
@@ -265,23 +226,17 @@ useEffect
             ></FontAwesome5>
             </TouchableOpacity>
             </View>
-  {/* <View style={{flexDirection:'row',justifyContent:'space-between',margin:20}}>
-    <Text style={{fontSize:20,fontWeight:'bold'}}>CHAIRS</Text>
-    <TouchableOpacity>
-        <FontAwesome5 name="arrow-right" size={30}></FontAwesome5>
-    </TouchableOpacity>
-    </View> */}
-        <FlatList
-        
-        horizontal
-        style={{height:400,margin:20,marginTop:0}}
-        data={chair}
-        renderItem={chairbuilder}
-            keyExtractor={item=>item.key}
-        >
+            <FlatList
+            
+            horizontal
+            style={{height:350,margin:20,marginTop:0}}
+            data={chair}
+            renderItem={chairbuilder}
+                keyExtractor={item=>item.key}
+            >
 
 
-        </FlatList>
+            </FlatList>
         <View style={{flexDirection:'row',
         justifyContent:'space-between',
         margin:20}}>
@@ -290,32 +245,6 @@ useEffect
         <FontAwesome5 name="angle-right" size={30}></FontAwesome5>
     </TouchableOpacity>
     </View>
-        <FlatList
-        horizontal
-        style={{height:400,margin:20,}}
-        data={arrivel}
-        renderItem={arrivalBuilder}
-            keyExtractor={item=>item.key}
-        >
-
-        </FlatList>
-
-        <Image
-        source={
-            {
-                uri:"https://www.ikea.com/in/en/images/products/lagkapten-adils-desk-black-brown-black__0977217_pe813462_s5.jpg?f=xl"
-            }
-        }
-        style={
-            {
-                height:500,
-                width:500,
-                backgroundColor:'blue'
-            }
-        }
-        >
-
-        </Image>
          </ScrollView>
         {load && <ActivityIndicator
          style={{alignSelf:"center",top:"50%",left:"50%",position:'absolute'}}
@@ -332,6 +261,20 @@ export default Home_screen
 
 const Homestyles=StyleSheet.create(
     {
+        catList:
+        {
+            marginHorizontal:20
+        },
+        searchBar:
+        {
+            
+            width:'80%',
+            alignSelf:"center",
+            height:50,
+            borderWidth:1,
+            borderRadius:15,
+            margin:20
+        }
 
     }
 )

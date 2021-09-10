@@ -11,6 +11,7 @@ import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import CustomFab from "../components/Admin_Product/CustomFab";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteProduct, LoadProducts } from "../redux/Actions/ProductActions";
+import ProductEditer from "../components/ProductEditer";
 
 
 const Admin_editProd=({navigation})=>
@@ -50,7 +51,7 @@ const Admin_editProd=({navigation})=>
     
         return(
             
-            <View style={{width:width-40,margin:20,height:300,
+            <View style={{width:width-40,margin:20,height:350,
                 elevation:20,
             backgroundColor:"#fff",borderRadius:20}}>
             <View style={{height:200,justifyContent:'center',flexDirection:"row"}}>
@@ -91,40 +92,44 @@ const Admin_editProd=({navigation})=>
 
             </View>
 
-            <View
-            style={
-                {
-                    flexDirection:'row'
-                }
-            }
-            >
-                <TextInput>
+           
+           <ProductEditer
+           
+           pid={item.key}
+           qty={item.pstock}
+           disc={item.pdisc}
+           />
+           
 
-                </TextInput>
-
-            </View>
-            <View style={{flexDirection:'row',alignSelf:"center",justifyContent:"space-evenly"}}>
+            <View style={{flexDirection:'row',
+            alignSelf:"center",
+            justifyContent:"space-evenly",
+            position:'absolute',
+            bottom:0,
+            
+            }}>
 
             <TouchableOpacity
             
             onPress={()=>navigation.navigate('Admin_product',{item:item.key})}
-            style={{height:50,margin:20,justifyContent:"center",width:width/4,backgroundColor:'blue',borderRadius:30,}}
+            style={{height:50,marginHorizontal:10,justifyContent:"center",backgroundColor:'blue',borderRadius:30,}}
             >
 
-                <Text style={{textAlign:'center',color:"#fff"}} >EDIT</Text>
+                <Text style={{textAlign:'center',marginHorizontal:20,color:"#fff"}} >EDIT</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-            onPress={
-                ()=>configuation(item.key)
-            } 
-          style={{height:50,margin:20,justifyContent:"center",
-            width:width/4,backgroundColor:'red',borderRadius:30,}}>
-                <Text style={{textAlign:'center',color:"#fff"
 
-            }}>DELETE</Text>
-            </TouchableOpacity>
-            </View>
             <TouchableOpacity
+            style={
+                {
+                    justifyContent:'center',
+                    alignItems:"center",
+                    backgroundColor:"#0abab5",
+                    height:50,
+                    marginHorizontal:20,
+                    borderRadius:20,
+                    
+                }
+            }
          onPress={
             ()=>navigation.navigate(
                 'Admin_features_edit',{
@@ -133,9 +138,28 @@ const Admin_editProd=({navigation})=>
             )
          }
            >
-                <Text>ADD To FEATURED</Text>
+                <Text
+                style={
+                    {
+                        color:"#fff",
+                        marginHorizontal:10
+                    }
+                }
+                >ADD FEATURED</Text>
 
             </TouchableOpacity>
+            <TouchableOpacity
+            onPress={
+                ()=>configuation(item.key)
+            } 
+          style={{height:50,justifyContent:"center",
+           backgroundColor:'red',borderRadius:30,}}>
+                <Text style={{textAlign:'center',marginHorizontal:20,color:"#fff"
+
+            }}>DELETE</Text>
+            </TouchableOpacity>
+            </View>
+          
             </View>
         )
 
