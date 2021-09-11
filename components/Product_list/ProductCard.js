@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState } from "react";
 import { Image,TouchableOpacity, Text,View } from "react-native"
 ;
@@ -6,7 +7,8 @@ import {  fonts} from "../../constants/fonts";
 
 const ProductCard=(props)=>
 {
-    const {navigation,item,index,height,width}=props
+  const navigation=useNavigation()
+    const {item,index,height,width}=props
     return(
         
         <TouchableOpacity
@@ -15,11 +17,14 @@ const ProductCard=(props)=>
       
         style={
           {
-            height:height/2.5,
+            backgroundColor:'#fff',
+            elevation:25,
+         
+            height:350,
             width:width/2-20,
             margin:10,
-            borderWidth:0.5
-            ,borderRadius:10,
+           
+            borderRadius:15,
            
           }
         }
@@ -37,7 +42,8 @@ const ProductCard=(props)=>
           //backgroundColor:"blue",
           height:'60%',
           width:'100%',
-          borderRadius:10,
+          
+          borderRadius:15,
           alignSelf:"center"
         }
         }

@@ -44,7 +44,7 @@ useEffect
         {
         
           style:{borderRadius:20,
-            backgroundColor:"black"
+            backgroundColor:"#fff"
           }
         }
       }

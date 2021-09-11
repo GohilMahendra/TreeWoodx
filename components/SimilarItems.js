@@ -16,7 +16,7 @@ import {
 import ProductCard from "./ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 
-import { FetchSimilarProducts } from "../redux/Actions/SimilarActions";
+import { FetchInitialSimilarProducts, FetchSimilarProducts } from "../redux/Actions/SimilarActions";
 import { useNavigation } from "@react-navigation/core";
 const SimilarItems = ({ category, curruntID }) => {
 
@@ -49,15 +49,18 @@ const SimilarItems = ({ category, curruntID }) => {
     useEffect
         (
             () => {
-                dispatch(FetchSimilarProducts(category, curruntID))
+                dispatch(FetchSimilarProducts(category))
             },
             []
         )
 
 
-    const products = useSelector(state => state.Similar.similarProducts)
+    const products = useSelector(state => state.Similar.similarProductsInitial)
+
+    const loading=useSelector(state => state.Similar.similarProductsInitialLoading)
 
 
+    console.log(products+"products")
     const SimilerItemBuilder = ({ item, index }) => {
         if (item == undefined)
             return
@@ -133,6 +136,14 @@ const SimilarItems = ({ category, curruntID }) => {
                 </FlatList>
 
 
+               <ActivityIndicator
+               style={{
+                   alignItems:'center',
+                   top:'50%'
+               }}
+               size={30}
+               animating={loading?true:false}
+               ></ActivityIndicator>
             </View>
 
 

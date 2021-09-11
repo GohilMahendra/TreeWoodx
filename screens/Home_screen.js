@@ -32,6 +32,7 @@ const Home_screen=({navigation})=>
 
     const chair=useSelector(state=>state.Products.HomeProducts)
 
+    const prodLoad=useSelector(state=>state.Products.prodLoad)
     console.log(chair)
     const dispatch=useDispatch()
 //fetch categories
@@ -196,6 +197,13 @@ useEffect
             
           
             <FlatList
+            refreshControl={
+                <RefreshControl
+                refreshing={prodLoad}
+                
+                
+                ></RefreshControl>
+            }
             horizontal
             style={Homestyles.catList}
             renderItem={catbuilder}
@@ -237,14 +245,7 @@ useEffect
 
 
             </FlatList>
-        <View style={{flexDirection:'row',
-        justifyContent:'space-between',
-        margin:20}}>
-    <Text style={{fontSize:20,fontWeight:'bold'}}>BEST DISCOUNT OFFERS</Text>
-    <TouchableOpacity>
-        <FontAwesome5 name="angle-right" size={30}></FontAwesome5>
-    </TouchableOpacity>
-    </View>
+      
          </ScrollView>
         {load && <ActivityIndicator
          style={{alignSelf:"center",top:"50%",left:"50%",position:'absolute'}}

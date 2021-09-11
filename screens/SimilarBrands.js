@@ -1,13 +1,15 @@
 
 import { useRoute } from '@react-navigation/core';
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { State } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
+
 import { ActivityIndicator } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { FetchSimilarBrands } from '../redux/Actions/FeaturedActions';
+import { FlatList } from "react-native-gesture-handler";
+import { FetchMoreSimilarBrands, FetchSimilarBrands } from '../redux/Actions/SimilarActions';
+import ProductCard from '../components/Product_list/ProductCard';
 
-
+const {height,width}=Dimensions.get('screen')
 const SimilarBrands = ({ navigation }) => {
 
 
@@ -19,26 +21,24 @@ const SimilarBrands = ({ navigation }) => {
 
 
     const dispatch = useDispatch()
-    console.log(name + "__brand name recieved")
-
-
+ 
     const brands = useSelector(state => state.Similar.similarBrands)
 
+    const moreBrandsLoading=useSelector(state => state.Similar.moreBrandsLoading)
+
+    const lastindex=useSelector(state => state.Similar.lastKeyBrand)
+
+    const fetchMoreBrands=()=>
+    {
+        if(lastindex==null)
+        return
 
 
+        dispatch(FetchMoreSimilarBrands(name,lastindex))
+    }
 
-    useEffect(
-        () => {
-            dispatch(FetchSimilarBrands(name))
-
-        }, []
-    )
 
     const itembuilder = ({ item, index }) => {
-
-        const disc = item.pprice - item.pprice * item.pdisc / 100
-
-        console.log(item)
 
         return (
 
@@ -64,26 +64,26 @@ const SimilarBrands = ({ navigation }) => {
             style={styles.container}
         >
 
-
-
-
-
-
-
-            {/* <FlatList
-        
-
+        <FlatList
 
         
         style={{flex:1}}
-        data={product}
+        data={brands}
+        onEndReached={
+            ()=>fetchMoreBrands()
+        }
         numColumns={2}
         keyExtractor={item=>item.key}
         renderItem={itembuilder}
+        ListFooterComponent={
+            <ActivityIndicator
+            animating={moreBrandsLoading?true:false}
+            ></ActivityIndicator>
+        }
         >
 
         </FlatList>
-     */}
+    
 
             <ActivityIndicator
                 animating={false}

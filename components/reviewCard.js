@@ -6,7 +6,6 @@ import { fonts } from "../constants/fonts";
 
 
 import AddStar from "./Addstar";
-const { height, width } = Dimensions.get('screen')
 const ReviewCard = ({ rev }) => {
 
   // console.log(rev)
@@ -38,14 +37,14 @@ const styles = StyleSheet.create(
   {
     container:
     {
-      marginHorizontal: 20,
-      width: width - 40,
-      borderRadius: 15,
+      margin: 20,
+      width: '90%',
+      borderRadius: 25,
       alignSelf: "center",
-      borderTopWidth: 1,
-      marginTop: 20,
-      borderBottomWidth: 1,
-      backgroundColor: "transparent"
+    
+    
+      backgroundColor: "#fff",
+      elevation:10
     },
     innerView:
     {

@@ -25,6 +25,7 @@ import { average } from "@tensorflow/tfjs-layers/dist/exports_layers";
 import ImageSwiper from "../components/ImageSwiper";
 import DimentionsView from "../components/Product/DimentionsView";
 import {  } from "@react-native-mapbox-gl/maps";
+import AddReview from "../components/AddReview";
 const { height, width } = Dimensions.get('screen')
 const product = ({ navigation }) => {
 
@@ -33,9 +34,7 @@ const product = ({ navigation }) => {
 
   const date = new Date()
 
-  const todaysdate = date.getDate() + '/' + date.getUTCMonth() + '/' + date.getFullYear()
-
-  console.log(todaysdate)
+  const todaysdate =date.toISOString().split('T')[0]
 
 
 
@@ -44,12 +43,6 @@ const product = ({ navigation }) => {
   const p = useRoute()
 
 
-
-  const addRate = () => {
-
-    dispatch(AddComment(review, p.params.item.key, todaysdate))
-
-  }
 
 
   const addTOcart = () => {
@@ -117,13 +110,7 @@ const product = ({ navigation }) => {
     , star: 5,
     review: ""
   })
-  const [review, setreview] = useState(
-    {
-      rate: 5,
-      review: '',
-
-    }
-  )
+ 
 
   return (
     <View
@@ -233,64 +220,13 @@ const product = ({ navigation }) => {
             </TouchableOpacity>
 
 
-            <View style={styles.addReviewContainer}>
-              <Text style={{
-                margin: 20, fontFamily: "Federo-Regular",
-                fontSize: 30
-              }}>REVIEWS</Text>
+           
+           <AddReview
+           
+           pid={p.params.item.key}
+           todaysdate={todaysdate}
 
-
-              {/**custom made review star component */}
-              <View style={{ flexDirection: 'row', margin: 20, marginTop: 0 }}>
-
-                <TouchableOpacity
-                  onPress={() => setreview({ ...review, rate: 1 })}
-                >
-                  <FontAwesome5Icon name="star" size={30} solid={(review.rate >= 1) ? true : false}></FontAwesome5Icon>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => setreview({ ...review, rate: 2 })}>
-                  <FontAwesome5Icon name="star" size={30} solid={(review.rate >= 2) ? true : false}></FontAwesome5Icon>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => setreview({ ...review, rate: 3 })}
-                >
-                  <FontAwesome5Icon name="star" size={30} solid={(review.rate >= 3) ? true : false}></FontAwesome5Icon>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => setreview({ ...review, rate: 4 })}
-                >
-                  <FontAwesome5Icon name="star" size={30} solid={(review.rate >= 4) ? true : false}></FontAwesome5Icon>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => setreview({ ...review, rate: 5 })}
-                >
-                  <FontAwesome5Icon name="star" size={30} solid={(review.rate >= 5) ? true : false}></FontAwesome5Icon>
-                </TouchableOpacity>
-              </View>
-
-              <TextInput
-
-                onChangeText={val => setreview({ ...review, review: val })}
-                placeholder=" + Add review Here"
-                style={{
-                  borderRadius: 20, alignSelf: 'center',
-                  borderWidth: 1, width: width - 40
-                }}
-                multiline={true}
-
-              >
-
-              </TextInput>
-
-              <TouchableOpacity
-
-                onPress={() => addRate()}
-                style={styles.addbtnReview}>
-                <Text style={styles.addbtnReviewText}>Add</Text>
-              </TouchableOpacity>
-            </View>
+           />
 
 
             {/**single review */}
@@ -412,17 +348,7 @@ const styles = StyleSheet.create
         margin: 20,
         borderRadius: 20
       },
-      reviewContainer:
-      {
-        marginHorizontal: 20,
-        width: width - 40,
-        borderRadius: 15,
-        alignSelf: "center",
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
-        backgroundColor: "transparent"
-      },
-
+   
       brandNameText:
       {
         alignSelf: 'center',
@@ -437,17 +363,7 @@ const styles = StyleSheet.create
         fontFamily: "Federo-Regular",
         fontSize: 18
       },
-      addbtnReview:
-      {
-
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 20,
-        height: 50,
-        width: 70,
-        borderRadius: 20,
-        backgroundColor: 'black'
-      },
+   
       AddToCartButtonContainer:
       {
         flexDirection: 'row',
@@ -516,12 +432,7 @@ const styles = StyleSheet.create
         
       },
 
-      addReviewContainer:
-      {
-        alignContent: "center",
-        alignItems: 'center',
-        margin: 20
-      },
+    
 
       categoryContainer:
       {
@@ -549,10 +460,6 @@ const styles = StyleSheet.create
         color: '#fff'
       },
 
-      addbtnReviewText:
-      {
-        color: "#fff",
-      },
       elevatedtext:
       {
         elevation: 25,

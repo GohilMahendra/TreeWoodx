@@ -16,11 +16,6 @@ import ProductCard from "../components/Product_list/ProductCard";
 import { FetchMoreSimilarProducts } from '../redux/Actions/SimilarActions';
 const { height, width } = Dimensions.get('screen')
 const SimilarProducts = ({ navigation }) => {
-
-
-
-
-
     const p = useRoute()
     const dispatch = useDispatch()
 
@@ -30,21 +25,15 @@ const SimilarProducts = ({ navigation }) => {
 
     const lastindex = useSelector(state => state.Similar.lastKeyProduct)
 
-    console.log(lastindex + "LAST INDE")
-
-    console.log(name + "__category name recieved")
-
-
+    const moreProductsLoading=useSelector(state => state.Similar.moreProductsLoading)
+    const moreProductsError=useSelector(state => state.Similar.moreProductsError)
     const fetchMoreProd = () => {
         dispatch(FetchMoreSimilarProducts(name, lastindex))
-
 
     }
     const itembuilder = ({ item, index }) => {
 
-        const disc = item.pprice - item.pprice * item.pdisc / 100
-
-        console.log(item)
+     
 
         return (
 
@@ -76,17 +65,20 @@ const SimilarProducts = ({ navigation }) => {
                 data={products}
                 numColumns={2}
                 keyExtractor={item => item.key}
+               
+                onEndReached={
+                    ()=>fetchMoreProd()
+                }
                 renderItem={itembuilder}
 
-                ListFooterComponent={
-                    <TouchableOpacity
 
-                        onPress={
-                            () => fetchMoreProd()
-                        }
-                    >
-                        <Text>LOAD MORE</Text>
-                    </TouchableOpacity>
+
+                ListFooterComponent={
+                   <ActivityIndicator
+                   animating={moreProductsLoading?true:false}
+                   >
+
+                   </ActivityIndicator>
                 }
             >
 

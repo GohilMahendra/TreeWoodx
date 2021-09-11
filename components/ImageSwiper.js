@@ -18,9 +18,7 @@ import Carousel from "react-native-snap-carousel";
 
 const { height, width } = Dimensions.get('screen')
 const ImageSwiper = ({ data }) => {
-
-    const [activeIndex, setActiveIndex] = useState(0);
-    const ref = useRef(null);
+ const ref = useRef(null);
 
 
     const renderItem = ({ item, index }) => {
@@ -32,7 +30,7 @@ const ImageSwiper = ({ data }) => {
 
                 style={
                     {
-                        height: 350,
+                        height: 450,
                         width: width - 20,
                         borderRadius: 15,
                         backgroundColor: "#fff",
@@ -50,23 +48,17 @@ const ImageSwiper = ({ data }) => {
                     style={
                         {
                             flex: 1,
+
                             borderRadius: 15
                         }
                     }
-                    resizeMode="stretch"
+                    resizeMode="cover"
 
 
                 >
 
                 </Image>
-                <ActivityIndicator
-                    style={{
-                        position: "absolute",
-                        alignSelf: "center"
-                    }}
-                >
-
-                </ActivityIndicator>
+            
             </View>
 
 

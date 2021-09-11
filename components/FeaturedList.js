@@ -69,7 +69,7 @@ const FeaturedList = () => {
                 }
                 style={
                     {
-                        height: height / 3.5,
+                        height: height / 4,
                         width: '100%'
                     }
                 }

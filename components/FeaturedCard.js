@@ -216,6 +216,7 @@ const styles = StyleSheet.create
                 borderRadius: 15,
 
                 borderRadius: 15,
+                margin:10
 
             },
             gradinetContainer:

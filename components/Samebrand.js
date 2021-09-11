@@ -12,18 +12,21 @@ import { FlatList } from "react-native-gesture-handler";
 import { fonts } from "../constants/fonts";
 import { Dimensions } from "react-native";
 import ProductCard from "./ProductCard";
+import { useNavigation } from "@react-navigation/core";
+import { useDispatch, useSelector } from "react-redux";
+import { stat } from "react-native-fs";
+import { FetchSimilarBrands } from "../redux/Actions/SimilarActions";
 
 const Samebrand = ({ brand, curruntID }) => {
 
 
+
+    const dispatch=useDispatch()
+    const navigation=useNavigation()
     const { height, width } = Dimensions.get(
         'screen'
     )
-    console.log(curruntID + 'currunt ID')
-
-    if (brand == undefined)
-        return
-
+  
 
     const emptyScreen = () => {
         return (
@@ -61,44 +64,7 @@ const Samebrand = ({ brand, curruntID }) => {
             () => {
 
 
-
-
-                try {
-                    setloading(true)
-                    firestore().collection('products').where('brand', "==", brand).limit(5).onSnapshot((snapshot) => {
-
-
-                        //    setsuccess(true)
-                        //console.log(snapshot.docs)
-
-
-                        var li = []
-                        snapshot.forEach(function (child) {
-
-
-                            li.push({
-                                key: child.id,
-                                pname: child.data().pname,
-                                pprice: child.data().price,
-                                pdisc: child.data().discount,
-                                pimage: child.data().img1,
-                                pbrand: child.data().brand
-                            })
-                        });
-
-
-                        // li=li.filter(obj=>obj.key!=curruntID)
-                        setproducts(li)
-                        console.log(JSON.stringify(products) + "similar item data")
-
-                        setloading(false)
-
-                    })
-                }
-                catch (err) {
-                    setError(true)
-                    console.log(err)
-                }
+                dispatch(FetchSimilarBrands(brand))
             },
 
 
@@ -106,14 +72,10 @@ const Samebrand = ({ brand, curruntID }) => {
             []
         )
 
-    const [products, setproducts] = useState([])
+    const products=useSelector(state=>state.Similar.similarBrandsInitial)
 
-    const [loading, setloading] = useState(false)
-
-    const [Error, setError] = useState(false)
-
-    console.log("BrandName Recived As " + JSON.stringify(brand))
-
+  
+  
     const SimilerItemBuilder = ({ item, index }) => {
 
 
@@ -189,7 +151,7 @@ const Samebrand = ({ brand, curruntID }) => {
 
                 </TouchableOpacity>
             </View>
-            {(!loading) &&
+          
                 <View style={{ flex: 1 }}>
 
                     <FlatList
@@ -215,7 +177,6 @@ const Samebrand = ({ brand, curruntID }) => {
 
                 </View>
 
-            }
         </View>
     )
 }
