@@ -2,10 +2,14 @@
 import auth from "@react-native-firebase/auth";
 
 import firestore from "@react-native-firebase/firestore";
+import product from "../../screens/poduct";
 import {
     LOAD_HOME_PRODUCTS_FAILED,
     LOAD_HOME_PRODUCTS_REQUEST,
     LOAD_HOME_PRODUCTS_SUCCESS,
+    LOAD_MORE_PRODUCTS_FAILED,
+    LOAD_MORE_PRODUCTS_REQUEST,
+    LOAD_MORE_PRODUCTS_SUCCESS,
     LOAD_PRODUCTS_FAILED,
     LOAD_PRODUCTS_SUCCESS,
     SEARCH_PRODUCTS_FAILED,
@@ -14,6 +18,7 @@ import {
 
 
 
+const MAX_FETCH_LIMIT = 2
 
 export const DeleteProduct = (pid) => {
 
@@ -21,7 +26,7 @@ export const DeleteProduct = (pid) => {
         firestore().collection('products').doc(pid).delete().
             then(
                 suc => {
-                   
+
                     console.log("DELETED SUCCESSFULLY!!YEY")
                 }
             ).catch(err => console.log(err))
@@ -82,18 +87,101 @@ export const ChangeDiscount = (pid, disc) => {
 
 }
 
-
-export const searchProd = (search) => {
-
+export const LoadInitialProducts = (name) => {
     return async (dispatch) => {
 
-        try {
-            ser = firestore().collection('products').where('pname', '>=', search).where('pname', '<=', search + '\uf8ff').limit(10)
+        dispatch({ type: LOAD_HOME_PRODUCTS_REQUEST })
 
-            const products = await ser.get()
+        try {
+            const quary = (name == "All" || name == null) ?
+                firestore()
+                    .collection('products')
+                    .limit(10) :
+
+                firestore()
+                    .collection('products')
+                    .where("cat", '==', name)
+                    .limit(10)
+
+            const products = await quary.get()
 
             var list = []
 
+            products.forEach(function (child) {
+
+
+                list.push({
+                    key: child.id,
+                    pname: child.data().pname,
+                    priceafterdisc: child.data().priceafterdisc,
+                    pprice: child.data().price,
+                    pdisc: child.data().discount,
+                    pimage: child.data().img1,
+                    pbrand: child.data().brand,
+
+                })
+            });
+
+
+            console.log(products + "prodcu")
+
+
+
+            dispatch({
+                type: LOAD_HOME_PRODUCTS_SUCCESS, payload: list
+            })
+
+        }
+        catch (err) {
+            console.log(err)
+            dispatch({
+                type: LOAD_HOME_PRODUCTS_FAILED, payload: err
+            })
+        }
+
+
+
+
+
+    }
+}
+
+export const LoadProducts = (category, search) => {
+    return async (dispatch) => {
+
+
+        try {
+
+
+            let quary = ""
+            if (category != null && search == "" && category != "All"
+                && category != "Search") {
+                quary = firestore()
+                    .collection('products')
+                    .where('cat', '==', category)
+                    .limit(MAX_FETCH_LIMIT)
+            }
+
+            else if (search != null && search != "") {
+                quary = firestore().collection('products')
+                    .where('pname', '>=', search)
+                    .where('pname', '<=', search + '\uf8ff').limit(MAX_FETCH_LIMIT)
+
+
+            }
+            else {
+                quary = firestore()
+                    .collection('products')
+                    .limit(MAX_FETCH_LIMIT)
+            }
+
+
+
+
+
+            const products = await quary.get()
+
+            var list = []
             products.forEach(function (child) {
 
 
@@ -107,64 +195,23 @@ export const searchProd = (search) => {
                     pimage: child.data().img1,
                     pbrand: child.data().brand
                 })
+            }
+
+            )
+
+            var lastkey = null
+            if (list.length >= MAX_FETCH_LIMIT) {
+                lastkey = list[list.length - 1].key
+            }
+
+            console.log(lastkey)
+            dispatch({
+                type: LOAD_PRODUCTS_SUCCESS, payload:
+                {
+                    Products: list,
+                    lastKey: lastkey
+                }
             })
-
-
-            dispatch({ type: SEARCH_PRODUCTS_SUCCESS, payload: list })
-
-
-        }
-        catch (err) {
-            dispatch({ type: SEARCH_PRODUCTS_FAILED, payload: err })
-        }
-    }
-}
-export const LoadProducts = (category) => {
-    return async (dispatch) => {
-
-
-        try {
-
-
-            console.log(category)
-
-            let quary = ""
-            if (category != null && category != "All" && category != "Search")
-                quary = firestore()
-                    .collection('products')
-                    .where('cat', '==', category)
-                    .limit(10)
-            else
-                quary = firestore()
-                    .collection('products')
-                    .limit(10)
-
-
-            quary.onSnapshot(
-                (snapshot) => {
-
-                    var list = []
-
-                    snapshot.forEach(function (child) {
-
-
-                        list.push({
-                            key: child.id,
-                            pname: child.data().pname,
-                            pprice: child.data().price,
-                            priceafterdisc: child.data().priceafterdisc,
-                            pdisc: child.data().discount,
-                            pstock: child.data().stock,
-                            pimage: child.data().img1,
-                            pbrand: child.data().brand
-                        })
-                    }
-
-                    )
-                    dispatch({ type: LOAD_PRODUCTS_SUCCESS, payload: list })
-
-                })
-
 
 
         }
@@ -173,9 +220,6 @@ export const LoadProducts = (category) => {
         }
 
 
-
-
-
     }
 
 
@@ -183,42 +227,91 @@ export const LoadProducts = (category) => {
 }
 
 
-export const LoadInitialProducts = (name) => {
+export const loadMoreProducts = (category, search, lastindex) => {
     return async (dispatch) => {
 
-        dispatch({ type: LOAD_HOME_PRODUCTS_REQUEST })
 
         try {
-            const quary = (name == "All") ? firestore().collection('products').limit(10) : firestore().collection('products').where("cat", '==', name).limit(10)
-            const subcription = quary.onSnapshot(
-                snapshot => {
-                    var list = []
 
-                    snapshot.forEach(function (child) {
+            if (lastindex == null || search.length > 0 || search != "") {
+                console.log("NULL INDEX")
+                return
+            }
 
 
-                        list.push({
-                            key: child.id,
-                            pname: child.data().pname,
-                            priceafterdisc: child.data().priceafterdisc,
-                            pprice: child.data().price,
-                            pdisc: child.data().discount,
-                            pimage: child.data().img1,
-                            pbrand: child.data().brand,
+            let quary = null
+            if (category != null &&
 
-                        })
-                    });
-                    dispatch({ type: LOAD_HOME_PRODUCTS_SUCCESS, payload: list })
-                }).catch(err => console.log(err));
+                category != "All"
+                && category != "Search") {
+
+                quary = firestore().collection('products')
+                    .where('cat', '==', category)
+                    .orderBy(firestore.FieldPath.documentId())
+                    .startAfter(lastindex)
+                    .limit(MAX_FETCH_LIMIT)
+
+            }
+
+            else {
+                quary = firestore()
+                    .collection('products')
+                    .orderBy(firestore.FieldPath.documentId())
+                    .startAfter(lastindex)
+                    .limit(MAX_FETCH_LIMIT)
+            }
+
+
+
+            var list = []
+
+            const products = await quary.get()
+
+            console.log(products)
+            products.forEach(function (child) {
+
+
+                list.push({
+                    key: child.id,
+                    pname: child.data().pname,
+                    pprice: child.data().price,
+                    priceafterdisc: child.data().priceafterdisc,
+                    pdisc: child.data().discount,
+                    pstock: child.data().stock,
+                    pimage: child.data().img1,
+                    pbrand: child.data().brand
+                })
+            }
+
+            )
+
+            console.log(list + "LIST")
+            let lastkey = null
+            if (list.length >= MAX_FETCH_LIMIT) {
+                lastkey = list[list.length - 1].key
+            }
+
+
+
+            console.log(lastkey)
+
+            dispatch({
+                type: LOAD_MORE_PRODUCTS_SUCCESS, payload:
+                {
+                    Products: list,
+                    lastKey: lastkey
+                }
+            })
+
 
         }
         catch (err) {
-            dispatch({ type: LOAD_HOME_PRODUCTS_FAILED, payload: err })
+            console.log(err)
+            dispatch({ type: LOAD_MORE_PRODUCTS_FAILED, payload: err })
         }
 
 
-
-
-
     }
+
 }
+

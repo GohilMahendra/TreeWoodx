@@ -24,7 +24,7 @@ import { AddComment, test } from "../redux/Actions/CommentActions";
 import { average } from "@tensorflow/tfjs-layers/dist/exports_layers";
 import ImageSwiper from "../components/ImageSwiper";
 import DimentionsView from "../components/Product/DimentionsView";
-import {  } from "@react-native-mapbox-gl/maps";
+import { } from "@react-native-mapbox-gl/maps";
 import AddReview from "../components/AddReview";
 const { height, width } = Dimensions.get('screen')
 const product = ({ navigation }) => {
@@ -34,7 +34,7 @@ const product = ({ navigation }) => {
 
   const date = new Date()
 
-  const todaysdate =date.toISOString().split('T')[0]
+  const todaysdate = date.toISOString().split('T')[0]
 
 
 
@@ -87,15 +87,15 @@ const product = ({ navigation }) => {
 
 
     firestore().collection('products')
-    .doc(p.params.item.key)
-    .onSnapshot((snapshot) => {
+      .doc(p.params.item.key)
+      .onSnapshot((snapshot) => {
 
-      setsuccess(true)
-      setprod(snapshot.data())
-      setload(false)
+        setsuccess(true)
+        setprod(snapshot.data())
+        setload(false)
 
 
-    });
+      });
 
   }
     , []
@@ -110,7 +110,7 @@ const product = ({ navigation }) => {
     , star: 5,
     review: ""
   })
- 
+
 
   return (
     <View
@@ -132,14 +132,7 @@ const product = ({ navigation }) => {
         <ScrollView style={{ flex: 1 }}>
 
           <View style={{ flex: 1 }}>
-            <View style={{
-              height: height / 4, position: 'absolute',
-              backgroundColor: 'gray', borderBottomLeftRadius: 40,
-              borderBottomRightRadius: 40
-            }}>
-
-            </View>
-
+          
             {/**image courousel for product*/}
             <ImageSwiper
 
@@ -170,8 +163,8 @@ const product = ({ navigation }) => {
               <View style={styles.priceContainer}
               >
                 {/*RS{Math.floor(prod.price-prod.price*prod.discount/100)} */}
-                <Text style={{ fontSize: 20 }} >
-                  {prod.priceafterdisc}
+                <Text style={{ fontSize: 20,fontFamily:fonts.Quicksand_Medium }} >
+                 RS {prod.priceafterdisc}
 
                 </Text>
                 <Text style={{ textDecorationLine: 'line-through', fontSize: 20 }} >RS{prod.price}</Text>
@@ -183,7 +176,7 @@ const product = ({ navigation }) => {
               <View style={styles.materialContainer}>
                 <Text style={styles.materialText}>Material :</Text>
                 <View style={styles.materialTextContainer}>
-                <Text style={styles.materialTextName}>  {prod.material}  </Text>
+                  <Text style={styles.materialTextName}>  {prod.material}  </Text>
                 </View>
               </View>
             </View>
@@ -193,15 +186,15 @@ const product = ({ navigation }) => {
             >
 
               <View
-               style={
-                 styles.categoryContainerView
-               }
+                style={
+                  styles.categoryContainerView
+                }
               >
                 <Text
                   style={styles.productCategoryText} >{prod.cat}</Text>
               </View>
               <View
-              style={styles.categoryContainerView}
+                style={styles.categoryContainerView}
               >
                 <Text style={styles.productCategoryText} >{prod.sub_cat}</Text>
               </View>
@@ -220,13 +213,13 @@ const product = ({ navigation }) => {
             </TouchableOpacity>
 
 
-           
-           <AddReview
-           
-           pid={p.params.item.key}
-           todaysdate={todaysdate}
 
-           />
+            <AddReview
+
+              pid={p.params.item.key}
+              todaysdate={todaysdate}
+
+            />
 
 
             {/**single review */}
@@ -348,7 +341,7 @@ const styles = StyleSheet.create
         margin: 20,
         borderRadius: 20
       },
-   
+
       brandNameText:
       {
         alignSelf: 'center',
@@ -363,7 +356,7 @@ const styles = StyleSheet.create
         fontFamily: "Federo-Regular",
         fontSize: 18
       },
-   
+
       AddToCartButtonContainer:
       {
         flexDirection: 'row',
@@ -389,23 +382,23 @@ const styles = StyleSheet.create
       {
         alignContent: "center",
         alignItems: 'center',
-        flexDirection:'row',
-        alignSelf:'center',
+        flexDirection: 'row',
+        alignSelf: 'center',
         margin: 20
       },
       materialText:
       {
         alignContent: "center",
         alignItems: 'center',
-        fontSize:20,
-        fontFamily:fonts.Federo_Regular,
+        fontSize: 20,
+        fontFamily: fonts.Federo_Regular,
         margin: 20
       },
       materialTextContainer:
       {
-        backgroundColor:"#fff",
-        borderRadius:20,
-        elevation:25
+        backgroundColor: "#fff",
+        borderRadius: 20,
+        elevation: 25
 
       }
       ,
@@ -414,9 +407,9 @@ const styles = StyleSheet.create
         alignContent: "center",
         alignItems: 'center',
         margin: 10,
-        fontSize:20,
-        fontFamily:fonts.Federo_Regular
-        
+        fontSize: 20,
+        fontFamily: fonts.Federo_Regular
+
       },
       productCategoryText:
       {
@@ -424,33 +417,33 @@ const styles = StyleSheet.create
         fontSize: 20,
         textAlignVertical: 'center',
         fontFamily: fonts.Federo_Regular,
-       
 
-        margin:20,
+
+        margin: 20,
         color: "black",
         textAlign: 'center',
-        
+
       },
 
-    
+
 
       categoryContainer:
       {
         alignContent: "center",
         alignItems: 'center',
-        flexDirection:"row",
-        justifyContent:'space-evenly',
+        flexDirection: "row",
+        justifyContent: 'space-evenly',
 
         margin: 20
       },
 
       categoryContainerView:
       {
-        backgroundColor:"#fff",
-        elevation:25,
-        borderRadius:20
+        backgroundColor: "#fff",
+        elevation: 25,
+        borderRadius: 20
       },
-    
+
       AddToCartText:
       {
         textAlignVertical: 'center',

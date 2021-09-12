@@ -14,7 +14,7 @@ import { ActivityIndicator, Searchbar } from "react-native-paper";
 
 import ProductCard from "../components/Product_list/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
-import { LoadProducts, searchProd } from "../redux/Actions/ProductActions";
+import { LoadProducts, loadMoreProducts } from "../redux/Actions/ProductActions";
 
 const Product_list = () => {
   const navigation = useNavigation()
@@ -26,16 +26,11 @@ const Product_list = () => {
 
   const product = useSelector(state => state.Products.products)
   const prodLoad = useSelector(state => state.Products.prodLoad)
+  const moreproductsLoad = useSelector(state => state.Products.moreproductsLoad)
+  const lastindex=useSelector(state => state.Products.lastindex)
 
   const dispatch = useDispatch()
-  const [search, setserach] = useState('')
-  const [filters, setfilters] = useState(
-    {
-      price: 0,
-      discount: 0,
-
-    }
-  )
+  const [search, setserach] = useState("")
 
 
   const p = useRoute()
@@ -46,15 +41,15 @@ const Product_list = () => {
   const [visible, setvisible] = useState(true)
   const { height, width } = Dimensions.get('screen')
 
-
-
   const searchProduct = () => {
 
+    dispatch(LoadProducts(category,search))
 
+  }
 
-    dispatch(searchProd(search))
-
-
+  const loadMoreProd=()=>
+  {
+    dispatch(loadMoreProducts(category,search,lastindex))
 
   }
 
@@ -88,9 +83,8 @@ const Product_list = () => {
     )
   useEffect
     (() => {
-      dispatch(LoadProducts(category))
-      setcategory(null)
-
+      dispatch(LoadProducts(category,search))
+    
     }
       , []
     )
@@ -103,6 +97,7 @@ const Product_list = () => {
       <View style={
         {
           flexDirection: "row",
+          backgroundColor:"#fff",
 
           justifyContent: "space-between"
         }
@@ -134,52 +129,13 @@ const Product_list = () => {
             size={30} color={"#fff"}></FontAwesome5Icon>
         </TouchableOpacity>
       </View>
-      <Modal isVisible={false}
-
-        onBackdropPress={() => setvisible(false)}
-      >
-        <View style={{
-          height: height / 2,
-          justifyContent: "space-evenly",
-          alignSelf: "center",
-          width: width - 20,
-          borderRadius: 30,
-          backgroundColor: '#fff'
-        }}>
-
-
-          <TouchableOpacity>
-            <Text style={{
-              alignSelf: "flex-end",
-              fontFamily: "Quicksand-Medium",
-              fontSize: 18,
-
-              color: "#0198E1",
-              marginRight: 20
-            }}>RESET FILTERS</Text>
-          </TouchableOpacity>
-          <Text style={{ fontSize: 30, alignSelf: "center" }}>SORT BY</Text>
-
-          <Slider
-            minimumValue={0}
-            step={5000}
-
-            onSlidingComplete={(value) => setfilters({ ...filters, price: value })}
-            maximumValue={100000}
-          >
-
-          </Slider>
-          <Text>{filters.price}</Text>
-          <Button title="APPLY" onPress={() => setvisible(!visible)} />
-        </View>
-      </Modal>
-
+     
 
       <FlatList
 
         refreshControl={
           <RefreshControl
-            onRefresh={() => dispatch(LoadProducts(null))}
+            onRefresh={() => dispatch(LoadProducts(category,search))}
 
             refreshing={prodLoad}
 
@@ -191,17 +147,18 @@ const Product_list = () => {
         style={{ flex: 1 }}
         data={product}
         numColumns={2}
+        onEndReached={
+          ()=>loadMoreProd()
+        }
         keyExtractor={item => item.key}
         renderItem={itembuilder}
       >
 
       </FlatList>
 
-      {
-        prodLoad
-        &&
+      
         <ActivityIndicator
-          animating={true}
+          animating={moreproductsLoad?true:false}
           style={{
             position: "absolute",
             alignSelf: 'center',
@@ -211,7 +168,7 @@ const Product_list = () => {
         >
 
         </ActivityIndicator>
-      }
+      
 
     </View>
   )

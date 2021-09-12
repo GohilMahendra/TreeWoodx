@@ -218,7 +218,7 @@ const {height,width}=Dimensions.get('screen')
                   width:width-40,
                   alignItems:'center',
                   justifyContent:"center"}}
-                 colors={["black","silver"]}
+                 colors={["#000B18","#0052A2"]}
                     >                 
                    <Text style={{textAlign:'center',
                    fontSize:20,alignSelf:'center'

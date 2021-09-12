@@ -10,18 +10,15 @@ import {
     LOAD_SIMILAR_BY_PRODUCTS_FAILED,
     LOAD_SIMILAR_BY_PRODUCTS_SUCCESS,
     LOAD_SIMILAR_BY_PRODUCTS_REQUEST,
+
     LOAD_MORE_SIMILAR_BY_PRODUCTS_REQUEST,
     LOAD_MORE_SIMILAR_BY_PRODUCTS_SUCCESS,
     LOAD_MORE_SIMILAR_BY_PRODUCTS_FAILED,
+
     LOAD_SIMILAR_BY_BRANDS_REQUEST,
     LOAD_SIMILAR_BY_BRANDS_SUCCESS,
     LOAD_SIMILAR_BY_BRANDS_FAILED,
-    INITIAL_LOAD_SIMILAR_BY_PRODUCTS_REQUEST,
-    INITIAL_LOAD_SIMILAR_BY_BRANDS_SUCCESS,
-    INITIAL_LOAD_SIMILAR_BY_BRANDS_FAILED,
-    INITIAL_LOAD_SIMILAR_BY_BRANDS_REQUEST,
-    INITIAL_LOAD_SIMILAR_BY_PRODUCTS_FAILED,
-    INITIAL_LOAD_SIMILAR_BY_PRODUCTS_SUCCESS,
+
     LOAD_MORE_SIMILAR_BY_BRANDS_REQUEST,
     LOAD_MORE_SIMILAR_BY_BRANDS_SUCCESS,
     LOAD_MORE_SIMILAR_BY_BRANDS_FAILED,
@@ -54,7 +51,8 @@ at that time
 
 Google playstore uses first method i found with their UI they donwload
  10 or any constant  similars in appscreen and use same state in similar 
- Screens means user dont wait for initial loading although play store dont use react native but logic is
+ Screens means user dont wait for initial loading although play store dont 
+ use react native but logic is
  same
 
 */}
@@ -123,8 +121,10 @@ export const FetchSimilarProducts = (category) => {
         catch
         (err) {
             console.log(err)
-            dispatch({ type: LOAD_SIMILAR_BY_PRODUCTS_FAILED,
-                 payload: err })
+            dispatch({
+                type: LOAD_SIMILAR_BY_PRODUCTS_FAILED,
+                payload: err
+            })
         }
 
 
@@ -197,9 +197,9 @@ export const FetchSimilarBrands = (Brand) => {
 
             dispatch({ type: LOAD_SIMILAR_BY_BRANDS_REQUEST })
             const quary = firestore()
-                         .collection('products')
-                         .where('brand', "==", Brand)
-                         .limit(MAX_FETCH_LIMIT)
+                .collection('products')
+                .where('brand', "==", Brand)
+                .limit(MAX_FETCH_LIMIT)
 
             const products = await quary.get()
 
@@ -225,16 +225,15 @@ export const FetchSimilarBrands = (Brand) => {
 
             console.log(list)
 
-          
-            var lastkey=null
-            if(list.length>=MAX_FETCH_LIMIT)
-            {
-                lastkey=list[list.length-1].key
+
+            var lastkey = null
+            if (list.length >= MAX_FETCH_LIMIT) {
+                lastkey = list[list.length - 1].key
             }
-          
+
 
             dispatch({
-                type: LOAD_SIMILAR_BY_BRANDS_SUCCESS, 
+                type: LOAD_SIMILAR_BY_BRANDS_SUCCESS,
                 payload: {
                     Products: list,
                     lastKey: lastkey
@@ -259,8 +258,8 @@ export const FetchMoreSimilarBrands = (Brand, lastindex) => {
     return async (dispatch) => {
         try {
 
-            dispatch({type:LOAD_MORE_SIMILAR_BY_BRANDS_REQUEST})
-            
+            dispatch({ type: LOAD_MORE_SIMILAR_BY_BRANDS_REQUEST })
+
             if (lastindex == null) {
                 console.log("NULL INDEX")
                 return
@@ -294,13 +293,13 @@ export const FetchMoreSimilarBrands = (Brand, lastindex) => {
                     }
                 )
 
-            let lastKey =null
+            let lastKey = null
             if (list.length >= MAX_FETCH_LIMIT)
-                lastKey = list[list.length-1].key
+                lastKey = list[list.length - 1].key
 
             dispatch({
                 type: LOAD_MORE_SIMILAR_BY_BRANDS_SUCCESS,
-                 payload: {
+                payload: {
                     Products: list,
                     lastKey: lastKey
                 }
@@ -309,7 +308,7 @@ export const FetchMoreSimilarBrands = (Brand, lastindex) => {
         catch (err) {
 
             console.log(err)
-            dispatch({type:LOAD_MORE_SIMILAR_BY_BRANDS_FAILED,payload:err})
+            dispatch({ type: LOAD_MORE_SIMILAR_BY_BRANDS_FAILED, payload: err })
         }
 
     }

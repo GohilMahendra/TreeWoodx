@@ -8,9 +8,11 @@ import { TextInputBase } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { ImageBackground } from 'react-native';
 import { fonts } from "../constants/fonts";
-const Search=({naviagtion})=>
+import { NavigationContainer ,useNavigation} from '@react-navigation/native';
+const Search=()=>
 {
-    const {height,width}=Dimensions.get('screen')
+    const navigation=useNavigation()
+  const {height,width}=Dimensions.get('screen')
     const [search,setsearch]=useState('')
 
     const [data,setData]=useState()
@@ -23,7 +25,7 @@ const Search=({naviagtion})=>
         console.log(item)
         return(
            <TouchableOpacity
-           onPress={()=>setdisplay(item)}
+        
            style={{width:'100%',height:50}}
            >
                <View style={{flexDirection:'row'}}>
@@ -52,7 +54,7 @@ const Search=({naviagtion})=>
 
             if(search=="")
             return
-            const ser=firestore().collection('products').orderBy("prod.pname").startAt(search).endAt(search + "\\uf8ff")
+            const ser=firestore().collection('products').orderBy("pname").startAt(search).endAt(search + "\\uf8ff")
             ser.onSnapshot(
                 (snapshot)=> {
 
@@ -68,15 +70,15 @@ const Search=({naviagtion})=>
                     list.push({
                        
                         pid:child.id,
-                        pname:child.data().prod.pname,
-                        pbrand:child.data().prod.brand,
-                        pcat:child.data().prod.cat,
+                        pname:child.data().pname,
+                        pbrand:child.data().brand,
+                        pcat:child.data().cat,
 
-                        pprice:child.data().prod.price,
-                        psubcat:child.data().prod.sub_cat,
-                        pmaterial:child.data().prod.material,
-                        pdiscount:child.data().prod.discount,
-                        pimage:child.data().prod.img1
+                        pprice:child.data().price,
+                        psubcat:child.data().sub_cat,
+                        pmaterial:child.data().material,
+                        pdiscount:child.data().discount,
+                        pimage:child.data().img1
                      
                       })
                 }

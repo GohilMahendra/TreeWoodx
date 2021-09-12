@@ -3,7 +3,8 @@
 import React, { useRef, useState } from "react";
 import {
     View,
-    Text
+    Text,
+    StyleSheet
 } from "react-native";
 
 
@@ -18,7 +19,7 @@ import Carousel from "react-native-snap-carousel";
 
 const { height, width } = Dimensions.get('screen')
 const ImageSwiper = ({ data }) => {
- const ref = useRef(null);
+    const ref = useRef(null);
 
 
     const renderItem = ({ item, index }) => {
@@ -28,15 +29,7 @@ const ImageSwiper = ({ data }) => {
 
             <View
 
-                style={
-                    {
-                        height: 450,
-                        width: width - 20,
-                        borderRadius: 15,
-                        backgroundColor: "#fff",
-                        margin: 10
-                    }
-                }
+                style={styles.imageContainer}
             >
                 <Image
 
@@ -48,8 +41,8 @@ const ImageSwiper = ({ data }) => {
                     style={
                         {
                             flex: 1,
-
-                            borderRadius: 15
+                          
+                            borderRadius:15
                         }
                     }
                     resizeMode="cover"
@@ -58,7 +51,7 @@ const ImageSwiper = ({ data }) => {
                 >
 
                 </Image>
-            
+
             </View>
 
 
@@ -68,16 +61,10 @@ const ImageSwiper = ({ data }) => {
     return (
 
         <View
-            style={
-                {
-                    flex: 1
-                }
-            }
+            style={ styles.Container  }
         >
 
             <Carousel
-
-
 
                 layout="default"
                 layoutCardOffset={5}
@@ -95,5 +82,21 @@ const ImageSwiper = ({ data }) => {
         </View>
     )
 }
-
+const styles=StyleSheet.create(
+    {
+        Container:
+        {
+            flex: 1
+        },
+        imageContainer:
+        {
+            height: 450,
+            width: '100%',
+           
+           
+            borderRadius: 15,
+            backgroundColor: "#fff",
+        },
+    }
+)
 export default ImageSwiper
