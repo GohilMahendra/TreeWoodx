@@ -4,10 +4,9 @@ import { View,Text } from "react-native";
 
 import  FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 
-const AddStar=(star)=>
+const AddStar=({star})=>
   {
 
-    star=star.star
     
     return(
       <View style={{flexDirection:'row',

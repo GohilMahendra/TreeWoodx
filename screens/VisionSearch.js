@@ -5,7 +5,7 @@ import { View, Text, PermissionsAndroid } from "react-native";
 
 
 import { RNCamera, FaceDetector } from "react-native-camera";
-import RNFS from "react-native-fs";
+// import RNFS from "react-native-fs";
 const VisionSearch = () => {
 
     const cameraRef = useRef()
@@ -31,19 +31,19 @@ const VisionSearch = () => {
     }
 
     const getPrediction = async (imageData) => {
-        var Path = RNFS.DocumentDirectoryPath
+        // var Path = RNFS.DocumentDirectoryPath
 
 
-        var name = date.getUTCDate().toString() +
-            "-" + date.getUTCMonth().toString() +
-            "-" + date.getUTCFullYear().toString() +
-            "-" + date.getMilliseconds().toString() +
-            ".jpg"
+        // var name = date.getUTCDate().toString() +
+        //     "-" + date.getUTCMonth().toString() +
+        //     "-" + date.getUTCFullYear().toString() +
+        //     "-" + date.getMilliseconds().toString() +
+        //     ".jpg"
 
 
 
-        console.log(name)
-        // try
+        // console.log(name)
+        // // try
         // {
         //     console.log(RNFS.PicturesDirectoryPath+"/"+name)
         // RNFS.writeFile(RNFS.PicturesDirectoryPath+"/",imageData,'base64')

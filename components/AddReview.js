@@ -6,6 +6,8 @@ import  FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { AddComment } from "../redux/Actions/CommentActions";
+
+
 const AddReview=({pid,todaysdate})=>
   {
 

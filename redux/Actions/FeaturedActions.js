@@ -10,65 +10,56 @@ import {
     LOAD_FEATURED_FAILED,
     DELETE_FEATURED_SUCCESS,
     DELETE_FEATURED_FAILED
-  } from "../Types/FeaturedTypes";
+} from "../Types/FeaturedTypes";
 
 
-export const deleteFeaturedProduct=(key)=>
-{
-    return async(dispatch)=>
-    {
-        dispatch({type:LOAD_FEATURED_REQUEST})
+export const deleteFeaturedProduct = (key) => {
+    return async (dispatch) => {
+        dispatch({ type: LOAD_FEATURED_REQUEST })
 
-        try
-        {
+        try {
 
-            const quary=firestore().collection('featured').doc(key)
+            const quary = firestore().collection('featured').doc(key)
 
-            const res=await quary.delete()
-            dispatch({type:DELETE_FEATURED_SUCCESS})
+            const res = await quary.delete()
+            dispatch({ type: DELETE_FEATURED_SUCCESS })
 
 
         }
-        catch(err)
-        {
-            dispatch({type:DELETE_FEATURED_FAILED,payload:err})
+        catch (err) {
+            dispatch({ type: DELETE_FEATURED_FAILED, payload: err })
 
         }
     }
 }
-export const fetchFeaturedProducts=()=>
-{
+export const fetchFeaturedProducts = () => {
 
-    return async(dispatch)=>
-    {
+    return async (dispatch) => {
 
-        dispatch({type:LOAD_FEATURED_REQUEST})
+        dispatch({ type: LOAD_FEATURED_REQUEST })
 
-        try
-        {
-    
-  
-        const quary=firestore().collection('featured')
+        try {
 
-        const featured=await quary.get()
 
-        var list=[]
-        featured.forEach
-        (
-            function(child)
-            {
+            const quary = firestore().collection('featured')
 
-                list.push(child.data())
+            const featured = await quary.get()
 
-                
-            }
-        )
+            var list = []
+            featured.forEach
+                (
+                    function (child) {
 
-        dispatch({type:LOAD_FEATURED_SUCCESS,payload:list})   
+                        list.push(child.data())
+
+
+                    }
+                )
+
+            dispatch({ type: LOAD_FEATURED_SUCCESS, payload: list })
         }
-        catch(err)
-        {
-            dispatch({type:LOAD_COMMENTS_FAILED,payload:"There is Some Problem in Featured"})
+        catch (err) {
+            dispatch({ type: LOAD_COMMENTS_FAILED, payload: "There is Some Problem in Featured" })
 
         }
     }

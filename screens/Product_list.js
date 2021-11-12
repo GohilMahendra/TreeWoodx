@@ -27,7 +27,7 @@ const Product_list = () => {
   const product = useSelector(state => state.Products.products)
   const prodLoad = useSelector(state => state.Products.prodLoad)
   const moreproductsLoad = useSelector(state => state.Products.moreproductsLoad)
-  const lastindex=useSelector(state => state.Products.lastindex)
+  const lastindex = useSelector(state => state.Products.lastindex)
 
   const dispatch = useDispatch()
   const [search, setserach] = useState("")
@@ -37,19 +37,18 @@ const Product_list = () => {
   var item = p.params.item
 
 
+  
   const [category, setcategory] = useState(item == undefined ? null : item)
-  const [visible, setvisible] = useState(true)
   const { height, width } = Dimensions.get('screen')
 
   const searchProduct = () => {
 
-    dispatch(LoadProducts(category,search))
+    dispatch(LoadProducts(category, search))
 
   }
 
-  const loadMoreProd=()=>
-  {
-    dispatch(loadMoreProducts(category,search,lastindex))
+  const loadMoreProd = () => {
+    //dispatch(loadMoreProducts(category, search, lastindex))
 
   }
 
@@ -73,69 +72,50 @@ const Product_list = () => {
   }
 
 
+
+  useEffect
+  (
+    ()=>
+    {
+      if(p.params!=null)
+      {
+        if(p.params.type=='search')
+        {
+          console.log(p.params.search,'type Search')
+          setserach(p.params.search)
+        }
+        else
+        {
+          dispatch(LoadProducts(category, search))
+
+        }
+      }
+    }
+    ,[]
+  )
+
   useEffect
     (
       () => {
+
+        if(search!="")
         searchProduct()
 
       },
       [search]
     )
-  useEffect
-    (() => {
-      dispatch(LoadProducts(category,search))
-    
-    }
-      , []
-    )
-
 
 
   return (
-    <View style={{ flex: 1, alignItems: "center", backgroundColor: '#fff' }}>
+    <View style={{ flex: 1, alignItems: "center", backgroundColor: '#E6E6FA' }}>
 
-      <View style={
-        {
-          flexDirection: "row",
-          backgroundColor:"#fff",
 
-          justifyContent: "space-between"
-        }
-      }>
-
-        <Searchbar
-
-          onChangeText={setserach}
-
-          style={
-            {
-              width: '80%',
-              borderRadius: 20
-            }
-          }
-        >
-
-        </Searchbar>
-        <TouchableOpacity
-          style={
-            {
-              backgroundColor: "black",
-              borderRadius: 20
-            }
-          }
-        >
-          <FontAwesome5Icon name="filter"
-            style={{ margin: 10 }}
-            size={30} color={"#fff"}></FontAwesome5Icon>
-        </TouchableOpacity>
-      </View>
-     
 
       <FlatList
 
         refreshControl={
           <RefreshControl
-            onRefresh={() => dispatch(LoadProducts(category,search))}
+            onRefresh={() => dispatch(LoadProducts(category, search))}
 
             refreshing={prodLoad}
 
@@ -148,7 +128,7 @@ const Product_list = () => {
         data={product}
         numColumns={2}
         onEndReached={
-          ()=>loadMoreProd()
+          () => loadMoreProd()
         }
         keyExtractor={item => item.key}
         renderItem={itembuilder}
@@ -156,19 +136,19 @@ const Product_list = () => {
 
       </FlatList>
 
-      
-        <ActivityIndicator
-          animating={moreproductsLoad?true:false}
-          style={{
-            position: "absolute",
-            alignSelf: 'center',
-            top: '50%'
-          }}
-          size={30}
-        >
 
-        </ActivityIndicator>
-      
+      <ActivityIndicator
+        animating={moreproductsLoad ? true : false}
+        style={{
+          position: "absolute",
+          alignSelf: 'center',
+          top: '50%'
+        }}
+        size={30}
+      >
+
+      </ActivityIndicator>
+
 
     </View>
   )

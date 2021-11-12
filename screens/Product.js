@@ -5,26 +5,19 @@ import { View, Text, Image, ScrollView, ActivityIndicator, TextInput, Dimensions
 import { TouchableOpacity } from "react-native-gesture-handler";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import auth from "@react-native-firebase/auth";
-
 import { useState } from "react/cjs/react.development";
 
 import firestore from "@react-native-firebase/firestore";
 import AddStar from "../components/Addstar";
-import Modal from "react-native-modal";
 import Samebrand from "../components/Samebrand";
-import { listenerCount } from "npm";
+
 import SimilarItems from "../components/SimilarItems";
 import { StyleSheet } from "react-native";
-import { $CombinedState } from "redux";
 import { fonts } from "../constants/fonts";
 import { useDispatch } from "react-redux";
-import { AddToCart } from "../redux/Actions/CartActions";
-import { AddComment, test } from "../redux/Actions/CommentActions";
-import { average } from "@tensorflow/tfjs-layers/dist/exports_layers";
-import ImageSwiper from "../components/ImageSwiper";
+import { AddToCart } from "../redux/Actions/CartActions"; import ImageSwiper from "../components/ImageSwiper";
 import DimentionsView from "../components/Product/DimentionsView";
-import { } from "@react-native-mapbox-gl/maps";
+//import { } from "@react-native-mapbox-gl/maps";
 import AddReview from "../components/AddReview";
 const { height, width } = Dimensions.get('screen')
 const product = ({ navigation }) => {
@@ -36,24 +29,13 @@ const product = ({ navigation }) => {
 
   const todaysdate = date.toISOString().split('T')[0]
 
-
-
   const [success, setsuccess] = useState(false)
 
   const p = useRoute()
 
-
-
-
   const addTOcart = () => {
-
-
     dispatch(AddToCart(prod, p.params.item.key))
-
   }
-
-
-  //   console.log(item)
 
   useEffect
     (
@@ -132,7 +114,7 @@ const product = ({ navigation }) => {
         <ScrollView style={{ flex: 1 }}>
 
           <View style={{ flex: 1 }}>
-          
+
             {/**image courousel for product*/}
             <ImageSwiper
 
@@ -163,11 +145,11 @@ const product = ({ navigation }) => {
               <View style={styles.priceContainer}
               >
                 {/*RS{Math.floor(prod.price-prod.price*prod.discount/100)} */}
-                <Text style={{ fontSize: 20,fontFamily:fonts.Quicksand_Medium }} >
-                 RS {prod.priceafterdisc}
+                <Text style={{ fontSize: 20, fontFamily: fonts.Quicksand_Medium }} >
+                  RS {prod.priceafterdisc}
 
                 </Text>
-                <Text style={{ textDecorationLine: 'line-through', fontSize: 20 }} >RS{prod.price}</Text>
+                <Text style={{ textDecorationLine: 'line-through', fontFamily: fonts.Quicksand_Medium, fontSize: 20 }} >RS{prod.price}</Text>
                 <Text style={{ color: "green", fontSize: 20 }}>{prod.discount} % OFF</Text>
 
               </View>

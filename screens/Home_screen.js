@@ -18,9 +18,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { LoadInitialProducts } from "../redux/Actions/ProductActions";
 
 const Home_screen = ({ navigation }) => {
-    const { height, width } = Dimensions.get('screen')
 
     const chair = useSelector(state => state.Products.HomeProducts)
+    const homeprodLoad = useSelector(state => state.Products.homeprodLoad)
+
+    const [ind, setind] = useState(0)
 
     const dispatch = useDispatch()
     //fetch categories
@@ -41,8 +43,6 @@ const Home_screen = ({ navigation }) => {
             , []
         )
 
-    const [ind, setind] = useState(0)
-
 
     const chairbuilder = ({ item, index }) => {
 
@@ -51,8 +51,8 @@ const Home_screen = ({ navigation }) => {
             <TouchableOpacity
                 onPress={
                     () => navigation.navigate("product",
-                     { item: item, name: item.pname }
-                     )}
+                        { item: item, name: item.pname }
+                    )}
             >
                 <ProductCard
                     item={item}
@@ -64,38 +64,6 @@ const Home_screen = ({ navigation }) => {
     }
 
 
-    const [load, setload] = useState(false)
-
-    const arrivalBuilder = ({ item, index }) => {
-        return (
-            <TouchableOpacity style={{
-                height: 150, width: 300,
-                borderRadius: 20
-                , margin: 20
-            }}>
-                <Image
-                    style={{
-                        height: 150,
-                        backgroundColor: 'gray',
-                        borderRadius: 20
-                    }}
-                    blurRadius={1}
-                    source={{ uri: item.pimage }}
-                >
-
-                </Image>
-                <Text
-                    style={{
-                        fontSize: 20,
-                        color: "#fff",
-                        alignSelf: "center"
-                    }}>
-                    {item.pname}
-                </Text>
-            </TouchableOpacity>
-        )
-
-    }
 
 
     const catbuilder = ({ item, index }) => {
@@ -140,7 +108,8 @@ const Home_screen = ({ navigation }) => {
                 <TouchableOpacity
                     onPress={
                         () =>
-                         navigation.navigate('Product_list', { item: 'search' })
+                            navigation
+                                .navigate('Search')
                     }
                 >
                     <Searchbar
@@ -175,7 +144,7 @@ const Home_screen = ({ navigation }) => {
                     keyExtractor={item => item.id.toString()}
                 >
                 </FlatList>
-                
+
                 <View
                     style={{
                         flexDirection: 'row',
@@ -188,7 +157,17 @@ const Home_screen = ({ navigation }) => {
                     </Text>
 
                     <TouchableOpacity
-                        onPress={() => { navigation.navigate("Product_list", { item: categories[ind].name }) }}
+                        onPress=
+                        {
+                            () => {
+                                navigation.navigate("Product_list",
+                                    {
+                                        item:
+                                            categories[ind].name
+                                    }
+                                )
+                            }
+                        }
                     >
                         <FontAwesome5
                             name={'angle-right'}
@@ -196,7 +175,7 @@ const Home_screen = ({ navigation }) => {
                         ></FontAwesome5>
                     </TouchableOpacity>
                 </View>
-                
+
                 <FlatList
 
                     horizontal
@@ -208,8 +187,8 @@ const Home_screen = ({ navigation }) => {
                 </FlatList>
 
             </ScrollView>
-            {load && <ActivityIndicator
-                style={{ alignSelf: "center", top: "50%", left: "50%", position: 'absolute' }}
+            {homeprodLoad && <ActivityIndicator
+                style={Homestyles.loadingBar}
 
                 size='large'
                 color="green"
@@ -236,6 +215,13 @@ const Homestyles = StyleSheet.create(
             borderWidth: 1,
             borderRadius: 15,
             margin: 20
+        },
+        loadingBar:
+        {
+            alignSelf: "center",
+            top: "50%",
+            left: "50%",
+            position: 'absolute'
         }
 
     }

@@ -3,21 +3,14 @@
 import React, { useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import { View, Text } from "react-native";
-import { Appbar, ProgressBar } from "react-native-paper";
-import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
-import AddStar from "./Addstar";
 
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Image } from "react-native";
 import { fonts } from "../constants/fonts";
 
-import auth from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
 import { useDispatch } from "react-redux";
 import { changeCartQuantity } from "../redux/Actions/CartActions";
-const { height, width } = Dimensions.get(
-    'screen'
-)
+
 
 
 const CartCard = (props) => {

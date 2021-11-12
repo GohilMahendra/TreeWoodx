@@ -1,28 +1,20 @@
 
 import React from "react";
 import { 
-View,Text,StyleSheet,Image,SafeAreaView, FlatList, TouchableOpacity, Dimensions, TextInput, ScrollView
+Button,Image,SafeAreaView, FlatList, TouchableOpacity, Dimensions, TextInput, ScrollView
 
  } from "react-native";
 
-import  FontAwesome5  from "react-native-vector-icons/FontAwesome5";
-import { categories } from "../data/categories";
-import { chairdata } from "../data/chairdata";
-import { beddata } from "../data/beddata";
-import {  NavigationContainer} from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useState } from "react/cjs/react.development";
-import { useEffect } from "react";
-import database from "@react-native-firebase/database";
-   import {  createStackNavigator, HeaderTitle} from "@react-navigation/stack";
+import {  createStackNavigator, HeaderTitle} from "@react-navigation/stack";
 import Home_screen from "./Home_screen";
-import product from "./poduct";
+import product from "./Product";
 import Product_list from "./Product_list";
 import Comments from "./Comments";
 import Search from "./Search";
+
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import VisionSearch from "./VisionSearch";
 import SimilarProducts from "./SimilarProducts";
-import SimilarItems from "../components/SimilarItems";
 import SimilarBrands from "./SimilarBrands";
 const newnav=createStackNavigator()
    const HomeView=({navigation})=>
@@ -111,11 +103,30 @@ const newnav=createStackNavigator()
         </newnav.Screen>
 
         <newnav.Screen
-         options={{
-             headerShown:true,
+         options={({ route }) => ({ title: route.params.name ,
+        
+          headerRight: () => (
+           <TouchableOpacity
+           style={{
+             margin:10
 
-           
-          }}
+           }}
+           onPress={
+          ()=>navigation.navigate('Search')
+           }
+           >
+             <FontAwesome5Icon
+             name={'search'}
+             size={20}
+             color={"grey"}
+             solid={false}
+             ></FontAwesome5Icon>
+           </TouchableOpacity>
+          ),
+        })}
+
+
+        
         name="Product_list"
         component={Product_list}
         >

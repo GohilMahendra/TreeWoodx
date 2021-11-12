@@ -11,15 +11,18 @@ const ProductCard = (props) => {
   return (
 
     <TouchableOpacity
-      onPress={() => navigation.push("product", { item: item, name: item.pname })}
+      onPress={() => 
+        navigation.push("product",
+         { item: item, name: item.pname 
+      })}
 
       style={
         {
           backgroundColor: '#FFF',
-          elevation: 25,
+          elevation: 10,
           height: 350,
-          width: '45%',
-          margin: 10,
+          width: '47%',
+          margin: 5,
           borderRadius: 15,
 
         }
@@ -38,14 +41,12 @@ const ProductCard = (props) => {
             //backgroundColor:"blue",
             height: '60%',
             width: '100%',
-
             borderRadius: 15,
             alignSelf: "center"
           }
         }
         resizeMode="cover"
       >
-
       </Image>
       <View
         style={
@@ -77,11 +78,20 @@ const ProductCard = (props) => {
           }
         >{item.pbrand}</Text>
 
+      <View
+      style={{
+        flexDirection:"row",
+        justifyContent:'space-around',
+        alignItems:"center"
+      }}
+      >
         <Text
           style={
             {
               fontFamily: fonts.Federo_Regular,
               fontSize: 18,
+              color:"black"
+             
 
             }
           }
@@ -94,11 +104,13 @@ const ProductCard = (props) => {
               fontFamily: fonts.Federo_Regular,
               fontSize: 18,
               textDecorationLine: 'line-through',
+              color:'gray'
             }
           }
         >
           RS {item.pprice}
         </Text>
+      </View>
       </View>
       <View
         style={

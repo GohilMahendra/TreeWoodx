@@ -5,7 +5,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import auth from "@react-native-firebase/auth";
 import { fonts } from "../constants/fonts";
 
-const UserName = auth().currentUser.displayName
+const UserName = (auth().currentUser!=null) ?auth().currentUser.displayName:null
 const Admin_addSales = ({ navigation }) => {
 
 

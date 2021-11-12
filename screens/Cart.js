@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState ,useRef} from "react";
 import { 
 
     Dimensions,
-    Text,TouchableOpacity,View,Image, TextInput, ActivityIndicator
+    Text,TouchableOpacity,View,Image, TextInput, ActivityIndicator, Animated
  } from "react-native";
 import { FlatList, Swipeable } from "react-native-gesture-handler";
 import { Value } from "react-native-reanimated";
@@ -54,7 +54,34 @@ const {height,width}=Dimensions.get('screen')
 
 
   
- 
+ const valref=useRef(new Animated.Value(1))
+
+ useEffect(() => {
+  // makes the sequence loop
+  Animated.loop(
+      
+    // runs given animations in a sequence
+    Animated.sequence([
+      // increase size
+      Animated.timing(valref.current, {
+        toValue: 1.5, 
+        duration: 200,
+        useNativeDriver: true 
+      }),
+      // decrease size
+      Animated.timing(valref.current, {
+        toValue: 1, 
+        duration: 200,
+        useNativeDriver: true 
+      }),
+    ])
+
+    ,
+  { iterations: 2 }
+  ).start();
+
+}, [tot]);
+
 
 // useEffect
 // (
@@ -192,7 +219,19 @@ const {height,width}=Dimensions.get('screen')
                  }
                }
                >
+                 <View
+                 style={{
+                   transform:[
+                     {
+                       scale:valref.current
+                     }
+                   ]
+                 }}
+                 >
                 <Text style={{marginHorizontal:20,fontSize:25,fontFamily:fonts.Quicksand_Medium}}>TOTAL </Text>
+               
+                </View>
+
                 <Text style={{marginHorizontal:20,fontWeight:"bold",fontSize:25,fontFamily:fonts.Quicksand_Medium}}>
                   RS {tot}</Text>
                 </View>

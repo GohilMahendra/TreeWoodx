@@ -44,10 +44,10 @@ export const LoadExternalDetails = (pid) => {
   }
 }
 
+
 export const FetchReviews = (pid) => {
+
   return async (dispatch) => {
-
-
 
     try {
 
@@ -65,12 +65,12 @@ export const FetchReviews = (pid) => {
       reviews.forEach
         (
           function (child) {
-            list.push({...child.data(),key:child.id})
+            list.push({ ...child.data(), key: child.id })
           }
         )
 
 
-      
+
       let lastkey = null
 
       if (list.length >= MAX_FETCH_LIMIT) {
@@ -97,9 +97,11 @@ export const FetchReviews = (pid) => {
   }
 
 }
-export const fetchMoreReviews = (pid, lastindex) => {
-  return async (dispatch) => {
 
+
+export const fetchMoreReviews = (pid, lastindex) => {
+
+  return async (dispatch) => {
 
     try {
       dispatch({ type: LOAD_MORE_COMMENTS_REQUEST })
@@ -126,14 +128,10 @@ export const fetchMoreReviews = (pid, lastindex) => {
 export const AddComment = (review, key, todaysdate) => {
   return async (dispatch) => {
 
-
-
     dispatch({ type: ADD_COMMENT_REQUEST })
 
-
-
     if (review.review == "" || review.review == undefined) {
-      alert('please add review and then try your thoughts are valueable to US')
+      alert("please add review and then try your thoughts are valueable to US")
       return
     }
 
@@ -150,9 +148,6 @@ export const AddComment = (review, key, todaysdate) => {
       .collection('reviews')
       .doc(key)
       .get()
-
-
-
 
 
     if (!avg.exists) {
@@ -255,8 +250,8 @@ export const AddComment = (review, key, todaysdate) => {
         .set(
           {
             date: todaysdate,
-            username: auth().currentUser.displayName
-            , star: review.rate,
+            username: "",
+            star: review.rate,
             review: review.review
 
           }
@@ -269,8 +264,6 @@ export const AddComment = (review, key, todaysdate) => {
 
       dispatch({ type: ADD_COMMENT_FAILED, payload: err })
     }
-
-
 
   }
 

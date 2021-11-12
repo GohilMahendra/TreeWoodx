@@ -2,7 +2,7 @@
 import auth from "@react-native-firebase/auth";
 
 import firestore from "@react-native-firebase/firestore";
-import product from "../../screens/poduct";
+import product from "../../screens/Product";
 import {
     LOAD_HOME_PRODUCTS_FAILED,
     LOAD_HOME_PRODUCTS_REQUEST,
@@ -154,8 +154,11 @@ export const LoadProducts = (category, search) => {
 
 
             let quary = ""
-            if (category != null && search == "" && category != "All"
-                && category != "Search") {
+            if (category != null && 
+                search == "" && 
+                category != "All"
+                && category != "Search") 
+            {
                 quary = firestore()
                     .collection('products')
                     .where('cat', '==', category)
@@ -163,7 +166,8 @@ export const LoadProducts = (category, search) => {
             }
 
             else if (search != null && search != "") {
-                quary = firestore().collection('products')
+                quary = firestore()
+                    .collection('products')
                     .where('pname', '>=', search)
                     .where('pname', '<=', search + '\uf8ff').limit(MAX_FETCH_LIMIT)
 
@@ -237,9 +241,7 @@ export const loadMoreProducts = (category, search, lastindex) => {
                 console.log("NULL INDEX")
                 return
             }
-
-
-            let quary = null
+    
             if (category != null &&
 
                 category != "All"
@@ -247,6 +249,7 @@ export const loadMoreProducts = (category, search, lastindex) => {
 
                 quary = firestore().collection('products')
                     .where('cat', '==', category)
+                    .where('pname','==',search)
                     .orderBy(firestore.FieldPath.documentId())
                     .startAfter(lastindex)
                     .limit(MAX_FETCH_LIMIT)
@@ -292,8 +295,6 @@ export const loadMoreProducts = (category, search, lastindex) => {
             }
 
 
-
-            console.log(lastkey)
 
             dispatch({
                 type: LOAD_MORE_PRODUCTS_SUCCESS, payload:

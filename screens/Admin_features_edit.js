@@ -12,9 +12,6 @@ import { useRoute } from "@react-navigation/native";
 
 
 import Featureddata from "../constants/FeaturedCard.json";
-import { ImageBackground } from "react-native";
-import { firebase } from "@react-native-firebase/auth";
-import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
 import firestore from "@react-native-firebase/firestore";
 const Admin_features_edit=()=>
 {

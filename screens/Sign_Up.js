@@ -1,19 +1,13 @@
 import React, { useState } from "react";
 import { View,Text,Alert, Button,TextInput, Dimensions, Image, ActivityIndicator } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { Value } from "react-native-reanimated";
 
 import auth from "@react-native-firebase/auth";
-import database from "@react-native-firebase/database"
 import firestore from "@react-native-firebase/firestore";
-import { FirebaseDatabaseTypes } from "@react-native-firebase/database";
-import { NavigationContainer } from "@react-navigation/native";
-import { KeyboardAvoidingView } from "react-native";
 import { ImageBackground } from "react-native";
 import { fonts } from "../constants/fonts";
 import { StyleSheet } from "react-native";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
-import LinearGradient from "react-native-linear-gradient";
 
 const Sign_Up=({navigation})=>
 {
@@ -160,6 +154,8 @@ const Sign_Up=({navigation})=>
          placeholderTextColor="black"
        placeholder="Enter Email HERE..."
        textContentType="emailAddress"
+     
+    
         onChangeText={setuemail}
         style={styles.textinputstyle}
        />
@@ -167,6 +163,8 @@ const Sign_Up=({navigation})=>
         <TextInput
         placeholder="Enter Password HERE..."
     
+     
+        ma
         placeholderTextColor="black"
         textContentType={"password"}
         style={styles.textinputstyle}
@@ -230,7 +228,7 @@ const styles=StyleSheet.create
     alignItems:'center',
     textAlign:"center",
     backgroundColor:"#fff",
-    color:"#fff",
+    color:"black",
     borderRadius:20,
     borderWidth:1}
   ,

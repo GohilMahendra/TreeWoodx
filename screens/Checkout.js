@@ -5,7 +5,7 @@ import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { Item } from "react-native-paper/lib/typescript/components/List/List";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import { useState } from "react/cjs/react.development";
-import MapboxGL from "@react-native-mapbox-gl/maps";
+//import MapboxGL from "@react-native-mapbox-gl/maps";
 import axios from "axios";
 import { Dimensions } from "react-native";
 import { Marker } from "react-native-svg";

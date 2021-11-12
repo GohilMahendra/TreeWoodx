@@ -8,8 +8,9 @@
 
 import React, { useEffect } from 'react';
 
-import { Provider } from 'react-redux';
-import store from './redux/store/store';
+import { View,Text } from "react-native";
+ import { Provider } from 'react-redux';
+ import store from './redux/store/store';
 import RootStackNavigator from './navigation/RootStackNavigater';
 
 
@@ -18,6 +19,8 @@ const App=()=>
 
 
   return(
+
+ 
     <Provider store={store}>
 
       <RootStackNavigator>

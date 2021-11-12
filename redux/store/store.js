@@ -15,6 +15,7 @@ import ProductReducer from "../reducers/ProductReducer";
 import SimilarReducer from "../reducers/SimilarReducer";
 import FeaturedReducer from "../reducers/FeaturedReducer";
 import OrderReducer from "../reducers/OrderReducer";
+import SearchReducer from "../reducers/SearchReducer";
  const rootReducer=combineReducers
  (
      {
@@ -23,7 +24,8 @@ import OrderReducer from "../reducers/OrderReducer";
          Products:ProductReducer,
          Similar:SimilarReducer,
          Featured:FeaturedReducer,
-         Orders:OrderReducer
+         Orders:OrderReducer,
+         Search:SearchReducer
      }
  )
  

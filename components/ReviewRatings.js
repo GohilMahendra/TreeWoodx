@@ -7,10 +7,6 @@ import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import AddStar from "./Addstar";
 import CountConverter from "./CountConverter";
 import ReviewCountPoll from "./ReviewCountPoll";
-import {  } from "moment";
-const { height, width } = Dimensions.get(
-  'screen'
-)
 
 
 const ReviewRatings = ({ avg} ) => {
