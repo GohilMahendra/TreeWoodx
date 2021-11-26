@@ -2,7 +2,7 @@ import React from "react";
 import { Dimensions } from "react-native";
 
 import { View, Text, StyleSheet } from "react-native";
-import { fonts } from "../constants/fonts";
+import { fonts } from "../../constants/fonts";
 
 
 import AddStar from "./Addstar";

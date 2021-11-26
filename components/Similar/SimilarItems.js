@@ -11,12 +11,12 @@ import firestore from "@react-native-firebase/firestore";
 import { FlatList } from "react-native-gesture-handler";
 import {
     fonts
-} from "../constants/fonts";
+} from "../../constants/fonts";
 
-import ProductCard from "./ProductCard";
+import ProductCard from "../ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 
-import { FetchInitialSimilarProducts, FetchSimilarProducts } from "../redux/Actions/SimilarActions";
+import { FetchInitialSimilarProducts, FetchSimilarProducts } from "../../redux/Actions/SimilarActions";
 import { useNavigation } from "@react-navigation/core";
 const SimilarItems = ({ category, curruntID }) => {
 

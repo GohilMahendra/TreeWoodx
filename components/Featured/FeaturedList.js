@@ -21,7 +21,7 @@ import firestore from "@react-native-firebase/firestore";
 
 import FeaturedCard from "./FeaturedCard";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFeaturedProducts } from "../redux/Actions/FeaturedActions";
+import { fetchFeaturedProducts } from "../../redux/Actions/FeaturedActions";
 import Carousel from "react-native-snap-carousel";
 
 
