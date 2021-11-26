@@ -8,8 +8,8 @@ import { Searchbar } from 'react-native-paper';
 
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { searchProd } from '../redux/Actions/SearchActions';
-import { fonts } from '../constants/fonts';
+import { searchProd } from '../../redux/Actions/SearchActions';
+import { fonts } from '../../constants/fonts';
 const Search = () => {
     const navigation = useNavigation()
     const [search, setsearch] = useState("")

@@ -1,19 +1,19 @@
 import React, { useReducer } from "react";
 import { View, Text, TextInput, Dimensions, Image, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { fonts } from "../constants/fonts";
+import { fonts } from "../../constants/fonts";
 import { useRoute } from "@react-navigation/core";
 
 
 import Modal from "react-native-modal";
 
-import { makeOrder } from "../redux/Actions/OrderActions";
-import AddressCard from "../components/AddressCard";
+import { makeOrder } from "../../redux/Actions/OrderActions";
+import AddressCard from "../../components/AddressCard";
 import { useState } from "react/cjs/react.development";
 import { ScrollView } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
 import { ActivityIndicator } from "react-native-paper";
-import PaymentCard from "../components/PaymentCard";
+import PaymentCard from "../../components/PaymentCard";
 const Payment = ({ navigation }) => {
 
   const dispatch = useDispatch()

@@ -5,10 +5,10 @@ import { TouchableOpacity, View, Text } from "react-native";
 import { FlatList } from "react-native";
 
 
-import ReviewRatings from "../components/ReviewRatings";
-import ReviewCard from "../components/reviewCard";
+import ReviewRatings from "../../components/Review/ReviewRatings";
+import ReviewCard from "../../components/Review/reviewCard";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMoreReviews, FetchReviews, LoadExternalDetails } from "../redux/Actions/CommentActions";
+import { fetchMoreReviews, FetchReviews, LoadExternalDetails } from "../../redux/Actions/CommentActions";
 
 const Comments = () => {
 

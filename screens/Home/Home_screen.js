@@ -6,16 +6,16 @@ import {
 } from "react-native";
 
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import { categories } from "../data/categories";
+import { categories } from "../../data/categories";
 
 import { useState } from "react/cjs/react.development";
 import { useEffect } from "react";
 
 import { Appbar, Searchbar } from "react-native-paper";
-import ProductCard from "../components/ProductCard";
-import FeaturedList from "../components/FeaturedList";
+import ProductCard from "../../components/ProductCard";
+import FeaturedList from "../../components/Featured/FeaturedList";
 import { useDispatch, useSelector } from "react-redux";
-import { LoadInitialProducts } from "../redux/Actions/ProductActions";
+import { LoadInitialProducts } from "../../redux/Actions/ProductActions";
 
 const Home_screen = ({ navigation }) => {
 

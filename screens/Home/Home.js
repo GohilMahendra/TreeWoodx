@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import HomeTabNavigator from "../navigation/HomeTabNavigator";
+import HomeTabNavigator from "../../navigation/HomeTabNavigator";
 
 import auth from "@react-native-firebase/auth";
 import { useNavigation } from "@react-navigation/core";

@@ -91,8 +91,10 @@ const Login = ({ navigation }) =>
 
       <Image
 
-        style={{ position: 'absolute', resizeMode: 'stretch', height: height, width: width }}
-        source={require('../assets/login.jpg')}
+        style={{ position: 'absolute', 
+        resizeMode: 'stretch'
+        , height: height, width: width }}
+        source={require('../../assets/login.jpg')}
       />
 
       <View style={{

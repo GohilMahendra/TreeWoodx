@@ -1,24 +1,24 @@
 import { useRoute } from "@react-navigation/core";
-import React, { useEffect } from "react";
+import React, { useEffect ,useState} from "react";
 
 import { View, Text, Image, ScrollView, ActivityIndicator, TextInput, Dimensions, FlatList, ImageBackground, VirtualizedList } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { useState } from "react/cjs/react.development";
 
 import firestore from "@react-native-firebase/firestore";
-import AddStar from "../components/Addstar";
-import Samebrand from "../components/Samebrand";
+import AddStar from "../../components/Review/Addstar";
+import Samebrand from "../../components/Similar/Samebrand";
 
-import SimilarItems from "../components/SimilarItems";
+import SimilarItems from "../../components/Similar/SimilarItems";
 import { StyleSheet } from "react-native";
-import { fonts } from "../constants/fonts";
+import { fonts } from "../../constants/fonts";
 import { useDispatch } from "react-redux";
-import { AddToCart } from "../redux/Actions/CartActions"; import ImageSwiper from "../components/ImageSwiper";
-import DimentionsView from "../components/Product/DimentionsView";
+import { AddToCart } from "../../redux/Actions/CartActions"; 
+import ImageSwiper from "../../components/ImageSwiper";
+import DimentionsView from "../../components/Product/DimentionsView";
 //import { } from "@react-native-mapbox-gl/maps";
-import AddReview from "../components/AddReview";
+import AddReview from "../../components/Review/AddReview";
 const { height, width } = Dimensions.get('screen')
 const product = ({ navigation }) => {
 

@@ -6,10 +6,10 @@ import { View, Text } from "react-native";
 
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Image } from "react-native";
-import { fonts } from "../constants/fonts";
+import { fonts } from "../../constants/fonts";
 
 import { useDispatch } from "react-redux";
-import { changeCartQuantity } from "../redux/Actions/CartActions";
+import { changeCartQuantity } from "../../redux/Actions/CommentActions";
 
 
 

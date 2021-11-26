@@ -12,8 +12,8 @@ import {
 } from "react-native-gesture-handler";
 
 
-import ProductCard from "../components/Product_list/ProductCard";
-import { FetchMoreSimilarProducts } from '../redux/Actions/SimilarActions';
+import ProductCard from "../../components/Product_list/ProductCard";
+import { FetchMoreSimilarProducts } from '../../redux/Actions/SimilarActions';
 const { height, width } = Dimensions.get('screen')
 const SimilarProducts = ({ navigation }) => {
     const p = useRoute()

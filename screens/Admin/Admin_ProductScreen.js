@@ -4,14 +4,14 @@ import { FlatList, TextInput, TouchableOpacity } from "react-native-gesture-hand
 import firestore from "@react-native-firebase/firestore";
 import { Alert } from "react-native";
 
-import { fonts } from "../constants/fonts";
-import { colorsArray } from "../constants/colors";
+import { fonts } from "../../constants/fonts";
+import { colorsArray } from "../../constants/colors";
 import { FAB } from "react-native-paper";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
-import CustomFab from "../components/Admin_Product/CustomFab";
+import CustomFab from "../../components/Admin_Product/CustomFab";
 import { useDispatch, useSelector } from "react-redux";
-import { DeleteProduct, LoadProducts } from "../redux/Actions/ProductActions";
-import ProductEditer from "../components/ProductEditer";
+import { DeleteProduct, LoadProducts } from "../../redux/Actions/ProductActions";
+import ProductEditer from "../../components/ProductEditer";
 
 
 const Admin_editProd=({navigation})=>

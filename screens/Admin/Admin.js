@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import AdminTabNavigator from "../navigation/AdminTabNavigator";
+import AdminTabNavigator from "../../navigation/AdminTabNavigator";
 import auth from "@react-native-firebase/auth";
 const Admin=({navigation})=>
 {

@@ -5,7 +5,7 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import { ImageBackground } from "react-native";
-import { fonts } from "../constants/fonts";
+import { fonts } from "../../constants/fonts";
 import { StyleSheet } from "react-native";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 
@@ -103,7 +103,7 @@ const Sign_Up=({navigation})=>
 
     
     <ImageBackground
-    source={require('../assets/modern.jpg')
+    source={require('../../assets/modern.jpg')
 
     }
     style={

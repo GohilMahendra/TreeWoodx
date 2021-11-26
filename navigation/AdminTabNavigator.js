@@ -1,11 +1,11 @@
 import React from "react";
 
 import {BottomTabBar, createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Admin_panel from "../screens/Admin_panel";
-import Admin_addSales from "../screens/Admin_addsales";
+import Admin_panel from "../screens/Admin/Admin_panel";
+import Admin_addSales from "../screens/Admin/Admin_addsales";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import Admin_editProd from "../screens/Admin_editProd";
-import Admin_addOffer from "../screens/Admin_addOffer";
+import Admin_editProd from "../screens/Admin/Admin_editProd";
+import Admin_addOffer from "../screens/Admin/Admin_addOffer";
 const bottomTab=createBottomTabNavigator();
 const AdminTabNavigator=({navigation})=>
 {

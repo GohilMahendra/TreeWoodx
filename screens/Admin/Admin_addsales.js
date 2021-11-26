@@ -3,7 +3,7 @@ import { View, Text, FlatList, StyleSheet, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import auth from "@react-native-firebase/auth";
-import { fonts } from "../constants/fonts";
+import { fonts } from "../../constants/fonts";
 
 const UserName = (auth().currentUser!=null) ?auth().currentUser.displayName:null
 const Admin_addSales = ({ navigation }) => {

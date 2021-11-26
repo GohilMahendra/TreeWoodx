@@ -10,7 +10,7 @@ import {
 import { Dimensions } from "react-native";
 
 import { Image, StyleSheet } from "react-native";
-import { fonts } from "../constants/fonts";
+import { fonts } from "../../constants/fonts";
 import { TouchableOpacity } from "react-native";
 import { Snackbar } from "react-native-paper";
 import LinearGradient from "react-native-linear-gradient";

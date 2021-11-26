@@ -1,6 +1,4 @@
 
-
-import Comments from "../../screens/Comments";
 import {
 
 

@@ -6,8 +6,8 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { FlatList } from "react-native-gesture-handler";
-import { FetchMoreSimilarBrands, FetchSimilarBrands } from '../redux/Actions/SimilarActions';
-import ProductCard from '../components/Product_list/ProductCard';
+import { FetchMoreSimilarBrands, FetchSimilarBrands } from '../../redux/Actions/SimilarActions';
+import ProductCard from '../../components/Product_list/ProductCard';
 
 const {height,width}=Dimensions.get('screen')
 const SimilarBrands = ({ navigation }) => {

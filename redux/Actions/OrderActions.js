@@ -1,10 +1,6 @@
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
 import { LOAD_ORDERS_FAILED, LOAD_ORDERS_REQUEST, LOAD_ORDERS_SUCCESS, MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST, MAKE_ORDER_SUCCESS } from "../Types/OrderReducer";
-import { ActionSheetIOS } from "react-native";
-import OrderReducer from "../reducers/OrderReducer";
-import { listenerCount } from "npm";
-
 
 
 let date=new Date()

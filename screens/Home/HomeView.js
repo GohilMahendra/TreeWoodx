@@ -7,15 +7,15 @@ Button,Image,SafeAreaView, FlatList, TouchableOpacity, Dimensions, TextInput, Sc
 
 import {  createStackNavigator, HeaderTitle} from "@react-navigation/stack";
 import Home_screen from "./Home_screen";
-import product from "./Product";
-import Product_list from "./Product_list";
-import Comments from "./Comments";
-import Search from "./Search";
+import product from "../Product/Product";
+import Product_list from "../Product/Product_list";
+import Comments from "../Comments/Comments";
+import Search from "../Search/Search";
 
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
-import VisionSearch from "./VisionSearch";
-import SimilarProducts from "./SimilarProducts";
-import SimilarBrands from "./SimilarBrands";
+
+import SimilarProducts from "../Product/SimilarProducts";
+import SimilarBrands from "../Product/SimilarBrands";
 const newnav=createStackNavigator()
    const HomeView=({navigation})=>
 {

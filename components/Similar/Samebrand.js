@@ -9,13 +9,13 @@ import {
 } from "react-native";
 import firestore from "@react-native-firebase/firestore";
 import { FlatList } from "react-native-gesture-handler";
-import { fonts } from "../constants/fonts";
+import { fonts } from "../../constants/fonts";
 import { Dimensions } from "react-native";
-import ProductCard from "./ProductCard";
+import ProductCard from "../ProductCard";
 import { useNavigation } from "@react-navigation/core";
 import { useDispatch, useSelector } from "react-redux";
 import { stat } from "react-native-fs";
-import { FetchSimilarBrands } from "../redux/Actions/SimilarActions";
+import { FetchSimilarBrands } from "../../redux/Actions/SimilarActions";
 
 const Samebrand = ({ brand, curruntID }) => {
 

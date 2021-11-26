@@ -2,7 +2,7 @@
 import auth from "@react-native-firebase/auth";
 
 import firestore from "@react-native-firebase/firestore";
-import product from "../../screens/Product";
+
 import {
     LOAD_HOME_PRODUCTS_FAILED,
     LOAD_HOME_PRODUCTS_REQUEST,

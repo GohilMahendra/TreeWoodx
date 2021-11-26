@@ -9,15 +9,15 @@ import { FlatList, Swipeable } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
 import { useEffect } from "react/cjs/react.development";
 
-import { fonts } from "../constants/fonts";
+import { fonts } from "../../constants/fonts";
 
-import CartCard from "../components/CartCard";
+import CartCard from "../../components/Cart/CartCard";
 
-import EmptyCartScreen from "../components/EmptyCartScreen";
+import EmptyCartScreen from "../../components/EmptyCartScreen";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { changeCartQuantity, removeFromCart } from "../redux/Actions/CartActions";
+import { changeCartQuantity, removeFromCart } from "../../redux/Actions/CartActions";
 const { height, width } = Dimensions.get('screen')
 
 const Cart = ({ navigation }) => {

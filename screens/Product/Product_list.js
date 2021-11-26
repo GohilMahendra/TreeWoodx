@@ -3,18 +3,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { Dimensions, Picker, RefreshControl, Image, Button, Pressable, Text, TextInput, View } from "react-native"
   ;
 
-import Modal from "react-native-modal";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 
 import { useNavigation, useRoute } from "@react-navigation/core";
 
-import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
-import { Slider } from "react-native-elements/dist/slider/Slider";
 import { ActivityIndicator, Searchbar } from "react-native-paper";
 
-import ProductCard from "../components/Product_list/ProductCard";
+import ProductCard from "../../components/Product_list/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
-import { LoadProducts, loadMoreProducts } from "../redux/Actions/ProductActions";
+import { LoadProducts, loadMoreProducts } from "../../redux/Actions/ProductActions";
 
 const Product_list = () => {
   const navigation = useNavigation()

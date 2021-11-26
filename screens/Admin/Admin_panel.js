@@ -1,10 +1,6 @@
 import React, { useEffect,useState } from "react";
 import { View,Dimensions ,Text,StyleSheet,ScrollView} from "react-native";
-import {PieChart,BarChart,LineChart ,ProgressChart } from "react-native-chart-kit";
 
-
-import { fonts } from "../constants/fonts";
-import firestore from "@react-native-firebase/firestore";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { CommonActions } from "@react-navigation/routers";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";

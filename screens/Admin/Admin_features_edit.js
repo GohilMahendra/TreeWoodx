@@ -3,15 +3,15 @@ import React,{useEffect, useState} from "react";
 import { TextInput } from "react-native";
 import { View ,Text, FlatList, Dimensions} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import FeaturedCard from "../components/FeaturedCard";
-import { Featured } from "../data/Featured";
+import FeaturedCard from "../../components/Featured/FeaturedCard";
+import { Featured } from "../../data/Featured";
 import {  
     RadioButton, useTheme
 } from "react-native-paper";
 import { useRoute } from "@react-navigation/native";
 
 
-import Featureddata from "../constants/FeaturedCard.json";
+import Featureddata from "../../constants/FeaturedCard.json";
 import firestore from "@react-native-firebase/firestore";
 const Admin_features_edit=()=>
 {

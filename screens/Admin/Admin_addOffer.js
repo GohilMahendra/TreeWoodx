@@ -6,23 +6,12 @@ import {
     Text,
     TouchableOpacity
 } from "react-native";
-
-
-import firestore from "@react-native-firebase/firestore";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
-import dummydata from "../../constants/dummydata.json";
 import { Dimensions } from "react-native";
-import { colorsArray } from "../../constants/colors";
-import { Image } from "react-native";
-import { fonts } from "../../constants/fonts";
 
-
-import { imagedata } from "../../data/imagedata";
-
-import Carousel from "react-native-snap-carousel";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFeaturedProduct, fetchFeaturedProducts } from "../../redux/Actions/FeaturedActions";
-import FeaturedCard from "../../components/FeaturedCard";
+import FeaturedCard from "../../components/Featured/FeaturedCard";
 
 
 const { height, width } = Dimensions.get('screen')

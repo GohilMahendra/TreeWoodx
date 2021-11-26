@@ -10,7 +10,7 @@ import axios from "axios";
 import { Dimensions } from "react-native";
 import { Marker } from "react-native-svg";
 import { Searchbar } from "react-native-paper";
-import { fonts } from "../constants/fonts";
+import { fonts } from "../../constants/fonts";
 
 const Checkout = ({ navigation }) => {
 
