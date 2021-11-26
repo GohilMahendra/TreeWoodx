@@ -107,7 +107,8 @@ const AddReview=({pid,todaysdate})=>
       {
         alignContent: "center",
         alignItems: 'center',
-        margin: 20
+        margin: 20,
+        
       },
 	  
 	     addbtnReview:

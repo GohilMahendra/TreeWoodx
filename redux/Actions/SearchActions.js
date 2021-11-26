@@ -18,7 +18,7 @@ export const searchProd = (search) => {
 
             const searchResults = await qry.get();
 
-            console.log(searchResults)
+         
             var list = []
 
             searchResults.forEach

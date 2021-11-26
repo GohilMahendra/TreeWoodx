@@ -21,7 +21,7 @@ const ProductCard = (props) => {
           backgroundColor: '#FFF',
           elevation: 10,
           height: 350,
-          width: '47%',
+          width: '100%',
           margin: 5,
           borderRadius: 15,
 

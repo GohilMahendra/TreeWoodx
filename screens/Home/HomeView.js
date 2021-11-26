@@ -32,7 +32,33 @@ const newnav=createStackNavigator()
         options=
         {
             {
-                headerShown:false
+                headerShown:true,
+                headerTitle:"Home",
+                headerLeft:()=>
+                (
+                   null
+                ),
+
+                headerRight:()=>
+                (
+                  <TouchableOpacity
+                  onPress={
+                    ()=>navigation.navigate('Search')
+                  }
+                  style={{
+                    margin:10,
+                    marginHorizontal:20
+                  }}
+                  >
+                      <FontAwesome5Icon
+                      name={'search'}
+                      size={20}
+
+                      ></FontAwesome5Icon>
+                  </TouchableOpacity>
+
+                )
+                
             }
         }
         name="Homescreen"

@@ -36,7 +36,7 @@ const Login = ({ navigation }) =>
             if (user) {
 
 
-              navigation.navigate("Home")
+              navigation.navigate("Admin")
             }
           })
 

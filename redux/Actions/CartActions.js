@@ -149,10 +149,9 @@ export const fetchCartproducts = () => {
     try {
 
 
-
-
-
-      firestore().collection('cart').doc(auth().currentUser.uid).collection('products').onSnapshot
+      const subscribe=firestore().collection('cart')
+      .doc(auth().currentUser.uid)
+      .collection('products').onSnapshot
 
         (
           (snapshot) => {
@@ -163,9 +162,6 @@ export const fetchCartproducts = () => {
             snapshot.forEach
               (
                 function (child) {
-
-
-
 
                   var pricex = child.data().price - child.data().price * child.data().discount / 100
                   total = total + child.data().quantity * pricex
@@ -198,8 +194,10 @@ export const fetchCartproducts = () => {
           }
         )
 
+        return ()=>subscribe()
 
     }
+
 
 
     catch (err) {

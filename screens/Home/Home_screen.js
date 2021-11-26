@@ -105,22 +105,7 @@ const Home_screen = ({ navigation }) => {
             <ScrollView
             >
 
-                <TouchableOpacity
-                    onPress={
-                        () =>
-                            navigation
-                                .navigate('Search')
-                    }
-                >
-                    <Searchbar
-                        editable={false}
-                        style={Homestyles.searchBar}
-                        placeholder="search......"
-
-                        disableFullscreenUI={true}
-                    />
-
-                </TouchableOpacity>
+        
 
                 <View
                     style={
