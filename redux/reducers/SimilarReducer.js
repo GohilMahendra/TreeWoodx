@@ -33,11 +33,13 @@ const initialstate = {
     similarBrands: [],
 
 
-    similarProductsInitial: [],
-    similarBrandsInitial: [],
 
     similarProductsInitialLoading: false,
     similarBrandsInitialLoading: false,
+
+
+    similarProductsError: null,
+    similarBrandsError: null,
 
 
     moreProductsLoading: false,
@@ -49,8 +51,6 @@ const initialstate = {
     lastKeyProduct: null,
     lastKeyBrand: null,
 
-    similarProductsError: null,
-    similarBrandsError: null,
 
 
 }
@@ -70,7 +70,6 @@ const SimilarReducer = (state = initialstate, action) => {
         case LOAD_SIMILAR_BY_PRODUCTS_SUCCESS:
             return {
                 ...state,
-                similarProductsInitial: action.payload.Products,
                 similarProducts: action.payload.Products,
                 similarProductsInitialLoading: false
                 , lastKeyProduct: action.payload.lastKey
@@ -117,7 +116,7 @@ const SimilarReducer = (state = initialstate, action) => {
             return {
                 ...state, similarBrands: action.payload.Products,
                 lastKeyBrand: action.payload.lastKey,
-                similarBrandsInitial: action.payload.Products,
+
                 similarBrandsInitialLoading: false,
 
             }
@@ -129,19 +128,22 @@ const SimilarReducer = (state = initialstate, action) => {
             }
 
         case LOAD_MORE_SIMILAR_BY_BRANDS_REQUEST:
-            return { ...state,
-                moreBrandsLoading:true,
-                moreBrandsError:null }
+            return {
+                ...state,
+                moreBrandsLoading: true,
+                moreBrandsError: null
+            }
         case LOAD_MORE_SIMILAR_BY_BRANDS_SUCCESS:
-            return {...state,
+            return {
+                ...state,
                 similarBrands: [...state.similarProducts, ...action.payload.Products],
-                lastKeyBrand:action.payload.lastKey,
-                moreBrandsLoading:false
+                lastKeyBrand: action.payload.lastKey,
+                moreBrandsLoading: false
             }
         case LOAD_MORE_SIMILAR_BY_BRANDS_FAILED:
             return {
-                ...state,moreProductsError:action.payload,
-                moreBrandsLoading:false
+                ...state, moreProductsError: action.payload,
+                moreBrandsLoading: false
             }
         default:
             return state

@@ -21,6 +21,8 @@ import {
 import auth from "@react-native-firebase/auth";
 
 import firestore from "@react-native-firebase/firestore";
+import { List } from "react-native-paper";
+
 
 
 
@@ -64,11 +66,6 @@ export const changeCartQuantity = (quantity, pid) => {
 export const AddToCart = (product, key) => {
 
 
-
-  console.log(product.priceafterdisc)
-
-
-  //console.log(prod+'prod')
   return async (dispatch) => {
 
     //console.log(product)
@@ -147,38 +144,37 @@ export const fetchCartproducts = () => {
       const subscribe = firestore().collection('cart')
         .doc(auth().currentUser.uid)
         .collection('products').onSnapshot
-
         (
           (snapshot) => {
 
             var total = 0
             var count = 0
-            var list = []
+            let list = []
             snapshot.forEach
               (
                 function (child) {
 
-                 
-                  total = total + child.data().quantity * child.data().priceafterdisc
-                  count = count + 1
-                  console.log(total)
-                  list.push({
-                    key: child.id,
-                    quantity: child.data().quantity,
-                    pname: child.data().pname,
-                    price: child.data().price,
-                    discount: child.data().discount,
-                    img1: child.data().img1,
-                    brand: child.data().brand,
-
-
-                  })
-
-
-
+                  count += 1
+                  total += child.data().priceafterdisc*child.data().quantity
+                  list.push(
+                    {
+                      key: child.id,
+                      pname: child.data().pname,
+                      brand: child.data().brand,
+                      price: child.data().price,
+                      stock: child.data().stock,
+                      priceafterdisc: child.data().priceafterdisc,
+                      cat: child.data().cat,
+                      quantity: child.data().quantity,
+                      img1: child.data().img1,
+                      discount: child.data().discount
+                    }
+                  )
                 }
 
+
               )
+
             dispatch({
               type: FETCH_CART_SUCCESS, payload:
               {
@@ -187,6 +183,7 @@ export const fetchCartproducts = () => {
                 totalprice: total
               }
             })
+
           }
         )
 

@@ -21,12 +21,15 @@ const Samebrand = ({ brand, curruntID }) => {
 
 
 
-    const dispatch=useDispatch()
-    const navigation=useNavigation()
+    const [loading, setloading] = useState(false)
+    const [products, setproducts] = useState()
+
+    const dispatch = useDispatch()
+    const navigation = useNavigation()
     const { height, width } = Dimensions.get(
         'screen'
     )
-  
+
 
     const emptyScreen = () => {
         return (
@@ -59,23 +62,53 @@ const Samebrand = ({ brand, curruntID }) => {
             </View>
         )
     }
+    const getSimilarItemData = async () => {
+
+        try {
+            setloading(true)
+            const products = await
+                firestore()
+                    .collection('products')
+                    .where('brand', '==', brand)
+                    .limit(5)
+                    .get()
+
+            let list = []
+
+            products.docs.forEach
+                (
+                    function (child) {
+                        list.push(
+                            {
+                                key: child.id,
+                                pname: child.data().pname,
+                                pprice: child.data().price,
+                                pdisc: child.data().discount,
+                                priceafterdisc: child.data().priceafterdisc,
+                                pimage: child.data().img1,
+                                pbrand: child.data().brand
+                            }
+                        )
+                    }
+                )
+
+            setproducts(list)
+            setloading(false)
+        }
+        catch (err) {
+            setloading(false)
+        }
+
+    }
     useEffect
         (
             () => {
-
-
-                dispatch(FetchSimilarBrands(brand))
+                getSimilarItemData()
             },
-
-
-
             []
         )
 
-    const products=useSelector(state=>state.Similar.similarBrandsInitial)
 
-  
-  
     const SimilerItemBuilder = ({ item, index }) => {
 
 
@@ -151,31 +184,31 @@ const Samebrand = ({ brand, curruntID }) => {
 
                 </TouchableOpacity>
             </View>
-          
-                <View style={{ flex: 1 }}>
 
-                    <FlatList
+            <View style={{ flex: 1 }}>
 
-
-                        horizontal
-                        data={products}
-
-                        ListEmptyComponent={emptyScreen}
-
-                        keyExtractor={(item) => item.key}
-
-                        renderItem={SimilerItemBuilder}
+                <FlatList
 
 
+                    horizontal
+                    data={products}
 
-                        style={{ marginHorizontal: 10, height: 350 }}
+                    ListEmptyComponent={emptyScreen}
 
-                    >
+                    keyExtractor={(item) => item.key}
 
-                    </FlatList>
+                    renderItem={SimilerItemBuilder}
 
 
-                </View>
+
+                    style={{ marginHorizontal: 10, height: 350 }}
+
+                >
+
+                </FlatList>
+
+
+            </View>
 
         </View>
     )

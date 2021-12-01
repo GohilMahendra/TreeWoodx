@@ -7,34 +7,44 @@ import {
     View
 } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import LinearGradient from 'react-native-linear-gradient';
-import { Item } from 'react-native-paper/lib/typescript/components/List/List';
-import { Color } from '../../constants/colors';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { fonts } from "../../constants/fonts";
 
-
+import {
+    makeOrder
+} from "../../redux/Actions/OrderActions";
 const Payment = () => {
 
 
-    const categories = ["VISA", "MASTERCARD", "RUPAY"]
-    const [creditCardNumber, setcreditCardNumber] = useState("")
-    const [expDate, setexpDate] = useState("")
-    const [cvv, setCvv] = useState("")
-    const [holderName, setholerName] = useState("")
-    const [categoty, setcategoty] = useState(categories[0])
 
-    const route=useRoute()
-    console.log(route.params)
-    const VarifyCard = (creditCardNumber, cvv, date) => {
+
+    const cart = useSelector(state => state.Cart.Cart)
+    const price = useSelector(state => state.Cart.totalPrice)
+
+    const orderSuccess=useSelector(state=>state.Orders.orderSuccess)
+
+    const categories = ["VISA", "MASTERCARD", "RUPAY"]
+    const [creditCardNumber, setcreditCardNumber] = useState("1234567855555555")
+    const [expDate, setexpDate] = useState("12/12")
+    const [cvv, setCvv] = useState("123")
+    const [holderName, setholerName] = useState("kingcobra")
+    const [category, setcategory] = useState(categories[0])
+
+    const dispatch = useDispatch()
+
+
+    const route = useRoute()
+
+    const VarifyCard = () => {
 
         var iSvarified = true
 
-        if(creditCardNumber.isNan()===true || cvv.isNan()===true)
-        {
-            iSvarified=false
+        if (isNaN(creditCardNumber) === true || isNaN(cvv) === true) {
+            iSvarified = false
         }
 
-        if (creditCardNumber.length != 16 || cvv.length != 3 || date.length != 5) {
+        if (creditCardNumber.length != 16 || cvv.length != 3 || expDate.length != 5) {
             iSvarified = false
         }
 
@@ -70,7 +80,7 @@ const Payment = () => {
 
 
     const changeCreditCardNumber = (text) => {
-        if (text.replaceAll(" ", "").length > 165)
+        if (text.replaceAll(" ", "").length > 16)
             return
         var str = text.replaceAll(" ", "")
         console.log(str.length)
@@ -80,6 +90,25 @@ const Payment = () => {
         setcreditCardNumber(text)
     }
 
+    const ProceedToPay = () => {
+
+        if (!VarifyCard())
+            return
+
+        const paymentDetails = {
+            creditCardNumber: creditCardNumber,
+            holderName: holderName,
+            expDate: expDate,
+            cardType: category,
+        }
+        dispatch(
+            makeOrder(cart, price, route.params.address, paymentDetails)
+        )
+
+
+
+
+    }
 
     return (
         <View
@@ -98,15 +127,15 @@ const Payment = () => {
                                 return (
                                     <TouchableOpacity
                                         key={item}
-                                        onPress={() => setcategoty(item)}
+                                        onPress={() => setcategory(item)}
                                         style={
                                             [
                                                 styles.cardOptionsConatiner,
-                                            {
+                                                {
 
-                                                backgroundColor: (categoty === item) ? "blue" : '#fff'
-                                            }
-                                        ]
+                                                    backgroundColor: (category === item) ? "blue" : '#fff'
+                                                }
+                                            ]
                                         }
                                     >
                                         <Text
@@ -114,7 +143,7 @@ const Payment = () => {
                                                 {
                                                     fontSize: 15,
                                                     fontFamily: fonts.Federo_Regular,
-                                                    color: (categoty === item) ? '#fff' : 'black'
+                                                    color: (category === item) ? '#fff' : 'black'
                                                 }
                                             }
                                         >{item}</Text>
@@ -190,6 +219,9 @@ const Payment = () => {
                 </View>
 
                 <TouchableOpacity
+                    onPress={
+                        () => ProceedToPay()
+                    }
                     style={styles.btnSubmit}
                 >
                     <Text
@@ -252,7 +284,7 @@ const styles = StyleSheet.create
             {
                 marginHorizontal: 20,
                 fontSize: 15,
-              
+
 
             }
             ,
@@ -296,14 +328,14 @@ const styles = StyleSheet.create
                 fontSize: 20,
                 textAlign: 'center',
                 borderRadius: 20,
-                elevation:10,
+                elevation: 10,
                 justifyContent: 'center',
                 alignItems: 'center'
             },
             textInputEXpDate:
 
             {
-                elevation:10,
+                elevation: 10,
                 backgroundColor: '#e5e5e5',
                 borderRadius: 15,
                 width: 100,

@@ -25,6 +25,10 @@ const SimilarItems = ({ category, curruntID }) => {
         return
 
 
+
+    const [loading,setloading]=useState(false)
+    const [products,setproducts]=useState()
+
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const emptyScreen = () => {
@@ -46,21 +50,58 @@ const SimilarItems = ({ category, curruntID }) => {
             </View>
         )
     }
+
+    const getSimilarItemData=async()=>{
+
+        try
+        {
+            setloading(true)
+        const products=await
+        firestore()
+        .collection('products')
+        .where('cat','==',category)
+        .limit(5)
+        .get()
+
+        let list = []
+
+        products.docs.forEach
+            (
+                function (child) {
+                    list.push(
+                        {
+                            key: child.id,
+                            pname: child.data().pname,
+                            pprice: child.data().price,
+                            pdisc: child.data().discount,
+                            priceafterdisc: child.data().priceafterdisc,
+                            pimage: child.data().img1,
+                            pbrand: child.data().brand
+                        }
+                    )
+                }
+            )
+
+        setproducts(list)
+
+
+        setloading(false)
+        }
+        catch(err)
+        {
+            setloading(false)
+        }
+
+    }
     useEffect
         (
             () => {
-                dispatch(FetchSimilarProducts(category))
+                getSimilarItemData()
             },
             []
         )
 
 
-    const products = useSelector(state => state.Similar.similarProductsInitial)
-
-    const loading=useSelector(state => state.Similar.similarProductsInitialLoading)
-
-
-    console.log(products+"products")
     const SimilerItemBuilder = ({ item, index }) => {
         if (item == undefined)
             return

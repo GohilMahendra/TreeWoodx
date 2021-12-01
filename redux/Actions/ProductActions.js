@@ -130,11 +130,6 @@ export const LoadInitialProducts = (name) => {
                 type: LOAD_HOME_PRODUCTS_FAILED, payload: err
             })
         }
-
-
-
-
-
     }
 }
 
