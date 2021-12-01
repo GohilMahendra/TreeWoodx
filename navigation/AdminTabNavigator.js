@@ -20,8 +20,8 @@ const AdminTabNavigator = ({ navigation }) => {
         {
           showLabel: false,
           keyboardHidesTabBar: true,
-          style:{
-            backgroundColor:'black'
+          style: {
+            backgroundColor: 'black'
           }
 
         }
@@ -61,10 +61,10 @@ const AdminTabNavigator = ({ navigation }) => {
             tabBarIcon: ({ size, focused, color }) =>
 
 
-                <FontAwesome5 size={size} color={color} name="chart-line">
+              <FontAwesome5 size={size} color={color} name="chart-line">
 
-                </FontAwesome5>
-             
+              </FontAwesome5>
+
           }
 
         }

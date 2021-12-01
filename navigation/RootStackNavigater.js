@@ -9,6 +9,7 @@ import Sign_Up from '../screens/Auth/Sign_Up';
 import Home from "../screens/Home/Home";
 import Payment from "../screens/Checkout/Payment";
 import Checkout from "../screens/Checkout/Checkout";
+import OrderDetails from '../screens/Checkout/OrderDetails';
 const stack = createStackNavigator()
 
 const RootStackNavigator = () => {
@@ -65,12 +66,20 @@ const RootStackNavigator = () => {
                 ></stack.Screen>
 
                 <stack.Screen
+                    name="OrderDetails"
+                    options={{
+                        headerShown: false
+                    }}
+                    component={OrderDetails}
+                ></stack.Screen>
+                 <stack.Screen
                     name="Payment"
                     options={{
                         headerShown: false
                     }}
                     component={Payment}
                 ></stack.Screen>
+
             </stack.Navigator>
         </NavigationContainer>
     )

@@ -1,301 +1,314 @@
-import React, { useReducer } from "react";
-import { View, Text, TextInput, Dimensions, Image, TouchableOpacity } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+
+import { useRoute } from '@react-navigation/core';
+import React, { useState } from 'react';
+import {
+    StyleSheet,
+    Text,
+    View
+} from 'react-native';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import LinearGradient from 'react-native-linear-gradient';
+import { Item } from 'react-native-paper/lib/typescript/components/List/List';
+import { Color } from '../../constants/colors';
 import { fonts } from "../../constants/fonts";
-import { useRoute } from "@react-navigation/core";
 
 
-import Modal from "react-native-modal";
-
-import { makeOrder } from "../../redux/Actions/OrderActions";
-import AddressCard from "../../components/AddressCard";
-import { useState } from "react/cjs/react.development";
-import { ScrollView } from "react-native-gesture-handler";
-import LinearGradient from "react-native-linear-gradient";
-import { ActivityIndicator } from "react-native-paper";
-import PaymentCard from "../../components/PaymentCard";
-const Payment = ({ navigation }) => {
-
-  const dispatch = useDispatch()
-
-  let date = new Date()
-  const todaysdate = date.getUTCDate() + "/" + date.getUTCMonth() + "/" + date.getUTCFullYear()
+const Payment = () => {
 
 
-  const p = useRoute()
+    const categories = ["VISA", "MASTERCARD", "RUPAY"]
+    const [creditCardNumber, setcreditCardNumber] = useState("")
+    const [expDate, setexpDate] = useState("")
+    const [cvv, setCvv] = useState("")
+    const [holderName, setholerName] = useState("")
+    const [categoty, setcategoty] = useState(categories[0])
 
-  const makeOrderRequest = () => {
+    const route=useRoute()
+    console.log(route.params)
+    const VarifyCard = (creditCardNumber, cvv, date) => {
 
+        var iSvarified = true
 
-    if (!VarifyCard()) {
-      alert("Please enter Valid Card details")
-      return
-    }
-
-    setisvisible(true)
-    let paymentDetails = {
-      cardNumber: creditCardNumber,
-      cardType: "VISA",
-      amount: price
-
-    }
-
-
-    dispatch(makeOrder(cart, price, p.params.address, paymentDetails))
-
-
-  }
-
-
-
-  const cart = useSelector(state => state.Cart.Cart)
-
-
-  const orderSuccess = useSelector(state => state.Orders.orderSuccess)
-  const orderLoading = useSelector(state => state.Orders.orderLoading)
-  const price = useSelector(state => state.Cart.totalPrice)
-
-
-  const [isVisible, setisvisible] = useState(false)
-
-  const { height, width } = Dimensions.get('screen')
-  return (
-    <View style={{ flex: 1 }}>
-      <ScrollView
-        style={
-          {
-            flex: 1
-          }
-        }
-      >
-        <Text
-          style={{
-            alignSelf: 'center',
-            fontFamily: fonts.Merienda_Regular,
-            fontSize: 20,
-            marginTop: 15
-          }}
-        >Order Summury</Text>
-
+        if(creditCardNumber.isNan()===true || cvv.isNan()===true)
         {
-          cart.map(
-            function (item) {
-              return (
+            iSvarified=false
+        }
+
+        if (creditCardNumber.length != 16 || cvv.length != 3 || date.length != 5) {
+            iSvarified = false
+        }
+
+        return iSvarified
+    }
+
+    const changeCreditCardCvv = (text) => {
+        if (text.length > 3)
+            return
+
+        setCvv(text)
+
+    }
+
+    const changeCreditCardHolderName = (text) => {
+
+        setholerName(text)
+
+    }
+
+
+    const changeCreditCardExpDate = (text) => {
+
+        if (text.length > 5)
+            return
+        if (text.length == 2 && expDate.includes('/') == false) {
+            text += '/'
+        }
+
+        setexpDate(text)
+
+    }
+
+
+    const changeCreditCardNumber = (text) => {
+        if (text.replaceAll(" ", "").length > 165)
+            return
+        var str = text.replaceAll(" ", "")
+        console.log(str.length)
+        if (str.length % 4 == 0 && str.length < 16 && str.length != 0) {
+            text = text + " "
+        }
+        setcreditCardNumber(text)
+    }
+
+
+    return (
+        <View
+            style={styles.Contianer}
+        >
+
+            <View
+
+            >
                 <View
-                  key={item.key}
+                    style={styles.rowViewContainer}
                 >
-
-
-                  <View
-                    style=
                     {
-                      {
-                        flexDirection: "row",
-                        margin: 10,
+                        categories.map(
+                            item => {
+                                return (
+                                    <TouchableOpacity
+                                        key={item}
+                                        onPress={() => setcategoty(item)}
+                                        style={
+                                            [
+                                                styles.cardOptionsConatiner,
+                                            {
 
-                        backgroundColor: "#fff",
-                        borderRadius: 10
-                      }
+                                                backgroundColor: (categoty === item) ? "blue" : '#fff'
+                                            }
+                                        ]
+                                        }
+                                    >
+                                        <Text
+                                            style={
+                                                {
+                                                    fontSize: 15,
+                                                    fontFamily: fonts.Federo_Regular,
+                                                    color: (categoty === item) ? '#fff' : 'black'
+                                                }
+                                            }
+                                        >{item}</Text>
+                                    </TouchableOpacity>
+                                )
+                            }
+                        )
                     }
-                  >
-
-                    <Image
-                      source={{ uri: item.img1 }}
-                      style={
-                        {
-                          width: '30%',
-                          height: '80%',
-                          height: 100,
-                          borderRadius: 15
-                        }
-                      }
-                    >
-
-                    </Image>
-                    <View
-
-                      style={
-                        {
-                          flexWrap: "wrap",
-                          flex: 1,
-                          marginLeft: 20,
-                          alignItems: 'center',
-
-                          justifyContent: 'center'
-                        }
-                      }
-                    >
-                      <Text
-
-
-                        style={
-                          {
-                            fontSize: 20,
-
-
-                            fontFamily: fonts.Federo_Regular
-                          }
-                        }>{item.pname}</Text>
-                      <Text
-
-
-                        style={
-                          {
-                            fontSize: 15
-                          }
-                        }>{item.brand}</Text>
-                      <Text
-
-
-                        style={
-                          {
-                            fontSize: 15
-                          }
-                        }>{item.price}</Text>
-
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between'
-                        }}
-                      >
-                        <Text
-                          style={
-                            {
-                              fontSize: 15
-                            }
-                          }> qty : {item.quantity}</Text>
-                        <Text
-                          style={
-                            {
-                              fontSize: 15
-                            }
-                          }>subtotal {item.price * item.quantity}</Text>
-                      </View>
-
-                    </View>
-
-                  </View>
-
-
-
 
                 </View>
-              )
-            }
-          )
-        }
 
+                <View
+                    style={
+                        {
+                            marginVertical: 20
+                        }
+                    }
+                >
+                    <Text
+                        style={styles.txtLabel}
+                    >
+                        CardHolder Name
+                    </Text>
 
-
-        <AddressCard
-          address={p.params.address}
-        ></AddressCard>
-
-        <PaymentCard>
-
-        </PaymentCard>
-      </ScrollView>
-      <TouchableOpacity
-        onPress={() => makeOrderRequest()}
-        style={{
-
-
-          height: 50,
-
-          elevation: 25,
-          justifyContent: 'center',
-          borderRadius: 30
-
-
-        }}
-      >
-
-        <LinearGradient
-          colors={["#009ffd", "#2a2a72"]}
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 20,
-              color: "#fff",
-
-              fontFamily: fonts.Federo_Regular
-            }}
-          >PROCCED FOR PAY RS {price}</Text>
-        </LinearGradient>
-      </TouchableOpacity>
-
-      <Modal
-        isVisible={isVisible}
-      >
-        <View
-          style={{
-            backgroundColor: '#fff',
-            height: 200,
-            borderRadius: 20
-          }}
-        >
-
-          {orderLoading
-            &&
-            <View
-              style={{ flex: 1, justifyContent: 'center', alignSelf: 'center' }}
-            >
-              <Text>
-                Proccessing Payment Please wait
-              </Text>
-              <ActivityIndicator
-                animating={true}
-                size={30}
-              />
-            </View>
-
-          }
-
-          {orderSuccess
-            &&
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: fonts.Federo_Regular,
-                  fontSize: 25
-                }}
-              >Order Placed Success fully</Text>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: 'green',
-                  borderRadius: 20
-                }}
-                onPress={
-                  () => navigation.pop(2)
-                }
-              >
+                    <TextInput
+                        placeholder="John DOE"
+                        value={holderName}
+                        onChangeText={text => changeCreditCardHolderName(text)}
+                        style={styles.txtCardname}
+                    >
+                    </TextInput>
+                </View>
                 <Text
-                  style={{
-                    margin: 10,
 
-                  }}
-                >GO BACK TO Cart</Text>
-              </TouchableOpacity>
+                    style={styles.txtLabel}>
+                    CARD NUMBER
+                </Text>
+                <TextInput
+                    placeholder="0000 0000 0000 0000"
+
+                    maxLength={19}
+                    value={creditCardNumber}
+                    keyboardType={
+                        "numeric"
+                    }
+                    onChangeText={text => changeCreditCardNumber(text)}
+                    style={styles.txtCardnum}
+                >
+
+                </TextInput>
+                <View
+                    style={styles.rowOptionsConatiner}
+                >
+
+                    <TextInput
+                        onChangeText={text => changeCreditCardExpDate(text)}
+                        value={expDate}
+                        placeholder="Exp Date"
+                        maxLength={5}
+                        keyboardType="number-pad"
+                        style={styles.textInputEXpDate}
+                    >
+                    </TextInput>
+
+                    <TextInput
+                        value={cvv}
+                        onChangeText={text => changeCreditCardCvv(text)}
+                        placeholder="cvv"
+                        keyboardType="number-pad"
+                        style={styles.textInputCvv}
+                    >
+                    </TextInput>
+                </View>
+
+                <TouchableOpacity
+                    style={styles.btnSubmit}
+                >
+                    <Text
+                        style={styles.txtsubmitText}
+                    >PROCEED</Text>
+                </TouchableOpacity>
+
             </View>
-          }
-
         </View>
-      </Modal>
-    </View>
-  )
+    )
+
 }
 
 export default Payment
+
+
+const styles = StyleSheet.create
+    (
+        {
+            Contianer:
+            {
+                flex: 1,
+                justifyContent: 'center'
+
+            },
+            rowViewContainer:
+            {
+                flexDirection: 'row'
+            },
+            txtsubmitText:
+            {
+                fontSize: 20,
+                color: "#fff",
+                fontFamily: fonts.Federo_Regular
+            },
+            btnSubmit:
+            {
+                height: 70,
+
+                width: "80%",
+                alignSelf: 'center',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 15,
+                elevation: 15,
+
+                backgroundColor: "blue"
+
+            },
+            txtCardname:
+
+            {
+                backgroundColor: '#e5e5e5',
+                marginHorizontal: 20,
+                fontSize: 20,
+                textAlign: 'center'
+            },
+            txtLabel:
+
+            {
+                marginHorizontal: 20,
+                fontSize: 15,
+              
+
+            }
+            ,
+            cardOptionsConatiner:
+            {
+                height: 50,
+                paddingHorizontal: 15,
+
+                margin: 20,
+                borderRadius: 20,
+                elevation: 15,
+                justifyContent: "center",
+                alignItems: "center",
+            },
+            txtCardnum:
+
+            {
+
+                backgroundColor: '#e5e5e5',
+                marginHorizontal: 20,
+                fontSize: 20,
+                borderRadius: 15,
+                height: 100,
+                textAlign: 'center'
+            }
+            ,
+            rowOptionsConatiner:
+
+            {
+                flexDirection: "row",
+                justifyContent: 'space-evenly',
+                margin: 20,
+
+            },
+
+
+            textInputCvv:
+            {
+                backgroundColor: '#e5e5e5',
+                width: 100,
+                fontSize: 20,
+                textAlign: 'center',
+                borderRadius: 20,
+                elevation:10,
+                justifyContent: 'center',
+                alignItems: 'center'
+            },
+            textInputEXpDate:
+
+            {
+                elevation:10,
+                backgroundColor: '#e5e5e5',
+                borderRadius: 15,
+                width: 100,
+                textAlign: 'center'
+
+            }
+        }
+    )
