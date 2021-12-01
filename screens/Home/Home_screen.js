@@ -78,7 +78,7 @@ const Home_screen = ({ navigation }) => {
                     elevation: 12, borderRadius: 20
                     , justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: (ind == index) ? 'black' : 'white',
+                    backgroundColor: (ind == index) ? 'black' : '#caf0f8',
                     marginRight: 20, borderWidth: 1, borderRadius: 20
                 }}>
 
@@ -107,17 +107,17 @@ const Home_screen = ({ navigation }) => {
 
         
 
-                <View
+                    <View
+
                     style={
                         {
-                            height: 250,
-
+                           
+                            marginVertical:20
                         }
                     }
-                >
+                    >
                     <FeaturedList />
-                </View>
-
+                    </View>
 
                 <FlatList
 

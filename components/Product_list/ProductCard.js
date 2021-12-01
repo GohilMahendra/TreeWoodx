@@ -18,10 +18,11 @@ const ProductCard = (props) => {
 
       style={
         {
-          backgroundColor: '#FFF',
+          backgroundColor: '#fff',
           elevation: 10,
-          height: 350,
-          width: '100%',
+         height: 350,
+          width: '50%',
+
           margin: 5,
           borderRadius: 15,
 
@@ -53,11 +54,35 @@ const ProductCard = (props) => {
           {
             alignSelf: 'center',
             justifyContent: "center",
-            flex: 1,
-            alignItems: "center"
+            height:'40%',
+            width:"100%",
+              alignItems: "center"
           }
         }
       >
+        <View
+        style={
+          {
+         
+            height:'100%',
+            width:'100%',
+            backgroundColor:'#fff',
+           
+            opacity:0.4,
+            borderRadius:10
+          }
+        }
+        />
+         
+        <View
+        style={
+          {
+            position:'absolute',
+            flex:1,
+            backgroundColor:''
+          }
+        }
+        >
         <Text
           style={
             {
@@ -111,6 +136,8 @@ const ProductCard = (props) => {
           RS {item.pprice}
         </Text>
       </View>
+     
+     </View>
       </View>
       <View
         style={

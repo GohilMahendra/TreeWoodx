@@ -23,6 +23,7 @@ import FeaturedCard from "./FeaturedCard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFeaturedProducts } from "../../redux/Actions/FeaturedActions";
 import Carousel from "react-native-snap-carousel";
+import { colorThemes } from "../../constants/colors";
 
 
 const { height, width } = Dimensions.get('screen')
@@ -76,6 +77,7 @@ const FeaturedList = () => {
             >
                 <FeaturedCard
                     data={item}
+                    colorTheme={colorThemes[0]}
                 >
 
                 </FeaturedCard>

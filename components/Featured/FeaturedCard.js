@@ -5,203 +5,145 @@ import {
     View,
     Text
 } from "react-native";
-
-
-import { Dimensions } from "react-native";
-
 import { Image, StyleSheet } from "react-native";
 import { fonts } from "../../constants/fonts";
 import { TouchableOpacity } from "react-native";
-import { Snackbar } from "react-native-paper";
 import LinearGradient from "react-native-linear-gradient";
 
 
 const FeaturedCard = (props) => {
 
 
-    const { data } = props
+    const { data, colorTheme } = props
 
 
-    //  console.log(data)
+  console.log(colorTheme)
 
     return (
 
+
         <View
-            style={
-                styles.Container
-            }
+            style={styles.Container}
+
         >
             <LinearGradient
-                style={
-                    styles.gradinetContainer
-                }
-                colors={[data.background_color, data.background_color_2]}
+                colors={[colorTheme.gradient_color_1, colorTheme.gradient_color_2]}
+                style={styles.gradinetContainer}
             >
+
                 <View
-                    style={
-                        styles.productContainer
-                    }
-
+                    style={styles.divideContainer}
                 >
+
                     <View
-                        style={
-                            styles.detailsContainer
-                        }
-
+                        style={styles.detailsContainer}
                     >
-
                         <View
-                            style={
-                                {
+                            style={styles.blurContainer}
+                        >
 
-                                    borderColor: '#fff',
-                                    borderWidth: 0.2,
-                                    borderRadius: data.border_radius,
-                                    alignItems: 'center',
-
-                                }
-                            }
+                        </View>
+                        <View
+                            style={styles.blurFreeView}
                         >
                             <Text
-                                style={
-                                    {
+                                style={{
+                                    color: colorTheme.textTitle,
+                                    fontSize: 20,
+                                    maxWidth:'100%',
+                                    fontFamily:fonts.Federo_Regular,
+                                    textShadowColor:'black',
+                                    textShadowRadius:15
 
-                                        marginVertical: 10,
-                                        color: data.font_headline_color,
-                                        fontFamily: data.font_headline_fontstyle,
-                                        fontSize: 18
-                                    }
-                                }
-                            >{data.headline}</Text>
+                                }}
+                            >
+                                {data.pname}
+                            </Text>
                             <Text
                                 style={
                                     {
+                                        color: colorTheme.textbrand,
+                                        fontSize: 18,
+                                        textShadowColor:colorTheme.background_off,
+                                        textShadowRadius:15,
 
-                                        color: data.font_brand_color,
-                                        fontFamily: fonts.Federo_Regular,
-
-                                        margin: 10,
-
-                                        fontSize: 20
+                                        fontFamily: fonts.Quicksand_Medium
                                     }
                                 }
-                            >{data.pbrand} 'S {data.pname}</Text>
-                            {(data.focus == 'discount') ?
-
-                                <View
+                            >
+                                {data.pbrand}
+                            </Text>
+                            <View
+                                style={styles.pricingContainer}
+                            >
+                                <Text
                                     style={
                                         {
-                                            borderRadius: 10,
-                                            backgroundColor: data.focus_background_color,
-
-                                            margin: 10
-
+                                            color: colorTheme.textPrice,
+                                            fontSize: 18,
+                                            padding: 10,
+                                            textShadowRadius:1,
+                                            textShadowColor:colorTheme.textTitle,
+                                            fontFamily:fonts.Federo_Regular,
+                                            
+                                            textDecorationLine:'line-through'
                                         }
                                     }
                                 >
-                                    <Text
-                                        style={
-                                            {
-                                                marginHorizontal: 10,
-                                                color: data.font_focus_color,
+                                   RS {data.pprice}
+                                </Text>
+                                <Text
+                                style={
+                                    {
+                                        color: colorTheme.textPrice,
+                                        fontSize: 20,
+                                        padding: 10,
+                                        fontFamily:fonts.Federo_Regular
+                                    }
+                                }
+                                >
+                                   RS {data.priceafterdisc}
+                                </Text>
 
-                                                fontFamily: data.font_focus_fontstyle,
+                            </View>
+                            <TouchableOpacity
 
-                                                fontSize: 25
-                                            }
-                                        }
-                                    >
-                                        {data.pdisc} % OFF
-                                    </Text>
-                                </View>
-                                : <View
+                                style={
+                                    {
+                                       backgroundColor:colorTheme.background_off,
+                                        borderRadius: 10,
 
+                                        padding: 10,
+
+
+                                    }
+                                }
+                            >
+                                <Text
                                     style={
                                         {
-                                            backgroundColor: data.focus_background_color,
-                                            flexDirection: "row",
-                                            borderRadius: 10,
-                                            margin: 10,
-                                            justifyContent: "space-between"
+                                            fontFamily: fonts.Federo_Regular
                                         }
-                                    }>
-                                    <Text
-                                        style={
-                                            {
-
-                                                color: data.font_focus_color,
-                                                fontFamily: data.font_focus_fontstyle,
-                                                marginHorizontal: 10,
-                                                alignSelf: 'center',
-                                                fontSize: 18
-                                            }
-                                        }
-                                    >
-                                        RS {data.pprice - (data.pprice * data.pdisc) / 100}
-                                    </Text>
-                                    <Text
-                                        style={
-                                            {
-                                                marginVertical: 10,
-                                                color: "#fff",
-                                                fontFamily: data.font_focus_fontstyle,
-                                                alignSelf: 'center',
-                                                color: "silver",
-                                                fontSize: 18,
-                                                textDecorationLine: "line-through",
-                                                textDecorationStyle: "dotted"
-                                            }
-                                        }
-                                    >
-                                        RS {data.pprice}
-                                    </Text>
-                                </View>
-                            }
+                                    }
+                                >{data.pdisc} % OFF</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
-
-                    <View
-                        style={
+                    <Image
+                        source={
                             {
-                                width: '40%',
-                                justifyContent: "center"
+                                uri: data.pimage
                             }
                         }
-                    >
-                        <Image
-                            source={
-                                {
-                                    uri: data.pimage
-                                }
-                            }
-                            //blurRadius={2}
-                            style={
-                                {
-
-                                    height: "70%",
-                                    margin: 10,
-
-                                    opacity: 0.65
-                                    ,
-
-                                    backgroundColor: data.backgroundColor,
-                                    borderTopLeftRadius: data.imageleftRadios,
-                                    borderBottomRightRadius: data.imageRIghtRadios
-
-                                }
-                            }
-
-                        >
-
-                        </Image>
-                    </View>
-
+                        resizeMode="cover"
+                        style={styles.imgContainer}
+                    ></Image>
                 </View>
 
 
             </LinearGradient>
-
         </View>
+
 
 
 
@@ -211,34 +153,82 @@ const styles = StyleSheet.create
     (
         {
             Container:
+
             {
-                flex: 1,
+                height: 200,
+                backgroundColor: '#fff',
+                margin: 15,
+                
                 borderRadius: 15,
+                elevation: 15
+            }
+            ,
+            divideContainer:
 
-                borderRadius: 15,
-                margin:10
-
-            },
-            gradinetContainer:
             {
-                flex: 1,
-                borderRadius: 20,
-
-            },
-            productContainer:
-            {
-
-                flex: 1,
                 flexDirection: "row",
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'space-between'
+            }
+            ,
+            gradinetContainer:
 
+            {
+                flex: 1,
+                borderRadius: 15
+            },
+
+         
+            blurContainer:
+            {
+                width: '100%',
+                height: "100%",
+                borderRadius: 15,
+                backgroundColor: "#fff",
+                opacity: 0.5
+
+
+            },
+            blurFreeView:
+            
+            {
+                position: "absolute",
+                backgroundColor: "transparent",
+                flex: 1,
+                alignItems:'center'
+            }
+            ,
+        
+            pricingContainer:
+            
+            {
+                flexDirection: 'row',
+
+                justifyContent: "space-evenly"
             },
             detailsContainer:
+
             {
-                width: '60%',
-                justifyContent: "center",
+                justifyContent: 'center',
                 alignItems: 'center',
+                width: '50%',
+
+            },
+            imgContainer:
+            
+            {
+                height: '80%',
+                width: "40%",
+                opacity: 0.7,
+                margin: 10,
+                alignSelf: "center",
+                padding: 20,
+                borderRadius: 15,
 
             }
+        
+
         }
     )
 export default FeaturedCard

@@ -34,8 +34,8 @@ const Product_list = () => {
   var item = p.params.item
 
 
-  
-  const [category, setcategory] = useState(item == undefined ? null : item)
+
+  const [category, setcategory] = useState(item == undefined ? "" : item)
   const { height, width } = Dimensions.get('screen')
 
   const searchProduct = () => {
@@ -54,6 +54,13 @@ const Product_list = () => {
     return (
 
 
+      <View
+      style={
+        {
+          width:'100%'
+        }
+      }
+      >
       <ProductCard
         navigation={navigation}
         item={item}
@@ -63,7 +70,7 @@ const Product_list = () => {
       >
 
       </ProductCard>
-
+      </View>
 
     )
   }
@@ -71,32 +78,28 @@ const Product_list = () => {
 
 
   useEffect
-  (
-    ()=>
-    {
-      if(p.params!=null)
-      {
-        if(p.params.type=='search')
-        {
-          console.log(p.params.search,'type Search')
-          setserach(p.params.search)
-        }
-        else
-        {
-          dispatch(LoadProducts(category, search))
+    (
+      () => {
+        if (p.params != null) {
+          if (p.params.type == 'search') {
+            console.log(p.params.search, 'type Search')
+            setserach(p.params.search)
+          }
+          else {
+            dispatch(LoadProducts(category, search))
 
+          }
         }
       }
-    }
-    ,[]
-  )
+      , []
+    )
 
   useEffect
     (
       () => {
 
-        if(search!="")
-        searchProduct()
+        if (search != "")
+          searchProduct()
 
       },
       [search]
@@ -106,6 +109,11 @@ const Product_list = () => {
   return (
     <View style={{ flex: 1, alignItems: "center", backgroundColor: '#E6E6FA' }}>
 
+    {p.params!=undefined&&<View>
+
+      <Text>{item}</Text>
+
+    </View>}
 
 
       <FlatList

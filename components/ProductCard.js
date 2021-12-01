@@ -16,8 +16,6 @@ import {
 } from "@react-navigation/native";
 const ProductCard = (props) => {
 
-
-
     const { item } = props
     const disc_price = Math.floor(item.pprice - item.pprice * item.pdisc / 100)
 

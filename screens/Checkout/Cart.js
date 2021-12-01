@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import {
 
   Dimensions,
-  Text, TouchableOpacity, View, Image, TextInput, ActivityIndicator, Animated
+  Text, TouchableOpacity, View, Image, TextInput, ActivityIndicator, Animated, StyleSheet
 } from "react-native";
 import { FlatList, Swipeable } from "react-native-gesture-handler";
 
@@ -102,7 +102,7 @@ const Cart = ({ navigation }) => {
 
   return (
 
-    <View style={{ flex: 1, backgroundColor: "#E3E8F0" }}>
+    <View style={styles.Container}>
       <View style={{ flex: 1 }}>
         <View style={{ marginTop: 10, flex: 1, width: width - 20 }}>
           <Text style={{
@@ -168,7 +168,7 @@ const Cart = ({ navigation }) => {
                 height: 50, backgroundColor: "blue",
                 borderRadius: 15,
                 flexDirection: 'row',
-                width: width - 40,
+             
                 margin: 20,
                 justifyContent: 'space-evenly'
                 ,
@@ -201,4 +201,15 @@ const Cart = ({ navigation }) => {
     </View>
   )
 }
+
+const styles = StyleSheet.create
+  (
+    {
+      Container:
+      {
+        flex: 1,
+        backgroundColor: "#E3E8F0"
+      }
+    }
+  )
 export default Cart

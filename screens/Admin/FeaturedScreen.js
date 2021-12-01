@@ -15,7 +15,7 @@ import FeaturedCard from "../../components/Featured/FeaturedCard";
 
 
 const { height, width } = Dimensions.get('screen')
-const Admin_addOffer = () => {
+const FeaturedScreen = () => {
 
 
     const dispatch = useDispatch()
@@ -118,4 +118,4 @@ const Admin_addOffer = () => {
     )
 }
 
-export default Admin_addOffer
+export default FeaturedScreen

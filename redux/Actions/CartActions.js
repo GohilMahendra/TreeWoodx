@@ -37,10 +37,14 @@ export const changeCartQuantity = (quantity, pid) => {
 
 
     try {
-      const res = await firestore().collection('cart').doc(auth().currentUser.uid).collection('products').doc(pid).update
+      const res = await firestore()
+        .collection('cart')
+        .doc(auth().currentUser.uid)
+        .collection('products')
+        .doc(pid)
+        .update
         (
           {
-
             quantity: quantity
           }
         )
@@ -78,26 +82,17 @@ export const AddToCart = (product, key) => {
         brand: product.brand,
         price: product.price,
         stock: product.stock,
-        priceafterdisc:product.priceafterdisc,
+        priceafterdisc: product.priceafterdisc,
         cat: product.cat,
         quantity: 1,
-        sub_cat: product.sub_cat,
         img1: product.img1,
         discount: product.discount
-        
       }
 
-
-
-      console.log(key + 'product ket')
-
-      //   console.log(JSON.stringify(productx)+'product x document succed')
       await firestore().collection('cart').doc(auth().currentUser.uid).collection('products').doc(key).set(
         productx
       )
 
-      //console.log(productx)
-      // console.log(productx+'productx value in cart')
       dispatch({ type: ADD_TO_CART_SUCCESS, payload: productx })
 
 
@@ -149,9 +144,9 @@ export const fetchCartproducts = () => {
     try {
 
 
-      const subscribe=firestore().collection('cart')
-      .doc(auth().currentUser.uid)
-      .collection('products').onSnapshot
+      const subscribe = firestore().collection('cart')
+        .doc(auth().currentUser.uid)
+        .collection('products').onSnapshot
 
         (
           (snapshot) => {
@@ -163,9 +158,10 @@ export const fetchCartproducts = () => {
               (
                 function (child) {
 
-                  var pricex = child.data().price - child.data().price * child.data().discount / 100
-                  total = total + child.data().quantity * pricex
+                 
+                  total = total + child.data().quantity * child.data().priceafterdisc
                   count = count + 1
+                  console.log(total)
                   list.push({
                     key: child.id,
                     quantity: child.data().quantity,
@@ -194,7 +190,7 @@ export const fetchCartproducts = () => {
           }
         )
 
-        return ()=>subscribe()
+      return () => subscribe()
 
     }
 

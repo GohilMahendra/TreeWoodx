@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import {
   View, Text, TextInput,
-  Button, Image, Dimensions, ActivityIndicator, ActivityIndicatorBase, ScrollView
+  Button, Image, Dimensions, ActivityIndicator, ActivityIndicatorBase, ScrollView, StyleSheet
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import auth from "@react-native-firebase/auth";
 
+import firestore from "@react-native-firebase/firestore";
 
-const Login = ({ navigation }) => 
-
-
-{
+const Login = ({ navigation }) => {
   const { height, width } = Dimensions.get('screen')
+
+  const [loading, setloading] = useState(false)
+  const [uname, setuname] = useState("")
+
   const validateCred = (uname, password) => {
 
     if (uname == "" || password == "")
@@ -26,6 +28,16 @@ const Login = ({ navigation }) =>
 
   }
 
+  const isAdmin = async (uid) => {
+    const exists = await firestore()
+      .collection('admin')
+      .doc(uid)
+      .get()
+
+    return exists.exists
+
+  }
+
   useEffect
     (
       () => {
@@ -36,7 +48,10 @@ const Login = ({ navigation }) =>
             if (user) {
 
 
+              if(!isAdmin(auth().currentUser.uid))
               navigation.navigate("Admin")
+              else
+              navigation.navigate("Home")
             }
           })
 
@@ -44,31 +59,37 @@ const Login = ({ navigation }) =>
       }, []
 
     )
+
   const onSignin = async (email, password) => {
+    try {
 
-    setloading(true)
+      if (!validateCred(email, password)) {
+        alert('Invalid creadentials')
+        return
+      }
 
+      setloading(true)
+      auth().signInWithEmailAndPassword(email, password)
+        .then(
+          user => {
+            if (user) {
+              if (!isAdmin(auth().currentUser.uid))
+                navigation.navigate('Home')
+              else
+                navigation.navigate('Admin')
+            }
+          }
+        )
 
-    if (!validateCred(email, password)) {
-      alert('Invalid creadentials')
-      setloading(false)
-      return
+        setloading(false)
     }
-
-    await auth().signInWithEmailAndPassword(email, password).then((result) => {
+    catch (err) {
       setloading(false)
-      console.log(result)
-      navigation.navigate("Home")
+      console.log(err)
     }
-    ).catch(err => {
-      setloading(false)
-      alert("WRONG PASSWORD/EMAIL")
-      console.log('error in login')
-    })
 
   }
-  const [loading, setloading] = useState(false)
-  const [uname, setuname] = useState("")
+ 
   const ResetPasswordWithEmail = () => {
     if (uname == "") {
       alert("enter email to send reset link")
@@ -87,72 +108,54 @@ const Login = ({ navigation }) =>
   }
   const [upassword, setupassword] = useState("")
   return (
-    <View>
+    <View
+      style={styles.Container
+      }
+    >
 
       <Image
-
-        style={{ position: 'absolute', 
-        resizeMode: 'stretch'
-        , height: height, width: width }}
+        style={styles.imgStyle}
         source={require('../../assets/login.jpg')}
       />
 
-      <View style={{
-        position: 'absolute', top: height / 20, shadowColor: 'black', shadowOffset: { height: 5, width: 5 },
-        alignSelf: 'flex-start', shadowOpacity: 1, elevation: 5, margin: 30
-      }}>
-        <Text style={{
-          fontSize: 25, color: '#fff', shadowOpacity: 1,
-          textShadowColor: 'silver', textShadowRadius: 20, fontWeight: 'bold',
-          textShadowOffset: { height: 5, width: 5 }
-        }}>hey HI !!</Text>
-        <Text style={{
-          fontSize: 25, color: '#fff', shadowOpacity: 1,
-          textShadowColor: 'silver', textShadowRadius: 20,
-          textShadowOffset: { height: 5, width: 5 }
-        }}>want to explore catalog?</Text>
-        <Text style={{
-          fontSize: 30, color: '#fff', shadowOpacity: 1,
-          textShadowColor: 'silver', textShadowRadius: 20,
-          textShadowOffset: { height: 5, width: 2 }
-        }}>LOGIN HERE!!</Text>
+      <View style={styles.detilsContainer}>
+        <Text style={styles.txtWelcomeText}>hey HI !!</Text>
+        <Text style={styles.txtWelcomeText}>want to explore catalog?</Text>
+        <Text style={styles.txtWelcomeText}>LOGIN HERE!!</Text>
       </View>
 
-      <View style={{ top: height / 5, margin: 20, backgroundColor: '#fff', borderRadius: 40 }}>
+      <View style={styles.inputContainer}>
+
         <TextInput
           placeholder="Enter Email HERE..."
           onChangeText={setuname}
-
-          onSubmitEditing={() => console.log("submit called")}
-
-          style={{ margin: 20, borderRadius: 20, backgroundColor: '#f2f3f4' }}
+          style={styles.txtInput}
         />
 
         <TextInput
           placeholder="Enter Password HERE..."
-
-          style={{ margin: 20, borderRadius: 20, backgroundColor: '#f2f3f4' }}
+          style={styles.txtInput}
           onChangeText={setupassword}
         >
-
         </TextInput>
-        <View style={{ margin: 20, alignSelf: 'center', flexDirection: 'row' }}
-        ><Text>DON'T HAVE A ACCOUNT ?</Text>
+
+        <View style={styles.accountContainer}
+        >
+          <Text>DON'T HAVE A ACCOUNT ?</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate("Sign_Up")}
           >
-            <Text style={{ color: 'skyblue' }}>REGISTER HERE!!</Text>
+
+            <Text style={styles.txtLinkbtn}>REGISTER HERE!!</Text>
           </TouchableOpacity>
 
-
         </View>
+
         <TouchableOpacity
           onPress={() => ResetPasswordWithEmail()}
         >
-          <Text style={{
-            alignItems: 'center', justifyContent: 'center', textAlign: 'center'
-            , fontSize: 15, color: 'skyblue'
-          }}>Forgot Password??</Text>
+          <Text style={styles.txtLinkbtn}>Forgot Password??</Text>
+
         </TouchableOpacity>
 
         {loading && <ActivityIndicator
@@ -160,24 +163,110 @@ const Login = ({ navigation }) =>
           style={{ position: 'absolute', top: height / 2, alignSelf: 'center', backgroundColor: 'white', borderRadius: 30, justifyContent: "center" }}
           size={"large"}
           color="green"
-
-
         />
         }
+
         <TouchableOpacity
-          style={{
-            margin: 20, height: 50, bottom: 10, width: 200, alignSelf: 'center', justifyContent: 'center',
-            alignItems: 'center', backgroundColor: '#e76f51', borderTopLeftRadius: 20, borderBottomRightRadius: 20
-          }}
-
+          style={styles.btnSignIn}
           onPress={() => onSignin(uname, upassword)}
-
         >
-          <Text style={{ color: "white", fontSize: 18 }}>SIGN IN
+          <Text style={styles.txtSignIN}>SIGN IN
           </Text>
         </TouchableOpacity>
+
       </View>
+
     </View>
   )
 }
+
+const styles = StyleSheet.create
+  (
+    {
+      Container:
+      {
+        flex: 1,
+        justifyContent: 'center'
+
+      },
+      imgStyle:
+      {
+        position: 'absolute',
+        resizeMode: 'stretch',
+        flex: 1
+      },
+      detilsContainer:
+      {
+        position: 'absolute',
+        top: 15,
+
+        shadowColor: 'black',
+        shadowOffset: { height: 5, width: 5 },
+        alignSelf: 'flex-start',
+        shadowOpacity: 1,
+        elevation: 5,
+        margin: 30
+      },
+      txtWelcomeText:
+      {
+        fontSize: 25,
+        color: '#fff',
+        shadowOpacity: 1,
+        textShadowColor: 'silver',
+        textShadowRadius: 20,
+        fontWeight: 'bold',
+        textShadowOffset: { height: 5, width: 5 }
+      },
+      inputContainer:
+      {
+        top: '20%',
+        position: "absolute",
+        width: '90%',
+        paddingVertical: 25,
+        alignSelf: 'center',
+        backgroundColor: '#fff',
+        borderRadius: 40
+      },
+      txtLinkbtn:
+      {
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        fontSize: 15,
+        color: 'skyblue'
+      },
+      accountContainer:
+      {
+        margin: 20,
+        alignSelf: 'center',
+        flexDirection: 'row'
+      },
+      txtInput:
+      {
+        margin: 20,
+        borderRadius: 20,
+        backgroundColor: '#f2f3f4'
+      },
+      btnSignIn:
+      {
+        margin: 20,
+        height: 50,
+        width: 200,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#e76f51',
+        borderTopLeftRadius: 20,
+        borderBottomRightRadius: 20
+      },
+      txtSignIN:
+      {
+        color: "white",
+        fontSize: 18
+      }
+
+
+
+    }
+  )
 export default Login

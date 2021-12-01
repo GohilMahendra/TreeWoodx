@@ -134,7 +134,7 @@ const Samebrand = ({ brand, curruntID }) => {
                         {
                             brandname: brand,
 
-                            name: "similar items for " + brand + " brand"
+                            name: brand
                         }
                     )}
                     disabled={(products != undefined && products.length > 0) ? false : true}

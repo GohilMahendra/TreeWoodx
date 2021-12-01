@@ -1,5 +1,5 @@
 import { useRoute } from "@react-navigation/core";
-import React, { useEffect ,useState} from "react";
+import React, { useEffect, useState } from "react";
 
 import { View, Text, Image, ScrollView, ActivityIndicator, TextInput, Dimensions, FlatList, ImageBackground, VirtualizedList } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -14,7 +14,7 @@ import SimilarItems from "../../components/Similar/SimilarItems";
 import { StyleSheet } from "react-native";
 import { fonts } from "../../constants/fonts";
 import { useDispatch } from "react-redux";
-import { AddToCart } from "../../redux/Actions/CartActions"; 
+import { AddToCart } from "../../redux/Actions/CartActions";
 import ImageSwiper from "../../components/ImageSwiper";
 import DimentionsView from "../../components/Product/DimentionsView";
 //import { } from "@react-native-mapbox-gl/maps";
@@ -141,7 +141,9 @@ const product = ({ navigation }) => {
               }} >
                 {prod.pname}
               </Text>
-              <Text style={styles.brandNameText} >{prod.brand}</Text>
+              <Text style={styles.brandNameText} >
+                {prod.brand}
+              </Text>
               <View style={styles.priceContainer}
               >
                 {/*RS{Math.floor(prod.price-prod.price*prod.discount/100)} */}
@@ -153,39 +155,65 @@ const product = ({ navigation }) => {
                 <Text style={{ color: "green", fontSize: 20 }}>{prod.discount} % OFF</Text>
 
               </View>
-              <Text style={styles.discription}>{prod.discription}</Text>
+              <Text style={styles.discription}>
+                {prod.discription}
+              </Text>
 
               <View style={styles.materialContainer}>
-                <Text style={styles.materialText}>Material :</Text>
+                <Text style={styles.materialText}>
+                  Material :
+                </Text>
+
                 <View style={styles.materialTextContainer}>
-                  <Text style={styles.materialTextName}>  {prod.material}  </Text>
+                  <Text style={styles.materialTextName}>
+                    {prod.material}
+                  </Text>
                 </View>
+
               </View>
+
             </View>
 
-            <View style={styles.categoryContainer}
 
+            <View
+            style={styles.categoryContainerView}
             >
-
-              <View
-                style={
-                  styles.categoryContainerView
-                }
-              >
-                <Text
-                  style={styles.productCategoryText} >{prod.cat}</Text>
-              </View>
-              <View
-                style={styles.categoryContainerView}
-              >
-                <Text style={styles.productCategoryText} >{prod.sub_cat}</Text>
-              </View>
-
+            <Text
+              style={styles.productCategoryText} >
+              {prod.cat}
+            </Text>
             </View>
+            <View
+            style={styles.categoryContainer}
+            >
+              {
+                prod.subcategories.map(
+                  (item)=>{
+                    return(
+                      <View
+            key={item}
+            style={styles.categoryContainerView}
+            >
+            <Text
+              style={styles.productCategoryText} >
+              {item}
+            </Text>
+            </View>
+                    )
+                  }
+                )
+              }
+                
+            </View>
+
+
+
+            <Text style={styles.productCategoryText} >
+              {prod.sub_cat}
+            </Text>
 
 
             <TouchableOpacity
-
               onPress={() => addTOcart()}
               style={styles.AddToCartButtonContainer}>
               <Text style={styles.AddToCartText}>ADD TO CART</Text>
@@ -193,8 +221,6 @@ const product = ({ navigation }) => {
                 size={20}
                 name="shopping-cart" color='#fff'></FontAwesome5Icon>
             </TouchableOpacity>
-
-
 
             <AddReview
 
@@ -214,9 +240,7 @@ const product = ({ navigation }) => {
 
               >
 
-
                 <View style={styles.reviewContainer}>
-
 
                   <MaterialIcons
 
@@ -229,7 +253,6 @@ const product = ({ navigation }) => {
                     name={"read-more"}
                     size={30}
                   >
-
                   </MaterialIcons>
 
                   <View style={{
@@ -237,8 +260,6 @@ const product = ({ navigation }) => {
                     alignItems: "center",
                     justifyContent: "space-between"
                   }}>
-
-
 
                     <AddStar
                       star={rev.star}
@@ -250,8 +271,6 @@ const product = ({ navigation }) => {
                     }}>{rev.date}</Text>
 
 
-
-
                   </View>
                   <Text style={{
                     fontSize: 20,
@@ -259,16 +278,14 @@ const product = ({ navigation }) => {
                     fontWeight: 'bold'
                   }}>{rev.username}</Text>
 
-
-
-
                   <Text style={{ fontSize: 15, marginHorizontal: 20 }}>{rev.review}</Text>
+
                 </View>
+
               </TouchableOpacity>
 
             }
           </View>
-
 
           <View
 
@@ -282,20 +299,18 @@ const product = ({ navigation }) => {
               curruntID={p.params.item.key}
 
             >
-
             </SimilarItems>
 
             {/**similar Brands */}
             <Samebrand
-
               brand={prod.brand}
-
               curruntID={p.params.item.key}
 
             >
-
             </Samebrand>
+
           </View>
+
         </ScrollView>
 
 
@@ -397,11 +412,11 @@ const styles = StyleSheet.create
       {
 
         fontSize: 20,
+    
+        height:50,
         textAlignVertical: 'center',
         fontFamily: fonts.Federo_Regular,
-
-
-        margin: 20,
+        padding: 15,
         color: "black",
         textAlign: 'center',
 
@@ -416,14 +431,15 @@ const styles = StyleSheet.create
         flexDirection: "row",
         justifyContent: 'space-evenly',
 
-        margin: 20
+
       },
 
       categoryContainerView:
       {
         backgroundColor: "#fff",
         elevation: 25,
-        borderRadius: 20
+
+        borderRadius: 15
       },
 
       AddToCartText:

@@ -1,149 +1,179 @@
 import React from "react";
 import { useState } from "react";
 import { ShadowPropTypesIOS } from "react-native";
-import { 
-View,Text,StyleSheet,Image,SafeAreaView, FlatList, TouchableOpacity, Dimensions, TextInput, ScrollView, ActivityIndicator
+import {
+    View, Text, StyleSheet, Image, SafeAreaView, FlatList, TouchableOpacity, Dimensions, TextInput, ScrollView, ActivityIndicator
 
- } from "react-native";
+} from "react-native";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 
- import { 
-     fonts
-  } from "../../constants/fonts";
+const CustomFab = (props) => {
 
+    const { navigation } = props
 
-  const CustomFab=(props)=>
-  {
-
-    const {navigation}=props
-
-
-
-    
-    const ToggleShow=()=>
-    {
+    const ToggleShow = () => {
         setshow(!show)
     }
-    
-    
-    const [show,setshow]=useState(false)
-    return(
 
-    <View
-   
-    >
 
-     {
-        
-        show && <TouchableOpacity
-    style={
-        {
-            height:50,
-            width:50,
-            borderRadius:50,
-            position:"absolute",
-            bottom:130,
-            right:10,
-            backgroundColor:'black',
-            alignItems:"center",
-            justifyContent:"center"
-            
-        }
-    }
+    const [show, setshow] = useState(false)
+    return (
 
-    onPress={
+        <View
 
-        ()=>navigation.navigate(
-            'Admin_product'
-        )
-    }
- 
-    >
-   
+        >
+            {
+                show &&
 
-        
-        <FontAwesome5Icon
-    name="plus"
-    color="#fff"
+                <View
 
-    >
+                    style={[styles.FabContainer, { bottom: 130, right: 10 }]}
 
-    </FontAwesome5Icon>
+                >
+                    <Text
+                        style={styles.txtLabel}
+                    >
+                        ADD PRODUCT
+                    </Text>
+                    <TouchableOpacity
+                        style={styles.btnFab}
 
-    </TouchableOpacity>
-  }
+                        onPress={
 
-  {show &&  <TouchableOpacity
-    style={
-        {
-            height:50,
-            width:50,
-            borderRadius:50,
-            position:"absolute",
-            bottom:70,
-            right:10,
-            backgroundColor:'black',
-            alignItems:"center",
-            justifyContent:"center"
-            
-        }
-    }
-    >
-    <View>
-    
-    <FontAwesome5Icon
-    name="plus"
-    color="#fff"
+                            () => navigation.navigate(
+                                'Admin_product'
+                            )
+                        }
 
-    >
+                    >
 
-    </FontAwesome5Icon>
 
-    </View>
-    </TouchableOpacity>
-  }
-    <TouchableOpacity
-    style={
-        {
-            height:50,
-            width:50,
-            borderRadius:50,
-            position:"absolute",
-            bottom:10,
-            right:10,
-            backgroundColor:'black',
-            alignItems:"center",
-            justifyContent:"center"
-            
-        }
-    }
 
-    onPress={()=>ToggleShow()}
-    >
+                        <FontAwesome5Icon
+                            name="plus"
+                            color="#fff"
 
-    {show
-    ?
-   <Text
-   style={
-       {
-           color:'#fff'
-       }
-   }
-   >
-       X
-   </Text>
-    :
-    <FontAwesome5Icon
-    name="plus"
-    color="#fff"
+                        >
 
-    >
+                        </FontAwesome5Icon>
 
-    </FontAwesome5Icon>
-  }
-    </TouchableOpacity>
-    </View>
+                    </TouchableOpacity>
+                </View>
+            }
+
+            {show &&
+                <View
+
+                    style={[styles.FabContainer, { bottom: 70, right: 10, }]}
+
+                >
+                    <Text
+                        style={styles.txtLabel}
+                    >
+                      FEATURED LIST
+                    </Text>
+
+                    <TouchableOpacity
+                       onPress={
+
+                        () => navigation.navigate(
+                            'FeaturedList'
+                        )
+                    }
+                        style={styles.btnFab}
+                    >
+                        <View>
+
+                            <FontAwesome5Icon
+                                name="plus"
+                                color="#fff"
+
+                            >
+
+                            </FontAwesome5Icon>
+
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            }
+            <TouchableOpacity
+                style={styles.btnToggle}
+
+                onPress={() => ToggleShow()}
+            >
+
+                {show
+                    ?
+                    <Text
+                        style={
+                            {
+                                color: '#fff'
+                            }
+                        }
+                    >
+                        X
+                    </Text>
+                    :
+                    <FontAwesome5Icon
+                        name="plus"
+                        color="#fff"
+
+                    >
+
+                    </FontAwesome5Icon>
+                }
+            </TouchableOpacity>
+        </View>
     )
 
-  }
-  export default CustomFab
+}
+
+const styles = StyleSheet.create
+    (
+        {
+            FabContainer:
+            {
+                position: "absolute",
+
+                flexDirection: 'row',
+                alignItems: 'center',
+
+            },
+            btnToggle:
+
+            {
+                height: 50,
+                width: 50,
+                borderRadius: 50,
+                position: "absolute",
+                bottom: 10,
+                right: 10,
+                backgroundColor: 'black',
+                alignItems: "center",
+                justifyContent: "center"
+
+            },
+            txtLabel:
+
+            {
+                marginHorizontal: 10,
+                padding: 10,
+                borderRadius: 20,
+                backgroundColor: 'black',
+                color: "#fff"
+            },
+            btnFab:
+            {
+                height: 50,
+                width: 50,
+                borderRadius: 50,
+
+                backgroundColor: 'black',
+                alignItems: "center",
+                justifyContent: "center"
+
+            }
+
+        }
+    )
+export default CustomFab

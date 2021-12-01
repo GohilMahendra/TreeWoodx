@@ -25,8 +25,8 @@ import SearchReducer from "../reducers/SearchReducer";
          Similar:SimilarReducer,
          Featured:FeaturedReducer,
          Orders:OrderReducer,
-         Search:SearchReducer
-     }
+         Search:SearchReducer,
+      }
  )
  
 

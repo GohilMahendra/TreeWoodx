@@ -9,23 +9,18 @@ import { Image } from "react-native";
 import { fonts } from "../../constants/fonts";
 
 import { useDispatch } from "react-redux";
-import { changeCartQuantity } from "../../redux/Actions/CommentActions";
+import { changeCartQuantity } from "../../redux/Actions/CartActions";
+import { Color } from "../../constants/colors";
 
 
 
 const CartCard = (props) => {
 
-
     const dispatch = useDispatch()
 
     const { item, navigation, onRemovePress } = props
 
-
-    const { height, width } = Dimensions.get('screen')
-
     console.log(item.priceafterdisc)
-
-
 
     const changeQuantity = (qty, pid) => {
 
@@ -33,156 +28,154 @@ const CartCard = (props) => {
 
     }
 
-
-
     const [quantity, setquantity] = React.useState(1)
     return (
 
         <View>
-        <View
-
-            style=
-            {
-                styles.Container
-            }
-        >
-
-            <View
-            style={
-                {
-                    width:'30%'
-                }
-            }
-            >
-            <Image
-                source={{ uri: item.img1 }}
-                style={
-
-                    styles.productImage
-                }
-            >
-            
-
-            </Image>
-            </View>
             <View
 
-                style={
-                    styles.productContainer
-                }
-            >
-                <Text
-
-
-                    style={
-                        {
-                            fontSize: 20,
-                            textAlign:"center",
-        
-                            fontFamily: fonts.Federo_Regular
-                        }
-                    }>{item.pname}</Text>
-                <Text
-
-
-                    style={
-                        {
-                            fontSize: 15
-                        }
-                    }>{item.brand}</Text>
-                            <View
-                style={
-                    {
-                        flexDirection:'row',
-                        justifyContent:'space-evenly',
-                        alignSelf:'center'
-                    }
-                }
-                >
-                <Text
-
-            
-                    style={
-                        {
-                            fontSize: 15
-                        }
-                    }>{item.price}</Text>
-                <Text
-                style={
-                    {
-                        fontSize:15,
-
-                    }
-                }
-                >
-                    {item.priceafterdisc}
-
-                </Text>
-                </View>
-
-            </View>
-            <View
                 style=
                 {
-                    styles.qtyContainer
+                    styles.Container
                 }
             >
-                <TouchableOpacity
 
-
-                    onPress={
-
-                        () => { changeQuantity(quantity - 1, item.key), setquantity(quantity - 1) }
-
-                    }
-
-                    disabled={(quantity == 1) ? true : false}
-                ><Text
+                <View
                     style={
                         {
-                            fontSize: 25
+                            width: '40%'
                         }
                     }
-                >-</Text></TouchableOpacity>
-                <Text
-                    style={
-                        {
-                            fontSize: 20
+                >
+                    <Image
+                        source={{ uri: item.img1 }}
+                        style={
+
+                            styles.productImage
                         }
-                    }
-                >{quantity}</Text>
-                <TouchableOpacity
-                    onPress={() => {
-                        changeQuantity(quantity + 1, item.key),
-                         setquantity(quantity + 1)
-                    }
-                    }
+                    >
 
-                    disabled={(quantity == 5) ? true : false}
-                ><Text
+
+                    </Image>
+                </View>
+                <View
+
                     style={
-                        {
-                            fontSize: 25
-
-                        }
-                    }
-                >+</Text></TouchableOpacity>
-
-            </View>
-        </View>
-        <TouchableOpacity
-                    onPress={() => onRemovePress(item.key)}
-                    style={
-                        styles.removeBtn
+                        styles.productContainer
                     }
                 >
                     <Text
+
+
                         style={
-                            styles.removeText
+                            {
+                                fontSize: 20,
+                                textAlign: "center",
+
+                                fontFamily: fonts.Federo_Regular
+                            }
+                        }>{item.pname}</Text>
+                    <Text
+
+
+                        style={
+                            {
+                                fontSize: 15
+                            }
+                        }>{item.brand}</Text>
+                    <View
+                        style={
+                            {
+                                flexDirection: 'row',
+                             alignSelf: 'center'
+                            }
                         }
-                    >X</Text>
-                </TouchableOpacity>
-  
+                    >
+                        <Text
+
+
+                            style={
+                                {
+                                    fontSize: 15
+                                }
+                            }>{item.price}</Text>
+                        <Text
+                            style={
+                                {
+                                    fontSize: 15,
+
+                                }
+                            }
+                        >
+                            {item.priceafterdisc}
+
+                        </Text>
+                    </View>
+
+                </View>
+                <View
+                    style=
+                    {
+                        styles.qtyContainer
+                    }
+                >
+                    <TouchableOpacity
+
+
+                        onPress={
+
+                            () => { changeQuantity(quantity - 1, item.key), setquantity(quantity - 1) }
+
+                        }
+
+                        disabled={(quantity == 1) ? true : false}
+                    ><Text
+                        style={
+                            {
+                                fontSize: 25,
+                                
+                            }
+                        }
+                    >-</Text></TouchableOpacity>
+                    <Text
+                        style={
+                            {
+                                fontSize: 20
+                            }
+                        }
+                    >{quantity}</Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            changeQuantity(quantity + 1, item.key),
+                                setquantity(quantity + 1)
+                        }
+                        }
+
+                        disabled={(quantity == 5) ? true : false}
+                    ><Text
+                        style={
+                            {
+                                fontSize: 25
+
+                            }
+                        }
+                    >+</Text></TouchableOpacity>
+
+                </View>
+            </View>
+            <TouchableOpacity
+                onPress={() => onRemovePress(item.key)}
+                style={
+                    styles.removeBtn
+                }
+            >
+                <Text
+                    style={
+                        styles.removeText
+                    }
+                >X</Text>
+            </TouchableOpacity>
+
         </View>
 
 
@@ -196,14 +189,14 @@ const styles = StyleSheet.create
             removeBtn:
             {
                 borderWidth: 1,
-                backgroundColor:"red",
-                alignSelf:'center',
-                height:25,
-                width:25,
+                backgroundColor: "red",
+                alignSelf: 'center',
+                height: 25,
+                width: 25,
 
-                alignSelf:"flex-end"
-               
-                
+                alignSelf: "flex-end"
+
+
 
             },
             Container:
@@ -211,21 +204,21 @@ const styles = StyleSheet.create
             {
                 flexDirection: "row",
                 marginLeft: 20,
-                height:100,
+                height: 150,
                 backgroundColor: "#fff",
                 borderRadius: 10
             },
             productImage:
 
             {
-               flex:1,
+                flex: 1,
                 borderRadius: 10
             },
             productContainer:
             {
                 flexWrap: "wrap",
 
-                width:'50%',
+                width: '50%',
                 marginLeft: 10,
                 alignItems: 'center',
                 justifyContent: 'center'
@@ -234,9 +227,9 @@ const styles = StyleSheet.create
             {
                 flexWrap: "wrap",
                 flex: 1,
-        
-                textAlign:"center",
-                color:"#fff",
+
+                textAlign: "center",
+                color: "#fff",
                 alignItems: 'center',
                 justifyContent: 'center'
             },

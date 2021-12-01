@@ -100,7 +100,7 @@ const SimilarItems = ({ category, curruntID }) => {
                         {
                             categoryname: category,
                             by: "category",
-                            name: "similar category for " + category
+                            name: category
                         }
                     )}
                     disabled={

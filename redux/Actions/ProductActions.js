@@ -1,5 +1,5 @@
 
-import auth from "@react-native-firebase/auth";
+import auth, { firebase } from "@react-native-firebase/auth";
 
 import firestore from "@react-native-firebase/firestore";
 
@@ -46,17 +46,14 @@ export const AddProduct = (key, prod) => {
 }
 export const AddStock = (pid, stk) => {
     return async (dispatch) => {
-        console.log("Add stock called")
-
+       
         try {
             const res = await firestore().collection('products').doc(pid).update
                 (
                     {
-                        stock: stk
+                        stock: firestore.FieldValue.increment(stk)
                     }
                 )
-
-            console.log(res)
         }
         catch (err) {
 
@@ -121,11 +118,6 @@ export const LoadInitialProducts = (name) => {
 
                 })
             });
-
-
-            console.log(products + "prodcu")
-
-
 
             dispatch({
                 type: LOAD_HOME_PRODUCTS_SUCCESS, payload: list

@@ -2,93 +2,109 @@ import React, { useEffect,useState } from "react";
 import { View,Dimensions ,Text,StyleSheet,ScrollView} from "react-native";
 
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { CommonActions } from "@react-navigation/routers";
-import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
-import { VISITOR_KEYS } from "@babel/types";
-
-const {height,width}=Dimensions.get('screen')
+import { Color } from "../../constants/colors";
+import { fonts } from "../../constants/fonts";
 const Admin_panel=()=>
 {
-    return(
 
+  const [email,setemail]=useState("")
+  const [password,setpassword]=useState("")
+  const [userName,setuserName]=useState("")
+    return(
 
       <View
       style={
+        styles.Container
+      }
+      > 
+      <Text
+      style={
         {
-          backgroundColor:"#1a1f71",
-          flex:1
+          fontSize:25,
+          fontFamily:fonts.Federo_Regular,
+          alignItems:'center',
+          alignSelf:'center'
         }
       }
+      >ADD ADMIN</Text>
+      <View
+      style={styles.inputContainer
+      }
       >
-
-
-
-        <View
-        style={
-          {
-            position:"absolute",
-            width:'100%',
-            backgroundColor:'#fff',
-            borderRadius:25,
-            top:height/3,
-            
-          }
-        }
-        >
         <Text
         style={
-          {
-            margin:20,
-            alignSelf:"center"
-          }
+          styles.txtInfo
         }
-        >ADD NEW ADMIN</Text>
-        <TextInput
-        placeholder="user Name"
-        style={styles.textInput}
         >
-
-        </TextInput>
+          USERNAME
+        </Text>
         <TextInput
-        placeholder="email"
-        style={styles.textInput}
-        >
-
-        </TextInput>
-        <TextInput
-        placeholder="password"
-        style={styles.textInput}
-        >
-
-        </TextInput>
-        <TouchableOpacity
+        value={userName}
+        onChangeText={text=>setuserName(text)}
+        style={styles
+          .textInput}
+        ></TextInput>
+            <Text
         style={
-         styles.addBtn
+          styles.txtInfo
         }
         >
-          <FontAwesome5Icon
-          name="plus"
-          size={25}
-          color="#FFF"
-          >
-
-          </FontAwesome5Icon>
-          <Text
-          style={{
-            fontSize:25,
-            color:'#fff'
-          }}
-          >ADD</Text>
+          EMAIL
+        </Text>
+         <TextInput
+           value={email}
+           onChangeText={text=>setemail(text)}
+        style={styles.textInput}
+        ></TextInput>
+         <Text
+        style={
+          styles.txtInfo
+        }
+        >
+            PASSWORD
+        </Text>
+         <TextInput
+           value={password}
+           onChangeText={text=>setpassword(text)}
+        style={styles.textInput}
+        ></TextInput>
+     
+        <TouchableOpacity
+        style={styles.addBtn}
+        >
+          <Text>ADD</Text>
         </TouchableOpacity>
-        </View>
+      </View>
 
       </View>
+
+
+    
     )
 }
 
 const styles=StyleSheet.create
 (
   {
+    Container:
+    {
+      flex:1,
+      backgroundColor:"#fff",
+      justifyContent:'center'
+    },
+    inputContainer:
+    {
+
+      margin:20,
+      backgroundColor:"#fff",
+      alignItems:'center',
+      justifyContent:"center",
+      borderRadius:15,
+      elevation:15
+
+
+        
+    },
     textInput:
     {
       
@@ -97,17 +113,26 @@ const styles=StyleSheet.create
         margin:10,
         textAlign:'center',
         textAlignVertical:'center',
-        height:50
+        height:50,
+        width:'100%'
       
 
     },
+    txtInfo:
+    {
+
+      fontSize:18,
+     
+    },
+
     addBtn:
     {
       flexDirection:"row",
-      backgroundColor:"#00356B",
+      backgroundColor:Color.lightBlue,
       justifyContent:"center",
       alignItems:"center",
-      width:100,
+      width:150,
+      height:50,
       alignSelf:'center',
       borderRadius:50
     }

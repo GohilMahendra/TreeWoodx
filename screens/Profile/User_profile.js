@@ -6,6 +6,9 @@ import { ModelView } from "react-native-3d-model-view";
 import LinearGradient from "react-native-linear-gradient";
 import auth from "@react-native-firebase/auth";
 import { useEffect } from "react/cjs/react.development";
+import { fonts } from "../../constants/fonts";
+import { Line } from "react-native-svg";
+import { Color } from "../../constants/colors";
 
 const { height, width } = Dimensions.get('screen')
 const User_profile = ({ navigation }) => {
@@ -31,57 +34,94 @@ const User_profile = ({ navigation }) => {
 
     return (
         <View style={{ flex: 1 }}>
+            <View
+                style={
+                    {
+                        backgroundColor: "#fff",
+                        height: '30%',
 
-            <LinearGradient
-                style={{ borderBottomLeftRadius: 90, borderBottomRightRadius: 90 }}
-                colors={["#ffc3a0", "#ffafbd"]}
+                    }
+                }
             >
+                <LinearGradient
+                    colors={
+                        [
+                            Color.lightBlue, Color.peach, Color.purpleLight
+                        ]
+                    }
+                    style={
+                        {
+                            flex: 1
+                        }
+                    }
+                >
 
-                <View style={{ height: height / 3, width: width }}>
+                </LinearGradient>
 
+            </View>
+            <View>
+                <View
+                    style={
+                        {
+                            borderRadius: 100,
+                            height: 100,
+                            alignSelf: "center",
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: '#fff',
+                            width: 100,
+                            transform: [
+                                {
+                                    translateY: -50
+                                }
+                            ],
+                            elevation: 25,
+                            shadowColor: "pink",
+                            shadowOffset: {
+                                height: 15,
+                                width: 15
+                            },
+                            shadowRadius: 25
+                        }
+                    }
+                >
+                    <Text
+                        style={
+                            {
+                                fontSize: 30,
+                                fontFamily: fonts.Federo_Regular
+                            }
+                        }
+                    >{auth().currentUser.displayName.substr(0, 2)}</Text>
+                </View>
+                <View
+                    style={styles.optionsContainer}
+                >
+                    <TouchableOpacity>
+                        <View
+                            style={styles.userOptionsContainer}
+                        >
+                            <Text
+                                style={styles.userOptionsText}
+                            >MY ORDERS</Text>
+
+                        </View>
+                    </TouchableOpacity>
+                    <View
+                        style={styles.userOptionsContainer}
+                    >
+                        <Text
+                            style={styles.userOptionsText}
+                        >Edit Profile</Text>
+
+                    </View>
 
                 </View>
-                <View style={styles.profileContainer}>
-                    <Text style={{ fontWeight: "bold", fontSize: 30 }}>{auth().currentUser.email[0]}</Text>
-                </View>
 
 
-            </LinearGradient>
-            {/**auth().currentUser.displayName */}
-            <View style={{ alignContent: 'center', alignItems: 'center', top: 50 }}>
-                <Text style={{ margin: 20, fontSize: 30, fontWeight: 'bold' }}>dff</Text>
-                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{auth().currentUser.email}</Text>
-
-
-                <TouchableOpacity style={{
-                    width: width - 40, height: 50,
-                    alignContent: 'center', alignItems: 'center',
-                    justifyContent: "center", borderRadius: 30, margin: 20,
-                    backgroundColor: '#37323E'
-                }}>
-                    <Text style={{ color: "#fff", fontSize: 20, fontFamily: "Federo-Regular" }}>MY ORDERS</Text>
-                </TouchableOpacity>
             </View>
 
 
-
-            <TouchableOpacity
-                onPress={() => logout()}
-                style={{
-                    top: 100,
-                    backgroundColor: "#1C5D99",
-                    justifyContent: "center",
-                    alignSelf: "center",
-                    borderRadius: 30,
-                    alignContent: "center",
-                    width: width / 3, height: 50
-                }}>
-                <Text style={{
-                    textAlign: "center",
-                    fontFamily: "Federo-Regular", color: '#fff',
-                    textAlignVertical: "center"
-                }}>LOGOUT</Text>
-            </TouchableOpacity>
         </View>
     )
 }
@@ -89,6 +129,30 @@ const User_profile = ({ navigation }) => {
 const styles = StyleSheet.create
     (
         {
+
+
+            optionsContainer:
+            {
+                margin: 20,
+            }     ,
+            userOptionsContainer:
+            {
+                height: 50,
+                backgroundColor: '#fff',
+                padding: 10,
+                justifyContent: 'center',
+                marginVertical: 10,
+                borderRadius: 15,
+                elevation: 15
+            }
+            ,
+            userOptionsText:
+            
+            {
+                color: Color.corporateBlue,
+                fontSize: 15,
+                fontFamily: fonts.Federo_Regular
+            }  ,
 
             profileContainer:
             {
