@@ -16,14 +16,16 @@ import { useDispatch } from "react-redux";
 import { AddStock, ChangeDiscount } from "../../redux/Actions/ProductActions";
 
 
-const ProductEditer = ({ pid, qty, disc }) => {
+const ProductEditer = ({ pid, qty, disc,price }) => {
 
     let dispatch = useDispatch()
     let qtyx = qty.toString()
     
+
+    console.log(price,"price")
     let discx = disc.toString()
 
-    const [pqty, setpqty] = useState(qtyx)
+    const [pqty, setpqty] = useState("0")
 
     const [pdiscount, setpdiscount] = useState(discx)
 
@@ -33,7 +35,7 @@ const ProductEditer = ({ pid, qty, disc }) => {
     }
     const ChangeDiscountHelper = () => {
 
-        dispatch(ChangeDiscount(pid, pdiscount))
+        dispatch(ChangeDiscount(pid, pdiscount,price))
     }
 
     return (
@@ -59,7 +61,7 @@ const ProductEditer = ({ pid, qty, disc }) => {
                 >
                     <Text
                         style={styles.txtbtnAdd}
-                    >+</Text>
+                    >stock +</Text>
 
                 </TouchableOpacity>
 
@@ -76,7 +78,7 @@ const ProductEditer = ({ pid, qty, disc }) => {
                 >
                     <Text
                         style={styles.txtbtnAdd}
-                    >+</Text>
+                    >discount</Text>
 
                 </TouchableOpacity>
 
@@ -103,6 +105,7 @@ const styles = StyleSheet.create
 
             {
                 flexDirection: "row",
+
                 justifyContent: "space-between",
 
 
@@ -112,8 +115,9 @@ const styles = StyleSheet.create
             {
                 height: 50,
                 width: 50,
+                elevation:2,
                 borderRadius: 15,
-                borderWidth: 1,
+                //borderWidth: 1,
                 textAlign: "center"
 
             },
@@ -121,8 +125,9 @@ const styles = StyleSheet.create
             {
 
                 height: 50,
-                width: 50,
-                backgroundColor: "black",
+                width:70,
+                elevation:15,
+                backgroundColor: "#fff",
                 borderRadius: 15,
                 alignItems: "center",
                 justifyContent: "center"
@@ -130,8 +135,9 @@ const styles = StyleSheet.create
             txtbtnAdd:
 
             {
-                color: "#fff",
-                fontSize: 25,
+               color: "black",
+                fontSize: 15,
+              
                 textAlign: 'center',
                 textAlignVertical: "center",
 

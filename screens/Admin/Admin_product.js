@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import { Dimensions, Text, StyleSheet, TextInput, ScrollView, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { Value } from "react-native-reanimated";
 import { useState } from "react/cjs/react.development";
 import firestore from "@react-native-firebase/firestore";
+import {
+  getDiscountRange,
+  getPriceRange
+} from "../../functions/CalculationHelpers";
 import { useRoute } from "@react-navigation/core";
-
 const { height, width } = Dimensions.get('window')
 const Admin_product = ({ navigation }) => {
 
@@ -15,6 +18,57 @@ const Admin_product = ({ navigation }) => {
 
   const p = useRoute()
 
+
+  const color = [
+    "white",
+    "black",
+    "silver",
+    "red",
+    "violet",
+    "blue",
+    "green",
+    "maroon",
+    "multi",
+
+    "cobalt",
+    "other",
+
+  ]
+
+  const [prod, setprod] = useState
+    (
+
+      {
+
+        pname: "",
+        brand: "",
+        cat: "",
+        subcategories: "",
+        material: "",
+        priceRange: "0-1000",
+        discountRange: '0-20',
+
+        priceafterdisc: 0,
+        price: 0,
+        color: color[0],
+        discount: 0,
+        dimensions: {
+
+          height: 50,
+          width: 50,
+          length: 50
+        },
+        warranty: 36,
+        discription: "It’s all wood. Crafted from high-grade mango wood, the Duetto bed makes for the perfect unwind zone. Its sleek frame and minimalist design exude a contemporary flavour and blend in seamlessly with various styles of decor. A gently curving headboard supports your back, letting you sit up to read, watch TV or simply have a conversation. Layer the bed with plush quilts and fluffy pillows for a warm, cosy nook you’ll never want to leave.",
+        date: todaysdate,
+        stock: 15,
+        img1: "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRdhvKeVWU27wW7t-pvkK-5f_nmot0QJ1HvyeM0qMojAKn069kTwyZUzTrrqHK0c3JbLqKZKfLx_Bg&usqp=CAc",
+        img2: "",
+        img3: "",
+        img4: "",
+
+      }
+    )
 
 
   const todaysdate = new Date().toISOString()
@@ -46,6 +100,7 @@ const Admin_product = ({ navigation }) => {
 
 
 
+
   const breakArr = (val) => {
 
     val = val.replaceAll(' ', '')
@@ -55,8 +110,6 @@ const Admin_product = ({ navigation }) => {
   }
   const uploadOnFirestore = async () => {
 
-
-
     try {
 
 
@@ -65,6 +118,9 @@ const Admin_product = ({ navigation }) => {
       prod.priceafterdisc = prod.price - ((prod.price * prod.discount) / 100)
 
       prod.subcategories = subcategories
+      prod.discountRange = getDiscountRange(prod.discount)
+      prod.priceRange = getPriceRange(prod.priceafterdisc)
+      prod.date = new Date().toISOString()
       console.log(prod)
 
       if (p.params != undefined) {
@@ -90,38 +146,69 @@ const Admin_product = ({ navigation }) => {
 
 
   // const {height,width}=Dimensions.get('screen')
-  const [prod, setprod] = useState
-    (
 
-      {
+  const renderItem = ({ item, index }) => {
+    return (
 
-        pname: "",
-        brand: "",
-        cat: "",
-        subcategories: "",
-        material: "",
+      <View
 
-        priceafterdisc: 0,
-        price: 0,
-        discount: 0,
-        dimensions: {
+      >
+        {
+          item != 'multi' && item != 'other' ? <TouchableOpacity
+            onPress={
+              () => setprod({ ...prod, color: item })
+            }
+          >
+            <View
+              style={
+                {
+                  height: (prod.color === item) ? 55 : 50,
+                  width: (prod.color === item) ? 55 : 50,
+                  backgroundColor: item,
+                  margin: 10,
+                  elevation: 5,
 
-          height: 50,
-          width: 50,
-          length: 50
-        },
-        warranty: 36,
-        discription: "It’s all wood. Crafted from high-grade mango wood, the Duetto bed makes for the perfect unwind zone. Its sleek frame and minimalist design exude a contemporary flavour and blend in seamlessly with various styles of decor. A gently curving headboard supports your back, letting you sit up to read, watch TV or simply have a conversation. Layer the bed with plush quilts and fluffy pillows for a warm, cosy nook you’ll never want to leave.",
-        date: todaysdate,
-        stock: 15,
-        img1: "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRdhvKeVWU27wW7t-pvkK-5f_nmot0QJ1HvyeM0qMojAKn069kTwyZUzTrrqHK0c3JbLqKZKfLx_Bg&usqp=CAc",
-        img2: "",
-        img3: "",
-        img4: "",
+                  borderColor: 'black',
+                  borderWidth: 1,
+                  borderRadius: 10
+                }
+              }
+            ></View>
+          </TouchableOpacity> :
+            <TouchableOpacity
 
-      }
+              onPress={
+                () => setprod({ ...prod, color: item })
+              }
+              style={
+                {
+                  backgroundColor: '#fff',
+                  height: (prod.color === item) ? 55 : 50,
+
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderWidth: 1,
+                  margin: 10,
+                  borderRadius: 10,
+                  paddingHorizontal: 10
+
+                }
+              }
+            >
+
+              <Text
+                style={
+                  {
+                    color: "black"
+                  }
+                }
+              >{item}</Text>
+            </TouchableOpacity>
+        }
+      </View>
+
     )
-
+  }
 
   return (
     <View style={{
@@ -237,7 +324,7 @@ const Admin_product = ({ navigation }) => {
             <TextInput
               keyboardType='numeric'
               onChangeText={text => setprod({ ...prod, price: text })}
-              value={prod.price}
+              value={prod.price.toString()}
               style={styles.inputTextNumbers}
             />
             <Text>
@@ -250,6 +337,16 @@ const Admin_product = ({ navigation }) => {
               style={styles.inputTextNumbers}
             />
           </View>
+          <Text>Select A Color</Text>
+          <FlatList
+            horizontal
+            data={
+              color
+            }
+            keyExtractor={item => item}
+            renderItem={renderItem
+            }
+          />
           <TextInput
             onChangeText={text => setprod({ ...prod, img1: text })} t
             value={prod.img1}

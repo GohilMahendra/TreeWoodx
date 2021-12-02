@@ -14,25 +14,19 @@ import { useNavigation } from "@react-navigation/core";
 
 const ProductCardEditer = (props) => {
 
+    const navigation = useNavigation()
+    const { item } = props
 
-
-    const navigation=useNavigation()
-
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
     const deleteProd = (productID) => {
-
         dispatch(DeleteProduct(productID))
-
     }
 
-
-    const { item } = props
-    const AddProductTOFeatured=()=>
-    {
+    const AddProductTOFeatured = () => {
         dispatch(AddToFeatured(item))
     }
 
- 
+
     return (
         <View
             style={styles.Container}
@@ -49,45 +43,30 @@ const ProductCardEditer = (props) => {
                     }
                     style={styles.imgContainer}
                 ></Image>
-                <View>
+                <View
+                    style={styles.RowContainer}
+                >
                     <Text
 
-                        style={
-                            {
-                                fontFamily: fonts.Quicksand_Medium
-                            }
-                        }
+                        style={styles.txtPname}
 
                     >
                         {item.pname}
 
                     </Text>
                     <Text
-                        style={
-                            {
-                                fontFamily: fonts.Quicksand_Medium
-                            }
-                        }
+                        style={styles.txtPname}
                     >
                         {item.pbrand}
 
                     </Text>
                     <View
-                        style={
-                            {
-                                flexDirection: "row"
-                            }
-                        }
+                        style={styles.priceRowContainer}
                     >
-                        <Text>{item.priceafterdisc}</Text>
+                        <Text>RS{item.priceafterdisc} </Text>
                         <Text
-                            style={
-                                {
-                                    textDecorationColor: 'black',
-                                    textDecorationLine: "line-through"
-                                }
-                            }
-                        >{item.pprice}</Text>
+                            style={styles.txtPriceStrike}
+                        >RS{item.pprice}</Text>
 
                     </View>
                 </View>
@@ -97,68 +76,47 @@ const ProductCardEditer = (props) => {
                 pid={item.key}
                 qty={item.pstock}
                 disc={item.pdisc}
+
+                price={item.pprice}
             ></ProductEditer>
             <View
                 style={styles.btnContainer}
             >
                 <TouchableOpacity
                     onPress={
-                        ()=>navigation.navigate('Admin_product',{
-                            item:item.key
+                        () => navigation.navigate('Admin_product', {
+                            item: item.key
                         })
                     }
-                    style={
-                        {
-                            backgroundColor: Color.peach,
-                            padding: 10,
-                            borderRadius: 10,
-                            elevation: 15
-
-                        }
-                    }
+                    style={styles.btnEdit}
                 >
-                    <Text>EDIT</Text>
+                    <Text
+                        style={styles.txtbtnInfo}
+                    >EDIT</Text>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                     onPress={
-                        ()=>deleteProd(item.key)
+                        () => deleteProd(item.key)
                     }
                     style={
                         {
                             backgroundColor: '#de1738',
                             padding: 10,
-                            
                             borderRadius: 10,
                             elevation: 25
                         }
                     }
                 >
                     <Text
-                    style={
-                        {
-                            fontSize:15,
-                            fontFamily:fonts.Federo_Regular
-                        }
-                    }
+                        style={styles.txtbtnInfo}
                     >DELETE</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-
-                onPress={()=>AddProductTOFeatured()}
-
-
-                    style={
-                        {
-                            backgroundColor: Color.blueModern,
-                            padding: 10,
-
-                            elevation: 15,
-
-                            borderRadius: 10
-                        }
-                    }
+                    onPress={() => AddProductTOFeatured()}
+                    style={styles.btnFeatured}
                 >
-                    <Text>FEATURED</Text>
+                    <Text style={styles.txtbtnInfo}>FEATURED</Text>
                 </TouchableOpacity>
 
             </View>
@@ -171,7 +129,8 @@ const styles = StyleSheet.create
         {
             Container:
             {
-                margin: 20, height: 350,
+                margin: 15,
+                height: 350,
                 backgroundColor: '#fff',
                 borderRadius: 50,
                 elevation: 10
@@ -195,7 +154,61 @@ const styles = StyleSheet.create
                 margin: 20,
                 flexDirection: 'row',
                 justifyContent: 'space-between'
+            },
+            txtbtnInfo:
+            {
+                fontSize: 15,
+                color: '#fff',
+                fontFamily: fonts.Federo_Regular
+            },
+            txtPname:
+
+            {
+                fontFamily: fonts.Quicksand_Medium,
+                fontSize: 15,
+
             }
+            ,
+            RowContainer:
+            {
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius:10
+            },
+            priceRowContainer:
+            {
+                flexDirection: "row",
+                elevation:5,
+                backgroundColor:'#fff',
+                borderRadius:5,
+                paddingHorizontal:10,
+                justifyContent: "space-between"
+            },
+
+            txtPriceStrike:
+            {
+                textDecorationColor: 'black',
+                textDecorationLine: "line-through"
+            },
+            btnEdit:
+            {
+                backgroundColor: Color.peach,
+                padding: 10,
+                borderRadius: 10,
+                elevation: 15
+
+            },
+            btnFeatured:
+
+            {
+                backgroundColor: Color.blueModern,
+                padding: 10,
+                elevation: 15,
+                borderRadius: 10
+            }
+
+
+
 
 
 

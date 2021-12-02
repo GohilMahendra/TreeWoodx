@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
-import { Dimensions, Picker, RefreshControl, Image, Button, Pressable, Text, TextInput, View } from "react-native"
+import { Dimensions, Picker, RefreshControl, Image, Button, Pressable, Text, TextInput, View, StyleSheet } from "react-native"
   ;
 
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
@@ -16,11 +16,6 @@ import { LoadProducts, loadMoreProducts } from "../../redux/Actions/ProductActio
 const Product_list = () => {
   const navigation = useNavigation()
 
-
-
-  const searchRef = useRef()
-
-
   const product = useSelector(state => state.Products.products)
   const prodLoad = useSelector(state => state.Products.prodLoad)
   const moreproductsLoad = useSelector(state => state.Products.moreproductsLoad)
@@ -34,18 +29,20 @@ const Product_list = () => {
   var item = p.params.item
 
 
+  const [filters, setfilters] = useState(
+    {
+        material:"Wood",
+        priceRange:"",
+        cat:"",
+        color:"",
+        discountRange:"",
+    }
+  )
 
-  const [category, setcategory] = useState(item == undefined ? "" : item)
   const { height, width } = Dimensions.get('screen')
 
-  const searchProduct = () => {
-
-    dispatch(LoadProducts(category, search))
-
-  }
-
   const loadMoreProd = () => {
-    //dispatch(loadMoreProducts(category, search, lastindex))
+    dispatch(loadMoreProducts(filters, search, lastindex))
 
   }
 
@@ -55,21 +52,17 @@ const Product_list = () => {
 
 
       <View
-      style={
-        {
-          width:'100%'
-        }
-      }
+      
       >
-      <ProductCard
-        navigation={navigation}
-        item={item}
-        index={index}
-        height={height}
-        width={width}
-      >
+        <ProductCard
+          navigation={navigation}
+          item={item}
+          index={index}
+          height={height}
+          width={width}
+        >
 
-      </ProductCard>
+        </ProductCard>
       </View>
 
     )
@@ -77,50 +70,33 @@ const Product_list = () => {
 
 
 
-  useEffect
-    (
-      () => {
-        if (p.params != null) {
-          if (p.params.type == 'search') {
-            console.log(p.params.search, 'type Search')
-            setserach(p.params.search)
-          }
-          else {
-            dispatch(LoadProducts(category, search))
-
-          }
-        }
-      }
-      , []
-    )
 
   useEffect
     (
       () => {
 
-        if (search != "")
-          searchProduct()
-
+        dispatch(LoadProducts(filters,search))
+     
       },
-      [search]
+      []
     )
 
 
   return (
-    <View style={{ flex: 1, alignItems: "center", backgroundColor: '#E6E6FA' }}>
+    <View style={styles.Container}>
 
-    {p.params!=undefined&&<View>
+      {p.params != undefined && <View>
 
-      <Text>{item}</Text>
+        <Text>{item}</Text>
 
-    </View>}
+      </View>}
 
 
       <FlatList
 
         refreshControl={
           <RefreshControl
-            onRefresh={() => dispatch(LoadProducts(category, search))}
+            onRefresh={() => dispatch(LoadProducts(filters, search))}
 
             refreshing={prodLoad}
 
@@ -159,4 +135,15 @@ const Product_list = () => {
   )
 }
 
+const styles = StyleSheet.create
+  (
+    {
+      Container:
+      {
+        flex: 1,
+        alignItems: "center",
+        backgroundColor: '#E6E6FA'
+      }
+    }
+  )
 export default Product_list

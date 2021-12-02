@@ -61,29 +61,7 @@ const User_profile = ({ navigation }) => {
             </View>
             <View>
                 <View
-                    style={
-                        {
-                            borderRadius: 100,
-                            height: 100,
-                            alignSelf: "center",
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: '#fff',
-                            width: 100,
-                            transform: [
-                                {
-                                    translateY: -50
-                                }
-                            ],
-                            elevation: 25,
-                            shadowColor: "pink",
-                            shadowOffset: {
-                                height: 15,
-                                width: 15
-                            },
-                            shadowRadius: 25
-                        }
-                    }
+                    style={styles.roundContainer}
                 >
                     <Text
                         style={
@@ -107,6 +85,7 @@ const User_profile = ({ navigation }) => {
 
                         </View>
                     </TouchableOpacity>
+
                     <View
                         style={styles.userOptionsContainer}
                     >
@@ -116,6 +95,24 @@ const User_profile = ({ navigation }) => {
 
                     </View>
 
+                    <TouchableOpacity
+                    onPress={
+                        ()=>logout()
+                    }
+                    >
+                        <View
+                            style={[styles.userOptionsContainer
+                            ,{
+                                backgroundColor:"red"
+                            }
+                        ]}
+                        >
+                            <Text
+                                style={styles.userOptionsText}
+                            >Logout</Text>
+
+                        </View>
+                    </TouchableOpacity>
                 </View>
 
 
@@ -134,7 +131,7 @@ const styles = StyleSheet.create
             optionsContainer:
             {
                 margin: 20,
-            }     ,
+            },
             userOptionsContainer:
             {
                 height: 50,
@@ -147,12 +144,12 @@ const styles = StyleSheet.create
             }
             ,
             userOptionsText:
-            
+
             {
                 color: Color.corporateBlue,
                 fontSize: 15,
                 fontFamily: fonts.Federo_Regular
-            }  ,
+            },
 
             profileContainer:
             {
@@ -165,7 +162,31 @@ const styles = StyleSheet.create
                 backgroundColor: 'white',
                 width: 100,
                 borderRadius: 100
+            },
+            roundContainer:
+
+            {
+                borderRadius: 100,
+                height: 100,
+                alignSelf: "center",
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#fff',
+                width: 100,
+                transform: [
+                    {
+                        translateY: -50
+                    }
+                ],
+                elevation: 25,
+                shadowColor: "pink",
+                shadowOffset: {
+                    height: 15,
+                    width: 15
+                },
+                shadowRadius: 25
             }
+
         }
     )
 export default User_profile

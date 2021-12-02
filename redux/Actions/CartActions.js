@@ -21,22 +21,12 @@ import {
 import auth from "@react-native-firebase/auth";
 
 import firestore from "@react-native-firebase/firestore";
-import { List } from "react-native-paper";
-
-
-
-
-
 
 export const changeCartQuantity = (quantity, pid) => {
 
-
-
   return async (dispatch) => {
 
-
     dispatch({ type: CHANGE_QUANTITY_REQUEST })
-
 
     try {
       const res = await firestore()
@@ -72,7 +62,6 @@ export const AddToCart = (product, key) => {
     dispatch({ type: ADD_TO_CART_REQUEST })
 
     try {
-
 
       const productx = {
         pname: product.pname,
@@ -118,8 +107,12 @@ export const removeFromCart = (pid) => {
       dispatch({ type: REMOVE_FROM_CART_REQUEST })
 
 
-      const res = await firestore().collection('cart').doc(auth().currentUser.uid).collection('products').doc(pid).delete()
-
+      const res = await firestore()
+      .collection('cart')
+      .doc(auth().currentUser.uid)
+      .collection('products')
+      .doc(pid)
+      .delete()
 
       dispatch({ type: REMOVE_FROM_CART_SUCCESS, payload: res })
     }
@@ -134,10 +127,8 @@ export const fetchCartproducts = () => {
 
   return async (dispatch) => {
 
-
-
-
     dispatch({ type: FETCH_CART_REQUEST })
+
     try {
 
 
@@ -155,21 +146,24 @@ export const fetchCartproducts = () => {
                 function (child) {
 
                   count += 1
-                  total += child.data().priceafterdisc*child.data().quantity
-                  list.push(
-                    {
-                      key: child.id,
-                      pname: child.data().pname,
-                      brand: child.data().brand,
-                      price: child.data().price,
-                      stock: child.data().stock,
-                      priceafterdisc: child.data().priceafterdisc,
-                      cat: child.data().cat,
-                      quantity: child.data().quantity,
-                      img1: child.data().img1,
-                      discount: child.data().discount
-                    }
-                  )
+                  total += child.data().priceafterdisc * child.data().quantity
+
+                  list.push
+                  ({
+                  key:child.id,
+                  pname: child.data().pname,
+                  brand: child.data().brand,
+                  price: child.data().price,
+                  stock: child.data().stock,
+                  priceafterdisc: child.data().priceafterdisc,
+                  cat: child.data().cat,
+                  quantity:  child.data().quantity,
+                  img1: child.data().img1,
+                  discount: child.data().discount
+
+                  })
+               
+                
                 }
 
 

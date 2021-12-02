@@ -32,6 +32,9 @@
 		4B664213DC62467C8AB4C65F /* Federo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9961832F6F904BC2B0AC5051 /* Federo-Regular.ttf */; };
 		D856D259946948E18C4FFD39 /* Merienda-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF434CE7EE454B88AB245E78 /* Merienda-Regular.ttf */; };
 		A4CE28BE125A465ABE18F549 /* Quicksand-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 691385B57C8B4CC189BADBD3 /* Quicksand-Medium.ttf */; };
+		B1B8F6FC76D04613830FDC5E /* Genos-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D37506EDFBB24486B1CA3D48 /* Genos-Regular.ttf */; };
+		B1933757C7E644028162D28A /* Playball-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5E3D5EC7E8A345A791B6E183 /* Playball-Regular.ttf */; };
+		711B5541F6124E9DB6FD7C00 /* SpaceMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E042311DECA495DBCAAF6A9 /* SpaceMono-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +79,9 @@
 		9961832F6F904BC2B0AC5051 /* Federo-Regular.ttf */ = {isa = PBXFileReference; name = "Federo-Regular.ttf"; path = "../assets/fonts/Federo-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		BF434CE7EE454B88AB245E78 /* Merienda-Regular.ttf */ = {isa = PBXFileReference; name = "Merienda-Regular.ttf"; path = "../assets/fonts/Merienda-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		691385B57C8B4CC189BADBD3 /* Quicksand-Medium.ttf */ = {isa = PBXFileReference; name = "Quicksand-Medium.ttf"; path = "../assets/fonts/Quicksand-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D37506EDFBB24486B1CA3D48 /* Genos-Regular.ttf */ = {isa = PBXFileReference; name = "Genos-Regular.ttf"; path = "../assets/fonts/Genos-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5E3D5EC7E8A345A791B6E183 /* Playball-Regular.ttf */ = {isa = PBXFileReference; name = "Playball-Regular.ttf"; path = "../assets/fonts/Playball-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8E042311DECA495DBCAAF6A9 /* SpaceMono-Regular.ttf */ = {isa = PBXFileReference; name = "SpaceMono-Regular.ttf"; path = "../assets/fonts/SpaceMono-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +194,9 @@
 				9961832F6F904BC2B0AC5051 /* Federo-Regular.ttf */,
 				BF434CE7EE454B88AB245E78 /* Merienda-Regular.ttf */,
 				691385B57C8B4CC189BADBD3 /* Quicksand-Medium.ttf */,
+				D37506EDFBB24486B1CA3D48 /* Genos-Regular.ttf */,
+				5E3D5EC7E8A345A791B6E183 /* Playball-Regular.ttf */,
+				8E042311DECA495DBCAAF6A9 /* SpaceMono-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -303,6 +312,9 @@
 				4B664213DC62467C8AB4C65F /* Federo-Regular.ttf in Resources */,
 				D856D259946948E18C4FFD39 /* Merienda-Regular.ttf in Resources */,
 				A4CE28BE125A465ABE18F549 /* Quicksand-Medium.ttf in Resources */,
+				B1B8F6FC76D04613830FDC5E /* Genos-Regular.ttf in Resources */,
+				B1933757C7E644028162D28A /* Playball-Regular.ttf in Resources */,
+				711B5541F6124E9DB6FD7C00 /* SpaceMono-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

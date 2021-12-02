@@ -42,11 +42,10 @@ const product = ({ navigation }) => {
 
       () => {
 
-
         const subscriber = firestore().collection('reviews')
           .doc(p.params.item.key)
           .collection('review')
-          .limit(1).
+          .limit(3).
           onSnapshot((snapshot) => {
 
             snapshot.docs.forEach((docs) => {
@@ -84,8 +83,8 @@ const product = ({ navigation }) => {
   )
 
   const [prod, setprod] = React.useState([])
-
   const [load, setload] = React.useState(true)
+
   const [rev, setrev] = useState({
     date: todaysdate,
     email: ""
@@ -174,44 +173,44 @@ const product = ({ navigation }) => {
 
             </View>
 
-
             <View
-            style={styles.categoryContainerView}
+              style={styles.categoryContainerView}
             >
-            <Text
-              style={styles.productCategoryText} >
-              {prod.cat}
-            </Text>
+              <Text
+                style={styles.productCategoryText} >
+                {prod.cat}
+              </Text>
             </View>
+            <ScrollView
+            horizontal
+            >
             <View
-            style={styles.categoryContainer}
+              style={styles.categoryContainer}
             >
               {
                 prod.subcategories.map(
-                  (item)=>{
-                    return(
+                  (item) => {
+                    return (
                       <View
-            key={item}
-            style={styles.categoryContainerView}
-            >
-            <Text
-              style={styles.productCategoryText} >
-              {item}
-            </Text>
-            </View>
+                        key={item}
+                        style={styles.categoryContainerView}
+                      >
+                        <Text
+                          style={styles.productCategoryText} >
+                          {item}
+                        </Text>
+                      </View>
                     )
                   }
                 )
               }
-                
+
             </View>
+            </ScrollView>
 
 
 
-            <Text style={styles.productCategoryText} >
-              {prod.sub_cat}
-            </Text>
-
+          
 
             <TouchableOpacity
               onPress={() => addTOcart()}
@@ -385,8 +384,7 @@ const styles = StyleSheet.create
       },
       materialText:
       {
-        alignContent: "center",
-        alignItems: 'center',
+
         fontSize: 20,
         fontFamily: fonts.Federo_Regular,
         margin: 20
@@ -395,7 +393,7 @@ const styles = StyleSheet.create
       {
         backgroundColor: "#fff",
         borderRadius: 20,
-        elevation: 25
+        elevation: 15
 
       }
       ,
@@ -412,11 +410,10 @@ const styles = StyleSheet.create
       {
 
         fontSize: 20,
-    
-        height:50,
         textAlignVertical: 'center',
         fontFamily: fonts.Federo_Regular,
         padding: 15,
+        
         color: "black",
         textAlign: 'center',
 
@@ -428,7 +425,11 @@ const styles = StyleSheet.create
       {
         alignContent: "center",
         alignItems: 'center',
+        alignSelf:'center',
+
+        margin:20,
         flexDirection: "row",
+
         justifyContent: 'space-evenly',
 
 
@@ -437,7 +438,9 @@ const styles = StyleSheet.create
       categoryContainerView:
       {
         backgroundColor: "#fff",
-        elevation: 25,
+       
+        alignItems:"center",
+        marginHorizontal:20,
 
         borderRadius: 15
       },

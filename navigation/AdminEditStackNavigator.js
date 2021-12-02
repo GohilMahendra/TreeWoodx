@@ -17,6 +17,11 @@ const AdminEditStackNavigator=()=>
 
         <editNaviagter.Navigator>
             <editNaviagter.Screen
+            options={
+                {
+                    headerShown:false
+                }
+            }
                 name="Admin_ProductScreen"
                 component={Admin_ProductScreen}
             >

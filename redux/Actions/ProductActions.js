@@ -2,18 +2,18 @@
 import auth, { firebase } from "@react-native-firebase/auth";
 
 import firestore from "@react-native-firebase/firestore";
+import { getDiscountRange, getPriceRange } from "../../functions/CalculationHelpers";
 
 import {
     LOAD_HOME_PRODUCTS_FAILED,
     LOAD_HOME_PRODUCTS_REQUEST,
     LOAD_HOME_PRODUCTS_SUCCESS,
     LOAD_MORE_PRODUCTS_FAILED,
-    LOAD_MORE_PRODUCTS_REQUEST,
+  
     LOAD_MORE_PRODUCTS_SUCCESS,
     LOAD_PRODUCTS_FAILED,
     LOAD_PRODUCTS_SUCCESS,
-    SEARCH_PRODUCTS_FAILED,
-    SEARCH_PRODUCTS_SUCCESS
+ 
 } from "../Types/ProductTypes";
 
 
@@ -46,7 +46,7 @@ export const AddProduct = (key, prod) => {
 }
 export const AddStock = (pid, stk) => {
     return async (dispatch) => {
-       
+
         try {
             const res = await firestore().collection('products').doc(pid).update
                 (
@@ -65,13 +65,23 @@ export const AddStock = (pid, stk) => {
 
 }
 
-export const ChangeDiscount = (pid, disc) => {
+export const ChangeDiscount = (pid, disc, price) => {
     return async (dispatch) => {
         try {
+
+
+            console.log(price)
+            const priceafterdisc = price - (price * disc) / 100
+
+            const discountRange = getDiscountRange(disc)
+            const priceRange = getPriceRange(priceafterdisc)
             const res = await firestore().collection('products').doc(pid).update
                 (
                     {
-                        discount: disc
+                        discount: disc,
+                        priceafterdisc: priceafterdisc,
+                        discountRange: discountRange,
+                        priceRange: priceRange
                     }
                 )
 
@@ -133,44 +143,70 @@ export const LoadInitialProducts = (name) => {
     }
 }
 
-export const LoadProducts = (category, search) => {
+
+const qryBuilder = (filters, search) => {
+  
+
+  
+    let qry=firestore().collection('products')
+
+    if(filters.material!="")
+    {
+
+        qry=qry.where('material','==',filters.material)
+    }
+    if(filters.priceRange!="")
+    {
+        qry=qry.where('priceRange','==',filters.priceRange)
+
+    }
+    if(filters.discountRange!="")
+    {
+        qry=qry.where('discountRange','==',filters.discountRange)
+
+    }
+    if(filters.color!="")
+    {
+        qry=qry.where('color','==',filters.color)
+
+    }
+    if(search!="" && search!=null)
+    {
+        qry=qry.where('pname','==',search)
+
+    }
+
+    return qry
+
+}
+
+
+export const LoadProducts = (filters = null, search = null) => {
     return async (dispatch) => {
 
 
         try {
 
 
-            let quary = ""
-            if (category != null && 
-                search == "" && 
-                category != "All"
-                && category != "Search") 
+            let qry=null
+
+            if(filters==null && search==null)
             {
-                quary = firestore()
-                    .collection('products')
-                    .where('cat', '==', category)
-                    .limit(MAX_FETCH_LIMIT)
+                qry=firestore()
+                .collection('products')
             }
-
-            else if (search != null && search != "") {
-                quary = firestore()
-                    .collection('products')
-                    .where('pname', '>=', search)
-                    .where('pname', '<=', search + '\uf8ff').limit(MAX_FETCH_LIMIT)
-
-
+            else if(filters==null && (search!=null && search!=""))
+            {
+                qry=firestore()
+                .collection('products')
+                .where('pname','==',search)   
             }
-            else {
-                quary = firestore()
-                    .collection('products')
-                    .limit(MAX_FETCH_LIMIT)
+            else
+            {
+                qry=qryBuilder(filters,search)
             }
-
-
-
-
-
-            const products = await quary.get()
+            
+            const products = await qry.limit(MAX_FETCH_LIMIT).get()
 
             var list = []
             products.forEach(function (child) {
@@ -190,7 +226,7 @@ export const LoadProducts = (category, search) => {
 
             )
 
-            var lastkey = null
+            let lastkey = null
             if (list.length >= MAX_FETCH_LIMIT) {
                 lastkey = list[list.length - 1].key
             }
@@ -218,48 +254,53 @@ export const LoadProducts = (category, search) => {
 }
 
 
-export const loadMoreProducts = (category, search, lastindex) => {
+export const loadMoreProducts = (filters, search, lastindex) => {
     return async (dispatch) => {
 
 
         try {
 
-            if (lastindex == null || search.length > 0 || search != "") {
+            if (lastindex == null) {
                 console.log("NULL INDEX")
                 return
             }
-    
-            if (category != null &&
 
-                category != "All"
-                && category != "Search") {
+          
+            let qry=null
 
-                quary = firestore().collection('products')
-                    .where('cat', '==', category)
-                    .where('pname','==',search)
-                    .orderBy(firestore.FieldPath.documentId())
-                    .startAfter(lastindex)
-                    .limit(MAX_FETCH_LIMIT)
+
+            if(filters==null && search==null)
+            {
+                qry=firestore()
+                .collection('products')
+               
+            }
+            else if(filters==null && (search!=null && search!=""))
+            {
+                qry=firestore()
+                .collection('products')
+                .where('pname','==',search)
+             
+                
 
             }
-
-            else {
-                quary = firestore()
-                    .collection('products')
-                    .orderBy(firestore.FieldPath.documentId())
-                    .startAfter(lastindex)
-                    .limit(MAX_FETCH_LIMIT)
+            else
+            {
+                qry=qryBuilder(filters,search)
             }
-
 
 
             var list = []
 
-            const products = await quary.get()
+            const products = await qry
+            .orderBy(firestore.FieldPath.documentId())
+            .startAfter(lastindex)
+            .get()
 
-            console.log(products)
+            console.log(products,"fetch more")
             products.forEach(function (child) {
 
+                console.log(child.data().pname,"pName")
 
                 list.push({
                     key: child.id,
@@ -275,7 +316,7 @@ export const loadMoreProducts = (category, search, lastindex) => {
 
             )
 
-            console.log(list + "LIST")
+      
             let lastkey = null
             if (list.length >= MAX_FETCH_LIMIT) {
                 lastkey = list[list.length - 1].key

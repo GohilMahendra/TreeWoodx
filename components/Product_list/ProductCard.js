@@ -2,6 +2,8 @@ import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState } from "react";
 import { Image, TouchableOpacity, Text, View } from "react-native"
   ;
+import { Colors } from "react-native/Libraries/NewAppScreen";
+import { Color } from "../../constants/colors";
 
 import { fonts } from "../../constants/fonts";
 
@@ -11,18 +13,18 @@ const ProductCard = (props) => {
   return (
 
     <TouchableOpacity
-      onPress={() => 
+      onPress={() =>
         navigation.push("product",
-         { item: item, name: item.pname 
-      })}
+          {
+            item: item, name: item.pname
+          })}
 
       style={
         {
           backgroundColor: '#fff',
-          elevation: 10,
-         height: 350,
-          width: '50%',
-
+          elevation: 5,
+          height: 350,
+          width: width/2-10,
           margin: 5,
           borderRadius: 15,
 
@@ -54,40 +56,39 @@ const ProductCard = (props) => {
           {
             alignSelf: 'center',
             justifyContent: "center",
-            height:'40%',
-            width:"100%",
-              alignItems: "center"
+            height: '40%',
+            width: "100%",
+           // elevation: 15,
+            borderRadius:15,
+            backgroundColor:"#fff",
+            alignItems: "center"
           }
         }
       >
         <View
         style={
           {
-         
-            height:'100%',
-            width:'100%',
-            backgroundColor:'#fff',
-           
-            opacity:0.4,
-            borderRadius:10
+            flex:1,
+            backgroundColor:"#fff",
+            opacity:0.5
           }
         }
-        />
-         
+        >
+        </View>
         <View
         style={
           {
-            position:'absolute',
             flex:1,
-            backgroundColor:''
+            position:"absolute"
           }
         }
         >
         <Text
           style={
             {
-              fontSize: 18,
+              fontSize: 20,
               fontFamily: fonts.Federo_Regular,
+              color: 'black',
 
             }
           }
@@ -96,58 +97,58 @@ const ProductCard = (props) => {
           style={
             {
               fontSize: 18,
-              fontFamily: fonts.Merienda_Regular,
               color: "gray"
 
             }
           }
         >{item.pbrand}</Text>
 
-      <View
-      style={{
-        flexDirection:"row",
-        justifyContent:'space-around',
-        alignItems:"center"
-      }}
-      >
-        <Text
-          style={
-            {
-              fontFamily: fonts.Federo_Regular,
-              fontSize: 18,
-              color:"black"
-             
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: 'space-between',
+           
+          }}
+        >
+          <Text
+            style={
+              {
+                fontFamily: fonts.Federo_Regular,
+                fontSize: 20,
+                color: "black"
 
+
+              }
             }
-          }
-        >
-          RS {item.priceafterdisc}
-        </Text>
-        <Text
-          style={
-            {
-              fontFamily: fonts.Federo_Regular,
-              fontSize: 18,
-              textDecorationLine: 'line-through',
-              color:'gray'
+          >
+            RS {item.priceafterdisc}
+          </Text>
+          <Text
+            style={
+              {
+                fontFamily: fonts.Federo_Regular,
+                fontSize: 18,
+                alignSelf:"flex-end",
+                textDecorationLine: 'line-through',
+                color: 'black'
+              }
             }
-          }
-        >
-          RS {item.pprice}
-        </Text>
+          >
+            RS {item.pprice}
+          </Text>
+
+        </View>
       </View>
-     
-     </View>
       </View>
       <View
         style={
           {
-            backgroundColor: "black",
+            backgroundColor: "#90a955",
             position: "absolute",
             top: 5,
             right: 5,
-            elevation: 25,
-            borderRadius: 20
+            elevation:10,
+            borderRadius: 10
 
           }
         }

@@ -48,10 +48,9 @@ const Login = ({ navigation }) => {
             if (user) {
 
 
-              if(!isAdmin(auth().currentUser.uid))
-              navigation.navigate("Admin")
-              else
+      //        if(!isAdmin(auth().currentUser.uid))
               navigation.navigate("Home")
+      
             }
           })
 
@@ -68,6 +67,8 @@ const Login = ({ navigation }) => {
         return
       }
 
+
+    
       setloading(true)
       auth().signInWithEmailAndPassword(email, password)
         .then(

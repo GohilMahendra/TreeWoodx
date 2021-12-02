@@ -137,6 +137,7 @@ const styles = StyleSheet.create
 
                 flexDirection: 'row',
                 alignItems: 'center',
+                elevation:15,
 
             },
             btnToggle:
@@ -145,6 +146,7 @@ const styles = StyleSheet.create
                 height: 50,
                 width: 50,
                 borderRadius: 50,
+                elevation:15,
                 position: "absolute",
                 bottom: 10,
                 right: 10,
@@ -158,6 +160,7 @@ const styles = StyleSheet.create
             {
                 marginHorizontal: 10,
                 padding: 10,
+                elevation:10,
                 borderRadius: 20,
                 backgroundColor: 'black',
                 color: "#fff"
@@ -166,6 +169,7 @@ const styles = StyleSheet.create
             {
                 height: 50,
                 width: 50,
+                elevation:15,
                 borderRadius: 50,
 
                 backgroundColor: 'black',

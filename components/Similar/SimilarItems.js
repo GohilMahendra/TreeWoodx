@@ -26,8 +26,8 @@ const SimilarItems = ({ category, curruntID }) => {
 
 
 
-    const [loading,setloading]=useState(false)
-    const [products,setproducts]=useState()
+    const [loading, setloading] = useState(false)
+    const [products, setproducts] = useState()
 
     const navigation = useNavigation()
     const dispatch = useDispatch()
@@ -51,44 +51,42 @@ const SimilarItems = ({ category, curruntID }) => {
         )
     }
 
-    const getSimilarItemData=async()=>{
+    const getSimilarItemData = async () => {
 
-        try
-        {
+        try {
             setloading(true)
-        const products=await
-        firestore()
-        .collection('products')
-        .where('cat','==',category)
-        .limit(5)
-        .get()
+            const products = await
+                firestore()
+                    .collection('products')
+                    .where('cat', '==', category)
+                    .limit(5)
+                    .get()
 
-        let list = []
+            let list = []
 
-        products.docs.forEach
-            (
-                function (child) {
-                    list.push(
-                        {
-                            key: child.id,
-                            pname: child.data().pname,
-                            pprice: child.data().price,
-                            pdisc: child.data().discount,
-                            priceafterdisc: child.data().priceafterdisc,
-                            pimage: child.data().img1,
-                            pbrand: child.data().brand
-                        }
-                    )
-                }
-            )
+            products.docs.forEach
+                (
+                    function (child) {
+                        list.push(
+                            {
+                                key: child.id,
+                                pname: child.data().pname,
+                                pprice: child.data().price,
+                                pdisc: child.data().discount,
+                                priceafterdisc: child.data().priceafterdisc,
+                                pimage: child.data().img1,
+                                pbrand: child.data().brand
+                            }
+                        )
+                    }
+                )
 
-        setproducts(list)
+            setproducts(list)
 
 
-        setloading(false)
+            setloading(false)
         }
-        catch(err)
-        {
+        catch (err) {
             setloading(false)
         }
 
@@ -127,15 +125,7 @@ const SimilarItems = ({ category, curruntID }) => {
                     }
                 >SIMILAR PRODUCTS</Text>
                 <TouchableOpacity
-                    style={
-                        {
-
-                            backgroundColor: "black",
-                            borderRadius: 10
-                        }
-
-
-                    }
+                    style={styles.btnGoToMore}
 
                     onPress={() => navigation.push("SimilarProducts",
                         {
@@ -177,14 +167,14 @@ const SimilarItems = ({ category, curruntID }) => {
                 </FlatList>
 
 
-               <ActivityIndicator
-               style={{
-                   alignItems:'center',
-                   top:'50%'
-               }}
-               size={30}
-               animating={loading?true:false}
-               ></ActivityIndicator>
+                <ActivityIndicator
+                    style={{
+                        alignItems: 'center',
+                        top: '50%'
+                    }}
+                    size={30}
+                    animating={loading ? true : false}
+                ></ActivityIndicator>
             </View>
 
 
@@ -228,10 +218,13 @@ const styles = StyleSheet.create
                 textAlignVertical: "center",
                 textAlign: "center"
 
+            },
+            btnGoToMore:
+            {
+
+                backgroundColor: "black",
+                borderRadius: 10
             }
-
-
-
         }
     )
 export default SimilarItems

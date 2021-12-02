@@ -10,7 +10,6 @@ import { fonts } from "../../constants/fonts";
 
 import { useDispatch } from "react-redux";
 import { changeCartQuantity } from "../../redux/Actions/CartActions";
-import { Color } from "../../constants/colors";
 
 
 
@@ -31,9 +30,9 @@ const CartCard = (props) => {
     const [quantity, setquantity] = React.useState(1)
     return (
 
+
         <View>
             <View
-
                 style=
                 {
                     styles.Container
@@ -41,11 +40,7 @@ const CartCard = (props) => {
             >
 
                 <View
-                    style={
-                        {
-                            width: '40%'
-                        }
-                    }
+                    style={styles.imageContainer}
                 >
                     <Image
                         source={{ uri: item.img1 }}
@@ -54,62 +49,38 @@ const CartCard = (props) => {
                             styles.productImage
                         }
                     >
-
-
                     </Image>
-                </View>
-                <View
 
+                </View>
+
+                <View
                     style={
                         styles.productContainer
                     }
                 >
+                    <Text style={styles.txtpname}>{item.pname}
+                    </Text>
+
                     <Text
-
-
-                        style={
-                            {
-                                fontSize: 20,
-                                textAlign: "center",
-
-                                fontFamily: fonts.Federo_Regular
-                            }
-                        }>{item.pname}</Text>
-                    <Text
-
-
                         style={
                             {
                                 fontSize: 15
                             }
-                        }>{item.brand}</Text>
+                        }>{item.brand}
+                    </Text>
+
                     <View
-                        style={
-                            {
-                                flexDirection: 'row',
-                             alignSelf: 'center'
-                            }
-                        }
+                        style={styles.rowContainer}
                     >
                         <Text
-
-
-                            style={
-                                {
-                                    fontSize: 15
-                                }
-                            }>{item.price}</Text>
-                        <Text
-                            style={
-                                {
-                                    fontSize: 15,
-
-                                }
-                            }
+                            style={styles.priceafterdisc}
                         >
-                            {item.priceafterdisc}
-
+                            RS{item.priceafterdisc}
                         </Text>
+                        <Text
+                            style={styles.txtPrice}>RS{item.price}
+                        </Text>
+
                     </View>
 
                 </View>
@@ -120,12 +91,8 @@ const CartCard = (props) => {
                     }
                 >
                     <TouchableOpacity
-
-
                         onPress={
-
                             () => { changeQuantity(quantity - 1, item.key), setquantity(quantity - 1) }
-
                         }
 
                         disabled={(quantity == 1) ? true : false}
@@ -133,7 +100,7 @@ const CartCard = (props) => {
                         style={
                             {
                                 fontSize: 25,
-                                
+
                             }
                         }
                     >-</Text></TouchableOpacity>
@@ -173,12 +140,10 @@ const CartCard = (props) => {
                     style={
                         styles.removeText
                     }
-                >X</Text>
+                >REMOVE</Text>
             </TouchableOpacity>
 
         </View>
-
-
     )
 }
 
@@ -188,16 +153,26 @@ const styles = StyleSheet.create
 
             removeBtn:
             {
-                borderWidth: 1,
                 backgroundColor: "red",
                 alignSelf: 'center',
-                height: 25,
-                width: 25,
-
+                paddingHorizontal: 10,
+                padding: 10,
+                elevation: 10,
+                borderRadius: 15,
+                margin: 10,
+                justifyContent: 'center',
                 alignSelf: "flex-end"
 
 
 
+            },
+            txtpname:
+
+            {
+                fontSize: 20,
+                textAlign: "center",
+
+                fontFamily: fonts.Federo_Regular
             },
             Container:
 
@@ -205,15 +180,39 @@ const styles = StyleSheet.create
                 flexDirection: "row",
                 marginLeft: 20,
                 height: 150,
+                elevation: 10,
                 backgroundColor: "#fff",
                 borderRadius: 10
             },
+
+            rowContainer:
+            {
+                flexDirection: 'row',
+                alignSelf: 'center',
+                justifyContent: "space-evenly"
+            },
+
             productImage:
 
             {
                 flex: 1,
                 borderRadius: 10
             },
+            imageContainer:
+            {
+                width: '40%',
+                elevation: 20,
+                backgroundColor: '#fff',
+                borderRadius: 15
+            },
+
+            priceafterdisc:
+
+            {
+                fontSize: 15,
+
+            },
+
             productContainer:
             {
                 flexWrap: "wrap",
@@ -223,10 +222,14 @@ const styles = StyleSheet.create
                 alignItems: 'center',
                 justifyContent: 'center'
             },
+            txtPrice:
+            {
+                fontSize: 15,
+                textDecorationLine: "line-through"
+            },
             removeText:
             {
                 flexWrap: "wrap",
-                flex: 1,
 
                 textAlign: "center",
                 color: "#fff",

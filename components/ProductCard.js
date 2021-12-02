@@ -10,19 +10,25 @@ import {
 
 import FastImage from "react-native-fast-image";
 
-
-import {
-    useNavigation
-} from "@react-navigation/native";
 const ProductCard = (props) => {
 
     const { item } = props
-    const disc_price = Math.floor(item.pprice - item.pprice * item.pdisc / 100)
 
 
     return (
         <View style={styles.container}>
             <View style={styles.ViewContainer}>
+                <View
+                style={
+                    {
+                        elevation:5,
+                        margin:10,
+                        borderRadius:20,
+                        backgroundColor:"#fff",
+                        flex:1
+                    }
+                }
+                >
                 <FastImage
                     source={{ uri: item.pimage, priority: FastImage.priority.normal }}
                     style={styles.image}
@@ -30,13 +36,14 @@ const ProductCard = (props) => {
                     resizeMode={FastImage.resizeMode.contain}
 
                 ></FastImage>
+                </View>
                 <View
                     style={styles.TextConatainer}>
                     <Text
                         style={styles.texts}>{item.pname}</Text>
 
                     <Text
-                        style={styles.texts}>RS {disc_price}</Text>
+                        style={styles.texts}>RS {item.priceafterdisc}</Text>
 
                     <Text
                         style={[styles.texts, { color: "green" }]}>{item.pdisc}% off</Text>
@@ -46,7 +53,6 @@ const ProductCard = (props) => {
                         style={{
                             alignItems: 'center',
                             fontSize: 20,
-                            fontStyle: 'italic',
                             alignSelf: 'center'
                         }}>{item.brand}</Text>
                 </View>
@@ -75,7 +81,7 @@ const styles = StyleSheet.create
 
 
                 flex: 1,
-                margin: 10
+               
             },
             ViewContainer:
             {
