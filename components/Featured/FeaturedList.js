@@ -38,9 +38,6 @@ const FeaturedList = () => {
     const load = useSelector(state => state.Featured.featuredLoading)
     const Error = useSelector(state => state.Featured.featuredError)
 
-
-
-
     useEffect
         (
             () => {
@@ -53,9 +50,9 @@ const FeaturedList = () => {
 
     const FeaturedBuilder = ({ item, index }) => {
 
+        
 
-        console.log(item.pname)
-        // console.log(JSON.stringify(item)+'featured item')
+        console.log(item)
         return (
             <TouchableOpacity
 
@@ -63,21 +60,21 @@ const FeaturedList = () => {
                     () => navigation.navigate('product',
                         {
                             item: {
-                                key: item.key
+                                key: item.data.key
                             },
-                            name: item.pname
+                            name: item.data.pname
                         })
                 }
                 style={
                     {
-                        height: height / 4,
+                        height: height /3.5,
                         width: '100%'
                     }
                 }
             >
                 <FeaturedCard
-                    data={item}
-                    colorTheme={colorThemes[0]}
+                    data={item.data}
+                    colorTheme={item.theme}
                 >
 
                 </FeaturedCard>
@@ -95,7 +92,7 @@ const FeaturedList = () => {
                 layoutCardOffset={18}
 
                 ref={featuredRef}
-                itemHeight={250}
+          
                 itemWidth={width - 20}
                 sliderWidth={width - 20}
                 data={featured}

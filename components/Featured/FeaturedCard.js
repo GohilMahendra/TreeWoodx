@@ -17,7 +17,7 @@ const FeaturedCard = (props) => {
     const { data, colorTheme } = props
 
 
-  console.log(colorTheme)
+    console.log(colorTheme)
 
     return (
 
@@ -48,13 +48,12 @@ const FeaturedCard = (props) => {
                         >
                             <Text
                                 style={{
-                                    color: colorTheme.textTitle,
+                                    color:"#fff",
                                     fontSize: 20,
-                                    maxWidth:'100%',
-                                    fontFamily:fonts.Federo_Regular,
-                                    textShadowColor:'black',
-                                    textShadowRadius:15
-
+                                    maxWidth: '100%',
+                                    fontFamily: fonts.Federo_Regular,
+                                    
+                                    
                                 }}
                             >
                                 {data.pname}
@@ -62,12 +61,9 @@ const FeaturedCard = (props) => {
                             <Text
                                 style={
                                     {
-                                        color: colorTheme.textbrand,
-                                        fontSize: 18,
-                                        textShadowColor:colorTheme.background_off,
-                                        textShadowRadius:15,
-
-                                        fontFamily: fonts.Quicksand_Medium
+                                        color: colorTheme.secondary_color,
+                                        fontSize: 18, 
+                                        fontFamily: colorTheme.fontFamily
                                     }
                                 }
                             >
@@ -79,50 +75,47 @@ const FeaturedCard = (props) => {
                                 <Text
                                     style={
                                         {
-                                            color: colorTheme.textPrice,
+                                            color: "#ffff",
                                             fontSize: 18,
                                             padding: 10,
-                                            textShadowRadius:1,
-                                            textShadowColor:colorTheme.textTitle,
-                                            fontFamily:fonts.Federo_Regular,
-                                            
-                                            textDecorationLine:'line-through'
+                                            textShadowRadius: 1,
+                                            textShadowColor: colorTheme.gradient_color_2,
+                                            fontFamily: colorTheme.fontFamily,
+
+                                            textDecorationLine: 'line-through'
                                         }
                                     }
                                 >
-                                   RS {data.pprice}
+                                    RS{data.pprice}
                                 </Text>
                                 <Text
-                                style={
-                                    {
-                                        color: colorTheme.textPrice,
-                                        fontSize: 20,
-                                        padding: 10,
-                                        fontFamily:fonts.Federo_Regular
+                                    style={
+                                        {
+                                            color: "#fff",
+                                            fontSize: 20,
+                                            padding: 10,
+                                            fontFamily: colorTheme.fontFamily
+                                        }
                                     }
-                                }
                                 >
-                                   RS {data.priceafterdisc}
+                                    RS{data.priceafterdisc}
                                 </Text>
 
                             </View>
                             <TouchableOpacity
-
                                 style={
                                     {
-                                       backgroundColor:colorTheme.background_off,
+                                        backgroundColor: colorTheme.secondary_color,
                                         borderRadius: 10,
-
                                         padding: 10,
-
-
                                     }
                                 }
                             >
                                 <Text
                                     style={
                                         {
-                                            fontFamily: fonts.Federo_Regular
+                                            fontFamily: colorTheme.fontFamily,
+                                            paddingHorizontal:20
                                         }
                                     }
                                 >{data.pdisc} % OFF</Text>
@@ -158,7 +151,7 @@ const styles = StyleSheet.create
                 height: 200,
                 backgroundColor: '#fff',
                 margin: 15,
-                
+
                 borderRadius: 15,
                 elevation: 15
             }
@@ -179,7 +172,7 @@ const styles = StyleSheet.create
                 borderRadius: 15
             },
 
-         
+
             blurContainer:
             {
                 width: '100%',
@@ -191,19 +184,20 @@ const styles = StyleSheet.create
 
             },
             blurFreeView:
-            
+
             {
                 position: "absolute",
                 backgroundColor: "transparent",
                 flex: 1,
-                alignItems:'center'
+                alignItems: 'center'
             }
             ,
-        
+
             pricingContainer:
-            
+
             {
                 flexDirection: 'row',
+                maxWidth:"100%",
 
                 justifyContent: "space-evenly"
             },
@@ -216,7 +210,7 @@ const styles = StyleSheet.create
 
             },
             imgContainer:
-            
+
             {
                 height: '80%',
                 width: "40%",
@@ -227,7 +221,7 @@ const styles = StyleSheet.create
                 borderRadius: 15,
 
             }
-        
+
 
         }
     )

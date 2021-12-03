@@ -105,6 +105,10 @@ const Payment = () => {
             makeOrder(cart, price, route.params.address, paymentDetails)
         )
 
+        if(orderSuccess)
+        {
+            
+        }
 
 
 
@@ -244,6 +248,7 @@ const styles = StyleSheet.create
             Contianer:
             {
                 flex: 1,
+                backgroundColor:"#fff",
                 justifyContent: 'center'
 
             },
@@ -266,17 +271,17 @@ const styles = StyleSheet.create
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 15,
-                elevation: 15,
-
+                elevation: 10,
                 backgroundColor: "blue"
 
             },
             txtCardname:
-
             {
                 backgroundColor: '#e5e5e5',
                 marginHorizontal: 20,
                 fontSize: 20,
+                elevation:2,
+                borderRadius:5,
                 textAlign: 'center'
             },
             txtLabel:
@@ -285,50 +290,44 @@ const styles = StyleSheet.create
                 marginHorizontal: 20,
                 fontSize: 15,
 
-
             }
             ,
             cardOptionsConatiner:
             {
                 height: 50,
                 paddingHorizontal: 15,
-
                 margin: 20,
                 borderRadius: 20,
-                elevation: 15,
+                elevation: 10,
                 justifyContent: "center",
                 alignItems: "center",
             },
             txtCardnum:
-
             {
-
                 backgroundColor: '#e5e5e5',
                 marginHorizontal: 20,
                 fontSize: 20,
-                borderRadius: 15,
+                elevation:2,
+                borderRadius: 5,
                 height: 100,
                 textAlign: 'center'
             }
             ,
             rowOptionsConatiner:
-
             {
                 flexDirection: "row",
                 justifyContent: 'space-evenly',
                 margin: 20,
 
             },
-
-
             textInputCvv:
             {
                 backgroundColor: '#e5e5e5',
                 width: 100,
                 fontSize: 20,
                 textAlign: 'center',
-                borderRadius: 20,
-                elevation: 10,
+                borderRadius: 5,
+                elevation: 5,
                 justifyContent: 'center',
                 alignItems: 'center'
             },
@@ -337,7 +336,7 @@ const styles = StyleSheet.create
             {
                 elevation: 10,
                 backgroundColor: '#e5e5e5',
-                borderRadius: 15,
+                borderRadius: 5,
                 width: 100,
                 textAlign: 'center'
 

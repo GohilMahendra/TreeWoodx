@@ -33,8 +33,6 @@ const Home_screen = ({ navigation }) => {
 
     }
 
-
-
     useEffect
         (
             () => {
@@ -43,11 +41,8 @@ const Home_screen = ({ navigation }) => {
             , []
         )
 
-
     const chairbuilder = ({ item, index }) => {
-
         return (
-
             <TouchableOpacity
                 onPress={
                     () => navigation.navigate("product",
@@ -58,31 +53,23 @@ const Home_screen = ({ navigation }) => {
                     item={item}
                 >
                 </ProductCard>
-
             </TouchableOpacity>
         )
     }
 
-
-
-
     const catbuilder = ({ item, index }) => {
         return (
             <TouchableOpacity
-
                 onPress={() => { setind(index), chairFetcher(item.name) }}
                 style={{
-                    height: 50
-                    ,
-                    width: 150,
-                    elevation: 12, borderRadius: 20
-                    , justifyContent: 'center',
+                    elevation: 5,
+                    borderRadius: 20,
+                    justifyContent: 'center',
+                    padding: 10,
                     alignItems: 'center',
-                    backgroundColor: (ind == index) ? 'black' : '#caf0f8',
-                    marginRight: 20, borderWidth: 1, borderRadius: 20
+                    backgroundColor: (ind == index) ? 'black' : '#fff',
+                    margin: 10, borderRadius: 20
                 }}>
-
-
                 <Text
                     style={{
                         marginRight: 20,
@@ -91,7 +78,6 @@ const Home_screen = ({ navigation }) => {
                         fontSize: 20,
                         color: (ind == index) ? 'white' : 'black'
                     }}>{item.name}</Text>
-
             </TouchableOpacity>
         )
     }
@@ -99,25 +85,13 @@ const Home_screen = ({ navigation }) => {
 
 
         <View
-
-            style={{ flex: 1, backgroundColor: "#EEE9E9" }}>
-
-            <ScrollView
-            >
-
-        
-
-                    <View
-
-                    style={
-                        {
-                           
-                            marginVertical:20
-                        }
-                    }
-                    >
+            style={Homestyles.Container}>
+            <ScrollView>
+                <View
+                    style={Homestyles.FeaturedContainer}
+                >
                     <FeaturedList />
-                    </View>
+                </View>
 
                 <FlatList
 
@@ -134,6 +108,7 @@ const Home_screen = ({ navigation }) => {
                     style={{
                         flexDirection: 'row',
                         marginBottom: 0,
+                        alignItems: 'center',
                         justifyContent: 'space-between',
                         margin: 20
                     }}>
@@ -142,6 +117,7 @@ const Home_screen = ({ navigation }) => {
                     </Text>
 
                     <TouchableOpacity
+                        style={Homestyles.browsemoreContainer}
                         onPress=
                         {
                             () => {
@@ -164,7 +140,7 @@ const Home_screen = ({ navigation }) => {
                 <FlatList
 
                     horizontal
-                    style={{ height: 350, margin: 20, marginTop: 0 }}
+                    style={Homestyles.listContainer}
                     data={chair}
                     renderItem={chairbuilder}
                     keyExtractor={item => item.key}
@@ -187,9 +163,34 @@ export default Home_screen
 
 const Homestyles = StyleSheet.create(
     {
+        Container:
+        {
+            flex: 1,
+            backgroundColor: "#E3E8F0"
+        },
+        FeaturedContainer:
+
+        {
+            marginVertical: 20
+        },
+        listContainer:
+        {
+            height: 350,
+            margin: 20,
+            marginTop: 0
+        },
         catList:
         {
             marginHorizontal: 20
+        },
+        browsemoreContainer:
+
+        {
+            backgroundColor: '#fff',
+            paddingHorizontal: 20,
+            paddingVertical: 5,
+            borderRadius: 10,
+            elevation: 5
         },
         searchBar:
         {

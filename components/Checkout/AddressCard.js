@@ -71,9 +71,10 @@ const styles = StyleSheet.create
             Container:
             {
                 backgroundColor: "#fff",
-                elevation: 15,
+                elevation: 5,
                 alignItems:'center',
-                borderRadius: 15
+                margin:10,
+                borderRadius:15
             },
             contactDetailsContainer:
             {
@@ -95,9 +96,9 @@ const styles = StyleSheet.create
             },
             txtInfo:
             {
-                fontFamily: fonts.Federo_Regular,
+                fontFamily: fonts.Genos_Regular,
 
-                fontSize: 18,
+                fontSize: 20,
                 color:'black'
             },
             addressDetailsContainer:
@@ -108,7 +109,7 @@ const styles = StyleSheet.create
             rowContainer:    
             {
                 flexDirection:'row',
-                margin:10,
+                margin:5,
                 justifyContent:'space-evenly'
             }
         

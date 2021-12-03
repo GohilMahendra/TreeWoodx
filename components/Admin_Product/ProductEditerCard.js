@@ -10,6 +10,7 @@ import { fonts } from "../../constants/fonts";
 import ProductEditer from "./ProductEditer";
 import { AddToFeatured } from "../../redux/Actions/FeaturedActions";
 import { useNavigation } from "@react-navigation/core";
+import { data } from "@tensorflow/tfjs";
 
 
 const ProductCardEditer = (props) => {
@@ -20,10 +21,6 @@ const ProductCardEditer = (props) => {
     const dispatch = useDispatch()
     const deleteProd = (productID) => {
         dispatch(DeleteProduct(productID))
-    }
-
-    const AddProductTOFeatured = () => {
-        dispatch(AddToFeatured(item))
     }
 
 
@@ -113,7 +110,7 @@ const ProductCardEditer = (props) => {
                     >DELETE</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => AddProductTOFeatured()}
+                    onPress={() => navigation.navigate('FeaturedEditer',{data:item})}
                     style={styles.btnFeatured}
                 >
                     <Text style={styles.txtbtnInfo}>FEATURED</Text>
@@ -129,11 +126,11 @@ const styles = StyleSheet.create
         {
             Container:
             {
-                margin: 15,
+                margin: 10,
                 height: 350,
                 backgroundColor: '#fff',
-                borderRadius: 50,
-                elevation: 10
+                borderRadius: 15,
+                elevation: 5
             },
             infoContainer:
             {

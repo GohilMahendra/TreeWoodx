@@ -33,11 +33,7 @@ const SimilarProducts = ({ navigation }) => {
     }
     const itembuilder = ({ item, index }) => {
 
-     
-
-        return (
-
-
+         return (
             <ProductCard
                 navigation={navigation}
                 item={item}
@@ -45,10 +41,7 @@ const SimilarProducts = ({ navigation }) => {
                 height={height}
                 width={width}
             >
-
             </ProductCard>
-
-
         )
     }
 
@@ -58,30 +51,22 @@ const SimilarProducts = ({ navigation }) => {
         <View
             style={styles.container}
         >
-
             <FlatList
-
                 style={{ flex: 1 }}
                 data={products}
                 numColumns={2}
                 keyExtractor={item => item.key}
-               
                 onEndReached={
                     ()=>fetchMoreProd()
                 }
                 renderItem={itembuilder}
-
-
-
                 ListFooterComponent={
                    <ActivityIndicator
                    animating={moreProductsLoading?true:false}
                    >
-
                    </ActivityIndicator>
                 }
             >
-
             </FlatList>
 
         </View>

@@ -96,16 +96,16 @@ const User_profile = ({ navigation }) => {
                     </View>
 
                     <TouchableOpacity
-                    onPress={
-                        ()=>logout()
-                    }
+                        onPress={
+                            () => logout()
+                        }
                     >
                         <View
                             style={[styles.userOptionsContainer
-                            ,{
-                                backgroundColor:"red"
+                                , {
+                                backgroundColor: "red"
                             }
-                        ]}
+                            ]}
                         >
                             <Text
                                 style={styles.userOptionsText}

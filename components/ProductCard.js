@@ -19,23 +19,26 @@ const ProductCard = (props) => {
         <View style={styles.container}>
             <View style={styles.ViewContainer}>
                 <View
-                style={
-                    {
-                        elevation:5,
-                        margin:10,
-                        borderRadius:20,
-                        backgroundColor:"#fff",
-                        flex:1
+                    style={
+                        {
+                            elevation: 5,
+                            margin: 10,
+                            borderRadius: 20,
+                            backgroundColor: "#fff",
+                            flex: 1
+                        }
                     }
-                }
                 >
-                <FastImage
-                    source={{ uri: item.pimage, priority: FastImage.priority.normal }}
-                    style={styles.image}
+                    <FastImage
+                        source={{
+                            uri: item.pimage,
+                            priority: FastImage.priority.normal
+                        }}
+                        style={styles.image}
 
-                    resizeMode={FastImage.resizeMode.contain}
+                        resizeMode={FastImage.resizeMode.contain}
 
-                ></FastImage>
+                    ></FastImage>
                 </View>
                 <View
                     style={styles.TextConatainer}>
@@ -47,14 +50,8 @@ const ProductCard = (props) => {
 
                     <Text
                         style={[styles.texts, { color: "green" }]}>{item.pdisc}% off</Text>
-
-
                     <Text
-                        style={{
-                            alignItems: 'center',
-                            fontSize: 20,
-                            alignSelf: 'center'
-                        }}>{item.brand}</Text>
+                        style={styles.txtbrand}>{item.brand}</Text>
                 </View>
             </View>
 
@@ -78,10 +75,8 @@ const styles = StyleSheet.create
             image:
             {
                 borderRadius: 20,
-
-
                 flex: 1,
-               
+
             },
             ViewContainer:
             {
@@ -102,7 +97,12 @@ const styles = StyleSheet.create
 
                 elevation: 7
             },
-
+            txtbrand:
+            {
+                alignItems: 'center',
+                fontSize: 20,
+                alignSelf: 'center'
+            },
             texts:
             {
                 alignSelf: 'center',

@@ -5,8 +5,6 @@ import Admin_panel from "../screens/Admin/Admin_panel";
 import Admin_addSales from "../screens/Admin/AdminProfile";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Admin_editProd from "../screens/Admin/Admin_editProd";
-import Admin_addOffer from "../screens/Admin/FeaturedScreen";
-import FeaturedScreen from "../screens/Admin/FeaturedScreen";
 import { View } from "react-native";
 import { Color } from "../constants/colors";
 import AdminProfile from "../screens/Admin/AdminProfile";

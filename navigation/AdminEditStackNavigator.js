@@ -7,9 +7,9 @@ import Admin_ProductScreen from "../screens/Admin/Admin_ProductScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import Admin_product from "../screens/Admin/Admin_product";
 import FeaturedList from "../screens/Admin/FeaturedList";
+import FeaturedEditer from "../screens/Admin/FeaturedEditer";
 
-const AdminEditStackNavigator=()=>
-{
+const AdminEditStackNavigator = () => {
 
     const editNaviagter = createStackNavigator()
 
@@ -17,11 +17,11 @@ const AdminEditStackNavigator=()=>
 
         <editNaviagter.Navigator>
             <editNaviagter.Screen
-            options={
-                {
-                    headerShown:false
+                options={
+                    {
+                        headerShown: false
+                    }
                 }
-            }
                 name="Admin_ProductScreen"
                 component={Admin_ProductScreen}
             >
@@ -36,10 +36,15 @@ const AdminEditStackNavigator=()=>
             </editNaviagter.Screen>
 
             <editNaviagter.Screen
-            name="FeaturedList"
-            component={FeaturedList}
+                name="FeaturedList"
+                component={FeaturedList}
             ></editNaviagter.Screen>
-         
+
+            <editNaviagter.Screen
+                name="FeaturedEditer"
+                component={FeaturedEditer}
+            ></editNaviagter.Screen>
+
 
         </editNaviagter.Navigator>
     )

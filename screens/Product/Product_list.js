@@ -31,10 +31,10 @@ const Product_list = () => {
 
   const [filters, setfilters] = useState(
     {
-        material:"Wood",
+        material:"",
         priceRange:"",
         cat:"",
-        color:"",
+        color:"black",
         discountRange:"",
     }
   )
@@ -49,10 +49,7 @@ const Product_list = () => {
   const itembuilder = ({ item, index }) => {
 
     return (
-
-
       <View
-      
       >
         <ProductCard
           navigation={navigation}
@@ -61,15 +58,10 @@ const Product_list = () => {
           height={height}
           width={width}
         >
-
         </ProductCard>
       </View>
-
     )
   }
-
-
-
 
   useEffect
     (
@@ -91,17 +83,13 @@ const Product_list = () => {
 
       </View>}
 
-
       <FlatList
 
         refreshControl={
           <RefreshControl
             onRefresh={() => dispatch(LoadProducts(filters, search))}
-
             refreshing={prodLoad}
-
           >
-
           </RefreshControl>
         }
 
@@ -127,9 +115,7 @@ const Product_list = () => {
         }}
         size={30}
       >
-
       </ActivityIndicator>
-
 
     </View>
   )

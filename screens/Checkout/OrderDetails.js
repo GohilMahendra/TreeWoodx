@@ -84,7 +84,8 @@ const styles = StyleSheet.create
     {
       Container:
       {
-        flex: 1
+        flex: 1,
+        backgroundColor:"#fff"
       },
       txtOrderSummury:
       {
@@ -99,7 +100,7 @@ const styles = StyleSheet.create
         height: 50,
         backgroundColor: Color.corporateBlue,
         margin: 20,
-        elevation:15,
+        elevation:5,
         borderRadius:15,
         justifyContent: 'center',
         alignItems: 'center'

@@ -19,7 +19,7 @@ import {
 
 
 
-export const AddToFeatured = (item) => {
+export const AddToFeatured = (item,theme) => {
     return async (dispatch) => {
         try {
             const qry = firestore()
@@ -27,7 +27,7 @@ export const AddToFeatured = (item) => {
                 .doc(item.key)
                 .set
                 (
-                    item
+                    item,theme
                 )
 
             dispatch({ type: ADD_FEATURED_SUCCESS })

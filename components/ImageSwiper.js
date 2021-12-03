@@ -21,18 +21,14 @@ const { height, width } = Dimensions.get('screen')
 const ImageSwiper = ({ data }) => {
     const ref = useRef(null);
 
-
     const renderItem = ({ item, index }) => {
 
-
         return (
-
             <View
 
                 style={styles.imageContainer}
             >
                 <Image
-
                     source={
                         {
                             uri: item
@@ -46,15 +42,9 @@ const ImageSwiper = ({ data }) => {
                         }
                     }
                     resizeMode="cover"
-
-
                 >
-
                 </Image>
-
             </View>
-
-
         )
     }
 
@@ -63,18 +53,13 @@ const ImageSwiper = ({ data }) => {
         <View
             style={ styles.Container  }
         >
-
             <Carousel
-
                 layout="default"
                 layoutCardOffset={5}
                 ref={ref}
-
                 itemHeight={300}
-
                 itemWidth={width}
                 data={data}
-
                 renderItem={renderItem}
                 sliderWidth={width}
             />

@@ -9,7 +9,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { FetchMoreSimilarBrands, FetchSimilarBrands } from '../../redux/Actions/SimilarActions';
 import ProductCard from '../../components/Product_list/ProductCard';
 
-const {height,width}=Dimensions.get('screen')
+const { height, width } = Dimensions.get('screen')
 const SimilarBrands = ({ navigation }) => {
 
 
@@ -21,28 +21,25 @@ const SimilarBrands = ({ navigation }) => {
 
 
     const dispatch = useDispatch()
- 
+
     const brands = useSelector(state => state.Similar.similarBrands)
 
-    const moreBrandsLoading=useSelector(state => state.Similar.moreBrandsLoading)
+    const moreBrandsLoading = useSelector(state => state.Similar.moreBrandsLoading)
 
-    const lastindex=useSelector(state => state.Similar.lastKeyBrand)
+    const lastindex = useSelector(state => state.Similar.lastKeyBrand)
 
-    const fetchMoreBrands=()=>
-    {
-        if(lastindex==null)
-        return
+    const fetchMoreBrands = () => {
+        if (lastindex == null)
+            return
 
 
-        dispatch(FetchMoreSimilarBrands(name,lastindex))
+        dispatch(FetchMoreSimilarBrands(name, lastindex))
     }
 
 
     const itembuilder = ({ item, index }) => {
 
         return (
-
-
             <ProductCard
                 navigation={navigation}
                 item={item}
@@ -50,10 +47,7 @@ const SimilarBrands = ({ navigation }) => {
                 height={height}
                 width={width}
             >
-
             </ProductCard>
-
-
         )
     }
 
@@ -63,27 +57,23 @@ const SimilarBrands = ({ navigation }) => {
         <View
             style={styles.container}
         >
+            <FlatList
+                style={{ flex: 1 }}
+                data={brands}
+                onEndReached={
+                    () => fetchMoreBrands()
+                }
+                numColumns={2}
+                keyExtractor={item => item.key}
+                renderItem={itembuilder}
+                ListFooterComponent={
+                    <ActivityIndicator
+                        animating={moreBrandsLoading ? true : false}
+                    ></ActivityIndicator>
+                }
+            >
 
-        <FlatList
-
-        
-        style={{flex:1}}
-        data={brands}
-        onEndReached={
-            ()=>fetchMoreBrands()
-        }
-        numColumns={2}
-        keyExtractor={item=>item.key}
-        renderItem={itembuilder}
-        ListFooterComponent={
-            <ActivityIndicator
-            animating={moreBrandsLoading?true:false}
-            ></ActivityIndicator>
-        }
-        >
-
-        </FlatList>
-    
+            </FlatList>
 
             <ActivityIndicator
                 animating={false}
