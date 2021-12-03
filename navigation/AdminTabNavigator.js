@@ -12,8 +12,6 @@ const bottomTab = createBottomTabNavigator();
 const AdminTabNavigator = ({ navigation }) => {
   return (
     <bottomTab.Navigator
-
-
       tabBarOptions={
         {
           showLabel: false,
@@ -21,54 +19,39 @@ const AdminTabNavigator = ({ navigation }) => {
           style: {
             backgroundColor: 'black'
           }
-
         }
       }
       initialRouteName="Admin_editProd"
     >
-
       <bottomTab.Screen
         name={"Admin_editProd"}
         options={
           {
-
             tabBarLabel: 'PANEL',
-
             tabBarIcon: ({ size, focused, color }) =>
-
               <FontAwesome5 size={size} color={color} name="edit">
-
               </FontAwesome5>
-
           }
-
         }
         component={Admin_editProd}
       >
-
-
-
       </bottomTab.Screen>
+
       <bottomTab.Screen
         name={"Admin_panel"}
         options={
           {
-
             tabBarLabel: 'PANEL',
-
             tabBarIcon: ({ size, focused, color }) =>
-
-
               <FontAwesome5 size={size} color={color} name="chart-line">
-
               </FontAwesome5>
-
           }
 
         }
         component={Admin_panel}
       >
       </bottomTab.Screen>
+
       <bottomTab.Screen
         name={"AdminProfile"}
         component={AdminProfile}
@@ -76,18 +59,14 @@ const AdminTabNavigator = ({ navigation }) => {
           {
 
             tabBarLabel: 'Profile',
-
             tabBarIcon: ({ size, focused, color }) =>
 
               <FontAwesome5 size={size} color={color} name="user-edit">
-
               </FontAwesome5>
-
           }
 
         }
       >
-
       </bottomTab.Screen>
 
     </bottomTab.Navigator>

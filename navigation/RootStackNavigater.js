@@ -20,7 +20,6 @@ const RootStackNavigator = () => {
         <NavigationContainer>
             <stack.Navigator
                 initialRouteName="Login"
-
             >
                 <stack.Screen
                     name="Login"

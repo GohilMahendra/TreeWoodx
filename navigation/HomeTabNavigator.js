@@ -20,16 +20,11 @@ const HomeTabNavigator = () => {
 
   const badge = useSelector(cart => cart.Cart.total)
 
-
-
   useEffect
     (
       () => {
-
         dispatch(fetchCartproducts())
-
       }
-
       , []
     )
 
@@ -37,10 +32,8 @@ const HomeTabNavigator = () => {
 
     <bottomTab.Navigator
       initialRouteName="Home"
-
       tabBarOptions={
         {
-
           style: {
             borderRadius: 20,
             backgroundColor: "#fff"
@@ -53,39 +46,19 @@ const HomeTabNavigator = () => {
         component={HomeView}
         options={
           {
-
-
             tabBarIcon: ({ size, focused, color }) =>
-
               <FontAwesome5 size={size} color={color} name="home">
-
               </FontAwesome5>
-
           }
-
         }
       >
-
       </bottomTab.Screen>
 
       <bottomTab.Screen
-
         name="Cart"
-
-
         component={Cart}
         options={
-
           {
-
-
-
-
-            // tabBarBadge:badge,
-            // tabBarBadgeStyle:{
-            //   backgroundColor:"blue"
-            // },
-
             tabBarIcon: ({ size, focused, color }) =>
               <FontAwesome5 style={{
                 justifyContent: 'flex-end',
@@ -93,35 +66,23 @@ const HomeTabNavigator = () => {
               }} size={size} color={color} name="shopping-cart">
                 <Badge value={badge}></Badge>
               </FontAwesome5>,
-
-
-
-
-
           }
 
         }
       >
-
       </bottomTab.Screen>
+
       <bottomTab.Screen
-
         name="Profile"
-
-
         component={User_profile}
         options={
-
           {
-
-
             tabBarIcon: ({ size, focused, color }) =>
-              <FontAwesome5 size={size} color={color} name="user-edit"></FontAwesome5>
+              <FontAwesome5 size={size} color={color} name="user-edit">
+              </FontAwesome5>
           }
-
         }
       >
-
       </bottomTab.Screen>
 
     </bottomTab.Navigator>

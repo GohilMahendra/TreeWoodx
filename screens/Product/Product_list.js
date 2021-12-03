@@ -1,17 +1,24 @@
 
 import React, { useEffect, useRef, useState } from "react";
-import { Dimensions, Picker, RefreshControl, Image, Button, Pressable, Text, TextInput, View, StyleSheet } from "react-native"
-  ;
+import { Dimensions, Picker, RefreshControl, Image, Button, Pressable, Text, TextInput, View, StyleSheet } from "react-native";
 
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList, ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 
 import { useNavigation, useRoute } from "@react-navigation/core";
 
 import { ActivityIndicator, Searchbar } from "react-native-paper";
-
+import Modal from "react-native-modal";
 import ProductCard from "../../components/Product_list/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadProducts, loadMoreProducts } from "../../redux/Actions/ProductActions";
+import { Mod } from "@tensorflow/tfjs-core";
+import ProductFilter from "../../components/Product_list/ProductFilter";
+import { color, discountRange, Material, priceRange } from "../../constants/categories";
+import { categories } from "../../constants/categories";
+import { fonts } from "../../constants/fonts";
+import { Color } from "../../constants/colors";
+import LinearGradient from "react-native-linear-gradient";
+import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 
 const Product_list = () => {
   const navigation = useNavigation()
@@ -21,24 +28,38 @@ const Product_list = () => {
   const moreproductsLoad = useSelector(state => state.Products.moreproductsLoad)
   const lastindex = useSelector(state => state.Products.lastindex)
 
+
   const dispatch = useDispatch()
   const [search, setserach] = useState("")
-
+  const [isVisible,setisVisble]=useState(false)
 
   const p = useRoute()
   var item = p.params.item
-
 
   const [filters, setfilters] = useState(
     {
         material:"",
         priceRange:"",
         cat:"",
-        color:"black",
+        color:"",
         discountRange:"",
     }
   )
 
+  console.log(filters,"filter")
+  
+console.log(p)
+
+
+  const makeInvisible=()=>
+  {
+    setisVisble(false)
+  }
+
+  const resetFilter=(val)=>
+  {
+    setfilters(val)
+  }
   const { height, width } = Dimensions.get('screen')
 
   const loadMoreProd = () => {
@@ -46,6 +67,10 @@ const Product_list = () => {
 
   }
 
+  const getProducts=()=>
+  {
+    dispatch(LoadProducts(filters,search))
+  }
   const itembuilder = ({ item, index }) => {
 
     return (
@@ -67,33 +92,26 @@ const Product_list = () => {
     (
       () => {
 
-        dispatch(LoadProducts(filters,search))
+       getProducts()
      
       },
-      []
+      [filters]
     )
 
 
   return (
     <View style={styles.Container}>
 
-      {p.params != undefined && <View>
-
-        <Text>{item}</Text>
-
-      </View>}
-
-      <FlatList
-
+      <FlatList      
         refreshControl={
           <RefreshControl
-            onRefresh={() => dispatch(LoadProducts(filters, search))}
+            onRefresh={getProducts}
             refreshing={prodLoad}
           >
           </RefreshControl>
         }
 
-        style={{ flex: 1 }}
+        style={{ flex: 1,marginTop:50 }}
         data={product}
         numColumns={2}
         onEndReached={
@@ -105,9 +123,42 @@ const Product_list = () => {
 
       </FlatList>
 
+    <View
+     style={
+       {
+         height:70,
+    
+         width:70,
+         borderRadius:70,
+         position:"absolute",
+         right:5,
+         backgroundColor:"#fff",
+         bottom:20
+       }
+     }
+     >
+      
+         <LinearGradient
+         style={{flex:1,borderRadius:50}}
+         colors={["skyblue",
+        "pink"]}
+         >
+       <TouchableOpacity
+       style={{flex:1,justifyContent:"center",alignItems:"center"}}
+       >
+         <FontAwesome5Icon
+         name="filter"
+         >
+
+         </FontAwesome5Icon>
+       </TouchableOpacity>
+
+         </LinearGradient>
+       
+     </View>
 
       <ActivityIndicator
-        animating={moreproductsLoad ? true : false}
+        animating={prodLoad ? true : false}
         style={{
           position: "absolute",
           alignSelf: 'center',
@@ -116,6 +167,30 @@ const Product_list = () => {
         size={30}
       >
       </ActivityIndicator>
+      <Modal
+      onBackButtonPress={()=>setisVisble(false)}
+      isVisible={isVisible}
+      >
+        <View
+
+        style={
+          {
+            height:'80%',
+            borderRadius:15,
+            backgroundColor:"#fff"
+          }
+        }
+        
+        >
+            <ProductFilter
+            filters={filters}
+            
+            onPress={resetFilter}
+            hideModel={makeInvisible}
+            ></ProductFilter>
+        </View>
+      </Modal>
+
 
     </View>
   )

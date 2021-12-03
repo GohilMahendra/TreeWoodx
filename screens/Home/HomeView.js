@@ -62,72 +62,61 @@ const HomeView = ({ navigation }) => {
         }
         name="Homescreen"
         component={Home_screen}
-
-
       />
+
       <newnav.Screen
-
         options={
-
           ({ route }) => ({ title: route.params.name, headerTransparent: true, headerTitleAlign: "center" })
-
         }
-
         name="product"
         component={product}
       >
-
       </newnav.Screen>
+
       <newnav.Screen
-
-
         options={({ route }) => ({ title: route.params.name 
         ,headerTitleAlign:"center"
         })}
         name="SimilarProducts"
         component={SimilarProducts}
       />
+
       <newnav.Screen
-
-
         options={({ route }) => ({ title: route.params.name 
           ,headerTitleAlign:"center"
         })}
         name="SimilarBrands"
         component={SimilarBrands}
       />
-      <newnav.Screen
 
+      <newnav.Screen
         options={{
           headerTitleAlign: 'center',
         }}
-
         name="Comments"
         component={Comments}
       />
 
-
       <newnav.Screen
-
         options={{
           headerTitleAlign: 'center'
           , headerShown: false
         }}
-
         name="Search"
         component={Search}
       >
-
       </newnav.Screen>
 
       <newnav.Screen
+     
         options={({ route }) => ({
           title: route.params.name,
-
+          headerTransparent:true,
+        //  headerShown:true,
           headerRight: () => (
             <TouchableOpacity
               style={{
-                margin: 10
+                marginHorizontal:20
 
               }}
               onPress={
@@ -137,15 +126,12 @@ const HomeView = ({ navigation }) => {
               <FontAwesome5Icon
                 name={'search'}
                 size={20}
-                color={"grey"}
+                color={"black"}
                 solid={false}
               ></FontAwesome5Icon>
             </TouchableOpacity>
           ),
         })}
-
-
-
         name="Product_list"
         component={Product_list}
       >
