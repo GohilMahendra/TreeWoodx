@@ -4,6 +4,7 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Admin_editProd from "../screens/Admin/Admin_editProd";
 import AdminProfile from "../screens/Admin/AdminProfile";
 import OrderState from "../screens/Admin/OrderState";
+import AdminPofileStackNavigator from "./AdminPofileStackNavigator";
 
 const bottomTab = createBottomTabNavigator();
 
@@ -51,8 +52,8 @@ const AdminTabNavigator = ({ navigation }) => {
       </bottomTab.Screen>
 
       <bottomTab.Screen
-        name={"AdminProfile"}
-        component={AdminProfile}
+        name={"AdminPofileStackNavigator"}
+        component={AdminPofileStackNavigator}
         options={
           {
 

@@ -8,32 +8,17 @@ import {
   getDiscountRange,
   getPriceRange
 } from "../../functions/CalculationHelpers";
+
+import { color, categories } from "../../constants/categories";
 import { useRoute } from "@react-navigation/core";
+import { Color } from "../../constants/colors";
+import { fonts } from "../../constants/fonts";
 const { height, width } = Dimensions.get('window')
 const Admin_product = ({ navigation }) => {
-
-
 
   date = new Date()
 
   const p = useRoute()
-
-
-  const color = [
-    "white",
-    "black",
-    "silver",
-    "red",
-    "violet",
-    "blue",
-    "green",
-    "maroon",
-    "multi",
-
-    "cobalt",
-    "other",
-
-  ]
 
   const [prod, setprod] = useState
     (
@@ -95,11 +80,6 @@ const Admin_product = ({ navigation }) => {
 
       }, []
     )
-
-
-
-
-
 
   const breakArr = (val) => {
 
@@ -211,11 +191,7 @@ const Admin_product = ({ navigation }) => {
   }
 
   return (
-    <View style={{
-      flex: 1, alignItems: 'center',
-      backgroundColor: '#fff',
-      alignContent: 'center', justifyContent: 'center'
-    }}>
+    <View style={styles.Container}>
 
       <ScrollView style={{ flex: 1 }}>
 
@@ -262,13 +238,58 @@ const Admin_product = ({ navigation }) => {
             mode="outlined"
 
           />
-          <TextInput
-            value={prod.cat}
-            onChangeText={val => setprod({ ...prod, cat: val })}
-            style={styles.inputText}
 
-            placeholder="Enter category(eg . Chair ,Bed ,Cabinet)"
-          />
+          <View
+            style={
+              {
+                height: 70,
+                justifyContent: 'center',
+                alignItems: "center",
+                margin: 10
+              }
+            }
+          >
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            >
+              {
+                categories.map
+                  (
+                    item => {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => setprod({ ...prod, cat: item })}
+                          key={item}
+                          style={
+                            {
+                              height: 50,
+                              padding: 10,
+                              margin: 10,
+                              borderRadius: 15,
+                              backgroundColor: (prod.cat === item) ? Color.purpleLight : "#fff",
+                              elevation: 10,
+                              justifyContent: "center",
+                              alignItems: "center"
+                            }
+                          }
+                        >
+                          <Text
+                            style={
+                              {
+                                color: (prod.cat === item) ? "#fff" : 'black',
+                                fontSize: 18,
+                                fontFamily: fonts.Federo_Regular
+                              }
+                            }
+                          >{item}</Text>
+                        </TouchableOpacity>
+                      )
+                    }
+                  )
+              }
+            </ScrollView>
+          </View>
           <TextInput
             onChangeText={val => setprod({ ...prod, subcategories: val })}
             value={prod.subcategories.toString()}
@@ -309,14 +330,7 @@ const Admin_product = ({ navigation }) => {
             ></TextInput>
           </View>
           <View
-            style={
-              {
-                flexDirection: "row",
-                alignItems: "center",
-
-                justifyContent: 'space-evenly'
-              }
-            }
+            style={styles.rowNumberContainer}
           >
             <Text>
               Price :
@@ -376,12 +390,7 @@ const Admin_product = ({ navigation }) => {
 
           <View
 
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center'
-
-
-            }}
+            style={styles.rowNumberContainer}
           >
             <Text>
               Stock :
@@ -440,78 +449,81 @@ const Admin_product = ({ navigation }) => {
 const styles = StyleSheet.create
   (
     {
+      Container:
+      {
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        alignContent: 'center',
+        justifyContent: 'center'
+      },
       inputText:
       {
         // marginHorizontal:10,
         marginVertical: 10,
         height: 50,
-
         width: width - 40,
-
         alignSelf: "center",
         borderRadius: 10,
-        borderWidth: 1,
+        //  borderWidth: 1,
+        elevation: 2,
         textAlign: 'center',
-        borderColor: "#009DAE"
+        borderColor: "black"
       },
 
       inputTextImgLink:
       {
         marginVertical: 10,
         height: 100,
-
         width: width - 40,
         alignSelf: "center",
         borderRadius: 20,
-        borderWidth: 1,
+        elevation: 2,
         textAlign: 'center',
-        borderColor: "#009DAE"
 
+      },
+      rowNumberContainer:    
+      {
+        flexDirection: "row",
+        alignItems: "center",
+
+        justifyContent: 'space-evenly'
       },
       inputTextNumbers:
       {
-
         alignItems: 'center',
         textAlign: 'center',
         margin: 20,
-        backgroundColor: '#009DAE',
-
         height: 50,
-        width: 70,
-        borderRadius: 20,
-        borderWidth: 1
+        elevation: 2,
+        width: 100,
+        borderRadius: 15,
       },
       dimensionsContainer:
       {
         flexDirection: 'row',
-
         alignSelf: "center",
         justifyContent: 'space-around'
       },
       btnSubmit:
       {
-
-
         paddingHorizontal: 50,
         marginBottom: 0,
         margin: 20,
-        backgroundColor: '#009DAE',
+        backgroundColor: Color.purpleLight,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 30
+        borderRadius: 15
       },
       inputTextDiscription:
       {
 
-
         height: 200,
-
-        borderColor: '#009DAE',
-
+        elevation: 2,
         marginHorizontal: 15,
         borderRadius: 20,
-        borderWidth: 1
+
       },
       txtSubmit:
       {

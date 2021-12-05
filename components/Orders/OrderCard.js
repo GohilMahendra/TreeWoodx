@@ -113,6 +113,7 @@ const styles = StyleSheet.create
             {
                 marginHorizontal: 20,
                 color: "black",
+                fontSize:18,
                 fontFamily: fonts.SpaceMono_Regular
 
             },
@@ -124,11 +125,11 @@ const styles = StyleSheet.create
             },
             txtNumber:
             {
-                fontSize: 18,
+                fontSize: 20,
                 color: "black",
                 marginHorizontal: 20,
 
-                fontFamily: fonts.Quicksand_Medium,
+                fontFamily: fonts.Federo_Regular,
 
             }
 

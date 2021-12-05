@@ -4,12 +4,21 @@ import { View,Dimensions ,Text,StyleSheet,ScrollView} from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { Color } from "../../constants/colors";
 import { fonts } from "../../constants/fonts";
-const Admin_panel=()=>
+const AddAdmin=()=>
 {
 
   const [email,setemail]=useState("")
   const [password,setpassword]=useState("")
   const [userName,setuserName]=useState("")
+
+
+  const AddAdmin=()=>
+  {
+
+
+      
+  }
+
     return(
 
       <View
@@ -17,62 +26,44 @@ const Admin_panel=()=>
         styles.Container
       }
       > 
-      <Text
-      style={
-        {
-          fontSize:25,
-          fontFamily:fonts.Federo_Regular,
-          alignItems:'center',
-          alignSelf:'center'
-        }
-      }
-      >ADD ADMIN</Text>
+     
       <View
       style={styles.inputContainer
       }
       >
-        <Text
-        style={
-          styles.txtInfo
-        }
-        >
-          USERNAME
-        </Text>
+         <Text
+      style={styles.txtHeader}
+      >ADD ADMIN</Text>
+      
         <TextInput
         value={userName}
+        placeholder="UserName"
         onChangeText={text=>setuserName(text)}
         style={styles
           .textInput}
         ></TextInput>
-            <Text
-        style={
-          styles.txtInfo
-        }
-        >
-          EMAIL
-        </Text>
+       
          <TextInput
            value={email}
+           placeholder="Email"
            onChangeText={text=>setemail(text)}
         style={styles.textInput}
         ></TextInput>
-         <Text
-        style={
-          styles.txtInfo
-        }
-        >
-            PASSWORD
-        </Text>
+      
          <TextInput
            value={password}
+           placeholder="Password"
            onChangeText={text=>setpassword(text)}
         style={styles.textInput}
         ></TextInput>
      
         <TouchableOpacity
+        onPress={
+          ()=>AddAdmin()
+        }
         style={styles.addBtn}
         >
-          <Text>ADD</Text>
+          <Text style={styles.txtAdd}>ADD</Text>
         </TouchableOpacity>
       </View>
 
@@ -89,13 +80,23 @@ const styles=StyleSheet.create
     Container:
     {
       flex:1,
-      backgroundColor:"#fff",
-      justifyContent:'center'
+      backgroundColor:Color.purpleLight,
+      justifyContent:'center',
+      
+    },
+    txtHeader:  
+    {
+      fontSize:25,
+      margin:30,
+      color:Color.purpleLight,
+      fontFamily:fonts.Federo_Regular,
+      alignItems:'center',
+      alignSelf:'center'
     },
     inputContainer:
     {
 
-      margin:20,
+      margin:10,
       backgroundColor:"#fff",
       alignItems:'center',
       justifyContent:"center",
@@ -108,13 +109,14 @@ const styles=StyleSheet.create
     textInput:
     {
       
-        borderWidth:1,
-        borderRadius:20,
+        borderRadius:15,
         margin:10,
+        width:"90%",
+        elevation:2,
         textAlign:'center',
         textAlignVertical:'center',
         height:50,
-        width:'100%'
+       
       
 
     },
@@ -128,15 +130,22 @@ const styles=StyleSheet.create
     addBtn:
     {
       flexDirection:"row",
-      backgroundColor:Color.lightBlue,
+      backgroundColor:Color.purpleLight,
       justifyContent:"center",
       alignItems:"center",
       width:150,
+      elevation:10,
+      margin:20,
       height:50,
       alignSelf:'center',
-      borderRadius:50
+      borderRadius:15
+    },
+    txtAdd:
+    {
+      fontSize:18,
+      fontFamily:fonts.Federo_Regular,
+      color:"#fff"
     }
-
   }
 )
-export default Admin_panel
+export default AddAdmin
