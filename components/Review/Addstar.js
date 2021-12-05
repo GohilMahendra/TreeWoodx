@@ -1,53 +1,59 @@
 import React from "react";
 
-import { View,Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
-import  FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 
-const AddStar=({star})=>
-  {
+const AddStar = ({ star }) => {
 
-    
-    return(
-      <View style={{flexDirection:'row',
-      width:70,
-      justifyContent:"space-evenly",
-      margin:20,
-      marginTop:0,
-      borderRadius:15,
-      backgroundColor:"green",
-     
-      }}> 
 
-      
+  return (
+    <View style={styles.Container}>
+
       <FontAwesome5Icon
-     
-      name={'star'}
-      size={25}
-      color={"#fff"}
-      solid={true}
+
+        name={'star'}
+        size={25}
+        color={"#fff"}
+        solid={true}
       >
 
       </FontAwesome5Icon>
       <Text
-      style=
-      {
+        style=
         {
-          fontSize:20,
-          color:'#fff',
-          textAlign:"center",
-          textAlignVertical:"center",
+          {
+            fontSize: 20,
+            color: '#fff',
+            textAlign: "center",
+            textAlignVertical: "center",
 
-          
+
+          }
         }
-      }
       >
         {star}
       </Text>
-  </View>
+    </View>
 
 
-    )
-  }
+  )
+}
 
-  export default AddStar
+const styles = StyleSheet.create
+  (
+    {
+      Container:
+      {
+        flexDirection: 'row',
+        width: 70,
+        justifyContent: "space-evenly",
+        margin: 20,
+        marginTop: 0,
+        borderRadius: 15,
+        backgroundColor: "green",
+      }
+    }
+  )
+
+export default AddStar

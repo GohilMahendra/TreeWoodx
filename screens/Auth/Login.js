@@ -49,7 +49,7 @@ const Login = ({ navigation }) => {
 
 
       //        if(!isAdmin(auth().currentUser.uid))
-              navigation.navigate("Home")
+              navigation.navigate("Admin")
       
             }
           })

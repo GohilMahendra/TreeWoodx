@@ -9,29 +9,17 @@ import CountConverter from "../CountConverter";
 import ReviewCountPoll from "./ReviewCountPoll";
 
 
-const ReviewRatings = ({ avg} ) => {
+const ReviewRatings = ({ avg }) => {
 
   var max = avg.total
 
-  console.log(avg)
-
   return (
-    <View style={{ marginHorizontal: 10 }}>
-      <View style={{
-        borderRightColor: "grey",
-        alignItems: "center",
-        justifyContent: 'center',
-        borderBottomWidth: 1,
-        marginHorizontal: 20
-      }}>
+    <View style={styles.Container}>
+      <View style={styles.ratingConatainer}>
 
 
         <FontAwesome5Icon
-          style={{
-            padding: 10,
-            backgroundColor: "green",
-            borderRadius: 20
-          }}
+          style={styles.iconStyle}
           size={20} color="#fff" name="star" solid={true}>
           <Text>{parseFloat(avg.avg).toFixed(2)}</Text>
         </FontAwesome5Icon>
@@ -42,23 +30,8 @@ const ReviewRatings = ({ avg} ) => {
         }}>Total {CountConverter(max)} Reviews</Text>
       </View>
 
-
-
-
-      <View style={
-        {
-          flexDirection: "row",
-          justifyContent: "center",
-          marginHorizontal: 10
-
-        }
-      }>
-        <View style={
-          {
-            width: "20%",
-            marginTop: 10
-          }
-        }>
+      <View style={styles.ratingPollContainer}>
+        <View style={styles.ratingNumberContainer}>
           <Text
             style=
             {
@@ -86,27 +59,17 @@ const ReviewRatings = ({ avg} ) => {
             }
           >1</Text>
         </View>
-        <View style={{ width: "60%", marginTop: 20 }}>
 
-
-
-
-
+        <View style={styles.ProgressContainer}>
           <ProgressBar
             style={[ReviewRatingsStyles.progressBar, { marginTop: 0 }]}
             progress={avg.five / max}
-
             color={"green"}
-
           />
 
           <ProgressBar
             style={ReviewRatingsStyles.progressBar}
             progress={avg.four / max}
-
-
-
-
             color={"green"}
           >
 
@@ -116,7 +79,6 @@ const ReviewRatings = ({ avg} ) => {
             progress={avg.three / max}
             color={"#7CFC00"}
           >
-
           </ProgressBar>
 
           <ProgressBar
@@ -124,8 +86,6 @@ const ReviewRatings = ({ avg} ) => {
             progress={avg.two / max}
             color={"orange"}
           >
-
-
           </ProgressBar>
 
           <ProgressBar
@@ -137,11 +97,7 @@ const ReviewRatings = ({ avg} ) => {
         </View>
 
         <View
-          style={{
-            width: '20%',
-            marginTop: 10
-
-          }}
+          style={styles.countPollContainer}
         >
           <ReviewCountPoll
             avg={avg}
@@ -174,6 +130,56 @@ const ReviewRatingsStyles = StyleSheet.create(
 const styles = StyleSheet.create
   (
     {
+      iconStyle:
+      {
+        padding: 10,
+        backgroundColor: "green",
+        borderRadius: 20
+      },
+      Container:
+      {
+        flexDirection: 'row',
+        width: 70,
+        justifyContent: "space-evenly",
+        margin: 20,
+        marginTop: 0,
+        borderRadius: 15,
+        backgroundColor: "green",
+
+      },
+      ratingConatainer:
+      {
+        borderRightColor: "grey",
+        alignItems: "center",
+        justifyContent: 'center',
+        borderBottomWidth: 1,
+        marginHorizontal: 20
+      },
+      countPollContainer:
+      {
+        width: '20%',
+        marginTop: 10
+
+      },
+      ratingNumberContainer:
+      {
+        width: "20%",
+        marginTop: 10
+      },
+
+      ratingPollContainer:
+
+      {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginHorizontal: 10
+
+      },
+      ProgressContainer:
+      {
+        width: "60%",
+        marginTop: 20
+      },
       reviewStarFONTS:
       {
 

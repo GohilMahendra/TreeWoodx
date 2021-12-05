@@ -1,14 +1,12 @@
 import React from "react";
-
 import { BottomTabBar, createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Admin_panel from "../screens/Admin/Admin_panel";
-import Admin_addSales from "../screens/Admin/AdminProfile";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Admin_editProd from "../screens/Admin/Admin_editProd";
-import { View } from "react-native";
-import { Color } from "../constants/colors";
 import AdminProfile from "../screens/Admin/AdminProfile";
+import OrderState from "../screens/Admin/OrderState";
+
 const bottomTab = createBottomTabNavigator();
+
 const AdminTabNavigator = ({ navigation }) => {
   return (
     <bottomTab.Navigator
@@ -38,7 +36,7 @@ const AdminTabNavigator = ({ navigation }) => {
       </bottomTab.Screen>
 
       <bottomTab.Screen
-        name={"Admin_panel"}
+        name={"OrderState"}
         options={
           {
             tabBarLabel: 'PANEL',
@@ -48,7 +46,7 @@ const AdminTabNavigator = ({ navigation }) => {
           }
 
         }
-        component={Admin_panel}
+        component={OrderState}
       >
       </bottomTab.Screen>
 

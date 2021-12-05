@@ -20,7 +20,6 @@ const ProductFilter = ({ filters, onPress, hideModel }) => {
 
     const [filter, setfilter] = useState(filters)
 
-
     const applyFilters = () => {
 
 
@@ -33,6 +32,8 @@ const ProductFilter = ({ filters, onPress, hideModel }) => {
             material: "",
             priceRange: "",
             cat: "",
+            search:filters.search,
+            brand:filters.brand,
             color: "",
             discountRange: "",
         })

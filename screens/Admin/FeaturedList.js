@@ -1,12 +1,11 @@
 
-import React from "react";
-import { View, Text,Image, StyleSheet, ImageBackground, RefreshControl } from "react-native";
+import React,{useEffect} from "react";
+import { View, Text, Image, StyleSheet, ImageBackground, RefreshControl } from "react-native";
 import { FlatList, TextInput, TouchableOpacity } from "react-native-gesture-handler";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react/cjs/react.development";
 import FeaturedCard from "../../components/Featured/FeaturedCard";
-import { Color, colorThemes } from "../../constants/colors";
+
 import { deleteFeaturedProduct, fetchFeaturedProducts } from "../../redux/Actions/FeaturedActions";
 
 const FeaturedList = () => {
@@ -15,94 +14,67 @@ const FeaturedList = () => {
     const dispatch = useDispatch()
 
     const featured = useSelector(state => state.Featured.featuredProducts)
-   
-    const loading=useSelector(state=>state.Featured.featuredLoading)
-   const loadFeatured=()=>
-   {
-    dispatch(fetchFeaturedProducts())
-   }
+
+    const loading = useSelector(state => state.Featured.featuredLoading)
+
+    const loadFeatured = () => {
+        dispatch(fetchFeaturedProducts())
+    }
     useEffect
         (
             () => {
-              
+
                 loadFeatured()
             },
             []
         )
 
-    const onRefresh=()=>
-    {
+    const onRefresh = () => {
         loadFeatured()
     }
-    const deleteProdFromFeatured=(pid)=>
-    {
+    const deleteProdFromFeatured = (pid) => {
         dispatch(deleteFeaturedProduct(pid))
     }
     const renderItem = ({ item, index }) => {
 
-
-        const colorTheme=colorThemes[0]
         return (
             <View>
                 <TouchableOpacity
 
-            onPress={
-                ()=>deleteProdFromFeatured(item.key)
-            }
-            style={
-                {
-                    backgroundColor:"red",
-                    justifyContent:'center',
-                    alignItems:"center",
-                    alignSelf:'flex-end',
-                    marginHorizontal:20,
-                    borderRadius:15
-                    
-                }
-            }
-            >
-                <Text
-                style={
-                    {
-                        fontSize:15,
-                        padding:15,
-                        color:"#fff"
+                    onPress={
+                        () => deleteProdFromFeatured(item.key)
                     }
-                }
-                >X</Text>
-            </TouchableOpacity>
-            <FeaturedCard
-            data={item}
-            colorTheme={colorTheme}
-            ></FeaturedCard>
-        
+                    style={styles.btnRemove}
+                >
+                    <Text
+                        style={styles.txtRemove}
+                    >REMOVE</Text>
+                </TouchableOpacity>
+                <FeaturedCard
+                    data={item.data}
+                    colorTheme={item.theme}
+                ></FeaturedCard>
+
             </View>
-            
 
         )
     }
 
     return (
 
-
-
         <View
-            style={
-                {
-                    flex: 1
-                }
-            }
+            style={styles.Container}
         >
             <FlatList
                 refreshControl={
                     <RefreshControl
-                    onRefresh={onRefresh}
-                    refreshing={loading}
+                        onRefresh={onRefresh}
+                        refreshing={loading}
                     ></RefreshControl>
                 }
                 keyExtractor={item => item.key}
                 renderItem={renderItem}
-            
+
                 data={featured}
                 style={
                     {
@@ -116,4 +88,33 @@ const FeaturedList = () => {
 }
 
 
+const styles = StyleSheet.create
+    (
+        {
+            Container:
+            {
+                flex: 1,
+                backgroundColor: '#fff'
+            }
+            ,
+            txtRemove:
+            {
+                fontSize: 15,
+                padding: 15,
+                color: "#fff"
+            },
+
+            btnRemove:
+            {
+                backgroundColor: "red",
+                justifyContent: 'center',
+                alignItems: "center",
+                alignSelf: 'flex-end',
+                marginHorizontal: 20,
+                borderRadius: 15
+
+            }
+
+        }
+    )
 export default FeaturedList

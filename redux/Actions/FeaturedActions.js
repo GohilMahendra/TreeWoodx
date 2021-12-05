@@ -19,15 +19,19 @@ import {
 
 
 
-export const AddToFeatured = (item,theme) => {
+export const AddToFeatured = (data,theme) => {
+
+ //   console.log(item,theme)
     return async (dispatch) => {
         try {
             const qry = firestore()
                 .collection('featured')
-                .doc(item.key)
+                .doc(data.key)
                 .set
                 (
-                    item,theme
+                   {
+                 data,theme
+                   }
                 )
 
             dispatch({ type: ADD_FEATURED_SUCCESS })

@@ -2,7 +2,8 @@
 import React from "react";
 import {
     View, Text, StyleSheet, Image, SafeAreaView, FlatList, TouchableOpacity, Dimensions, TextInput, ScrollView, ActivityIndicator
-    , RefreshControl
+    , RefreshControl,Alert,
+    BackHandler
 } from "react-native";
 
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -10,8 +11,6 @@ import { categories } from "../../data/categories";
 
 import { useState } from "react/cjs/react.development";
 import { useEffect } from "react";
-
-import { Appbar, Searchbar } from "react-native-paper";
 import ProductCard from "../../components/ProductCard";
 import FeaturedList from "../../components/Featured/FeaturedList";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,6 +32,30 @@ const Home_screen = ({ navigation }) => {
 
     }
 
+
+    const backAction = () => {
+        Alert.alert("Hold on!", "Are you sure you want to Exit APP?", [
+          {
+            text: "Cancel",
+            onPress: () => null,
+            style: "cancel"
+          },
+          { text: "YES", onPress: () => BackHandler.exitApp() }
+        ]);
+        return true;
+      };
+    useEffect(
+        ()=>
+        {
+           const subscription=BackHandler.addEventListener(
+                "hardwareBackPress",
+           backAction
+            )
+    return subscription.remove()
+        },
+    []
+
+    )
     useEffect
         (
             () => {
@@ -62,13 +85,13 @@ const Home_screen = ({ navigation }) => {
             <TouchableOpacity
                 onPress={() => { setind(index), chairFetcher(item.name) }}
                 style={{
-                    elevation: 5,
-                    borderRadius: 20,
+                    elevation: 10,
+                    borderRadius: 10,
                     justifyContent: 'center',
                     padding: 10,
                     alignItems: 'center',
                     backgroundColor: (ind == index) ? 'black' : '#fff',
-                    margin: 10, borderRadius: 20
+                    margin: 10, 
                 }}>
                 <Text
                     style={{

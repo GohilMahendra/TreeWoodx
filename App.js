@@ -16,19 +16,14 @@ import RootStackNavigator from './navigation/RootStackNavigater';
 
 const App=()=>
 {
-
-
   return(
-
- 
     <Provider store={store}>
 
       <RootStackNavigator>
       </RootStackNavigator>
-
+    
     </Provider>
-  
   )
-  
 }
+
 export default App;

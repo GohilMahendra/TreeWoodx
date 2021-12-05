@@ -11,18 +11,15 @@ import Modal from "react-native-modal";
 import ProductCard from "../../components/Product_list/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadProducts, loadMoreProducts } from "../../redux/Actions/ProductActions";
-import { Mod } from "@tensorflow/tfjs-core";
 import ProductFilter from "../../components/Product_list/ProductFilter";
-import { color, discountRange, Material, priceRange } from "../../constants/categories";
-import { categories } from "../../constants/categories";
-import { fonts } from "../../constants/fonts";
-import { Color } from "../../constants/colors";
+
 import LinearGradient from "react-native-linear-gradient";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 
 const Product_list = () => {
   const navigation = useNavigation()
 
+  const p = useRoute()
   const product = useSelector(state => state.Products.products)
   const prodLoad = useSelector(state => state.Products.prodLoad)
   const moreproductsLoad = useSelector(state => state.Products.moreproductsLoad)
@@ -30,31 +27,61 @@ const Product_list = () => {
 
 
   const dispatch = useDispatch()
-  const [search, setserach] = useState("")
   const [isVisible,setisVisble]=useState(false)
-
-  const p = useRoute()
-  var item = p.params.item
 
   const [filters, setfilters] = useState(
     {
         material:"",
         priceRange:"",
         cat:"",
+        search:"",
+        brand:"",
         color:"",
         discountRange:"",
     }
   )
-
-  console.log(filters,"filter")
-  
-console.log(p)
+  const [search,setsearch]=useState("")
 
 
+
+  const isAllfiltersNull=()=>
+  {
+    return filters.material===""&&
+    filters.cat===""&&
+    filters.brand===""&&
+    filters.search===""&&
+    filters.color===""&&
+    filters.priceRange===""&&
+    filters.discountRange===""
+  }
   const makeInvisible=()=>
   {
     setisVisble(false)
   }
+
+  useEffect(
+    ()=>
+    {
+      if(p.params!=undefined)
+      {
+        if(p.params.item!=undefined)
+        {
+
+          if(p.params.item!="All")
+          setfilters(
+            {
+              ...filters,cat:p.params.item
+            }
+          )
+        }
+        else if(p.params.search!=undefined)
+     setfilters({...filters,search:p.params.search}) 
+     else if(p.params.brand!=undefined)
+     setfilters({...filters,brand:p.params.brand}) 
+      }
+    },
+    []
+  )
 
   const resetFilter=(val)=>
   {
@@ -63,13 +90,13 @@ console.log(p)
   const { height, width } = Dimensions.get('screen')
 
   const loadMoreProd = () => {
-    dispatch(loadMoreProducts(filters, search, lastindex))
+    dispatch(loadMoreProducts(filters, lastindex))
 
   }
 
   const getProducts=()=>
   {
-    dispatch(LoadProducts(filters,search))
+    dispatch(LoadProducts(filters))
   }
   const itembuilder = ({ item, index }) => {
 
@@ -102,6 +129,7 @@ console.log(p)
   return (
     <View style={styles.Container}>
 
+ 
       <FlatList      
         refreshControl={
           <RefreshControl
@@ -123,6 +151,7 @@ console.log(p)
 
       </FlatList>
 
+
     <View
      style={
        {
@@ -138,23 +167,29 @@ console.log(p)
      }
      >
       
+      <TouchableOpacity
+      onPress={()=>setisVisble(true)}
+     style={{height:'100%',width:'100%'}}
+     >
          <LinearGradient
-         style={{flex:1,borderRadius:50}}
-         colors={["skyblue",
-        "pink"]}
+         style={{flex:1,justifyContent:'center',
+         alignItems:'center',borderRadius:50}}
+         colors={["violet",
+        "purple"]}
          >
-       <TouchableOpacity
-       style={{flex:1,justifyContent:"center",alignItems:"center"}}
-       >
+      
          <FontAwesome5Icon
          name="filter"
+         size={30}
+         color={"#fff"}
          >
 
          </FontAwesome5Icon>
-       </TouchableOpacity>
-
+      
          </LinearGradient>
-       
+
+       </TouchableOpacity>
+ 
      </View>
 
       <ActivityIndicator
@@ -182,12 +217,12 @@ console.log(p)
         }
         
         >
-            <ProductFilter
+           {isVisible && <ProductFilter
             filters={filters}
             
             onPress={resetFilter}
             hideModel={makeInvisible}
-            ></ProductFilter>
+            ></ProductFilter>}
         </View>
       </Modal>
 

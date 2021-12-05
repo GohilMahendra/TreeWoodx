@@ -9,11 +9,11 @@ import {
     LOAD_HOME_PRODUCTS_REQUEST,
     LOAD_HOME_PRODUCTS_SUCCESS,
     LOAD_MORE_PRODUCTS_FAILED,
-  
+
     LOAD_MORE_PRODUCTS_SUCCESS,
     LOAD_PRODUCTS_FAILED,
     LOAD_PRODUCTS_SUCCESS,
- 
+
 } from "../Types/ProductTypes";
 
 
@@ -144,35 +144,32 @@ export const LoadInitialProducts = (name) => {
 }
 
 
-const qryBuilder = (filters, search) => {
-  
+const qryBuilder = (filters) => {
 
-  
-    let qry=firestore().collection('products')
+    let qry = firestore().collection('products')
 
-    if(filters.material!="")
-    {
+    if (filters.material != "" && filters.material != undefined && filters.material != null) {
 
-        qry=qry.where('material','==',filters.material)
+        qry = qry.where('material', '==', filters.material)
     }
-    if(filters.priceRange!="")
-    {
-        qry=qry.where('priceRange','==',filters.priceRange)
+    if (filters.priceRange != "" && filters.priceRange != undefined && filters.priceRange != null) {
+        qry = qry.where('priceRange', '==', filters.priceRange)
 
     }
-    if(filters.discountRange!="")
-    {
-        qry=qry.where('discountRange','==',filters.discountRange)
+    if (filters.discountRange != "" && filters.discountRange != undefined && filters.discountRange != null) {
+        qry = qry.where('discountRange', '==', filters.discountRange)
 
     }
-    if(filters.color!="")
-    {
-        qry=qry.where('color','==',filters.color)
+    if (filters.color != "" && filters.color != undefined && filters.color != null) {
+        qry = qry.where('color', '==', filters.color)
 
     }
-    if(search!="" && search!=null)
-    {
-        qry=qry.where('pname','==',search)
+    if (filters.brand != "" && filters.brand != undefined && filters.brand != null) {
+        qry = qry.where('brand', '==', filters.brand)
+
+    }
+    if (filters.search != "" && filters.search != undefined && filters.search != null) {
+        qry = qry.where('pname', '==', filters.search)
 
     }
 
@@ -181,31 +178,20 @@ const qryBuilder = (filters, search) => {
 }
 
 
-export const LoadProducts = (filters = null, search = null) => {
+export const LoadProducts = (filters = null) => {
     return async (dispatch) => {
 
-
         try {
+            let qry = null
 
+            if (filters == null) {
+                qry = firestore()
+                    .collection('products')
+            }
+            else {
+                qry = qryBuilder(filters)
+            }
 
-            let qry=null
-
-            if(filters==null && search==null)
-            {
-                qry=firestore()
-                .collection('products')
-            }
-            else if(filters==null && (search!=null && search!=""))
-            {
-                qry=firestore()
-                .collection('products')
-                .where('pname','==',search)   
-            }
-            else
-            {
-                qry=qryBuilder(filters,search)
-            }
-            
             const products = await qry.limit(MAX_FETCH_LIMIT).get()
 
             var list = []
@@ -254,7 +240,7 @@ export const LoadProducts = (filters = null, search = null) => {
 }
 
 
-export const loadMoreProducts = (filters, search, lastindex) => {
+export const loadMoreProducts = (filters, lastindex) => {
     return async (dispatch) => {
 
 
@@ -265,42 +251,29 @@ export const loadMoreProducts = (filters, search, lastindex) => {
                 return
             }
 
-          
-            let qry=null
+
+            let qry = null
 
 
-            if(filters==null && search==null)
-            {
-                qry=firestore()
-                .collection('products')
-               
-            }
-            else if(filters==null && (search!=null && search!=""))
-            {
-                qry=firestore()
-                .collection('products')
-                .where('pname','==',search)
-             
-                
+            if (filters == null) {
+                qry = firestore()
+                    .collection('products')
 
             }
-            else
-            {
-                qry=qryBuilder(filters,search)
+            else {
+                qry = qryBuilder(filters)
             }
 
 
             var list = []
 
             const products = await qry
-            .orderBy(firestore.FieldPath.documentId())
-            .startAfter(lastindex)
-            .get()
+                .orderBy(firestore.FieldPath.documentId())
+                .startAfter(lastindex)
+                .limit(MAX_FETCH_LIMIT)
+                .get()
 
-            console.log(products,"fetch more")
             products.forEach(function (child) {
-
-                console.log(child.data().pname,"pName")
 
                 list.push({
                     key: child.id,
@@ -316,7 +289,7 @@ export const loadMoreProducts = (filters, search, lastindex) => {
 
             )
 
-      
+
             let lastkey = null
             if (list.length >= MAX_FETCH_LIMIT) {
                 lastkey = list[list.length - 1].key

@@ -1,6 +1,8 @@
 
 
 import firestore from "@react-native-firebase/firestore";
+import { data } from "@tensorflow/tfjs";
+
 import { SEARCH_PRODUCT_AUTOCOMPLETE_FAILED, SEARCH_PRODUCT_AUTOCOMPLETE_SUCCESS } from "../Types/SearchTypes";
 
 
@@ -11,8 +13,8 @@ export const searchProd = (search) => {
         try {
             const qry = firestore()
             .collection('products')
-            .where('pname', '>=', search)
-            .where('pname', '<=', search+'\uf8ff')
+            .where('brand', '>=', search)
+            .where('brand', '<=', search+'\uf8ff')
             .limit(10)
 
 
@@ -28,10 +30,29 @@ export const searchProd = (search) => {
                             pname: child.data().pname,
                             pbrand: child.data().brand,
                             key: child.id,
+                            pmaterial:child.data().material,
                             pcat: child.data().cat
                         })
                     }
                 )
+
+                console.log(list)
+            let temp=list
+
+            if(!temp==[] && temp!=undefined)
+            {
+               temp.forEach(
+                (item)=>
+                {
+                        list.push({
+                            key:item.key+item.pbrand,
+                            pbrand:item.pbrand,
+                            pcat:item.pcat
+                        })
+                }
+               )
+            }
+
             dispatch({ type: SEARCH_PRODUCT_AUTOCOMPLETE_SUCCESS, payload: list })
 
 
