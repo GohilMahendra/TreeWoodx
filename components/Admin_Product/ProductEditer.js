@@ -5,24 +5,26 @@ import {
     View,
     Text,
     TextInput,
-    StyleSheet
+    StyleSheet,
+    Alert
 } from "react-native";
 
 
 import { Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native";
+import { State } from "react-native-gesture-handler";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AddStock, ChangeDiscount } from "../../redux/Actions/ProductActions";
+import ErrorCard from "../../components/ErrorCard";
+import { ActivityIndicator } from "react-native-paper";
 
-
-const ProductEditer = ({ pid, qty, disc,price }) => {
+const ProductEditer = ({ pid, qty, disc, price }) => {
 
     let dispatch = useDispatch()
-    let qtyx = qty.toString()
-    
 
-    console.log(price,"price")
+
+
     let discx = disc.toString()
 
     const [pqty, setpqty] = useState("0")
@@ -35,7 +37,7 @@ const ProductEditer = ({ pid, qty, disc,price }) => {
     }
     const ChangeDiscountHelper = () => {
 
-        dispatch(ChangeDiscount(pid, pdiscount,price))
+        dispatch(ChangeDiscount(pid, pdiscount, price))
     }
 
     return (
@@ -59,6 +61,7 @@ const ProductEditer = ({ pid, qty, disc,price }) => {
                     onPress={() => addstockHelper()}
                     style={styles.btnAdd}
                 >
+
                     <Text
                         style={styles.txtbtnAdd}
                     >stock +</Text>
@@ -83,6 +86,7 @@ const ProductEditer = ({ pid, qty, disc,price }) => {
                 </TouchableOpacity>
 
             </View>
+          
 
         </View>
 
@@ -115,7 +119,7 @@ const styles = StyleSheet.create
             {
                 height: 50,
                 width: 50,
-                elevation:2,
+                elevation: 2,
                 borderRadius: 15,
                 //borderWidth: 1,
                 textAlign: "center"
@@ -125,8 +129,8 @@ const styles = StyleSheet.create
             {
 
                 height: 50,
-                width:70,
-                elevation:15,
+                width: 70,
+                elevation: 15,
                 backgroundColor: "#fff",
                 borderRadius: 15,
                 alignItems: "center",
@@ -135,9 +139,9 @@ const styles = StyleSheet.create
             txtbtnAdd:
 
             {
-               color: "black",
+                color: "black",
                 fontSize: 15,
-              
+
                 textAlign: 'center',
                 textAlignVertical: "center",
 

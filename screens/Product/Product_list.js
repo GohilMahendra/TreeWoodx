@@ -184,15 +184,16 @@ const Product_list = () => {
             &&
             <TouchableOpacity
               onPress={() => { setfilters({ ...filters, search: "" }), removeParams("search") }}
-              style={{
-                height: 50,
-                padding: 10,
-                backgroundColor: '#fff',
-                elevation: 10,
-                borderRadius: 10,
-              }}
+              style={styles.btnRemoveFilter}
             >
-              <Text>{filters.search}</Text>
+                 <Text
+              style={styles.txtFilterlabel}
+              >{filters.search}</Text>
+              <Text
+              style={styles.txtRemove}
+              >
+                X
+              </Text>
             </TouchableOpacity>
           }
           {
@@ -444,7 +445,7 @@ const styles = StyleSheet.create
         height: 50,
         padding:5,
         margin:5,
-        backgroundColor: 'blue',
+        backgroundColor: 'black',
         elevation: 10,
         flexDirection:'row',
         justifyContent:'space-evenly',

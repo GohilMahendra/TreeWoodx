@@ -25,6 +25,7 @@ const Login = ({ navigation }) => {
 
   const isadmin = useSelector(state => state.Auth.isadmin)
 
+  console.log(isadmin)
   const dispatch = useDispatch()
 
   useEffect
@@ -60,7 +61,7 @@ const Login = ({ navigation }) => {
   const ResetPasswordWithEmail = () => {
 
  
-    if(email=="")
+    if(uname=="")
     {
       Alert.alert("FIll email for link","Please fill email details for reset password")
       return

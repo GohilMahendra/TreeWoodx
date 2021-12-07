@@ -1,9 +1,4 @@
-
-
 import {
-
-
-
     LOAD_SIMILAR_BY_PRODUCTS_FAILED,
     LOAD_SIMILAR_BY_PRODUCTS_SUCCESS,
     LOAD_SIMILAR_BY_PRODUCTS_REQUEST,
@@ -13,34 +8,24 @@ import {
     LOAD_SIMILAR_BY_BRANDS_REQUEST,
     LOAD_SIMILAR_BY_BRANDS_SUCCESS,
     LOAD_SIMILAR_BY_BRANDS_FAILED,
-    INITIAL_LOAD_SIMILAR_BY_PRODUCTS_REQUEST,
-    INITIAL_LOAD_SIMILAR_BY_BRANDS_SUCCESS,
-    INITIAL_LOAD_SIMILAR_BY_PRODUCTS_SUCCESS,
-    INITIAL_LOAD_SIMILAR_BY_PRODUCTS_FAILED,
+   
     LOAD_MORE_SIMILAR_BY_BRANDS_FAILED,
     LOAD_MORE_SIMILAR_BY_BRANDS_REQUEST,
     LOAD_MORE_SIMILAR_BY_BRANDS_SUCCESS,
-
 
 } from "../Types/SimilarTypes";
 
 
 const initialstate = {
 
-
-
     similarProducts: [],
     similarBrands: [],
-
-
 
     similarProductsInitialLoading: false,
     similarBrandsInitialLoading: false,
 
-
     similarProductsError: null,
     similarBrandsError: null,
-
 
     moreProductsLoading: false,
     moreBrandsLoading: false,
@@ -50,9 +35,6 @@ const initialstate = {
 
     lastKeyProduct: null,
     lastKeyBrand: null,
-
-
-
 }
 
 
@@ -60,11 +42,11 @@ const SimilarReducer = (state = initialstate, action) => {
 
     switch (action.type) {
 
-
         case LOAD_SIMILAR_BY_PRODUCTS_REQUEST:
             return {
                 ...state, similarProductsError: null,
-                similarProductsInitialLoading: true
+                similarProductsInitialLoading: true,
+                similarProducts: []
             }
 
         case LOAD_SIMILAR_BY_PRODUCTS_SUCCESS:
@@ -109,6 +91,7 @@ const SimilarReducer = (state = initialstate, action) => {
                 ...state,
                 similarBrandsInitialLoading: true,
                 similarBrandsError: null,
+                similarBrands: []
 
 
             }

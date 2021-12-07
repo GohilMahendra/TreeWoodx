@@ -14,7 +14,8 @@ import {
     LOAD_MORE_PRODUCTS_FAILED,
     ADD_PRODUCT_REQUEST,
     ADD_PRODUCT_SUCCESS,
-    ADD_PRODUCT_FAILED
+    ADD_PRODUCT_FAILED,
+   
 } from "../Types/ProductTypes";
 
 const initialstate = {
@@ -23,6 +24,8 @@ const initialstate = {
     products: [],
 
     HomeProducts: [],
+
+
 
 
 
@@ -132,6 +135,7 @@ const ProductReducer = (state = initialstate, action) => {
                 addProductLoad: false,
                 addProductError: action.payload
             }
+
         default:
             return state
 

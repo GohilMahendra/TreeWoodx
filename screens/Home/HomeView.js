@@ -74,16 +74,18 @@ const HomeView = ({ navigation }) => {
       </newnav.Screen>
 
       <newnav.Screen
-        options={({ route }) => ({ title: route.params.name 
-        ,headerTitleAlign:"center"
+        options={({ route }) => ({
+          title: route.params.name
+          , headerTitleAlign: "center"
         })}
         name="SimilarProducts"
         component={SimilarProducts}
       />
 
       <newnav.Screen
-        options={({ route }) => ({ title: route.params.name 
-          ,headerTitleAlign:"center"
+        options={({ route }) => ({
+          title: route.params.name
+          , headerTitleAlign: "center"
         })}
         name="SimilarBrands"
         component={SimilarBrands}
@@ -108,15 +110,15 @@ const HomeView = ({ navigation }) => {
       </newnav.Screen>
 
       <newnav.Screen
-     
+
         options={({ route }) => ({
-          title: route.params.name,
-          headerTransparent:true,
-        //  headerShown:true,
+          title: route.params.name != undefined ? route.params.name : "",
+          headerTransparent: true,
+          //  headerShown:true,
           headerRight: () => (
             <TouchableOpacity
               style={{
-                marginHorizontal:20
+                marginHorizontal: 20
 
               }}
               onPress={

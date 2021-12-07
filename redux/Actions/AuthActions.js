@@ -65,7 +65,7 @@ export const resetPassword = (email) => {
             dispatch({ type: CHANGE_PASSWORD_REQUEST })
             const sendlink = await auth().sendPasswordResetEmail(email)
 
-            console.log(sendlink)
+            Alert.alert("REQUEST SUCCESS","CHECK YOUR EMAIL "+email)
             dispatch({ type: CHANGE_PASSWORD_SUCCESS })
         }
         catch (err) {

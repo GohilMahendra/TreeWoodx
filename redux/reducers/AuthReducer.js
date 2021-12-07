@@ -11,7 +11,7 @@ const initialState = {
 
 
 
-    isadmin:false,
+    isadmin:true,
 
 
     logoutLoading: false,
@@ -58,7 +58,7 @@ const AuthReducer = (state = initialState, action) => {
             }
         case SIGN_OUT_SUCCESS:
            return initialState
-           
+
         case SIGN_OUT_FAILED:
             return {
                 ...state,

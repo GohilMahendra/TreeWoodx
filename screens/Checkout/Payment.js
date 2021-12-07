@@ -2,15 +2,21 @@
 import { useRoute } from '@react-navigation/core';
 import React, { useState } from 'react';
 import {
+    Alert,
     StyleSheet,
     Text,
     View
 } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import  Modal  from 'react-native-modal';
+import { ActivityIndicator } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
+import ErrorCard from '../../components/ErrorCard';
 import { Color } from '../../constants/colors';
 
 import { fonts } from "../../constants/fonts";
+
+
 
 import {
     makeOrder
@@ -24,6 +30,8 @@ const Payment = () => {
     const price = useSelector(state => state.Cart.totalPrice)
 
     const orderSuccess=useSelector(state=>state.Orders.orderSuccess)
+    const orderFailedError=useSelector(state=>state.Orders.orderFailedError)
+    const orderLoading=useSelector(state=>state.Orders.orderLoading)
 
     const categories = ["VISA", "MASTERCARD", "RUPAY"]
     const [creditCardNumber, setcreditCardNumber] = useState("1234567855555555")
@@ -94,8 +102,10 @@ const Payment = () => {
     const ProceedToPay = () => {
 
         if (!VarifyCard())
+        {
+            Alert.alert("Invalid Card Details","Please fill appropiate Card Details")
             return
-
+        }
         const paymentDetails = {
             creditCardNumber: creditCardNumber,
             holderName: holderName,
@@ -232,6 +242,40 @@ const Payment = () => {
                 </TouchableOpacity>
 
             </View>
+
+        {
+            orderFailedError
+            &&
+            <ErrorCard
+            error={"Enable to Make Order please Try Again Later !!"}
+            ></ErrorCard>
+        }
+            <Modal
+            isVisible={orderLoading}
+            >
+                <View
+                style={{
+                    backgroundColor:"#fff",
+                    elevation:20,
+                    padding:20,
+                    justifyContent:'space-between',
+                    alignItems:'center'
+                }}
+                >
+                <ActivityIndicator
+                size={30}
+                color="black"
+                ></ActivityIndicator>
+                <Text
+                style={
+                    {
+                        fontSize:20
+                    }
+                }
+                >Proccesing Order....</Text>
+                </View>
+                
+            </Modal>
         </View>
     )
 

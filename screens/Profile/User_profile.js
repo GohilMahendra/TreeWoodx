@@ -5,7 +5,6 @@ import { Dimensions, ImageBackground, StyleSheet, Text, TextInput, TouchableOpac
 import { ModelView } from "react-native-3d-model-view";
 import LinearGradient from "react-native-linear-gradient";
 import auth from "@react-native-firebase/auth";
-import { useEffect } from "react/cjs/react.development";
 import { fonts } from "../../constants/fonts";
 import { Line } from "react-native-svg";
 import { Color } from "../../constants/colors";
@@ -55,7 +54,7 @@ const User_profile = ({ navigation }) => {
                                 fontFamily: fonts.Federo_Regular
                             }
                         }
-                    >{auth().currentUser.displayName.substr(0, 2)}</Text>
+                    >{auth().currentUser!=null?auth().currentUser.displayName.substr(0, 2):""}</Text>
                 </View>
                 <View
                     style={styles.optionsContainer}

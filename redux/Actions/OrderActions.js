@@ -4,10 +4,11 @@ import { CHANGE_ORDERS_STATUS_FAILED, CHANGE_ORDERS_STATUS_REQUEST, CHANGE_ORDER
    LOAD_MORE_ORDERS_SUCCESS, LOAD_ORDERS_FAILED, LOAD_ORDERS_REQUEST, 
    LOAD_ORDERS_SUCCESS, MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST,
     MAKE_ORDER_SUCCESS } from "../Types/OrderTypes";
+import { Alert } from "react-native";
 
 
 
-const MAX_FETCH_LIMIT = 1
+const MAX_FETCH_LIMIT = 3
 
 
 
@@ -187,7 +188,7 @@ export const makeOrder = (cart, price, address, paymentDetails) => {
       dispatch({ type: MAKE_ORDER_REQUEST })
       let { inStock, childName } = await checkIFinStock(cart)
       if (inStock == false) {
-        alert("could not make Transactions because Product is Out Of Stock" + childName)
+        alert("Out OF STOCK !!","could not make Transactions because Product is Out Of Stock" + childName)
         return
       }
 
@@ -214,7 +215,7 @@ export const makeOrder = (cart, price, address, paymentDetails) => {
         name: address.contactDetails.fullName,
         totalPrice: price,
         products: cart,
-        states: "Ordered",
+        status: "Ordered",
         address: address,
         paymentDetails: paymentDetails
       }
@@ -224,11 +225,14 @@ export const makeOrder = (cart, price, address, paymentDetails) => {
         (
           order
         )
+
+      Alert.alert("ORDER SUCCESS","YOUR ORDER OF RS "+totalPrice+" SUCCESS YOU CAN TRACK IT BY PROFILE SECTION")
       dispatch({ type: MAKE_ORDER_SUCCESS })
     }
     catch (err) {
+      Alert.alert("Order Failed","We are sorry for inconvinince !!")
       dispatch({ type: MAKE_ORDER_FAILED, payload: err })
-      console.log(err)
+      
     }
   }
 

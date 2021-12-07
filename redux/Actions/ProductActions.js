@@ -1,13 +1,12 @@
-
-import auth, { firebase } from "@react-native-firebase/auth";
-
 import firestore from "@react-native-firebase/firestore";
+import { Alert } from "react-native";
 import { getDiscountRange, getPriceRange } from "../../functions/CalculationHelpers";
 
 import {
     ADD_PRODUCT_FAILED,
     ADD_PRODUCT_REQUEST,
     ADD_PRODUCT_SUCCESS,
+   
     LOAD_HOME_PRODUCTS_FAILED,
     LOAD_HOME_PRODUCTS_REQUEST,
     LOAD_HOME_PRODUCTS_SUCCESS,
@@ -36,34 +35,33 @@ export const DeleteProduct = (pid) => {
 
     }
 }
-export const AddProduct = (key="", prod) => {
+export const AddProduct = (key = "", prod) => {
     return async (dispatch) => {
-   
-        try
-        {
-            dispatch({type:ADD_PRODUCT_REQUEST})
-            if (key != "" && key!="") {
+
+        try {
+            dispatch({ type: ADD_PRODUCT_REQUEST })
+            if (key != "" && key != "") {
                 await firestore()
-                  .collection('products')
-                  .doc(key)
-                  .set(prod)
-              }
-              else {
+                    .collection('products')
+                    .doc(key)
+                    .set(prod)
+            }
+            else {
                 await firestore()
-                  .collection('products')
-                  .add(prod)
-              }
-        dispatch({type:ADD_PRODUCT_SUCCESS})
+                    .collection('products')
+                    .add(prod)
+            }
+            Alert.alert("Product added SuccessFully", "Now it is listed on app !!")
+            dispatch({ type: ADD_PRODUCT_SUCCESS })
 
         }
-        catch(err)
-        {
-            dispatch({type:ADD_PRODUCT_FAILED})
+        catch (err) {
+            dispatch({ type: ADD_PRODUCT_FAILED })
 
             console.log(err)
 
         }
-       
+
 
     }
 }
@@ -71,16 +69,21 @@ export const AddStock = (pid, stk) => {
     return async (dispatch) => {
 
         try {
+
+
             const res = await firestore().collection('products').doc(pid).update
                 (
                     {
-                        stock: firestore.FieldValue.increment(stk)
+                        stock: firestore.FieldValue.increment(Number(stk))
                     }
                 )
+
+            Alert.alert("Stock Added", "Extra Stock of " + stk + "Items Added")
         }
         catch (err) {
 
             console.log(err)
+            Alert.alert("Error", "" + err)
 
         }
 
@@ -93,7 +96,7 @@ export const ChangeDiscount = (pid, disc, price) => {
         try {
 
 
-            console.log(price)
+
             const priceafterdisc = price - (price * disc) / 100
 
             const discountRange = getDiscountRange(disc)
@@ -107,9 +110,12 @@ export const ChangeDiscount = (pid, disc, price) => {
                         priceRange: priceRange
                     }
                 )
+            Alert.alert("DISCOUNT SUCCESS", "REFRESH TO SEE CHANGE")
 
         }
         catch (err) {
+
+            Alert.alert("Error", "" + err)
 
         }
 

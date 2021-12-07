@@ -1,7 +1,7 @@
 
 import { useRoute } from '@react-navigation/core';
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, RefreshControl } from 'react-native';
 
 import { ActivityIndicator } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,9 +20,15 @@ const SimilarBrands = ({ navigation }) => {
     let name = p.params.brandname
 
 
+
+
     const dispatch = useDispatch()
 
     const brands = useSelector(state => state.Similar.similarBrands)
+
+    const similarBrandsInitialLoading= useSelector(state => state.Similar.similarBrandsInitialLoading)
+
+    const similarBrandsError= useSelector(state => state.Similar.similarBrandsError)
 
     const moreBrandsLoading = useSelector(state => state.Similar.moreBrandsLoading)
 
@@ -32,11 +38,24 @@ const SimilarBrands = ({ navigation }) => {
         if (lastindex == null)
             return
 
-
         dispatch(FetchMoreSimilarBrands(name, lastindex))
     }
 
+    const fetchBrands=()=>
+    {
+        if(name==undefined)
+        return
 
+        dispatch(FetchSimilarBrands(name))
+    }
+
+    useEffect(
+        ()=>
+        {
+            fetchBrands()
+        },
+    []
+    )
     const itembuilder = ({ item, index }) => {
 
         return (
@@ -60,6 +79,12 @@ const SimilarBrands = ({ navigation }) => {
             <FlatList
                 style={{ flex: 1 }}
                 data={brands}
+                refreshControl={
+                    <RefreshControl
+                    refreshing={similarBrandsInitialLoading}
+                    onRefresh={()=>fetchBrands()}
+                    ></RefreshControl>
+                }
                 onEndReached={
                     () => fetchMoreBrands()
                 }
@@ -89,6 +114,7 @@ const styles = StyleSheet.create
             container:
             {
                 flex: 1,
+                backgroundColor:'#E3E8F0'
             }
         }
     )

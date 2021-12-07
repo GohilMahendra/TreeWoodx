@@ -2,9 +2,7 @@
 
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
-import { CommonActions } from "@react-navigation/routers";
-import { ClipPath } from "react-native-svg";
-import { categories } from "../../data/categories";
+
 
 import {
     LOAD_SIMILAR_BY_PRODUCTS_FAILED,
@@ -195,6 +193,7 @@ export const FetchSimilarBrands = (Brand) => {
     return async (dispatch) => {
         try {
 
+            console.log(Brand)
             dispatch({ type: LOAD_SIMILAR_BY_BRANDS_REQUEST })
             const quary = firestore()
                 .collection('products')
@@ -203,6 +202,7 @@ export const FetchSimilarBrands = (Brand) => {
 
             const products = await quary.get()
 
+            console.log(products)
             var list = []
             products.forEach
                 (

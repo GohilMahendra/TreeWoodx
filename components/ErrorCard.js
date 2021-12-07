@@ -14,6 +14,7 @@ const ErrorCard=({error=""})=>
         <View
         style={{
             height:50,
+            zIndex:5,
             backgroundColor:'red',
             justifyContent:'center',
             alignItems:'center',
