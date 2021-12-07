@@ -1,8 +1,5 @@
 
 import React, { useEffect } from "react";
-
-import { colorsArray } from "../constants/colors";
-
 import Admin_ProductScreen from "../screens/Admin/Admin_ProductScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import Admin_product from "../screens/Admin/Admin_product";
@@ -16,6 +13,7 @@ const AdminEditStackNavigator = () => {
     return (
 
         <editNaviagter.Navigator>
+
             <editNaviagter.Screen
                 options={
                     {
@@ -25,14 +23,18 @@ const AdminEditStackNavigator = () => {
                 name="Admin_ProductScreen"
                 component={Admin_ProductScreen}
             >
-
             </editNaviagter.Screen>
 
             <editNaviagter.Screen
                 name="Admin_product"
+                options={
+                    {
+                        headerTitle:"",
+                        headerTransparent:true
+                    }
+                }
                 component={Admin_product}
             >
-
             </editNaviagter.Screen>
 
             <editNaviagter.Screen

@@ -16,10 +16,12 @@ import SimilarReducer from "../reducers/SimilarReducer";
 import FeaturedReducer from "../reducers/FeaturedReducer";
 import OrderReducer from "../reducers/OrderReducer";
 import SearchReducer from "../reducers/SearchReducer";
+import AuthReducer from "../reducers/AuthReducer";
  const rootReducer=combineReducers
  (
      {
          Cart:CartReducer,
+         Auth:AuthReducer,
          Comment:CommentReducer,
          Products:ProductReducer,
          Similar:SimilarReducer,

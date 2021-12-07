@@ -8,7 +8,7 @@ export const ValidateEmail=(email="Sring fdf")=>
 
 }
 
-export const VarifySintext=(UserName,email,password)=>
+export const VarifySyntex=(UserName,email,password)=>
 {
 
     let error=""

@@ -3,76 +3,37 @@ import { View, Text, Alert, Button, TextInput, Dimensions, Image, ActivityIndica
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 
 import auth from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
 import { ImageBackground } from "react-native";
 import { fonts } from "../../constants/fonts";
 import { StyleSheet } from "react-native";
-import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import { useDispatch, useSelector } from "react-redux";
+import { signUp } from "../../redux/Actions/AuthActions";
+import ErrorCard from "../../components/ErrorCard";
 
 const Sign_Up = ({ navigation }) => {
 
-  const checkEmail = (email) => {
-    const expression = /(?!.*\.{2})^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([\t]*\r\n)?[\t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([\t]*\r\n)?[\t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
 
-    return expression.test(String(email).toLowerCase())
-  }
+  const registerLoading = useSelector(state => state.Auth.registerLoading)
+  const registerError = useSelector(state => state.Auth.registerError)
 
-
-  const createTwoButtonAlert = () => {
-    Alert.alert(
-      "invalid email provided",
-      "error in email varification",
-      [
-
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ]
-    );
-  }
-
-
-  const onsignup = async (name, email, password) => {
-    
-    if (name == null || email == null || password == null || password.length < 8) {
-      console.log('error')
-      return
-    }
-
-    if (!checkEmail(email)) {
-
-      createTwoButtonAlert()
-      return
-    }
-    setloading(true)
-    auth().createUserWithEmailAndPassword(email, password).then((result) => {
-      firestore().collection('admin').doc(auth().currentUser.uid).set
-        (
-          {
-            name: uname,
-            email: uemail,
-          }
-        )
-
-      auth().currentUser.updateProfile(
-        {
-          displayName: name
-        }
-      )
-
-      setloading(false)
-      navigation.navigate("Login")
-
-    }).catch((err) => {
-      setloading(false)
-      console.log("error")
-
-    })
-
-  }
 
   const [uname, setuname] = useState("")
   const [uemail, setuemail] = useState("")
   const [upassword, setupassword] = useState("")
-  const [loadin, setloading] = useState(false)
+
+  const dispatch = useDispatch()
+
+  const onsignup = async (name, email, password) => {
+
+    dispatch(signUp(name, email, password))
+
+    if(auth().currentUser!=null && auth().currentUser!=undefined)
+    navigation.navigate("Login")
+
+  }
+
+ 
+
 
   return (
 
@@ -93,14 +54,7 @@ const Sign_Up = ({ navigation }) => {
           // behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.detailsConatainer}>
 
-          <FontAwesome5Icon
-            name="user"
-            size={70}
-            style={styles.signUPLogo}
-            solid={true}
-            color="#fff"
-          />
-
+         
           <Text
             style={
               styles.signUPText
@@ -154,7 +108,7 @@ const Sign_Up = ({ navigation }) => {
 
 
           >
-            {loadin ?
+            {registerLoading ?
               <ActivityIndicator
                 style={styles.activityIndicator}
                 size={'large'}
@@ -166,6 +120,14 @@ const Sign_Up = ({ navigation }) => {
             }
           </TouchableOpacity>
 
+          {
+            registerError != null
+            &&
+
+            <ErrorCard
+              error={"Error in register Please Try Again !!"}
+            ></ErrorCard>
+          }
         </View>
 
       </ImageBackground>

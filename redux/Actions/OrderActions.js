@@ -1,6 +1,9 @@
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
-import { LOAD_MORE_ORDERS_FAILED, LOAD_MORE_ORDERS_REQUEST, LOAD_MORE_ORDERS_SUCCESS, LOAD_ORDERS_FAILED, LOAD_ORDERS_REQUEST, LOAD_ORDERS_SUCCESS, MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST, MAKE_ORDER_SUCCESS } from "../Types/OrderReducer";
+import { CHANGE_ORDERS_STATUS_FAILED, CHANGE_ORDERS_STATUS_REQUEST, CHANGE_ORDERS_STATUS_SUCCESS, LOAD_MORE_ORDERS_FAILED, LOAD_MORE_ORDERS_REQUEST,
+   LOAD_MORE_ORDERS_SUCCESS, LOAD_ORDERS_FAILED, LOAD_ORDERS_REQUEST, 
+   LOAD_ORDERS_SUCCESS, MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST,
+    MAKE_ORDER_SUCCESS } from "../Types/OrderTypes";
 
 
 
@@ -137,7 +140,6 @@ export const getMoreOrders = (All = null) => {
       const subscription = quary.onSnapshot(
         (snapshot) => {
           let list = []
-
           snapshot.forEach
             (
               function (child) {
@@ -256,6 +258,8 @@ const getStatus = (status) => {
 export const changeStatus = (status, id) => {
   return async (dispatch, getState) => {
     try {
+
+      dispatch({type:CHANGE_ORDERS_STATUS_REQUEST})
       const new_status = getStatus(status)
 
       const res = await firestore()
@@ -267,11 +271,11 @@ export const changeStatus = (status, id) => {
             status: new_status
           }
         )
-
+        dispatch({type:CHANGE_ORDERS_STATUS_SUCCESS})
 
     }
     catch (err) {
-      console.log(err)
+      dispatch({type:CHANGE_ORDERS_STATUS_FAILED,payload:err})
     }
 
   }

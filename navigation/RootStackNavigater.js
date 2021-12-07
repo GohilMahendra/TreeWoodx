@@ -57,25 +57,31 @@ const RootStackNavigator = () => {
 
                 <stack.Screen
                     name="Checkout"
-                    options={{
-                        headerShown: false
-                    }}
+                    options={
+                        {
+                            headerTitleAlign: "center"
+                        }
+                    }
                     component={Checkout}
 
                 ></stack.Screen>
 
                 <stack.Screen
                     name="OrderDetails"
-                    options={{
-                        headerShown: false
-                    }}
+                    options={
+                        {
+                            headerTitleAlign: "center"
+                        }
+                    }
                     component={OrderDetails}
                 ></stack.Screen>
-                 <stack.Screen
+                <stack.Screen
                     name="Payment"
-                    options={{
-                        headerShown: false
-                    }}
+                    options={
+                        {
+                            headerTitleAlign: "center"
+                        }
+                    }
                     component={Payment}
                 ></stack.Screen>
 

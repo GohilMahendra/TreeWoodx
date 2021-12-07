@@ -27,66 +27,72 @@ const Product_list = () => {
 
 
   const dispatch = useDispatch()
-  const [isVisible,setisVisble]=useState(false)
+  const [isVisible, setisVisble] = useState(false)
 
   const [filters, setfilters] = useState(
     {
-        material:"",
-        priceRange:"",
-        cat:"",
-        search:"",
-        brand:"",
-        color:"",
-        discountRange:"",
+      material: "",
+      priceRange: "",
+      cat: "",
+      search: "",
+      brand: "",
+      color: "",
+      discountRange: "",
     }
   )
-  const [search,setsearch]=useState("")
 
-
-
-  const isAllfiltersNull=()=>
-  {
-    return filters.material===""&&
-    filters.cat===""&&
-    filters.brand===""&&
-    filters.search===""&&
-    filters.color===""&&
-    filters.priceRange===""&&
-    filters.discountRange===""
+  const isAllfiltersNull = () => {
+    return filters.material === "" &&
+      filters.cat === "" &&
+      filters.brand === "" &&
+      filters.search === "" &&
+      filters.color === "" &&
+      filters.priceRange === "" &&
+      filters.discountRange === ""
   }
-  const makeInvisible=()=>
-  {
+
+  const makeInvisible = () => {
     setisVisble(false)
   }
 
-  useEffect(
-    ()=>
-    {
-      if(p.params!=undefined)
-      {
-        if(p.params.item!=undefined)
-        {
 
-          if(p.params.item!="All")
-          setfilters(
-            {
-              ...filters,cat:p.params.item
-            }
-          )
+  useEffect
+    (
+      () => {
+
+        getProducts()
+
+      },
+      [filters]
+    )
+
+  useEffect(
+    () => {
+      if (p.params != undefined) {
+        if (p.params.item != undefined) {
+
+          if (p.params.item != "All")
+            setfilters(
+              {
+                ...filters, cat: p.params.item
+              }
+            )
         }
-        else if(p.params.search!=undefined)
-     setfilters({...filters,search:p.params.search}) 
-     else if(p.params.brand!=undefined)
-     setfilters({...filters,brand:p.params.brand}) 
+        else if (p.params.search != undefined)
+          setfilters({ ...filters, search: p.params.search })
+        else if (p.params.brand != undefined)
+          setfilters({ ...filters, brand: p.params.brand })
       }
     },
     []
   )
 
-  const resetFilter=(val)=>
-  {
+
+
+  const resetFilter = (val) => {
     setfilters(val)
   }
+
   const { height, width } = Dimensions.get('screen')
 
   const loadMoreProd = () => {
@@ -94,8 +100,47 @@ const Product_list = () => {
 
   }
 
-  const getProducts=()=>
-  {
+
+  const removeParams = (fieldname) => {
+
+    if (p.params == undefined) {
+      return
+    }
+
+    switch (fieldname) {
+      case "search":
+        navigation.setParams({
+          search: undefined
+        })
+        break
+      case "item":
+        navigation.setParams(
+          {
+            item: undefined
+          }
+        )
+        break
+
+      case "brand":
+        navigation.setParams(
+          {
+            brand: undefined
+          }
+        )
+        break
+      default:
+        navigation.setParams(
+          {
+            undefined
+          }
+        )
+        break
+    }
+
+  }
+
+  const getProducts = () => {
+    console.log(filters)
     dispatch(LoadProducts(filters))
   }
   const itembuilder = ({ item, index }) => {
@@ -115,22 +160,149 @@ const Product_list = () => {
     )
   }
 
-  useEffect
-    (
-      () => {
-
-       getProducts()
-     
-      },
-      [filters]
-    )
 
 
   return (
     <View style={styles.Container}>
 
- 
-      <FlatList      
+
+      {
+        !isAllfiltersNull()
+        &&
+        <View
+          style={
+            {
+              flexDirection: "row",
+              flexWrap: 'wrap',
+              marginTop: 50
+            }
+          }
+        >
+
+          {
+            filters.search != ""
+            &&
+            <TouchableOpacity
+              onPress={() => { setfilters({ ...filters, search: "" }), removeParams("search") }}
+              style={{
+                height: 50,
+                padding: 10,
+                backgroundColor: '#fff',
+                elevation: 10,
+                borderRadius: 10,
+              }}
+            >
+              <Text>{filters.search}</Text>
+            </TouchableOpacity>
+          }
+          {
+            filters.brand != ""
+            &&
+            <TouchableOpacity
+              onPress={() => { setfilters({ ...filters, brand: "" }), removeParams("brand") }}
+              style={styles.btnRemoveFilter}
+            >
+              <Text
+              style={styles.txtFilterlabel}
+              >{filters.brand}</Text>
+              <Text
+              style={styles.txtRemove}
+              >
+                X
+              </Text>
+            </TouchableOpacity>
+          }
+          {
+            filters.cat != ""
+            &&
+            <TouchableOpacity
+              onPress={() => { setfilters({ ...filters, cat: "" }), removeParams("item") }}
+              style={styles.btnRemoveFilter}
+            >
+             <Text
+              style={styles.txtFilterlabel}
+              >{filters.cat}</Text>
+              <Text
+              style={styles.txtRemove}
+              >
+                X
+              </Text>
+            </TouchableOpacity>
+          }
+          {
+            filters.material != ""
+            &&
+            <TouchableOpacity
+              onPress={() => setfilters({ ...filters, material: "" })}
+              style={styles.btnRemoveFilter}
+            >
+             <Text
+              style={styles.txtFilterlabel}
+              >{filters.material}</Text>
+              <Text
+              style={styles.txtRemove}
+              >
+                X
+              </Text>
+            </TouchableOpacity>
+          }
+           {
+            filters.color != ""
+            &&
+            <TouchableOpacity
+              onPress={() => setfilters({ ...filters, color: "" })}
+              style={[styles.btnRemoveColor,{backgroundColor:filters.color}]}
+            >
+              <Text
+              style={[styles.txtFilterlabel,{color:filters.color==='white'?'black':'#fff'}]}
+            >{filters.color}</Text>
+              <Text
+              style={styles.txtRemove}
+              >
+                X
+              </Text>
+            </TouchableOpacity>
+          }
+            {
+            filters.priceRange != ""
+            &&
+            <TouchableOpacity
+              onPress={() => setfilters({ ...filters, priceRange: "" })}
+              style={styles.btnRemoveFilter}
+            >
+              <Text
+              style={styles.txtFilterlabel}
+              >{filters.priceRange}</Text>
+              <Text
+              style={styles.txtRemove}
+              >
+                X
+              </Text>
+            </TouchableOpacity>
+          }
+          {
+            filters.discountRange != ""
+            &&
+            <TouchableOpacity
+              onPress={() => setfilters({ ...filters, discountRange: "" })}
+              style={styles.btnRemoveFilter}
+            >
+               <Text
+              style={styles.txtFilterlabel}
+              >{filters.discountRange}</Text>
+              <Text
+              style={styles.txtRemove}
+              >
+                X
+              </Text>
+            </TouchableOpacity>
+          }
+
+
+        </View>
+      }
+
+      <FlatList
         refreshControl={
           <RefreshControl
             onRefresh={getProducts}
@@ -139,7 +311,7 @@ const Product_list = () => {
           </RefreshControl>
         }
 
-        style={{ flex: 1,marginTop:50 }}
+        style={[styles.listStyle,{marginTop:!isAllfiltersNull()?0:50}]}
         data={product}
         numColumns={2}
         onEndReached={
@@ -152,45 +324,34 @@ const Product_list = () => {
       </FlatList>
 
 
-    <View
-     style={
-       {
-         height:70,
-    
-         width:70,
-         borderRadius:70,
-         position:"absolute",
-         right:5,
-         backgroundColor:"#fff",
-         bottom:20
-       }
-     }
-     >
-      
-      <TouchableOpacity
-      onPress={()=>setisVisble(true)}
-     style={{height:'100%',width:'100%'}}
-     >
-         <LinearGradient
-         style={{flex:1,justifyContent:'center',
-         alignItems:'center',borderRadius:50}}
-         colors={["violet",
-        "purple"]}
-         >
-      
-         <FontAwesome5Icon
-         name="filter"
-         size={30}
-         color={"#fff"}
-         >
+      <View
+        style={styles.filterContainer}
+      >
 
-         </FontAwesome5Icon>
-      
-         </LinearGradient>
+        <TouchableOpacity
 
-       </TouchableOpacity>
- 
-     </View>
+          onPress={() => setisVisble(true)}
+          style={styles.filterBtn}
+        >
+          <LinearGradient
+            style={styles.filtersGradient}
+            colors={["blue",
+              "skyblue"]}
+          >
+
+            <FontAwesome5Icon
+              name="filter"
+              size={30}
+              color={"#fff"}
+            >
+
+            </FontAwesome5Icon>
+
+          </LinearGradient>
+
+        </TouchableOpacity>
+
+      </View>
 
       <ActivityIndicator
         animating={prodLoad ? true : false}
@@ -203,26 +364,20 @@ const Product_list = () => {
       >
       </ActivityIndicator>
       <Modal
-      onBackButtonPress={()=>setisVisble(false)}
-      isVisible={isVisible}
+        onBackButtonPress={() => setisVisble(false)}
+        isVisible={isVisible}
       >
         <View
 
-        style={
-          {
-            height:'80%',
-            borderRadius:15,
-            backgroundColor:"#fff"
-          }
-        }
-        
+          style={styles.modalContainer}
+
         >
-           {isVisible && <ProductFilter
+          {isVisible && <ProductFilter
             filters={filters}
-            
+
             onPress={resetFilter}
             hideModel={makeInvisible}
-            ></ProductFilter>}
+          ></ProductFilter>}
         </View>
       </Modal>
 
@@ -239,7 +394,79 @@ const styles = StyleSheet.create
         flex: 1,
         alignItems: "center",
         backgroundColor: '#E6E6FA'
+      },
+      filterContainer:
+      {
+        height: 70,
+        width: 70,
+        borderRadius: 70,
+        position: "absolute",
+        right: 5,
+        elevation: 15,
+        backgroundColor: "#fff",
+        bottom: 20
       }
+      ,
+      listStyle:
+      {
+        flex: 1,
+        marginTop: 50
+      },
+      filtersGradient:
+      {
+        flex: 1, justifyContent: 'center',
+        alignItems: 'center', borderRadius: 50
+      },
+      filterBtn:
+      {
+        height: '100%',
+
+        width: '100%'
+      },
+      modalContainer:
+      {
+        height: '80%',
+        borderRadius: 15,
+        backgroundColor: "#fff"
+      },
+      txtRemove:
+      {
+        color:'black',
+        marginHorizontal:5,
+        fontSize:18,
+        backgroundColor:'#fff',
+        textAlignVertical:'center',
+        paddingHorizontal:10
+        ,borderRadius:10
+      },
+      btnRemoveFilter:
+      {
+        height: 50,
+        padding:5,
+        margin:5,
+        backgroundColor: 'blue',
+        elevation: 10,
+        flexDirection:'row',
+        justifyContent:'space-evenly',
+        alignItems:'center',
+        borderRadius: 10,
+      },
+      txtFilterlabel:
+      {
+        color:'#fff',
+        fontSize:18
+      },
+      btnRemoveColor: 
+      {
+        height:50,
+       
+        padding:10,
+        borderRadius:10,
+        margin:5,
+        flexDirection:'row'
+      }
+    
+
     }
   )
 export default Product_list

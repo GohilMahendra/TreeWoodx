@@ -1,42 +1,31 @@
 import React, { useEffect, useState } from "react";
 import {
   View, Text, TextInput,
-  Button, Image, Dimensions, ActivityIndicator, ActivityIndicatorBase, ScrollView, StyleSheet
+  Button, Image, Dimensions, ActivityIndicator, ActivityIndicatorBase, ScrollView, StyleSheet, Alert
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import auth from "@react-native-firebase/auth";
 
 import firestore from "@react-native-firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+import ErrorCard from "../../components/ErrorCard";
+import { loginUser, resetPassword } from "../../redux/Actions/AuthActions";
 
 const Login = ({ navigation }) => {
-  const { height, width } = Dimensions.get('screen')
-
-  const [loading, setloading] = useState(false)
+ 
   const [uname, setuname] = useState("")
+  const [upassword, setupassword] = useState("")
 
-  const validateCred = (uname, password) => {
+  const loginLoading = useSelector(state => state.Auth.loginLoading)
+  const loginError = useSelector(state => state.Auth.loginError)
 
-    if (uname == "" || password == "")
-      return false
+  const changePasswordLoading = useSelector(state => state.Auth.changePasswordLoading)
+  const changePasswordError = useSelector(state => state.Auth.changePasswordError)
 
-    if (password.length < 8)
-      return false
+  const isadmin = useSelector(state => state.Auth.isadmin)
 
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(uname).toLowerCase());
-
-  }
-
-  const isAdmin = async (uid) => {
-    const exists = await firestore()
-      .collection('admin')
-      .doc(uid)
-      .get()
-
-    return exists.exists
-
-  }
+  const dispatch = useDispatch()
 
   useEffect
     (
@@ -48,9 +37,11 @@ const Login = ({ navigation }) => {
             if (user) {
 
 
-      //        if(!isAdmin(auth().currentUser.uid))
-              navigation.navigate("Admin")
-      
+              if (!isadmin)
+                navigation.navigate("Home")
+              else
+                navigation.navigate("Admin")
+
             }
           })
 
@@ -60,54 +51,27 @@ const Login = ({ navigation }) => {
     )
 
   const onSignin = async (email, password) => {
-    try {
 
-      if (!validateCred(email, password)) {
-        alert('Invalid creadentials')
-        return
-      }
-
-
-    
-      setloading(true)
-      auth().signInWithEmailAndPassword(email, password)
-        .then(
-          user => {
-            if (user) {
-              if (!isAdmin(auth().currentUser.uid))
-                navigation.navigate('Home')
-              else
-                navigation.navigate('Admin')
-            }
-          }
-        )
-
-        setloading(false)
-    }
-    catch (err) {
-      setloading(false)
-      console.log(err)
-    }
+   
+    dispatch(loginUser(email, password))
 
   }
- 
+
   const ResetPasswordWithEmail = () => {
-    if (uname == "") {
-      alert("enter email to send reset link")
+
+ 
+    if(email=="")
+    {
+      Alert.alert("FIll email for link","Please fill email details for reset password")
+      return
     }
-    else {
 
-      auth().sendPasswordResetEmail(uname).then(function (user) {
+    dispatch(resetPassword(uname))
 
-        alert('link is in your email SIR')
-      }).catch(function (err) {
 
-        alert('wrong email please check correct please enter email and then click on it we will send rest link on that email')
-      })
 
-    }
   }
-  const [upassword, setupassword] = useState("")
+
   return (
     <View
       style={styles.Container
@@ -136,7 +100,7 @@ const Login = ({ navigation }) => {
         <TextInput
           placeholder="Enter Password HERE..."
           style={styles.txtInput}
-          onChangeText={setupassword}
+          onChangeText={(text) => setupassword(text)}
         >
         </TextInput>
 
@@ -159,21 +123,28 @@ const Login = ({ navigation }) => {
 
         </TouchableOpacity>
 
-        {loading && <ActivityIndicator
-
-          style={{ position: 'absolute', top: height / 2, alignSelf: 'center', backgroundColor: 'white', borderRadius: 30, justifyContent: "center" }}
-          size={"large"}
-          color="green"
-        />
-        }
+       
 
         <TouchableOpacity
           style={styles.btnSignIn}
           onPress={() => onSignin(uname, upassword)}
         >
-          <Text style={styles.txtSignIN}>SIGN IN
-          </Text>
+          {
+            loginLoading||changePasswordLoading
+            ?
+            <ActivityIndicator
+            size={25}
+            color="#fff"
+            />
+            :
+            <Text style={styles.txtSignIN}>SIGN IN
+            </Text>
+          }
         </TouchableOpacity>
+
+        {(loginError != null || changePasswordError != null) && <ErrorCard
+          error={(loginError != null) ? "there is proble with email and password login" : "Not valid email id For change password || network ERRORs"}
+        ></ErrorCard>}
 
       </View>
 

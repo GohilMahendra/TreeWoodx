@@ -9,39 +9,28 @@ import { useEffect } from "react/cjs/react.development";
 import { fonts } from "../../constants/fonts";
 import { Line } from "react-native-svg";
 import { Color } from "../../constants/colors";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "../../redux/Actions/AuthActions";
 
 const { height, width } = Dimensions.get('screen')
 const User_profile = ({ navigation }) => {
 
-    const logout = () => {
-        auth().signOut()
+    const dispatch=useDispatch()
 
-        navigation.navigate("Login")
+    const logoutError=useSelector(state=>state.Auth.logoutError)
+    const logoutLoading=useSelector(state=>state.Auth.logoutLoading)
+
+    const logout = () => {
+    
+        dispatch(signOut())  
+        navigation.navigate("Login")  
 
     }
-
-    // useEffect
-    //     (
-    //         () => 
-    //             {
-    //             if (auth().currentUser == undefined) {
-    //                 navigation.pop(2)
-    //             }
-    //         },
-    //         []
-    //     )
-
 
     return (
         <View style={{ flex: 1 }}>
             <View
-                style={
-                    {
-                        backgroundColor: "#fff",
-                        height: '30%',
-
-                    }
-                }
+                style={styles.subContainer}
             >
                 <LinearGradient
                     colors={
@@ -49,11 +38,7 @@ const User_profile = ({ navigation }) => {
                             Color.lightBlue, Color.peach, Color.purpleLight
                         ]
                     }
-                    style={
-                        {
-                            flex: 1
-                        }
-                    }
+                    style={{flex:1}}
                 >
 
                 </LinearGradient>
@@ -163,8 +148,13 @@ const styles = StyleSheet.create
                 width: 100,
                 borderRadius: 100
             },
-            roundContainer:
+            subContainer:
+            {
+                backgroundColor: "#fff",
+                height: '30%',
 
+            },
+            roundContainer:
             {
                 borderRadius: 100,
                 height: 100,

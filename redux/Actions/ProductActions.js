@@ -5,6 +5,9 @@ import firestore from "@react-native-firebase/firestore";
 import { getDiscountRange, getPriceRange } from "../../functions/CalculationHelpers";
 
 import {
+    ADD_PRODUCT_FAILED,
+    ADD_PRODUCT_REQUEST,
+    ADD_PRODUCT_SUCCESS,
     LOAD_HOME_PRODUCTS_FAILED,
     LOAD_HOME_PRODUCTS_REQUEST,
     LOAD_HOME_PRODUCTS_SUCCESS,
@@ -33,14 +36,34 @@ export const DeleteProduct = (pid) => {
 
     }
 }
-export const AddProduct = (key, prod) => {
+export const AddProduct = (key="", prod) => {
     return async (dispatch) => {
-        ifexist = await firestore().collection('products').doc(key).get()
-
-        if (ifexist.exists || key != null) {
-
+   
+        try
+        {
+            dispatch({type:ADD_PRODUCT_REQUEST})
+            if (key != "" && key!="") {
+                await firestore()
+                  .collection('products')
+                  .doc(key)
+                  .set(prod)
+              }
+              else {
+                await firestore()
+                  .collection('products')
+                  .add(prod)
+              }
+        dispatch({type:ADD_PRODUCT_SUCCESS})
 
         }
+        catch(err)
+        {
+            dispatch({type:ADD_PRODUCT_FAILED})
+
+            console.log(err)
+
+        }
+       
 
     }
 }
@@ -156,6 +179,10 @@ const qryBuilder = (filters) => {
         qry = qry.where('priceRange', '==', filters.priceRange)
 
     }
+    if (filters.cat != "" && filters.cat != undefined && filters.cat != null) {
+        qry = qry.where('cat', '==', filters.cat)
+
+    }
     if (filters.discountRange != "" && filters.discountRange != undefined && filters.discountRange != null) {
         qry = qry.where('discountRange', '==', filters.discountRange)
 
@@ -212,6 +239,7 @@ export const LoadProducts = (filters = null) => {
 
             )
 
+            console.log(list.length)
             let lastkey = null
             if (list.length >= MAX_FETCH_LIMIT) {
                 lastkey = list[list.length - 1].key

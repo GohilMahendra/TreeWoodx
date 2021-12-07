@@ -40,29 +40,28 @@ const Checkout = () => {
     let isNull = false
     isNull =
       contactDetails.emailID === "" || contactDetails.fullName === "" || contactDetails.fullName === ""
-      ||addressDetails.postalCode==""||addressDetails.state==""||addressDetails.city==""||
-      addressDetails.landMark==""||addressDetails.addressArea==""
+      || addressDetails.postalCode == "" || addressDetails.state == "" || addressDetails.city == "" ||
+      addressDetails.landMark == "" || addressDetails.addressArea == ""
     return isNull
   }
   const SubmitDetails = () => {
 
-   if(IsAnyFiledNull())
-   {
-     Alert.alert("Please Fill All FIELDS are Mendatory")
-     return
+    if (IsAnyFiledNull()) {
+      Alert.alert("Please Fill All FIELDS are Mendatory")
+      return
 
-   }
+    }
 
 
-   navigation.navigate(
-     "OrderDetails",
-     {
-       address:{
-         addressDetails:addressDetails,
-         contactDetails:contactDetails
-       }
-     }
-   )
+    navigation.navigate(
+      "OrderDetails",
+      {
+        address: {
+          addressDetails: addressDetails,
+          contactDetails: contactDetails
+        }
+      }
+    )
 
 
   }
@@ -74,13 +73,7 @@ const Checkout = () => {
 
       <ScrollView>
         <View
-          style={
-            {
-              marginTop: 50,
-
-
-            }
-          }
+          style={styles.detailsContainer}
         >
           <Text
             style={styles.txtLabel}
@@ -120,6 +113,7 @@ const Checkout = () => {
           >
             Enter Address Details
           </Text>
+          
           <TextInput
             onChangeText={text => setAddressDetails({ ...addressDetails, addressArea: text })}
             value={addressDetails.addressArea}
@@ -164,17 +158,7 @@ const Checkout = () => {
 
           <TouchableOpacity
             onPress={() => SubmitDetails()}
-            style={
-              {
-                height: 50,
-                margin: 20,
-                backgroundColor: Color.corporateBlue,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 15,
-                elevation: 15
-              }
-            }
+            style={styles.btnSubmit}
           >
             <Text
               style={
@@ -207,20 +191,36 @@ const styles = StyleSheet.create(
 
       position: 'relative'
     },
+    detailsContainer:
+    {
+      marginTop: 50,
+    },
+  
     txtInput:
     {
       height: 50,
-      borderWidth: 1,
-      borderColor: Color.corporateBlue,
+      elevation:5,
+   
       paddingHorizontal: 10,
       marginHorizontal: 20,
       marginVertical: 10,
       borderRadius: 10
     },
+    btnSubmit:   
+    {
+      height: 50,
+      margin: 20,
+      backgroundColor: Color.purpleLight,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 15,
+      elevation: 15
+    }
+  ,
     txtInputArea:
     {
       height: 100,
-      borderWidth: 1,
+     elevation:5,
       paddingHorizontal: 10,
       marginHorizontal: 20,
       marginVertical: 10,

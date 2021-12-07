@@ -1,9 +1,11 @@
 import React, { useEffect,useState } from "react";
-import { View,Dimensions ,Text,StyleSheet,ScrollView} from "react-native";
+import { View,Dimensions ,Text,StyleSheet,ScrollView, Alert} from "react-native";
 
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { Color } from "../../constants/colors";
 import { fonts } from "../../constants/fonts";
+import firestore from "@react-native-firebase/firestore";
+import { VarifySintext, VarifySyntex } from "../../functions/VarifySyntex";
 const AddAdmin=()=>
 {
 
@@ -15,6 +17,32 @@ const AddAdmin=()=>
   const AddAdmin=()=>
   {
 
+
+    try
+    {
+
+
+
+      const {varified,error}=VarifySyntex(userName,email,password)
+
+      if(!varified)
+      {
+        Alert.alert("Fields Are not Apropiate",error)
+        return
+      }
+      const AddAdm=firestore()
+      .collection("admin")
+      .add(
+        {
+          userName:userName,
+          email:email
+        }
+      )
+    }
+    catch(err)
+    {
+      console.log(err)
+    }
 
       
   }

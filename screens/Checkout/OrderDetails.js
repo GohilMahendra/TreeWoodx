@@ -62,8 +62,7 @@ const OrderDetails = ({ navigation }) => {
         ></AddressCard>
 
       </ScrollView>
-
-
+      
       <TouchableOpacity
       onPress={()=>goToPayment()}
         style={styles.btnPayment}
@@ -98,9 +97,9 @@ const styles = StyleSheet.create
       btnPayment:
       {
         height: 50,
-        backgroundColor: Color.corporateBlue,
+        backgroundColor: Color.purpleLight,
         margin: 20,
-        elevation:5,
+        elevation:10,
         borderRadius:15,
         justifyContent: 'center',
         alignItems: 'center'

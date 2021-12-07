@@ -2,15 +2,14 @@
 import React from "react";
 import {
     View, Text, StyleSheet, Image, SafeAreaView, FlatList, TouchableOpacity, Dimensions, TextInput, ScrollView, ActivityIndicator
-    , RefreshControl,Alert,
+    , RefreshControl, Alert,
     BackHandler
 } from "react-native";
 
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import { categories } from "../../data/categories";
-
 import { useState } from "react/cjs/react.development";
 import { useEffect } from "react";
+import { categories } from "../../constants/categories";
 import ProductCard from "../../components/ProductCard";
 import FeaturedList from "../../components/Featured/FeaturedList";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,8 +20,9 @@ const Home_screen = ({ navigation }) => {
     const chair = useSelector(state => state.Products.HomeProducts)
     const homeprodLoad = useSelector(state => state.Products.homeprodLoad)
 
-    const [ind, setind] = useState(0)
+    const [category, setcategory] = useState("All")
 
+    
     const dispatch = useDispatch()
     //fetch categories
 
@@ -35,33 +35,32 @@ const Home_screen = ({ navigation }) => {
 
     const backAction = () => {
         Alert.alert("Hold on!", "Are you sure you want to Exit APP?", [
-          {
-            text: "Cancel",
-            onPress: () => null,
-            style: "cancel"
-          },
-          { text: "YES", onPress: () => BackHandler.exitApp() }
+            {
+                text: "Cancel",
+                onPress: () => null,
+                style: "cancel"
+            },
+            { text: "YES", onPress: () => BackHandler.exitApp() }
         ]);
         return true;
-      };
+    };
     useEffect(
-        ()=>
-        {
-           const subscription=BackHandler.addEventListener(
+        () => {
+            const subscription = BackHandler.addEventListener(
                 "hardwareBackPress",
-           backAction
+                backAction
             )
-    return subscription.remove()
+            return subscription.remove()
         },
-    []
+        []
 
     )
     useEffect
         (
             () => {
-                chairFetcher("All")
+                chairFetcher(category)
             }
-            , []
+            , [category]
         )
 
     const chairbuilder = ({ item, index }) => {
@@ -80,30 +79,6 @@ const Home_screen = ({ navigation }) => {
         )
     }
 
-    const catbuilder = ({ item, index }) => {
-        return (
-            <TouchableOpacity
-                onPress={() => { setind(index), chairFetcher(item.name) }}
-                style={{
-                    elevation: 10,
-                    borderRadius: 10,
-                    justifyContent: 'center',
-                    padding: 10,
-                    alignItems: 'center',
-                    backgroundColor: (ind == index) ? 'black' : '#fff',
-                    margin: 10, 
-                }}>
-                <Text
-                    style={{
-                        marginRight: 20,
-                        textAlignVertical: "center",
-                        marginLeft: 20,
-                        fontSize: 20,
-                        color: (ind == index) ? 'white' : 'black'
-                    }}>{item.name}</Text>
-            </TouchableOpacity>
-        )
-    }
     return (
 
 
@@ -116,27 +91,38 @@ const Home_screen = ({ navigation }) => {
                     <FeaturedList />
                 </View>
 
-                <FlatList
-
-                    horizontal
-                    style={Homestyles.catList}
-                    renderItem={catbuilder}
-                    data={categories}
-                    showsHorizontalScrollIndicator={false}
-                    keyExtractor={item => item.id.toString()}
+                <View
+                style={Homestyles.categoryContainer}
                 >
-                </FlatList>
+                    <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    >
+                    {
+                        categories.map(
+                            item=>
+                            {
+                                return(
+                                    <TouchableOpacity
+                                    key={item}
+                                   onPress={() =>(item===category)?setcategory("All"):setcategory(item)}
+                                    style={[Homestyles.btnCategory,
+                                    {backgroundColor: (category === item) ? 'black' : '#fff',}]}>
+                                    <Text
+                                        style={[Homestyles.txtCategory
+                                        ,{color: (category === item) ? 'white' : 'black'}]}>{item}</Text>
+                                </TouchableOpacity>
+                                )
+                            }
+                        )
+                    }
+                    </ScrollView>
+                </View>
 
                 <View
-                    style={{
-                        flexDirection: 'row',
-                        marginBottom: 0,
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        margin: 20
-                    }}>
+                    style={Homestyles.navigationRowContainer}>
                     <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                        BROWSE MORE {categories[ind].name}
+                        BROWSE MORE {category}
                     </Text>
 
                     <TouchableOpacity
@@ -146,8 +132,7 @@ const Home_screen = ({ navigation }) => {
                             () => {
                                 navigation.navigate("Product_list",
                                     {
-                                        item:
-                                            categories[ind].name
+                                        item: category
                                     }
                                 )
                             }
@@ -202,9 +187,31 @@ const Homestyles = StyleSheet.create(
             margin: 20,
             marginTop: 0
         },
+        categoryContainer:
+        {
+            flexDirection:'row'
+        },
         catList:
         {
             marginHorizontal: 20
+        },
+        navigationRowContainer:
+        {
+            flexDirection: 'row',
+            marginBottom: 0,
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            margin: 20
+        },
+        btnCategory:
+        {
+            elevation: 10,
+            borderRadius: 10,
+            justifyContent: 'center',
+            padding: 10,
+            alignItems: 'center',
+          
+            margin: 10,
         },
         browsemoreContainer:
 
@@ -214,6 +221,14 @@ const Homestyles = StyleSheet.create(
             paddingVertical: 5,
             borderRadius: 10,
             elevation: 5
+        },
+        txtCategory:
+        {
+            marginRight: 20,
+            textAlignVertical: "center",
+            marginLeft: 20,
+            fontSize: 20,
+        
         },
         searchBar:
         {

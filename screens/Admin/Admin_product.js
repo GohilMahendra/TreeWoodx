@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Dimensions, Text, StyleSheet, TextInput, ScrollView, View } from "react-native";
+import { Dimensions, Text, StyleSheet, TextInput, ScrollView, View, Alert } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { Value } from "react-native-reanimated";
 import { useState } from "react/cjs/react.development";
@@ -13,12 +13,25 @@ import { color, categories } from "../../constants/categories";
 import { useRoute } from "@react-navigation/core";
 import { Color } from "../../constants/colors";
 import { fonts } from "../../constants/fonts";
+import { useDispatch } from "react-redux";
+import { AddProduct } from "../../redux/Actions/ProductActions";
 const { height, width } = Dimensions.get('window')
 const Admin_product = ({ navigation }) => {
 
   date = new Date()
 
   const p = useRoute()
+
+  const dispatch=useDispatch()
+  const IsAnyFieldNull=()=>
+  {
+    return prod.pname===""||prod.discount===""||prod.price===""||prod.warranty===""||
+    prod.brand===""||prod.material===""||prod.subcategories===""||prod.cat===""||prod.discription===""||
+  
+    prod.dimensions.length===""||prod.dimensions.width===""||prod.stock===""||prod.color===""||prod.domentions.height===""||
+    prod.img1===""||prod.img2===""||prod.img3===""||prod.img4===""
+  }
+  
 
   const [prod, setprod] = useState
     (
@@ -92,6 +105,12 @@ const Admin_product = ({ navigation }) => {
 
     try {
 
+      if(IsAnyFieldNull())
+      {
+        Alert.alert("Null field","Please Check Your Field Before Upload")
+        return
+      }
+
 
       let subcategories = breakArr(prod.subcategories.toString())
 
@@ -104,16 +123,12 @@ const Admin_product = ({ navigation }) => {
       console.log(prod)
 
       if (p.params != undefined) {
-        await firestore()
-          .collection('products')
-          .doc(p.params.item)
-          .set(prod)
+      
+        dispatch(AddProduct(key,prod))
       }
       else {
-        await firestore()
-          .collection('products')
-
-          .add(prod)
+        dispatch(AddProduct("",prod))
+        
       }
 
 

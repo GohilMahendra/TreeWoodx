@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
+import { Color } from '../../constants/colors';
 
 import { fonts } from "../../constants/fonts";
 
@@ -109,9 +110,6 @@ const Payment = () => {
         {
             
         }
-
-
-
     }
 
     return (
@@ -137,7 +135,7 @@ const Payment = () => {
                                                 styles.cardOptionsConatiner,
                                                 {
 
-                                                    backgroundColor: (category === item) ? "blue" : '#fff'
+                                                    backgroundColor: (category === item) ? Color.purpleLight : '#fff'
                                                 }
                                             ]
                                         }
@@ -248,8 +246,7 @@ const styles = StyleSheet.create
             Contianer:
             {
                 flex: 1,
-                backgroundColor:"#fff",
-                justifyContent: 'center'
+                backgroundColor:'#fff',
 
             },
             rowViewContainer:
@@ -272,7 +269,8 @@ const styles = StyleSheet.create
                 alignItems: 'center',
                 borderRadius: 15,
                 elevation: 10,
-                backgroundColor: "blue"
+                margin:20,
+                backgroundColor:Color.purpleLight
 
             },
             txtCardname:
@@ -280,8 +278,8 @@ const styles = StyleSheet.create
                 backgroundColor: '#e5e5e5',
                 marginHorizontal: 20,
                 fontSize: 20,
-                elevation:2,
-                borderRadius:5,
+                elevation:5,
+                borderRadius:10,
                 textAlign: 'center'
             },
             txtLabel:
@@ -289,6 +287,7 @@ const styles = StyleSheet.create
             {
                 marginHorizontal: 20,
                 fontSize: 15,
+                margin:5
 
             }
             ,
