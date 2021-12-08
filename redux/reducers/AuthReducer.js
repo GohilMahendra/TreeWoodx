@@ -11,7 +11,7 @@ const initialState = {
 
 
 
-    isadmin:true,
+    isadmin:false,
 
 
     logoutLoading: false,

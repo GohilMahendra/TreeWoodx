@@ -10,6 +10,7 @@ import { Line } from "react-native-svg";
 import { Color } from "../../constants/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../../redux/Actions/AuthActions";
+import { useNavigation } from "@react-navigation/core";
 
 const { height, width } = Dimensions.get('screen')
 const User_profile = ({ navigation }) => {
@@ -34,7 +35,7 @@ const User_profile = ({ navigation }) => {
                 <LinearGradient
                     colors={
                         [
-                            Color.lightBlue, Color.peach, Color.purpleLight
+                            Color.navy, Color.baige
                         ]
                     }
                     style={{flex:1}}
@@ -57,9 +58,19 @@ const User_profile = ({ navigation }) => {
                     >{auth().currentUser!=null?auth().currentUser.displayName.substr(0, 2):""}</Text>
                 </View>
                 <View
+                style={styles.detailsContainer}
+                >
+                    <Text
+                    style={styles.txtDetails}
+                    >{auth().currentUser!=null?auth().currentUser.displayName:""}</Text>
+                    <Text style={styles.txtDetails}>{auth().currentUser!=null?auth().currentUser.email:""}</Text>
+                </View>
+                <View
                     style={styles.optionsContainer}
                 >
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                    onPress={()=>navigation.navigate("UserOrders")}
+                    >
                         <View
                             style={styles.userOptionsContainer}
                         >
@@ -70,14 +81,7 @@ const User_profile = ({ navigation }) => {
                         </View>
                     </TouchableOpacity>
 
-                    <View
-                        style={styles.userOptionsContainer}
-                    >
-                        <Text
-                            style={styles.userOptionsText}
-                        >Edit Profile</Text>
-
-                    </View>
+                 
 
                     <TouchableOpacity
                         onPress={
@@ -87,13 +91,14 @@ const User_profile = ({ navigation }) => {
                         <View
                             style={[styles.userOptionsContainer
                                 , {
-                                backgroundColor: "red"
+                                backgroundColor: "red",
+                                alignItems:'center'
                             }
                             ]}
                         >
                             <Text
-                                style={styles.userOptionsText}
-                            >Logout</Text>
+                                style={[styles.userOptionsText,{color:'#fff'}]}
+                            >LOGOUT</Text>
 
                         </View>
                     </TouchableOpacity>
@@ -115,18 +120,27 @@ const styles = StyleSheet.create
             optionsContainer:
             {
                 margin: 20,
+                justifyContent:"space-around"
             },
             userOptionsContainer:
             {
                 height: 50,
                 backgroundColor: '#fff',
                 padding: 10,
+                alignItems:'center',
                 justifyContent: 'center',
                 marginVertical: 10,
                 borderRadius: 15,
                 elevation: 15
-            }
-            ,
+            },
+            detailsContainer:
+            {
+                backgroundColor:'#fff',
+                alignItems:'center',
+                padding:20,
+                margin:10,
+                borderRadius:15
+            },
             userOptionsText:
 
             {
@@ -134,7 +148,12 @@ const styles = StyleSheet.create
                 fontSize: 15,
                 fontFamily: fonts.Federo_Regular
             },
-
+            txtDetails:
+            {
+                fontFamily:fonts.Federo_Regular,
+                fontSize:20
+            
+            },
             profileContainer:
             {
                 alignSelf: 'center',

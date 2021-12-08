@@ -11,11 +11,10 @@ import Cart from "../screens/Checkout/Cart";
 import User_profile from "../screens/Profile/User_profile";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartproducts } from "../redux/Actions/CartActions";
+import ProfileStackNavigator from "./ProfileStackNavigator";
 const bottomTab = createBottomTabNavigator()
 
 const HomeTabNavigator = () => {
-
-
   const dispatch = useDispatch()
 
   const badge = useSelector(cart => cart.Cart.total)
@@ -32,9 +31,13 @@ const HomeTabNavigator = () => {
 
     <bottomTab.Navigator
       initialRouteName="Home"
+      
       tabBarOptions={
+
         {
+          keyboardHidesTabBar:true,
           style: {
+            
             borderRadius: 20,
             backgroundColor: "#fff"
           }
@@ -73,13 +76,14 @@ const HomeTabNavigator = () => {
       </bottomTab.Screen>
 
       <bottomTab.Screen
-        name="Profile"
-        component={User_profile}
+        name="ProfileStackNavigator"
+        component={ProfileStackNavigator}
         options={
           {
             tabBarIcon: ({ size, focused, color }) =>
               <FontAwesome5 size={size} color={color} name="user-edit">
-              </FontAwesome5>
+              </FontAwesome5>,
+              tabBarLabel:"Profile"
           }
         }
       >
