@@ -199,12 +199,14 @@ const styles = StyleSheet.create(
     txtInput:
     {
       height: 50,
-      elevation:5,
+      borderWidth:0.2,
+     // elevation:0.2,
    
+
       paddingHorizontal: 10,
       marginHorizontal: 20,
       marginVertical: 10,
-      borderRadius: 10
+      borderRadius: 5
     },
     btnSubmit:   
     {
@@ -220,11 +222,12 @@ const styles = StyleSheet.create(
     txtInputArea:
     {
       height: 100,
-     elevation:5,
+   //  elevation:5,
       paddingHorizontal: 10,
       marginHorizontal: 20,
       marginVertical: 10,
-      borderRadius: 10
+      borderRadius: 10,
+      borderWidth:0.2
 
     },
     txtLabel:

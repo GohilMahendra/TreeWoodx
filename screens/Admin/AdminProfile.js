@@ -7,12 +7,23 @@ import { fonts } from "../../constants/fonts";
 
 import LinearGradient from "react-native-linear-gradient";
 import { Color } from "../../constants/colors";
+import { useDispatch } from "react-redux";
+import { signOut } from "../../redux/Actions/AuthActions";
 const AdminProfile = ({ navigation }) => {
 
+    const dispatch=useDispatch()
     const LogoutUser = () => {
 
-        auth().signOut()
-        navigation.navigate('Login')
+       
+      dispatch(signOut())
+        navigation.reset({
+            index:0,
+            routes:[
+                {
+                    name:"Login"
+                }
+            ]
+        })
 
     }
     return (
@@ -41,14 +52,9 @@ const AdminProfile = ({ navigation }) => {
             </View>
 
             <View>
+               
                 <TouchableOpacity
-        onPress={()=>navigation.navigate("AddAdmin")}
-                    style={styles.btnOptions}
-                >
-                    <Text>ADD ADMIN</Text>
-
-                </TouchableOpacity>
-                <TouchableOpacity
+                onPress={()=>LogoutUser()}
 
                     style={[styles.btnOptions,{backgroundColor:"red"}]}
                 >

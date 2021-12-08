@@ -8,9 +8,10 @@ import {
  } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react/cjs/react.development';
 import OrderCard from '../../components/Orders/OrderCard';
 import { fonts } from '../../constants/fonts';
-import { changeStatus, getOrders } from '../../redux/Actions/OrderActions';
+import { changeStatus, getMoreOrders, getOrders } from '../../redux/Actions/OrderActions';
 const OrderState=()=>
 {
 
@@ -18,6 +19,26 @@ const OrderState=()=>
     const orderLoading=useSelector(state=>state.Orders.orderLoading)
 
     const dispatch=useDispatch()
+
+    const [orderID,setOrderID]=useState("")
+    const fetchMoreOrders=()=>
+    {
+        dispatch(getMoreOrders("All"))
+    }
+
+    const getOrderDetails=()=>
+    {
+        dispatch(getOrders("All"))
+    }
+    useEffect
+    (
+        ()=>
+        {
+           getOrderDetails()
+        },
+        []
+    )
+ 
    
     const changeOrderStatus=(status,id)=>
     {
@@ -43,18 +64,7 @@ const OrderState=()=>
         )
 
     }
-    const getOrderDetails=()=>
-    {
-        dispatch(getOrders("All"))
-    }
-    useEffect
-    (
-        ()=>
-        {
-           getOrderDetails()
-        },
-        []
-    )
+  
 
     return(
         <View
@@ -64,6 +74,14 @@ const OrderState=()=>
         }
         }
         >
+            <View
+            style={{
+                margin:10,
+                backgroundColor:"silver",
+                borderRadius:10,
+                height:50
+            }}
+            ></View>
             <FlatList
             data={orders}
             refreshControl={
@@ -71,6 +89,9 @@ const OrderState=()=>
                 refreshing={orderLoading}
                 onRefresh={()=>getOrderDetails()}
                 ></RefreshControl>
+            }
+            onEndReached={
+                ()=>fetchMoreOrders()
             }
             renderItem={renderItem}
             keyExtractor={item=>item.key}

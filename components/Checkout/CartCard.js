@@ -3,7 +3,8 @@ import React from "react";
 import {
   Text,
   View,
-  Image
+  Image,
+  StyleSheet
 } from 'react-native';
 
 import { fonts } from "../../constants/fonts";
@@ -15,84 +16,27 @@ const CartCard = (props) => {
 
   return (
     <View
-      style=
-      {
-        {
-          flexDirection: "row",
-          margin: 10,
-          elevation:5,
-          backgroundColor: "#fff",
-          borderRadius: 10
-        }
-      }
+      style={styles.Container}
     >
       <Image
         source={{ uri: item.img1 }}
-        style={
-          {
-            width: '30%',
-            height: '80%',
-            height: 100,
-            borderRadius: 15
-          }
-        }
+        style={styles.imgContainer}
       >
       </Image>
-      <View
 
-        style={
-          {
-            flexWrap: "wrap",
-            flex: 1,
-            marginLeft: 20,
-            alignItems: 'center',
-            justifyContent: 'center'
-          }
-        }
-      >
+      <View  style={styles.detailsContainer}>
         <Text
-          style={
-            {
-              fontSize: 20,
-              fontFamily: fonts.Genos_Regular
-            }
-          }>{item.pname}</Text>
+          style={styles.txtName}>{item.pname}</Text>
         <Text
-          style={
-            {
-              fontSize: 20,
-              fontFamily:fonts.SpaceMono_Regular
-            }
-          }>{item.brand}</Text>
+          style={styles.txtBrand}>{item.brand}</Text>
         <Text
-          style={
-            {
-              fontSize: 20,
-              fontFamily:fonts.Genos_Regular
-            }
-          }>RS {item.price}</Text>
+          style={styles.txtPrice}>RS {item.price}</Text>
 
-        <View
-          style={{
-            flexDirection: 'row',
-          
-          }}
-        >
+        <View style={styles.qtyContainer}>
           <Text
-            style={
-              {
-                fontSize: 20,
-                marginHorizontal:15,
-                fontFamily:fonts.Genos_Regular
-              }
-            }> qty : {item.quantity}</Text>
+            style={styles.txtQty}> qty : {item.quantity}</Text>
           <Text
-            style={
-              {
-                fontSize: 20,
-                fontFamily:fonts.Genos_Regular
-              }
-            }>subtotal RS{item.price * item.quantity}</Text>
+            style={styles.txtTotal}>Total RS{item.price * item.quantity}</Text>
         </View>
 
       </View>
@@ -101,5 +45,66 @@ const CartCard = (props) => {
 
   )
 }
+const styles = StyleSheet.create
+  (
+    {
+      Container:
+      {
+        flexDirection: "row",
+        margin: 10,
+        elevation: 5,
+        backgroundColor: "#fff",
+        borderRadius: 10
+      },
+      imgContainer:
+      {
+        width: '30%',
+        height: '80%',
+        height: 100,
+        borderRadius: 15
+      },
+      detailsContainer:
+      {
+        flexWrap: "wrap",
+        flex: 1,
+        marginLeft: 20,
+        alignItems: 'center',
+        justifyContent: 'center'
+      },
+      txtName:
+      {
+        fontSize: 20,
+        fontFamily: fonts.Genos_Regular
+      },
+      txtBrand:
+      {
+        fontSize: 20,
+        fontFamily: fonts.SpaceMono_Regular
+      },
+      txtPrice:
+      {
+        fontSize: 20,
+        fontFamily: fonts.Genos_Regular
+      },
+      qtyContainer:
+      {
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        flexWrap:'wrap'
+      },
+      txtQty:
+      {
+        fontSize: 20,
+        marginHorizontal: 5,
+        fontFamily: fonts.Genos_Regular
+      },
+      txtTotal:
+      {
+        fontSize: 20,
+        fontFamily: fonts.Genos_Regular
+      }
 
+
+    }
+  )
 export default CartCard

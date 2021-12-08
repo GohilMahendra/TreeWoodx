@@ -189,7 +189,7 @@ const styles = StyleSheet.create
             },
             btnEdit:
             {
-                backgroundColor: Color.peach,
+                backgroundColor: Color.purpleLight,
                 padding: 10,
                 borderRadius: 10,
                 elevation: 15

@@ -4,7 +4,6 @@ import {
     Text,
     View
  } from 'react-native';
-import AddAdmin from '../screens/Admin/AddAdmin';
 import AdminProfile from '../screens/Admin/AdminProfile';
 
 
@@ -26,17 +25,7 @@ const AdminPofileStackNavigator=()=>
            >
 
            </ProfileStack.Screen>
-           <ProfileStack.Screen
-           name="AddAdmin"
-           options={
-               {
-                   headerShown:false
-               }
-           }
-           component={AddAdmin}
-           >
-
-           </ProfileStack.Screen>
+         
 
        </ProfileStack.Navigator>
     )

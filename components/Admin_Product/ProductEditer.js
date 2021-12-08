@@ -119,9 +119,9 @@ const styles = StyleSheet.create
             {
                 height: 50,
                 width: 50,
-                elevation: 2,
-                borderRadius: 15,
-                //borderWidth: 1,
+                borderRadius: 10,
+                borderWidth: 0.2,
+             
                 textAlign: "center"
 
             },
@@ -130,7 +130,7 @@ const styles = StyleSheet.create
 
                 height: 50,
                 width: 70,
-                elevation: 15,
+                elevation: 10,
                 backgroundColor: "#fff",
                 borderRadius: 15,
                 alignItems: "center",
@@ -141,7 +141,6 @@ const styles = StyleSheet.create
             {
                 color: "black",
                 fontSize: 15,
-
                 textAlign: 'center',
                 textAlignVertical: "center",
 

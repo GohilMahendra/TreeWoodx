@@ -1,9 +1,9 @@
 
-export const ValidateEmail=(email="Sring fdf")=>
+export const ValidateEmail=(email)=>
 {
     email=email.toLowerCase().trim()
 
-    return email.match("/^[^\s@]+@[^\s@]+\.[^\s@]+$/")
+    return email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
 
 
 }
@@ -21,6 +21,7 @@ export const VarifySyntex=(UserName,email,password)=>
     }
     else if (email=="" || !ValidateEmail(email))
     {
+        console.log("email profbe")
         varified=false
         error="Email is Not Right Please Fill it Again"
     }

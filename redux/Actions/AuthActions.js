@@ -22,16 +22,18 @@ export const loginUser = (email, password) => {
             const validate = validateCred(email, password)
 
             if (!validate) {
-              Alert.alert("invalid syntex", "Email or Password is not uniforrm")
-           
+                Alert.alert("invalid syntex", "Email or Password is not uniforrm")
+
                 return
             }
 
             dispatch({ type: SIGN_IN_REQUEST })
 
             const user = await auth().signInWithEmailAndPassword(email, password)
-
-            let admin = await firestore().collection('Admin').doc(auth().currentUser.uid).get()
+            let admin = await firestore()
+                .collection('admin')
+                .doc(auth().currentUser.uid)
+                .get()
 
             let isAdmin = false
 
@@ -39,11 +41,13 @@ export const loginUser = (email, password) => {
                 isAdmin = true
             }
 
+            console.log(isAdmin, "isAdmin")
             dispatch({ type: SIGN_IN_SUCCESS, payload: { isAdmin: isAdmin } })
 
         }
         catch (err) {
             console.log(err)
+            Alert.alert("Error in Login", "" + err)
             dispatch({ type: SIGN_IN_FAILED, payload: err })
 
         }
@@ -56,16 +60,16 @@ export const resetPassword = (email) => {
 
             const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             let validate = re.test(String(email).toLowerCase());
-        
+
             if (!validate) {
-              Alert.alert("please add email", "Add email in email section for password link!!")
-              return
+                Alert.alert("please add email", "Add email in email section for password link!!")
+                return
             }
 
             dispatch({ type: CHANGE_PASSWORD_REQUEST })
             const sendlink = await auth().sendPasswordResetEmail(email)
 
-            Alert.alert("REQUEST SUCCESS","CHECK YOUR EMAIL "+email)
+            Alert.alert("REQUEST SUCCESS", "CHECK YOUR EMAIL " + email)
             dispatch({ type: CHANGE_PASSWORD_SUCCESS })
         }
         catch (err) {
@@ -109,7 +113,7 @@ export const signUp = (username, email, password, isAdmin = false) => {
 
             const user = await auth().createUserWithEmailAndPassword(email, password)
 
-            const uploadDetilas = await firestore().
+            const uploadDetails = await firestore().
                 collection(destination)
                 .doc(auth().currentUser.uid)
                 .set(
@@ -125,10 +129,12 @@ export const signUp = (username, email, password, isAdmin = false) => {
                 }
             )
             dispatch({ type: SIGN_UP_REQUEST })
+            Alert.alert("Successfully Added", "added a" + destination + " " + username + "succed")
 
         }
         catch (err) {
             console.log(err)
+            Alert.alert("Error", "added a" + destination + " " + username + "Failed")
             dispatch({ type: SIGN_UP_FAILED })
         }
     }

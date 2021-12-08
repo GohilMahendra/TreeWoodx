@@ -1,29 +1,36 @@
 
 import React from "react";
-import { Dimensions, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
-    ;
-import { ModelView } from "react-native-3d-model-view";
+import { Dimensions, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import auth from "@react-native-firebase/auth";
 import { fonts } from "../../constants/fonts";
-import { Line } from "react-native-svg";
 import { Color } from "../../constants/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../../redux/Actions/AuthActions";
 import { useNavigation } from "@react-navigation/core";
 
 const { height, width } = Dimensions.get('screen')
-const User_profile = ({ navigation }) => {
+const User_profile = () => {
 
+
+    const navigation=useNavigation()
     const dispatch=useDispatch()
 
     const logoutError=useSelector(state=>state.Auth.logoutError)
     const logoutLoading=useSelector(state=>state.Auth.logoutLoading)
 
+
     const logout = () => {
     
         dispatch(signOut())  
-        navigation.navigate("Login")  
+        navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name: 'Login'
+              }
+            ]
+          })
 
     }
 

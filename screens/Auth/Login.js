@@ -11,9 +11,11 @@ import firestore from "@react-native-firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import ErrorCard from "../../components/ErrorCard";
 import { loginUser, resetPassword } from "../../redux/Actions/AuthActions";
+import { useNavigation } from "@react-navigation/core";
 
-const Login = ({ navigation }) => {
- 
+const Login = () => {
+
+  const navigation=useNavigation()
   const [uname, setuname] = useState("")
   const [upassword, setupassword] = useState("")
 
@@ -35,9 +37,11 @@ const Login = ({ navigation }) => {
         const subcription = auth().onAuthStateChanged
 
           ((user) => {
-            if (user) {
+            console.log(user,auth().currentUser)
+            if (user != null && auth().currentUser != null) 
+            {
 
-
+             
               if (!isadmin)
                 navigation.navigate("Home")
               else
@@ -53,17 +57,16 @@ const Login = ({ navigation }) => {
 
   const onSignin = async (email, password) => {
 
-   
+
     dispatch(loginUser(email, password))
 
   }
 
   const ResetPasswordWithEmail = () => {
 
- 
-    if(uname=="")
-    {
-      Alert.alert("FIll email for link","Please fill email details for reset password")
+
+    if (uname == "") {
+      Alert.alert("FIll email for link", "Please fill email details for reset password")
       return
     }
 
@@ -84,11 +87,7 @@ const Login = ({ navigation }) => {
         source={require('../../assets/login.jpg')}
       />
 
-      <View style={styles.detilsContainer}>
-        <Text style={styles.txtWelcomeText}>hey HI !!</Text>
-        <Text style={styles.txtWelcomeText}>want to explore catalog?</Text>
-        <Text style={styles.txtWelcomeText}>LOGIN HERE!!</Text>
-      </View>
+
 
       <View style={styles.inputContainer}>
 
@@ -124,22 +123,22 @@ const Login = ({ navigation }) => {
 
         </TouchableOpacity>
 
-       
+
 
         <TouchableOpacity
           style={styles.btnSignIn}
           onPress={() => onSignin(uname, upassword)}
         >
           {
-            loginLoading||changePasswordLoading
-            ?
-            <ActivityIndicator
-            size={25}
-            color="#fff"
-            />
-            :
-            <Text style={styles.txtSignIN}>SIGN IN
-            </Text>
+            loginLoading || changePasswordLoading
+              ?
+              <ActivityIndicator
+                size={25}
+                color="#fff"
+              />
+              :
+              <Text style={styles.txtSignIN}>SIGN IN
+              </Text>
           }
         </TouchableOpacity>
 
@@ -168,37 +167,18 @@ const styles = StyleSheet.create
         resizeMode: 'stretch',
         flex: 1
       },
-      detilsContainer:
-      {
-        position: 'absolute',
-        top: 15,
 
-        shadowColor: 'black',
-        shadowOffset: { height: 5, width: 5 },
-        alignSelf: 'flex-start',
-        shadowOpacity: 1,
-        elevation: 5,
-        margin: 30
-      },
-      txtWelcomeText:
-      {
-        fontSize: 25,
-        color: '#fff',
-        shadowOpacity: 1,
-        textShadowColor: 'silver',
-        textShadowRadius: 20,
-        fontWeight: 'bold',
-        textShadowOffset: { height: 5, width: 5 }
-      },
       inputContainer:
       {
         top: '20%',
         position: "absolute",
         width: '90%',
+        elevation: 15,
+
         paddingVertical: 25,
         alignSelf: 'center',
         backgroundColor: '#fff',
-        borderRadius: 40
+        borderRadius: 20
       },
       txtLinkbtn:
       {

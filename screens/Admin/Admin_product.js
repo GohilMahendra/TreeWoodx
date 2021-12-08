@@ -495,9 +495,9 @@ const styles = StyleSheet.create
         height: 50,
         width: width - 40,
         alignSelf: "center",
-        borderRadius: 10,
-        //  borderWidth: 1,
-        elevation: 2,
+        borderRadius: 5,
+         borderWidth: 0.2,
+    
         textAlign: 'center',
         borderColor: "black"
       },
@@ -509,7 +509,8 @@ const styles = StyleSheet.create
         width: width - 40,
         alignSelf: "center",
         borderRadius: 20,
-        elevation: 2,
+      
+        borderWidth:0.2,
         textAlign: 'center',
 
       },
@@ -517,7 +518,7 @@ const styles = StyleSheet.create
       {
         flexDirection: "row",
         alignItems: "center",
-
+        margin:10,
         justifyContent: 'space-evenly'
       },
       innerContainer:
@@ -533,11 +534,11 @@ const styles = StyleSheet.create
       {
         alignItems: 'center',
         textAlign: 'center',
-        margin: 20,
+        margin: 5,
         height: 50,
-        elevation: 2,
+        borderWidth:0.1,
         width: 100,
-        borderRadius: 15,
+        borderRadius: 5,
       },
       dimensionsContainer:
       {
@@ -571,9 +572,9 @@ const styles = StyleSheet.create
       {
 
         height: 200,
-        elevation: 2,
+        borderWidth:0.1,
         marginHorizontal: 15,
-        borderRadius: 20,
+        borderRadius: 5,
 
       },
       btnCategory:

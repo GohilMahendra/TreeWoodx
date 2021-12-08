@@ -37,7 +37,7 @@ const checkIFinStock = async (cart) => {
 }
 
 
-export const getOrders = (All = null) => {
+export const getOrders = (All = null,orderId=null) => {
 
   return async (dispatch) => {
     try {
@@ -49,6 +49,14 @@ export const getOrders = (All = null) => {
         quary = firestore()
           .collection('Orders')
           .limit(MAX_FETCH_LIMIT)
+
+      }
+      else if(orderId!="" && orderId!=null)
+      {
+        quary = firestore()
+        .collection('Orders')
+        .where(firestore.FieldPath.documentId(),'==',orderId)
+        .limit(MAX_FETCH_LIMIT)
 
       }
       else {
@@ -107,15 +115,25 @@ export const getOrders = (All = null) => {
 
 }
 
-export const getMoreOrders = (All = null) => {
+export const getMoreOrders = (All = null,orderID=null) => {
 
-  return async (dispatch) => {
+  return async (dispatch,getState) => {
     try {
 
+
+      if(orderID!=null || orderID!="")
+      {
+        console.log("list end Reached")
+        return
+      }
+
       const lastID = getState().Orders.lastKeyOrder
+
+      console.log("called","last ID")
       if (lastID == null) {
         return
       }
+
       dispatch({ type: LOAD_MORE_ORDERS_REQUEST })
 
       let quary = null
@@ -226,11 +244,11 @@ export const makeOrder = (cart, price, address, paymentDetails) => {
           order
         )
 
-      Alert.alert("ORDER SUCCESS","YOUR ORDER OF RS "+totalPrice+" SUCCESS YOU CAN TRACK IT BY PROFILE SECTION")
+      Alert.alert("ORDER SUCCESS","YOUR ORDER OF RS "+price+" SUCCESS YOU CAN TRACK IT BY PROFILE SECTION")
       dispatch({ type: MAKE_ORDER_SUCCESS })
     }
     catch (err) {
-      Alert.alert("Order Failed","We are sorry for inconvinince !!")
+      Alert.alert(""+err)
       dispatch({ type: MAKE_ORDER_FAILED, payload: err })
       
     }

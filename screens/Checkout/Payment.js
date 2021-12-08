@@ -295,7 +295,8 @@ const styles = StyleSheet.create
             },
             rowViewContainer:
             {
-                flexDirection: 'row'
+                flexDirection: 'row',
+                justifyContent:"space-between"
             },
             txtsubmitText:
             {
@@ -339,7 +340,9 @@ const styles = StyleSheet.create
             {
                 height: 50,
                 paddingHorizontal: 15,
-                margin: 20,
+                marginHorizontal: 10,
+                marginVertical:20,
+
                 borderRadius: 20,
                 elevation: 10,
                 justifyContent: "center",

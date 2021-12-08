@@ -25,6 +25,7 @@ const AdminEditStackNavigator = () => {
                         headerTransparent:false,
                         headerTitle:"Product List",
                         headerTitleAlign:'center',
+                        headerLeft:null,
                         headerRight:()=>(
                             <TouchableOpacity
                             onPress={()=>navigation.navigate("AdminSearch")}
