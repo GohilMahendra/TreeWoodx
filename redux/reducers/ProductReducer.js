@@ -24,12 +24,6 @@ const initialstate = {
     products: [],
 
     HomeProducts: [],
-
-
-
-
-
-
     prodLoad: false,
     homeprodLoad: false,
     moreproductsLoad: false,

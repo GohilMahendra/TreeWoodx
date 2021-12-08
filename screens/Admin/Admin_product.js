@@ -9,12 +9,13 @@ import {
   getPriceRange
 } from "../../functions/CalculationHelpers";
 
-import { color, categories } from "../../constants/categories";
+import { color, categories, Material } from "../../constants/categories";
 import { useRoute } from "@react-navigation/core";
 import { Color } from "../../constants/colors";
 import { fonts } from "../../constants/fonts";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AddProduct } from "../../redux/Actions/ProductActions";
+import { ActivityIndicator } from "react-native-paper";
 const { height, width } = Dimensions.get('window')
 const Admin_product = ({ navigation }) => {
 
@@ -22,17 +23,19 @@ const Admin_product = ({ navigation }) => {
 
   const p = useRoute()
 
-  const dispatch=useDispatch()
-  const IsAnyFieldNull=()=>
-  {
-    return prod.pname===""||prod.discount===""||prod.price===""||prod.warranty===""||
-    prod.brand===""||prod.material===""||prod.subcategories===""||prod.cat===""||prod.discription===""||
-  
-    prod.dimensions.length===""||prod.dimensions.width===""||prod.stock===""||prod.color===""||prod.domentions.height===""||
-    prod.img1===""||prod.img2===""||prod.img3===""||prod.img4===""
-  }
-  
+  const dispatch = useDispatch()
+  const IsAnyFieldNull = () => {
+    return prod.pname === "" || prod.discount === "" || prod.price === "" || prod.warranty === "" ||
+      prod.brand === "" || prod.material === "" || prod.subcategories === "" || prod.cat === "" || prod.discription === "" ||
 
+      prod.dimensions.length === "" || prod.dimensions.width === "" || prod.stock === "" || prod.color === "" || prod.domentions.height === "" ||
+      prod.img1 === "" || prod.img2 === "" || prod.img3 === "" || prod.img4 === ""
+  }
+
+
+  const addProductLoad = useSelector(state => state.Products.addProductLoad)
+  const addProductError = useSelector(state => state.Products.addProductError)
+ 
   const [prod, setprod] = useState
     (
 
@@ -105,9 +108,8 @@ const Admin_product = ({ navigation }) => {
 
     try {
 
-      if(IsAnyFieldNull())
-      {
-        Alert.alert("Null field","Please Check Your Field Before Upload")
+      if (IsAnyFieldNull()) {
+        Alert.alert("Null field", "Please Check Your Field Before Upload")
         return
       }
 
@@ -123,12 +125,12 @@ const Admin_product = ({ navigation }) => {
       console.log(prod)
 
       if (p.params != undefined) {
-      
-        dispatch(AddProduct(key,prod))
+
+        dispatch(AddProduct(key, prod))
       }
       else {
-        dispatch(AddProduct("",prod))
-        
+        dispatch(AddProduct("", prod))
+
       }
 
 
@@ -155,19 +157,10 @@ const Admin_product = ({ navigation }) => {
             }
           >
             <View
-              style={
-                {
-                  height: (prod.color === item) ? 55 : 50,
-                  width: (prod.color === item) ? 55 : 50,
-                  backgroundColor: item,
-                  margin: 10,
-                  elevation: 5,
-
-                  borderColor: 'black',
-                  borderWidth: 1,
-                  borderRadius: 10
-                }
-              }
+              style={[styles.colorContainer, {
+                backgroundColor: item,
+                borderRadius: (item === prod.color) ? 50 : 10
+              }]}
             ></View>
           </TouchableOpacity> :
             <TouchableOpacity
@@ -175,20 +168,9 @@ const Admin_product = ({ navigation }) => {
               onPress={
                 () => setprod({ ...prod, color: item })
               }
-              style={
-                {
-                  backgroundColor: '#fff',
-                  height: (prod.color === item) ? 55 : 50,
-
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderWidth: 1,
-                  margin: 10,
-                  borderRadius: 10,
-                  paddingHorizontal: 10
-
-                }
-              }
+              style={[styles.btnColorSelecter, {
+                height: 50, borderRadius: (prod.color === item) ? 55 : 10,
+              }]}
             >
 
               <Text
@@ -211,15 +193,7 @@ const Admin_product = ({ navigation }) => {
       <ScrollView style={{ flex: 1 }}>
 
         <View
-          style={
-            {
-              justifyContent: 'center',
-              alignItems: 'center',
-
-              flex: 1,
-              alignContent: "center"
-            }
-          }
+          style={styles.innerContainer}
         >
 
           <Text
@@ -276,18 +250,7 @@ const Admin_product = ({ navigation }) => {
                         <TouchableOpacity
                           onPress={() => setprod({ ...prod, cat: item })}
                           key={item}
-                          style={
-                            {
-                              height: 50,
-                              padding: 10,
-                              margin: 10,
-                              borderRadius: 15,
-                              backgroundColor: (prod.cat === item) ? Color.purpleLight : "#fff",
-                              elevation: 10,
-                              justifyContent: "center",
-                              alignItems: "center"
-                            }
-                          }
+                          style={[styles.btnCategory, { backgroundColor: (item === prod.cat) ? Color.purpleLight : '#fff' }]}
                         >
                           <Text
                             style={
@@ -309,8 +272,53 @@ const Admin_product = ({ navigation }) => {
             onChangeText={val => setprod({ ...prod, subcategories: val })}
             value={prod.subcategories.toString()}
             style={styles.inputText}
-            placeholder="subcategories like office king media"
+            placeholder="subcategories like Office,Modern,LivingRoom etc"
           />
+
+          <View
+            style={{
+              flexDirection: "row",
+              //   height:50
+            }}
+          >
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            >
+              {Material.map
+                (
+                  item => {
+                    return (
+                      <TouchableOpacity
+                        onPress={() => setprod({ ...prod, material: item })}
+                        key={item}
+                        style={
+                          {
+                            padding: 10,
+                            elevation: 10,
+                            borderRadius: 10,
+                            margin: 10,
+                            backgroundColor: (item === prod.material) ? Color.purpleLight : '#fff'
+
+                          }
+                        }
+                      >
+                        <Text
+                          style={{
+                            color: (item === prod.material) ? "#fff" : "black",
+                            fontSize: 18,
+                            fontFamily: fonts.Federo_Regular
+                          }}
+                        >{item}</Text>
+                      </TouchableOpacity>
+
+                    )
+                  }
+
+                )}
+            </ScrollView>
+          </View>
+
           <Text style={{ margin: 20 }}>Enter Dimentions in inches(height,width,length)</Text>
 
           <View style={styles.dimensionsContainer}>
@@ -446,9 +454,17 @@ const Admin_product = ({ navigation }) => {
 
             onPress={() => uploadOnFirestore()}
             style={styles.btnSubmit}
-          >
 
-            <Text style={styles.txtSubmit}>SUBMIT</Text>
+          >
+            {addProductLoad
+              ?
+              <ActivityIndicator
+                size={30}
+                color="#fff"
+              />
+              :
+              <Text style={styles.txtSubmit}>SUBMIT</Text>
+            }
           </TouchableOpacity>
 
 
@@ -497,12 +513,21 @@ const styles = StyleSheet.create
         textAlign: 'center',
 
       },
-      rowNumberContainer:    
+      rowNumberContainer:
       {
         flexDirection: "row",
         alignItems: "center",
 
         justifyContent: 'space-evenly'
+      },
+      innerContainer:
+
+      {
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        flex: 1,
+        alignContent: "center"
       },
       inputTextNumbers:
       {
@@ -531,6 +556,17 @@ const styles = StyleSheet.create
         alignItems: 'center',
         borderRadius: 15
       },
+      colorContainer:
+      {
+        height: 50,
+        width: 50,
+        margin: 10,
+        elevation: 5,
+
+        borderColor: 'black',
+        borderWidth: 1,
+
+      },
       inputTextDiscription:
       {
 
@@ -538,6 +574,28 @@ const styles = StyleSheet.create
         elevation: 2,
         marginHorizontal: 15,
         borderRadius: 20,
+
+      },
+      btnCategory:
+
+      {
+        height: 50,
+        padding: 10,
+        margin: 10,
+        borderRadius: 15,
+
+        elevation: 10,
+        justifyContent: "center",
+        alignItems: "center"
+      },
+      btnColorSelecter:
+      {
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        margin: 10,
+        paddingHorizontal: 10
 
       },
       txtSubmit:

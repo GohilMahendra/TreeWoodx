@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import { FlatList, TextInput,TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet } from 'react-native';
+import { FlatList, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,19 +12,21 @@ const AdminSearch = ({ navigation }) => {
     const [search, setsearch] = useState("")
 
     const data = useSelector(state => state.Search.searchResults)
-
-    console.log(data,"search result")
     useEffect(
         () => {
-            if (search != "")
+
+         //   console.log("search", search)
+            if (search != "") {
                 dispatch(searchProd(search))
+
+            }
 
         },
         [search]
     )
 
     const itemBuilder = ({ item, index }) => {
-       console.log(item)
+    //    console.log(item)
         return (
             <TouchableOpacity
 
@@ -63,33 +65,16 @@ const AdminSearch = ({ navigation }) => {
 
     return (
         <View
-            style={{
-                flex: 1
-            }}
-
-
-        >
+            style={styles.Container} >
 
             <View
-                style={{
-                    flexDirection: 'row',
-                    height: 50,
-                    marginHorizontal: 20,
-                    marginVertical: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: 'silver'
-
-                }}
+                style={styles.InputContainer}
             >
                 <TextInput
 
                     value={search}
                     onChangeText={text => setsearch(text)}
-                    style={{
-                        width: '80%',
-                        height: '100%'
-                    }}
+                    style={styles.txtInputeSearch}
                 />
                 <FontAwesome5Icon
                     name="search"
@@ -99,9 +84,7 @@ const AdminSearch = ({ navigation }) => {
             </View>
             <FlatList
 
-style={{
-    flex:1
-}}
+                style={styles.listContainer}
                 data={data}
                 renderItem={itemBuilder}
                 keyExtractor={item => item.key}
@@ -112,5 +95,37 @@ style={{
         </View>
     )
 }
+
+
+const styles = StyleSheet.create
+    (
+        {
+            Container:
+            {
+                flex: 1
+            },
+            InputContainer:
+            {
+                flexDirection: 'row',
+                height: 50,
+                marginHorizontal: 20,
+                marginVertical: 10,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'silver'
+
+            },
+            txtInputeSearch:
+            {
+                width: '80%',
+                height: '100%'
+            },
+            listContainer:
+            {
+                flex: 1
+            }
+
+        }
+    )
 
 export default AdminSearch

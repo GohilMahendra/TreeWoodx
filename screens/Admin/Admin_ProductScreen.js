@@ -9,6 +9,8 @@ import { DeleteProduct, LoadProducts } from "../../redux/Actions/ProductActions"
 import { fonts } from "../../constants/fonts";
 import ProductCardEditer from "../../components/Admin_Product/ProductEditerCard";
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/core";
+import { off } from "npm";
+import Search from "../Search/Search";
 
 const Admin_editProd = ({ navigation }) => {
 
@@ -27,13 +29,26 @@ const Admin_editProd = ({ navigation }) => {
     )
 
 
-   
+
     useEffect(
         () => {
-         
-        }, []
+            if (route.params != undefined) {
+                if (route.params.search != undefined && route.params.brand != undefined) {
+                    setfilters({ search: route.params.search, brand: route.params.brand })
+
+                }
+                else {
+                    if (route.params.search != undefined) {
+                        setfilters({ ...filters, search: route.params.search })
+                    }
+                    if (route.params.brand != undefined) {
+                        setfilters({ ...filters, brand: route.params.brand })
+                    }
+                }
+            }
+        }, [route.params]
     )
-  
+
     const removeParams = (param) => {
         switch (param) {
             case "search":
@@ -63,12 +78,11 @@ const Admin_editProd = ({ navigation }) => {
         dispatch(LoadProducts(filters))
     }
 
-  
+
 
     useEffect
         (
             () => {
-                console.log("filters Updated")
                 fetchProd()
             },
             [filters]
@@ -94,11 +108,8 @@ const Admin_editProd = ({ navigation }) => {
     }
 
     return (
-        <View style={{ flex: 1 }}>
-
-
+        <View style={styles.Container}>
             {
-
                 (filters.search != "" || filters.brand != "")
                 &&
                 <View
@@ -131,7 +142,8 @@ const Admin_editProd = ({ navigation }) => {
 
                     }
 
-                </View>}
+                </View>
+            }
             <FlatList
                 data={data}
                 renderItem={prodBuilder}
@@ -148,7 +160,6 @@ const Admin_editProd = ({ navigation }) => {
             <CustomFab
                 navigation={navigation}
             >
-
             </CustomFab>
         </View>
     )
@@ -157,6 +168,10 @@ const Admin_editProd = ({ navigation }) => {
 const styles = StyleSheet.create
     (
         {
+            Container:
+            {
+                flex: 1
+            },
             txtRemove:
             {
                 color: 'black',
@@ -171,7 +186,6 @@ const styles = StyleSheet.create
             {
                 flexDirection: 'row',
                 flexWrap: 'wrap',
-                marginTop: 50,
             },
             btnRemoveFilter:
             {

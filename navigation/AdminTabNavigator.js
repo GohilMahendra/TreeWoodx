@@ -40,7 +40,7 @@ const AdminTabNavigator = ({ navigation }) => {
         name={"OrderState"}
         options={
           {
-            tabBarLabel: 'PANEL',
+
             tabBarIcon: ({ size, focused, color }) =>
               <FontAwesome5 size={size} color={color} name="chart-line">
               </FontAwesome5>
@@ -56,7 +56,6 @@ const AdminTabNavigator = ({ navigation }) => {
         component={AdminPofileStackNavigator}
         options={
           {
-
             tabBarLabel: 'Profile',
             tabBarIcon: ({ size, focused, color }) =>
 
