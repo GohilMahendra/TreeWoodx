@@ -1,14 +1,17 @@
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
-import { CHANGE_ORDERS_STATUS_FAILED, CHANGE_ORDERS_STATUS_REQUEST, CHANGE_ORDERS_STATUS_SUCCESS, LOAD_MORE_ORDERS_FAILED, LOAD_MORE_ORDERS_REQUEST,
-   LOAD_MORE_ORDERS_SUCCESS, LOAD_ORDERS_FAILED, LOAD_ORDERS_REQUEST, 
-   LOAD_ORDERS_SUCCESS, MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST,
-    MAKE_ORDER_SUCCESS } from "../Types/OrderTypes";
+import {
+  CHANGE_ORDERS_STATUS_FAILED, CHANGE_ORDERS_STATUS_REQUEST, CHANGE_ORDERS_STATUS_SUCCESS, LOAD_MORE_ORDERS_FAILED, LOAD_MORE_ORDERS_REQUEST,
+  LOAD_MORE_ORDERS_SUCCESS, LOAD_ORDERS_FAILED, LOAD_ORDERS_REQUEST,
+  LOAD_ORDERS_SUCCESS, MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST,
+  MAKE_ORDER_SUCCESS
+} from "../Types/OrderTypes";
 import { Alert } from "react-native";
+import { prod } from "@tensorflow/tfjs-core";
 
 
 
-const MAX_FETCH_LIMIT = 3
+const MAX_FETCH_LIMIT = 2
 
 
 
@@ -37,7 +40,7 @@ const checkIFinStock = async (cart) => {
 }
 
 
-export const getOrders = (All = null,orderId=null) => {
+export const getOrders = (All = null, orderId = null) => {
 
   return async (dispatch) => {
     try {
@@ -51,12 +54,11 @@ export const getOrders = (All = null,orderId=null) => {
           .limit(MAX_FETCH_LIMIT)
 
       }
-      else if(orderId!="" && orderId!=null)
-      {
+      else if (orderId != "" && orderId != null) {
         quary = firestore()
-        .collection('Orders')
-        .where(firestore.FieldPath.documentId(),'==',orderId)
-        .limit(MAX_FETCH_LIMIT)
+          .collection('Orders')
+          .where(firestore.FieldPath.documentId(), '==', orderId)
+          .limit(MAX_FETCH_LIMIT)
 
       }
       else {
@@ -65,47 +67,37 @@ export const getOrders = (All = null,orderId=null) => {
           .where('userid', '==', auth().currentUser.uid)
           .limit(MAX_FETCH_LIMIT)
       }
-      const subscription = quary.onSnapshot(
-        (snapshot) => {
-          let list = []
 
-          snapshot.forEach
-            (
-              function (child) {
+      const products = await quary.get()
 
-                const key = child.id
 
-                list.push({ key, ...child.data() })
+      let list = []
 
-              }
-            )
+      products.forEach
+        (
+          function (child) {
 
-          let lastindex = null
-          if (list.length >= MAX_FETCH_LIMIT) {
-            lastindex = list[list.length - 1].key
+            const key = child.id
+
+            list.push({ key, ...child.data() })
+
           }
+        )
 
-          dispatch({
-            type: LOAD_ORDERS_SUCCESS, payload: {
-              orders: list,
-              lastKey: lastindex
-            }
-          })
+      let lastindex = null
+      if (list.length >= MAX_FETCH_LIMIT) {
+        lastindex = list[list.length - 1].key
+      }
 
+      dispatch({
+        type: LOAD_ORDERS_SUCCESS, payload: {
+          orders: list,
+          lastKey: lastindex
         }
-        , (err) => {
-          dispatch({ type: LOAD_ORDERS_FAILED, payload: "SOME ERROR IN LOADING ERROR" })
-
-
-        }
-      )
-
-      return () => subscription()
+      })
 
     }
     catch (err) {
-
-
       dispatch({ type: LOAD_ORDERS_FAILED, payload: "SOME ERROR IN LOADING ERROR" })
 
     }
@@ -115,21 +107,19 @@ export const getOrders = (All = null,orderId=null) => {
 
 }
 
-export const getMoreOrders = (All = null,orderID=null) => {
+export const getMoreOrders = (All = null, orderID = null) => {
 
-  return async (dispatch,getState) => {
+  return async (dispatch, getState) => {
     try {
 
 
-      if(orderID!=null || orderID!="")
-      {
+      if (orderID != null) {
         console.log("list end Reached")
         return
       }
 
       const lastID = getState().Orders.lastKeyOrder
 
-      console.log("called","last ID")
       if (lastID == null) {
         return
       }
@@ -155,38 +145,29 @@ export const getMoreOrders = (All = null,orderID=null) => {
           .limit(MAX_FETCH_LIMIT)
       }
 
+      const product = await quary.get()
 
-      const subscription = quary.onSnapshot(
-        (snapshot) => {
-          let list = []
-          snapshot.forEach
-            (
-              function (child) {
-
-                const key = child.id
-
-                list.push({ key, ...child.data() })
-
-              }
-            )
-          let lastindex = null
-          if (list.length >= MAX_FETCH_LIMIT) {
-            lastindex = list[list.length - 1].key
+      let list = []
+      product.forEach
+        (
+          function (child) {
+            const key = child.id
+            list.push({ key, ...child.data() })
           }
+        )
 
-          dispatch({
-            type: LOAD_MORE_ORDERS_SUCCESS, payload: {
-              orders: list,
-              lastKey: lastindex
-            }
-          })
-        },
-        err => {
-          dispatch({ type: LOAD_MORE_ORDERS_FAILED, payload: "SOME ERROR IN LOADING ERROR" })
+      let lastindex = null
+
+      if (list.length >= MAX_FETCH_LIMIT) {
+        lastindex = list[list.length - 1].key
+      }
+
+      dispatch({
+        type: LOAD_MORE_ORDERS_SUCCESS, payload: {
+          orders: list,
+          lastKey: lastindex
         }
-      )
-
-      return ()=>subscription()
+      })
 
     }
     catch (err) {
@@ -206,7 +187,7 @@ export const makeOrder = (cart, price, address, paymentDetails) => {
       dispatch({ type: MAKE_ORDER_REQUEST })
       let { inStock, childName } = await checkIFinStock(cart)
       if (inStock == false) {
-        alert("Out OF STOCK !!","could not make Transactions because Product is Out Of Stock" + childName)
+        alert("Out OF STOCK !!", "could not make Transactions because Product is Out Of Stock" + childName)
         return
       }
 
@@ -244,13 +225,13 @@ export const makeOrder = (cart, price, address, paymentDetails) => {
           order
         )
 
-      Alert.alert("ORDER SUCCESS","YOUR ORDER OF RS "+price+" SUCCESS YOU CAN TRACK IT BY PROFILE SECTION")
+      Alert.alert("ORDER SUCCESS", "YOUR ORDER OF RS " + price + " SUCCESS YOU CAN TRACK IT BY PROFILE SECTION")
       dispatch({ type: MAKE_ORDER_SUCCESS })
     }
     catch (err) {
-      Alert.alert(""+err)
+      Alert.alert("" + err)
       dispatch({ type: MAKE_ORDER_FAILED, payload: err })
-      
+
     }
   }
 
@@ -281,7 +262,8 @@ export const changeStatus = (status, id) => {
   return async (dispatch, getState) => {
     try {
 
-      dispatch({type:CHANGE_ORDERS_STATUS_REQUEST})
+
+      dispatch({ type: CHANGE_ORDERS_STATUS_REQUEST })
       const new_status = getStatus(status)
 
       const res = await firestore()
@@ -293,11 +275,20 @@ export const changeStatus = (status, id) => {
             status: new_status
           }
         )
-        dispatch({type:CHANGE_ORDERS_STATUS_SUCCESS})
+      dispatch({
+        type: CHANGE_ORDERS_STATUS_SUCCESS,
+        payload:
+        {
+          id: id,
+          status: new_status
+        }
+      })
 
     }
     catch (err) {
-      dispatch({type:CHANGE_ORDERS_STATUS_FAILED,payload:err})
+      console.log(err)
+      Alert.alert(""+err)
+      dispatch({ type: CHANGE_ORDERS_STATUS_FAILED, payload: err })
     }
 
   }

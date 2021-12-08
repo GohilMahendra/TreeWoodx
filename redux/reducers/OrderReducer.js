@@ -6,6 +6,7 @@ import { CHANGE_ORDERS_STATUS_FAILED, CHANGE_ORDERS_STATUS_REQUEST, CHANGE_ORDER
 
 const initialstate = {
     Orders: [],
+
     loadOrderError: null,
     loadOrdersLoading: false,
 
@@ -16,6 +17,9 @@ const initialstate = {
     orderSuccess: false,
     orderLoading: false,
     orderFailedError: null,
+
+
+    changeOrderError: null,
 
     lastKeyOrder: null
 
@@ -34,7 +38,7 @@ const OrderReducer = (state = initialstate, action) => {
             }
 
         case MAKE_ORDER_SUCCESS:
-            console.log("SUCEESS ORDER ")
+            // console.log("SUCEESS ORDER ")
             return { ...state, orderSuccess: true, orderLoading: false }
 
         case MAKE_ORDER_FAILED:
@@ -47,7 +51,8 @@ const OrderReducer = (state = initialstate, action) => {
         case LOAD_ORDERS_REQUEST:
             return {
                 ...state, loadOrdersLoading: true,
-                loadOrderError: null
+                loadOrderError: null,
+                Orders: []
             }
 
         case LOAD_ORDERS_SUCCESS:
@@ -65,24 +70,43 @@ const OrderReducer = (state = initialstate, action) => {
         case LOAD_MORE_ORDERS_REQUEST:
             return {
                 ...state,
-                loadMoreLoading:true,
-                loadMoreError:null
+                loadMoreLoading: true,
+                loadMoreError: null
             }
         case LOAD_MORE_ORDERS_SUCCESS:
             return {
                 ...state,
-                loadMoreLoading:false,
-                Orders:[...state.Orders,...action.payload.orders]
+                loadMoreLoading: false,
+                lastKeyOrder: action.payload.lastKey,
+                Orders: [...state.Orders, ...action.payload.orders]
             }
         case LOAD_MORE_ORDERS_FAILED:
             return {
                 ...state,
-                loadMoreLoading:false,
-                loadMoreError:action.payload
+                loadMoreLoading: false,
+                loadMoreError: action.payload
             }
         case CHANGE_ORDERS_STATUS_REQUEST:
+            return {
+                ...state,
+                changeOrderError: null
+            }
         case CHANGE_ORDERS_STATUS_SUCCESS:
+
+            let newArray = [...state.Orders]
+            const index = newArray.findIndex(item => item.key == action.payload.id)
+            newArray[index].status = action.payload.status
+
+            return {
+                ...state,
+                Orders: newArray
+            }
+
         case CHANGE_ORDERS_STATUS_FAILED:
+            return {
+                ...state,
+                changeOrderError: action.payload
+            }
         default:
             return state
 

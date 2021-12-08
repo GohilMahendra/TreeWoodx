@@ -8,11 +8,7 @@ import {
 import { ProgressBar } from 'react-native-paper';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
-
 const OrderStatusCard = ({status}) => {
-
-
-    console.log(status)
 
     const getProgress=()=>
     {
@@ -64,7 +60,7 @@ const OrderStatusCard = ({status}) => {
                         ></FontAwesome5Icon>
 
                     </View>
-                    <Text>Packaged</Text>
+                    <Text>Ordered</Text>
                </View>
                 <View
                     style={styles.stepConatainer}

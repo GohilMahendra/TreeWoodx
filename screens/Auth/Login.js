@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/core";
 
 const Login = () => {
 
-  const navigation=useNavigation()
+  const navigation = useNavigation()
   const [uname, setuname] = useState("")
   const [upassword, setupassword] = useState("")
 
@@ -25,9 +25,15 @@ const Login = () => {
   const changePasswordLoading = useSelector(state => state.Auth.changePasswordLoading)
   const changePasswordError = useSelector(state => state.Auth.changePasswordError)
 
-  const isadmin = useSelector(state => state.Auth.isadmin)
+  const isAdmin = async () => {
 
-  console.log(isadmin)
+    let adminData = await firestore()
+      .collection('admin')
+      .doc(auth().currentUser.uid)
+      .get()
+
+    return adminData.exists
+  }
   const dispatch = useDispatch()
 
   useEffect
@@ -37,16 +43,13 @@ const Login = () => {
         const subcription = auth().onAuthStateChanged
 
           ((user) => {
-            console.log(user,auth().currentUser)
-            if (user != null && auth().currentUser != null) 
-            {
+            console.log(user, auth().currentUser)
+            if (user != null && auth().currentUser != null) {
 
-             
-              if (!isadmin)
-                navigation.navigate("Home")
-              else
+              // let isadmin =false
+              
+              // isadmin= isAdmin()
                 navigation.navigate("Admin")
-
             }
           })
 
@@ -56,23 +59,15 @@ const Login = () => {
     )
 
   const onSignin = async (email, password) => {
-
-
     dispatch(loginUser(email, password))
-
   }
 
   const ResetPasswordWithEmail = () => {
-
-
     if (uname == "") {
       Alert.alert("FIll email for link", "Please fill email details for reset password")
       return
     }
-
     dispatch(resetPassword(uname))
-
-
 
   }
 

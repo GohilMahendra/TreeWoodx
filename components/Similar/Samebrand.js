@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Button, Image, TouchableOpacity } from "react-native";
+import { Button, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { ActivityIndicator } from "react-native";
 import {
 
@@ -24,7 +24,6 @@ const Samebrand = ({ brand, curruntID }) => {
     const [loading, setloading] = useState(false)
     const [products, setproducts] = useState()
 
-    const dispatch = useDispatch()
     const navigation = useNavigation()
     const { height, width } = Dimensions.get(
         'screen'
@@ -118,14 +117,10 @@ const Samebrand = ({ brand, curruntID }) => {
         // console.log(item.key)
         return (
             <TouchableOpacity
-
                 onPress={() => navigation.push("product", { item: item, name: item.pname })}
             >
                 <ProductCard
-
-
                     item={item}
-
                 >
 
                 </ProductCard>
@@ -135,83 +130,87 @@ const Samebrand = ({ brand, curruntID }) => {
     }
     return (
         <View style={{ margin: 20 }}>
-            <View style={{ flexDirection: "row", marginVertical: 10, justifyContent: "space-between" }}>
+            <View style={styles.itemContainer}>
                 <Text
-                    style=
-                    {
-                        {
-                            fontFamily: fonts.Quicksand_Medium,
-                            fontWeight: "bold",
-                            fontSize: 20,
-                            textTransform: 'uppercase',
-                            textAlignVertical: "center",
-
-                            width: '70%'
-
-
-                        }
-                    }
-
-
-                >MORE FROM {brand}</Text>
+                    style={styles.txtItemName}>
+                    MORE FROM {brand}
+                </Text>
                 <TouchableOpacity
-                    style={
-                        {
-                            backgroundColor: "black",
-                            borderRadius: 10,
-                            justifyContent: 'center',
-                            alignItems: "center"
-                        }
-                    }
+                    style={styles.btnNavigate}
                     onPress={() => navigation.navigate("SimilarBrands",
                         {
                             brandname: brand,
-
                             name: brand
                         }
                     )}
                     disabled={(products != undefined && products.length > 0) ? false : true}
                 >
                     <Text
-                        style={
-                            {
-                                color: "white",
-                                margin: 10,
-                                textAlignVertical: 'center'
-                            }
-                        }
+                        style={styles.txtViewMore}
                     >VIEW MORE</Text>
-
                 </TouchableOpacity>
+
             </View>
 
-            <View style={{ flex: 1 }}>
-
+            <View style={styles.listContainer}>
                 <FlatList
-
-
                     horizontal
                     data={products}
-
                     ListEmptyComponent={emptyScreen}
-
                     keyExtractor={(item) => item.key}
-
                     renderItem={SimilerItemBuilder}
-
-
-
                     style={{ marginHorizontal: 10, height: 350 }}
 
                 >
 
                 </FlatList>
-
-
             </View>
 
         </View>
     )
 }
 
+const styles = StyleSheet.create
+    (
+        {
+            txtItemName:
+            {
+                fontFamily: fonts.Quicksand_Medium,
+                fontWeight: "bold",
+                fontSize: 20,
+                textTransform: 'uppercase',
+                textAlignVertical: "center",
+
+                width: '70%'
+
+
+            },
+            itemContainer:
+            {
+                flexDirection: "row",
+                marginVertical: 10,
+                justifyContent: "space-between"
+            },
+            btnNavigate:
+
+            {
+                backgroundColor: "black",
+                borderRadius: 10,
+                justifyContent: 'center',
+                alignItems: "center"
+            },
+            txtViewMore:
+            {
+                color: "white",
+                margin: 10,
+                textAlignVertical: 'center'
+            },
+            listContainer:
+            { 
+                flex: 1 
+            }
+
+
+        }
+    )
 export default Samebrand
