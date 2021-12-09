@@ -27,9 +27,9 @@ const CustomFab = (props) => {
 
                 <View
 
-                    style={[styles.FabContainer, { bottom: 130, right: 10 }]}
+                    style={[styles.FabContainer, { bottom: 170, right: 10 }]}
 
-                >
+               >
                     <Text
                         style={styles.txtLabel}
                     >
@@ -46,12 +46,10 @@ const CustomFab = (props) => {
                         }
 
                     >
-
-
-
                         <FontAwesome5Icon
-                            name="plus"
+                            name="shopping-bag"
                             color="#fff"
+                            size={30}
 
                         >
 
@@ -64,7 +62,7 @@ const CustomFab = (props) => {
             {show &&
                 <View
 
-                    style={[styles.FabContainer, { bottom: 70, right: 10, }]}
+                    style={[styles.FabContainer, { bottom: 90, right: 10, }]}
 
                 >
                     <Text
@@ -72,7 +70,6 @@ const CustomFab = (props) => {
                     >
                       FEATURED LIST
                     </Text>
-
                     <TouchableOpacity
                        onPress={
 
@@ -83,13 +80,11 @@ const CustomFab = (props) => {
                         style={styles.btnFab}
                     >
                         <View>
-
                             <FontAwesome5Icon
-                                name="plus"
+                                name="shopping-basket"
                                 color="#fff"
-
+                                size={30}
                             >
-
                             </FontAwesome5Icon>
 
                         </View>
@@ -101,7 +96,6 @@ const CustomFab = (props) => {
 
                 onPress={() => ToggleShow()}
             >
-
                 {show
                     ?
                     <Text
@@ -119,7 +113,6 @@ const CustomFab = (props) => {
                         color="#fff"
 
                     >
-
                     </FontAwesome5Icon>
                 }
             </TouchableOpacity>
@@ -143,8 +136,8 @@ const styles = StyleSheet.create
             btnToggle:
 
             {
-                height: 50,
-                width: 50,
+                height: 70,
+                width: 70,
                 borderRadius: 50,
                 elevation:15,
                 position: "absolute",
@@ -167,8 +160,8 @@ const styles = StyleSheet.create
             },
             btnFab:
             {
-                height: 50,
-                width: 50,
+                height: 70,
+                width: 70,
                 elevation:15,
                 borderRadius: 50,
 

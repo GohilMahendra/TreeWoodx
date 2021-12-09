@@ -161,8 +161,8 @@ const styles = StyleSheet.create
             txtPname:
 
             {
-                fontFamily: fonts.Quicksand_Medium,
-                fontSize: 15,
+                fontFamily: fonts.Federo_Regular,
+                fontSize: 18,
 
             }
             ,
@@ -176,9 +176,10 @@ const styles = StyleSheet.create
             {
                 flexDirection: "row",
                 elevation:5,
+                margin:10,
                 backgroundColor:'#fff',
-                borderRadius:5,
-                paddingHorizontal:10,
+                borderRadius:10,
+                padding:10,
                 justifyContent: "space-between"
             },
 

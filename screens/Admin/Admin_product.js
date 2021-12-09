@@ -28,7 +28,7 @@ const Admin_product = ({ navigation }) => {
     return prod.pname === "" || prod.discount === "" || prod.price === "" || prod.warranty === "" ||
       prod.brand === "" || prod.material === "" || prod.subcategories === "" || prod.cat === "" || prod.discription === "" ||
 
-      prod.dimensions.length === "" || prod.dimensions.width === "" || prod.stock === "" || prod.color === "" || prod.domentions.height === "" ||
+      prod.dimensions.length === "" || prod.dimensions.width === "" || prod.stock === "" || prod.color === "" || prod.dimensions.height === "" ||
       prod.img1 === "" || prod.img2 === "" || prod.img3 === "" || prod.img4 === ""
   }
 
@@ -123,6 +123,8 @@ const Admin_product = ({ navigation }) => {
       prod.priceRange = getPriceRange(prod.priceafterdisc)
       prod.date = new Date().toISOString()
       console.log(prod)
+
+
 
       if (p.params != undefined) {
 
@@ -387,12 +389,14 @@ const Admin_product = ({ navigation }) => {
           <TextInput
             onChangeText={text => setprod({ ...prod, img1: text })} t
             value={prod.img1}
+            multiline={true}
             style={styles.inputTextImgLink}
             placeholder="Enter img Link 1"
           />
           <TextInput
             onChangeText={text => setprod({ ...prod, img2: text })}
             value={prod.img2}
+            multiline={true}
             style={styles.inputTextImgLink}
             placeholder="Enter img Link 2"
           />
@@ -400,6 +404,7 @@ const Admin_product = ({ navigation }) => {
           <TextInput
             onChangeText={text => setprod({ ...prod, img3: text })}
             value={prod.img3}
+            multiline={true}
             style={styles.inputTextImgLink}
             placeholder="Enter img3"
           />
@@ -407,6 +412,7 @@ const Admin_product = ({ navigation }) => {
           <TextInput
             onChangeText={text => setprod({ ...prod, img4: text })}
             value={prod.img4}
+            multiline={true}
             style={styles.inputTextImgLink}
             placeholder="Enter img Link 4"
           />
@@ -508,7 +514,7 @@ const styles = StyleSheet.create
         height: 100,
         width: width - 40,
         alignSelf: "center",
-        borderRadius: 20,
+        borderRadius: 10,
       
         borderWidth:0.2,
         textAlign: 'center',

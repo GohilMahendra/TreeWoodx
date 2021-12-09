@@ -20,17 +20,21 @@ const User_profile = () => {
     const logoutLoading=useSelector(state=>state.Auth.logoutLoading)
 
 
-    const logout = () => {
+    const logout = async() => {
     
-        dispatch(signOut())  
+        dispatch(signOut())
+
+        if(auth().currentUser==null)
+        {
         navigation.reset({
-            index: 0,
-            routes: [
-              {
-                name: 'Login'
-              }
+            index:0,
+            routes:[
+                {
+                    name:"Login"
+                }
             ]
-          })
+        })
+    }
 
     }
 

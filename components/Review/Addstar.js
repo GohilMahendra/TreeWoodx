@@ -11,29 +11,19 @@ const AddStar = ({ star }) => {
     <View style={styles.Container}>
 
       <FontAwesome5Icon
-
         name={'star'}
-        size={25}
+        size={20}
         color={"#fff"}
         solid={true}
       >
-
       </FontAwesome5Icon>
+
       <Text
-        style=
-        {
-          {
-            fontSize: 20,
-            color: '#fff',
-            textAlign: "center",
-            textAlignVertical: "center",
-
-
-          }
-        }
+        style={styles.txtNumber}
       >
         {star}
       </Text>
+      
     </View>
 
 
@@ -48,11 +38,20 @@ const styles = StyleSheet.create
         flexDirection: 'row',
         width: 70,
         justifyContent: "space-evenly",
-        margin: 20,
-        marginTop: 0,
-        borderRadius: 15,
+        margin: 15,
+        alignItems:"center",
+        padding:5,
+        borderRadius: 10,
         backgroundColor: "green",
+      },
+      txtNumber:
+      {
+        fontSize: 20,
+        color: '#fff',
+        textAlign: "center",
+        textAlignVertical: "center",
       }
+    
     }
   )
 

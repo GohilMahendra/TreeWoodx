@@ -1,6 +1,6 @@
 import { useRoute } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, View, Text } from "react-native";
+import { TouchableOpacity, View, Text, RefreshControl, StyleSheet } from "react-native";
 
 import { FlatList } from "react-native";
 
@@ -17,35 +17,27 @@ const Comments = () => {
 
     const dispatch = useDispatch()
 
+    const commentsLoading=useSelector(state => state.Comment.commentsLoading)
     const avg = useSelector(state => state.Comment.avg)
     const Comments = useSelector(state => state.Comment.Comments)
-    const lastCommentIndex = useSelector(state => state.Comment.lastCommentIndex)
-
-    console.log(Comments+"COMMENTS")
 
     useEffect
         (
             () => {
-                dispatch(LoadExternalDetails(key))
+               
+              fetchComments()
             },
             []
         )
-    useEffect
-        (
+ 
 
-            () => {
-
-
-                dispatch(FetchReviews(key))
-
-            }
-            , []
-
-        )
-    
-    const FetchMoreComments=()=>
+    const fetchComments=()=>
     {
-        dispatch(fetchMoreReviews(key,lastCommentIndex))
+        dispatch(LoadExternalDetails(key))
+        dispatch(FetchReviews(key))
+    }
+    const FetchMoreComments = () => {
+        dispatch(fetchMoreReviews(key))
     }
 
     const itembuilder = ({ item, index }) => {
@@ -66,24 +58,28 @@ const Comments = () => {
     return (
 
 
-        <View style={{ flex: 1 }}>
-
-            <View style={{ flex: 1 
-            ,backgroundColor:'#fff'
-            }}>
-
-                <ReviewRatings
-
-                    avg={avg}
-                >
-
-                </ReviewRatings>
+        <View style={styles.Container}>
 
 
                 <FlatList
                     data={Comments}
+                    ListHeaderComponent={
+                       avg.total>0 && <ReviewRatings
+                            avg={avg}
+                        >
+                        </ReviewRatings>
+                    }
                     style={{ flex: 1 }}
 
+                    refreshControl={
+                        <RefreshControl
+                        refreshing={commentsLoading}
+                        onRefresh={()=>fetchComments()}
+                        ></RefreshControl>
+                    }
+                    onEndReached={
+                        ()=>fetchMoreReviews()
+                    }
                     scrollEnabled={true}
                     renderItem={itembuilder}
 
@@ -92,10 +88,22 @@ const Comments = () => {
 
                 </FlatList>
 
-            </View>
+        
         </View>
 
     )
 
 }
+
+const styles=StyleSheet.create
+(
+    {
+        Container:
+        {
+            flex:1,
+            backgroundColor:"#fff"
+        }
+
+    }
+)
 export default Comments

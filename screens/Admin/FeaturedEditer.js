@@ -26,7 +26,7 @@ const FeaturedEditer = ({ navigation }) => {
         {
             gradient_color_1: "#B8E4F0",
             gradient_color_2: "#E6DDC4",
-            secondary_color: "#fff",
+            secondary_color: "#E6DDC4",
             fontFamily: fonts.SpaceMono_Regular
 
         }

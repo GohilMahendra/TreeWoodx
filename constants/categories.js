@@ -12,6 +12,8 @@ export const Material=
 [
     "Wood",
     "Glass",
+    "plastic",
+    "Fabric",,
     "Metal",
     "Linen",
     "Wool",
@@ -44,7 +46,7 @@ export const color = [
     "violet",
     "blue",
     "green",
-    "maroon",
+   
     "multi",
     "other",
 

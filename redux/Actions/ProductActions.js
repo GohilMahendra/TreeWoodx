@@ -6,14 +6,17 @@ import {
     ADD_PRODUCT_FAILED,
     ADD_PRODUCT_REQUEST,
     ADD_PRODUCT_SUCCESS,
-   
+
     LOAD_HOME_PRODUCTS_FAILED,
     LOAD_HOME_PRODUCTS_REQUEST,
     LOAD_HOME_PRODUCTS_SUCCESS,
     LOAD_MORE_PRODUCTS_FAILED,
 
+    LOAD_MORE_PRODUCTS_REQUEST,
+
     LOAD_MORE_PRODUCTS_SUCCESS,
     LOAD_PRODUCTS_FAILED,
+    LOAD_PRODUCTS_REQUEST,
     LOAD_PRODUCTS_SUCCESS,
 
 } from "../Types/ProductTypes";
@@ -58,6 +61,7 @@ export const AddProduct = (key = "", prod) => {
         catch (err) {
             dispatch({ type: ADD_PRODUCT_FAILED })
 
+            Alert.alert("" + err)
             console.log(err)
 
         }
@@ -94,8 +98,6 @@ export const AddStock = (pid, stk) => {
 export const ChangeDiscount = (pid, disc, price) => {
     return async (dispatch) => {
         try {
-
-
 
             const priceafterdisc = price - (price * disc) / 100
 
@@ -215,6 +217,8 @@ export const LoadProducts = (filters = null) => {
     return async (dispatch) => {
 
         try {
+
+            dispatch({ type: LOAD_PRODUCTS_REQUEST })
             let qry = null
 
             if (filters == null) {
@@ -245,13 +249,13 @@ export const LoadProducts = (filters = null) => {
 
             )
 
-            console.log(list.length)
+
             let lastkey = null
             if (list.length >= MAX_FETCH_LIMIT) {
                 lastkey = list[list.length - 1].key
             }
 
-            console.log(lastkey)
+
             dispatch({
                 type: LOAD_PRODUCTS_SUCCESS, payload:
                 {
@@ -266,24 +270,23 @@ export const LoadProducts = (filters = null) => {
             dispatch({ type: LOAD_PRODUCTS_FAILED, payload: err })
         }
 
-
     }
-
-
 
 }
 
 
-export const loadMoreProducts = (filters, lastindex) => {
-    return async (dispatch) => {
-
+export const loadMoreProducts = (filters) => {
+    return async (dispatch, getState) => {
 
         try {
 
+            const lastindex = getState().Products.lastindex
             if (lastindex == null) {
-                console.log("NULL INDEX")
+                console.log("NULL INDEX END REACHED")
                 return
             }
+
+            dispatch({ type: LOAD_MORE_PRODUCTS_REQUEST })
 
 
             let qry = null
@@ -330,7 +333,6 @@ export const loadMoreProducts = (filters, lastindex) => {
             }
 
 
-
             dispatch({
                 type: LOAD_MORE_PRODUCTS_SUCCESS, payload:
                 {
@@ -342,7 +344,7 @@ export const loadMoreProducts = (filters, lastindex) => {
 
         }
         catch (err) {
-            console.log(err)
+            Alert.alert("" + err)
             dispatch({ type: LOAD_MORE_PRODUCTS_FAILED, payload: err })
         }
 

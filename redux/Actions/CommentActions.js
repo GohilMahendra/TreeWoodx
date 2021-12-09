@@ -1,8 +1,10 @@
 
 import auth from "@react-native-firebase/auth";
 
-import firestore from "@react-native-firebase/firestore";
+import firestore, { firebase } from "@react-native-firebase/firestore";
+import { constraints } from "@tensorflow/tfjs-layers";
 import { lstm } from "@tensorflow/tfjs-layers/dist/exports_layers";
+import { Alert } from "react-native";
 import {
   ADD_COMMENT_FAILED,
   ADD_COMMENT_REQUEST,
@@ -31,8 +33,6 @@ export const LoadExternalDetails = (pid) => {
 
       const avg = await qry.get()
 
-
-      console.log(avg.data())
       dispatch({ type: LOAD_EXTERNAL_DETAILS_SUCCESS, payload: avg.data() })
 
 
@@ -57,24 +57,23 @@ export const FetchReviews = (pid) => {
         .doc(pid)
         .collection('review')
         .limit(MAX_FETCH_LIMIT)
+
       const reviews = await qry.get()
 
       var list = []
 
-
       reviews.forEach
         (
           function (child) {
-            list.push({ ...child.data(), key: child.id })
+            list.push({ key: child.id, ...child.data() })
           }
         )
-
 
 
       let lastkey = null
 
       if (list.length >= MAX_FETCH_LIMIT) {
-        lastkey = list[list.length - 1].username
+        lastkey = list[list.length - 1].key
       }
 
       dispatch({
@@ -99,22 +98,61 @@ export const FetchReviews = (pid) => {
 }
 
 
-export const fetchMoreReviews = (pid, lastindex) => {
+export const fetchMoreReviews = (pid) => {
 
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
 
     try {
+
+      const id = getState().Comment.lastCommentIndex
+      if (id == null) {
+        console.log("NUll ID")
+        return
+      }
+
+
       dispatch({ type: LOAD_MORE_COMMENTS_REQUEST })
 
       const qry = firestore()
         .collection('reviews')
         .doc(pid)
         .collection('review')
-        .orderBy('email')
+        .orderBy(firestore.FieldPath.documentId())
+        .startAfter(id)
         .limit(MAX_FETCH_LIMIT)
+
+      const reviews = await qry.get()
+
+      var list = []
+
+      reviews.forEach
+        (
+          function (child) {
+            list.push({ key: child.id, ...child.data() })
+          }
+        )
+
+
+      let lastkey = null
+
+      if (list.length >= MAX_FETCH_LIMIT) {
+        lastkey = list[list.length - 1].key
+      }
+
+      dispatch({
+        type: LOAD_COMMENTS_SUCCESS, payload: {
+          Reviews: list,
+          lastKey: lastkey
+        }
+      })
+
+
+
 
     }
     catch (err) {
+      console.log(err)
+      dispatch({ type: LOAD_COMMENTS_FAILED, payload: err })
 
     }
 
@@ -128,129 +166,198 @@ export const fetchMoreReviews = (pid, lastindex) => {
 export const AddComment = (review, key, todaysdate) => {
   return async (dispatch) => {
 
-    dispatch({ type: ADD_COMMENT_REQUEST })
-
     if (review.review == "" || review.review == undefined) {
-      alert("please add review and then try your thoughts are valueable to US")
+      alert("add some words", "please add review and then try your thoughts are valueable to US")
       return
-    }
-
-
-    const ifExists = await firestore()
-      .collection('reviews')
-      .doc(key)
-      .collection('review').doc(auth().currentUser.uid)
-      .get()
-
-
-
-    let avg = await firestore()
-      .collection('reviews')
-      .doc(key)
-      .get()
-
-
-    if (!avg.exists) {
-
-      avg = {
-        one: 0,
-        two: 0,
-        three: 0,
-        four: 0,
-        five: 0,
-        total: 0,
-        avg: 0
-      }
 
     }
-    else {
-      avg = avg.data()
-
-    }
-
-
-
-    if (ifExists.exists) {
-
-
-      switch (ifExists.data().star) {
-        case 1:
-          avg.one = avg.one - 1
-          break;
-        case 2:
-          avg.two = avg.two - 1
-          break;
-        case 3:
-          avg.three = avg.three - 1
-          break;
-        case 4:
-          avg.four = avg.four - 1
-          break;
-        default:
-          avg.five = avg.five - 1
-
-
-      }
-      total = avg.total * avg.avg
-      total -= ifExists.data().star
-      let p = avg.total
-      p--
-
-      avg.total = p
-
-      console.log(p)
-      let average = total / p
-
-      if (p <= 0) {
-        average = 0
-      }
-
-      avg.avg = average
-
-    }
-
-    console.log(avg)
-
-    switch (review.rate) {
-      case 1:
-        avg.one++;
-        break;
-      case 2:
-        avg.two++;
-        break;
-      case 3:
-        avg.three++;
-        break;
-      case 4:
-        avg.four++;
-        break;
-      default:
-        avg.five++;
-
-    }
-
-
-    avg.total++;
-
-
-    avg.avg = ((avg.avg * (avg.total - 1)) + (review.rate)) / avg.total
-
-    console.log(avg)
-
 
     try {
-      await firestore().collection('reviews').doc(key).set
-        (
-          avg
-        )
+      dispatch({ type: ADD_COMMENT_REQUEST })
 
-      await firestore().collection('reviews').doc(key)
+
+      var star = Number(review.rate)
+
+      const ifExists = await firestore()
+        .collection('reviews')
+        .doc(key)
+        .collection('review')
+        .doc(auth().currentUser.uid)
+        .get()
+
+
+      const data = await firestore()
+        .collection('reviews')
+        .doc(key)
+        .get()
+
+
+
+      if (ifExists.exists) {
+
+        if (ifExists.data().star == 1) {
+          await firestore()
+            .collection('reviews')
+            .doc(key)
+            .update(
+              {
+                total: firebase.firestore.FieldValue.increment(-1),
+                totalStar: firebase.firestore.FieldValue.increment(-1),
+                one: firebase.firestore.FieldValue.increment(-1)
+              }
+            )
+        }
+        else if (ifExists.data().star == 2) {
+          await firestore()
+            .collection('reviews')
+            .doc(key)
+            .update(
+              {
+                total: firebase.firestore.FieldValue.increment(-1),
+                totalStar: firebase.firestore.FieldValue.increment(-2),
+                two: firebase.firestore.FieldValue.increment(-1)
+              }
+            )
+        }
+        else if (ifExists.data().star == 3) {
+          await firestore()
+            .collection('reviews')
+            .doc(key)
+            .update(
+              {
+                total: firebase.firestore.FieldValue.increment(-1),
+                totalStar: firebase.firestore.FieldValue.increment(-3),
+                three: firebase.firestore.FieldValue.increment(-1)
+              }
+            )
+        }
+        else if (ifExists.data().star == 4) {
+          await firestore()
+            .collection('reviews')
+            .doc(key)
+            .update(
+              {
+                total: firebase.firestore.FieldValue.increment(-1),
+                totalStar: firebase.firestore.FieldValue.increment(-4),
+                four: firebase.firestore.FieldValue.increment(-1)
+              }
+            )
+        }
+        else if (ifExists.data().star == 5) {
+          await firestore()
+            .collection('reviews')
+            .doc(key)
+            .update(
+              {
+                total: firebase.firestore.FieldValue.increment(-1),
+                totalStar: firebase.firestore.FieldValue.increment(-5),
+                five: firebase.firestore.FieldValue.increment(-1)
+              }
+            )
+        }
+
+      }
+
+
+      if (data.exists) {
+
+        console.log(star)
+        if (star == 1) {
+          await firestore()
+            .collection('reviews')
+            .doc(key)
+            .update(
+              {
+                total: firebase.firestore.FieldValue.increment(1),
+                totalStar: firebase.firestore.FieldValue.increment(1),
+                one: firebase.firestore.FieldValue.increment(1)
+              }
+            )
+        }
+
+        else if (star == 2) {
+          await firestore()
+            .collection('reviews')
+            .doc(key)
+            .update(
+              {
+                total: firebase.firestore.FieldValue.increment(1),
+                totalStar: firebase.firestore.FieldValue.increment(2),
+                two: firebase.firestore.FieldValue.increment(1)
+              }
+            )
+        }
+
+        else if (star == 3) {
+          await firestore()
+            .collection('reviews')
+            .doc(key)
+            .update(
+              {
+                total: firebase.firestore.FieldValue.increment(1),
+                totalStar: firebase.firestore.FieldValue.increment(3),
+                three: firebase.firestore.FieldValue.increment(1)
+              }
+            )
+        }
+
+        else if (star == 4) {
+          await firestore()
+            .collection('reviews')
+            .doc(key)
+            .update(
+              {
+                total: firebase.firestore.FieldValue.increment(1),
+                totalStar: firebase.firestore.FieldValue.increment(4),
+                four: firebase.firestore.FieldValue.increment(1)
+              }
+            )
+        }
+
+        else if (star == 5) {
+          await firestore()
+            .collection('reviews')
+            .doc(key)
+            .update(
+              {
+                total: firebase.firestore.FieldValue.increment(1),
+                totalStar: firebase.firestore.FieldValue.increment(5),
+                five: firebase.firestore.FieldValue.increment(1)
+              }
+            )
+        }
+
+      }
+
+      else {
+        await
+          firestore()
+            .collection('reviews')
+            .doc(key)
+            .set(
+              {
+                totalStar: star,
+                total: 1,
+                one: (star == 1) ? 1 : 0,
+                two: (star == 2) ? 1 : 0,
+                three: (star == 3) ? 1 : 0,
+                four: (star == 4) ? 1 : 0,
+                five: (star == 5) ? 1 : 0
+
+
+              }
+            )
+      }
+
+
+
+      const addReview = await firestore().collection('reviews').doc(key)
         .collection('review')
         .doc(auth().currentUser.uid)
         .set(
           {
             date: todaysdate,
-            username: "",
+            username: auth().currentUser.displayName,
             star: review.rate,
             review: review.review
 
@@ -258,10 +365,13 @@ export const AddComment = (review, key, todaysdate) => {
         )
 
 
+
       dispatch({ type: ADD_COMMENT_SUCCESS })
+      Alert.alert("Comment Added", "Thanks for your Review")
     }
     catch (err) {
 
+      Alert.alert("Err", "" + err)
       dispatch({ type: ADD_COMMENT_FAILED, payload: err })
     }
 

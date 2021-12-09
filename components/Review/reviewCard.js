@@ -8,9 +8,6 @@ import { fonts } from "../../constants/fonts";
 import AddStar from "./Addstar";
 const ReviewCard = ({ rev }) => {
 
-  // console.log(rev)
-
-
 
   return (
     <View style={styles.container}>
@@ -37,27 +34,25 @@ const styles = StyleSheet.create(
   {
     container:
     {
-      margin: 20,
-      width: '90%',
+      margin: 10,
+      padding:10,
+      width:'90%',
       borderRadius: 25,
       alignSelf: "center",
-    
-    
+
       backgroundColor: "#fff",
-      elevation:10
+      elevation:5
     },
     innerView:
     {
       flexDirection: "row",
       alignItems: "center",
-
-      margin: 10,
-
       justifyContent: "space-between"
     },
     reviewText:
     {
-      fontSize: 15,
+      fontSize: 18,
+      fontFamily:fonts.Genos_Regular,
       marginHorizontal: 20
     },
     usernameText:

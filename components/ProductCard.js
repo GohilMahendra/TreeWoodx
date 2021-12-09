@@ -18,27 +18,23 @@ const ProductCard = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.ViewContainer}>
+
+                <FastImage
+                    source={{
+                        uri: item.pimage,
+                        priority: FastImage.priority.normal
+                    }}
+                    style={styles.image}
+
+                    resizeMode={FastImage.resizeMode.contain}
+
+                ></FastImage>
+
                 <View
-                    style={
-                        {
-                            elevation: 5,
-                            margin: 10,
-                            borderRadius: 20,
-                            backgroundColor: "#fff",
-                            flex: 1
-                        }
-                    }
+                    style={styles.discountContainer}
                 >
-                    <FastImage
-                        source={{
-                            uri: item.pimage,
-                            priority: FastImage.priority.normal
-                        }}
-                        style={styles.image}
-
-                        resizeMode={FastImage.resizeMode.contain}
-
-                    ></FastImage>
+                    <Text
+                        style={[styles.texts, { color: "#fff" }]}>{item.pdisc}% off</Text>
                 </View>
                 <View
                     style={styles.TextConatainer}>
@@ -48,8 +44,7 @@ const ProductCard = (props) => {
                     <Text
                         style={styles.texts}>RS {item.priceafterdisc}</Text>
 
-                    <Text
-                        style={[styles.texts, { color: "green" }]}>{item.pdisc}% off</Text>
+
                     <Text
                         style={styles.txtbrand}>{item.brand}</Text>
                 </View>
@@ -74,8 +69,10 @@ const styles = StyleSheet.create
             },
             image:
             {
-                borderRadius: 20,
+
                 flex: 1,
+                margin: 10,
+                borderRadius: 15
 
             },
             ViewContainer:
@@ -101,16 +98,26 @@ const styles = StyleSheet.create
             {
                 alignItems: 'center',
                 fontSize: 20,
+
                 alignSelf: 'center'
             },
             texts:
             {
                 alignSelf: 'center',
-
                 fontFamily: fonts.Federo_Regular,
                 color: "black",
                 fontSize: 18
 
+            },
+            discountContainer:
+            {
+                position: 'absolute',
+                top: 10,
+                right: 20,
+                elevation: 10,
+                backgroundColor: 'green',
+                padding: 5,
+                borderRadius:10
             }
 
         }

@@ -1,6 +1,7 @@
 import auth from "@react-native-firebase/auth";
 
 import firestore from "@react-native-firebase/firestore";
+import { Alert } from "react-native";
 import { createNativeWrapper } from "react-native-gesture-handler";
 import { LOAD_COMMENTS_FAILED } from "../Types/CommentTypes";
 
@@ -35,9 +36,11 @@ export const AddToFeatured = (data,theme) => {
                 )
 
             dispatch({ type: ADD_FEATURED_SUCCESS })
+            Alert.alert("added successfully","Now it will be listed in Featured in while")
         }
         catch (err) {
 
+            Alert.alert("addition failed",""+err)
             console.log(err)
         }
     }
@@ -45,18 +48,24 @@ export const AddToFeatured = (data,theme) => {
 
 export const deleteFeaturedProduct = (key) => {
     return async (dispatch) => {
-        dispatch({ type: DELETE_FEATURED_REQUEST })
+       
 
         try {
 
+            dispatch({ type: DELETE_FEATURED_REQUEST })
             const quary = firestore().collection('featured').doc(key)
 
             const res = await quary.delete()
+            
+            console.log(res)
+            
             dispatch({ type: DELETE_FEATURED_SUCCESS })
-
+            Alert.alert("Deleted Successfully","Refreash to see changes here!!")
 
         }
         catch (err) {
+            console.log(err)
+            Alert.alert("Deletion failed",""+err)
             dispatch({ type: DELETE_FEATURED_FAILED, payload: err })
 
         }
@@ -80,15 +89,19 @@ export const fetchFeaturedProducts = () => {
                 (
                     function (child) {
 
-                        list.push(child.data())
+                        list.push({key:child.id,...child.data()})
 
 
                     }
+
                 )
 
+
             dispatch({ type: LOAD_FEATURED_SUCCESS, payload: list })
+         
         }
         catch (err) {
+            Alert.alert("fetch failed!!",""+err)
             dispatch({ type: LOAD_FEATURED_FAILED, payload: "There is Some Problem in Featured" })
 
         }

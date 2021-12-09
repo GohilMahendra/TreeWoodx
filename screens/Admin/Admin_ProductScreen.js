@@ -5,21 +5,18 @@ import { Color, colorsArray } from "../../constants/colors";
 
 import CustomFab from "../../components/Admin_Product/CustomFab";
 import { useDispatch, useSelector } from "react-redux";
-import { DeleteProduct, LoadProducts } from "../../redux/Actions/ProductActions";
+import { DeleteProduct, loadMoreProducts, LoadProducts } from "../../redux/Actions/ProductActions";
 import { fonts } from "../../constants/fonts";
 import ProductCardEditer from "../../components/Admin_Product/ProductEditerCard";
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/core";
 import { off } from "npm";
 import Search from "../Search/Search";
+import { ActivityIndicator } from "react-native-paper";
 
 const Admin_editProd = ({ navigation }) => {
 
 
     const dispatch = useDispatch()
-
-
-
-    //const navigation = useNavigation()
     const route = useRoute()
     const [filters, setfilters] = useState(
         {
@@ -27,8 +24,6 @@ const Admin_editProd = ({ navigation }) => {
             brand: ""
         }
     )
-
-
 
     useEffect(
         () => {
@@ -80,6 +75,12 @@ const Admin_editProd = ({ navigation }) => {
 
 
 
+    const fecthMore=()=>
+    {
+        dispatch(loadMoreProducts(filters))
+    }
+
+
     useEffect
         (
             () => {
@@ -93,9 +94,10 @@ const Admin_editProd = ({ navigation }) => {
     const loading = useSelector(state => state.Products.prodLoad)
 
 
-    const prodBuilder = ({ item, index }) => {
+    const moreproductsLoad= useSelector(state => state.Products.moreproductsLoad)
 
-        console.log(item.pimage)
+    console.log(moreproductsLoad)
+    const prodBuilder = ({ item, index }) => {
 
         return (
 
@@ -146,11 +148,22 @@ const Admin_editProd = ({ navigation }) => {
             }
             <FlatList
                 data={data}
+                onEndReached={
+                    ()=>fecthMore()
+                }
                 renderItem={prodBuilder}
+                ListFooterComponent={
+                  moreproductsLoad &&  <ActivityIndicator
+                    size={30}
+                
+                    
+                    color="black"
+                    ></ActivityIndicator>
+                }
                 keyExtractor={item => item.key}
                 refreshControl={
                     <RefreshControl
-                        onRefresh={fetchProd}
+                        onRefresh={()=>fetchProd()}
                         refreshing={loading}
                     ></RefreshControl>
                 }

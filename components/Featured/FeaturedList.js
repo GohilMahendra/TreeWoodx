@@ -34,7 +34,7 @@ const FeaturedList = () => {
     const featuredRef = useRef()
     const navigation = useNavigation()
     const featured = useSelector(state => state.Featured.featuredProducts)
-
+    
     const load = useSelector(state => state.Featured.featuredLoading)
     const Error = useSelector(state => state.Featured.featuredError)
 
@@ -88,11 +88,11 @@ const FeaturedList = () => {
 
 
 
-                layout="tinder"
+                layout="default"
                 layoutCardOffset={18}
 
                 ref={featuredRef}
-          
+        
                 itemWidth={width - 20}
                 sliderWidth={width - 20}
                 data={featured}

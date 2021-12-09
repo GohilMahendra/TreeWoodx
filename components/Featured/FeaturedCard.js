@@ -16,21 +16,14 @@ const FeaturedCard = (props) => {
 
     const { data, colorTheme } = props
 
-
-    console.log(colorTheme)
-
     return (
-
-
         <View
             style={styles.Container}
-
         >
             <LinearGradient
                 colors={[colorTheme.gradient_color_1, colorTheme.gradient_color_2]}
                 style={styles.gradinetContainer}
             >
-
                 <View
                     style={styles.divideContainer}
                 >
@@ -61,7 +54,7 @@ const FeaturedCard = (props) => {
                             <Text
                                 style={
                                     {
-                                        color: colorTheme.secondary_color,
+                                        color:"#fff",
                                         fontSize: 18, 
                                         fontFamily: colorTheme.fontFamily
                                     }
@@ -75,13 +68,12 @@ const FeaturedCard = (props) => {
                                 <Text
                                     style={
                                         {
-                                            color: "#ffff",
+                                            color: colorTheme.gradient_color_1,
                                             fontSize: 18,
                                             padding: 10,
                                             textShadowRadius: 1,
                                             textShadowColor: colorTheme.gradient_color_2,
                                             fontFamily: colorTheme.fontFamily,
-
                                             textDecorationLine: 'line-through'
                                         }
                                     }
@@ -91,7 +83,7 @@ const FeaturedCard = (props) => {
                                 <Text
                                     style={
                                         {
-                                            color: "#fff",
+                                            color: colorTheme.gradient_color_1,
                                             fontSize: 20,
                                             padding: 10,
                                             fontFamily: colorTheme.fontFamily
@@ -107,6 +99,7 @@ const FeaturedCard = (props) => {
                                     {
                                         backgroundColor: colorTheme.secondary_color,
                                         borderRadius: 10,
+                                        elevation:10,
                                         padding: 10,
                                     }
                                 }
@@ -115,7 +108,8 @@ const FeaturedCard = (props) => {
                                     style={
                                         {
                                             fontFamily: colorTheme.fontFamily,
-                                            paddingHorizontal:20
+                                            paddingHorizontal:20,
+                                            color:'#fff'
                                         }
                                     }
                                 >{data.pdisc} % OFF</Text>
@@ -150,8 +144,7 @@ const styles = StyleSheet.create
             {
                 height: 200,
                 backgroundColor: '#fff',
-                margin: 15,
-
+                margin: 10,
                 borderRadius: 15,
                 elevation: 15
             }
@@ -206,18 +199,17 @@ const styles = StyleSheet.create
             {
                 justifyContent: 'center',
                 alignItems: 'center',
-                width: '50%',
+                width: '60%',
 
             },
             imgContainer:
 
             {
-                height: '80%',
-                width: "40%",
+                height: '70%',
+                width: "35%",
                 opacity: 0.7,
-                margin: 10,
+                margin:10,
                 alignSelf: "center",
-                padding: 20,
                 borderRadius: 15,
 
             }

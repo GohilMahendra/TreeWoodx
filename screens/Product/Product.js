@@ -22,7 +22,6 @@ import AddReview from "../../components/Review/AddReview";
 const { height, width } = Dimensions.get('screen')
 const product = ({ navigation }) => {
 
-
   const dispatch = useDispatch()
 
   const date = new Date()
@@ -30,6 +29,10 @@ const product = ({ navigation }) => {
   const todaysdate = date.toISOString().split('T')[0]
 
   const [success, setsuccess] = useState(false)
+  
+  const [prod, setprod] = React.useState([])
+  const [load, setload] = React.useState(true)
+
 
   const p = useRoute()
 
@@ -37,36 +40,10 @@ const product = ({ navigation }) => {
     dispatch(AddToCart(prod, p.params.item.key))
   }
 
-  useEffect
-    (
-
-      () => {
-
-        const subscriber = firestore().collection('reviews')
-          .doc(p.params.item.key)
-          .collection('review')
-          .limit(3).
-          onSnapshot((snapshot) => {
-
-            snapshot.docs.forEach((docs) => {
-              setrev(docs.data())
-
-            }
-
-            )
-
-          })
-
-        return subscriber
-      }
-      , [rev]
-    )
-
+ 
 
 
   useEffect(() => {
-
-
     firestore().collection('products')
       .doc(p.params.item.key)
       .onSnapshot((snapshot) => {
@@ -82,15 +59,7 @@ const product = ({ navigation }) => {
     , []
   )
 
-  const [prod, setprod] = React.useState([])
-  const [load, setload] = React.useState(true)
-
-  const [rev, setrev] = useState({
-    date: todaysdate,
-    email: ""
-    , star: 5,
-    review: ""
-  })
+  
 
 
   return (
@@ -120,8 +89,6 @@ const product = ({ navigation }) => {
               data={[prod.img1, prod.img2, prod.img3, prod.img4]}
             />
 
-
-
             <DimentionsView
 
               productHeight={prod.dimensions.height}
@@ -132,12 +99,7 @@ const product = ({ navigation }) => {
 
 
             <View style={styles.productDetailsContainer}>
-              <Text style={{
-                alignSelf: 'center',
-                fontFamily: "Merienda-Regular",
-                fontWeight: 'bold',
-                fontSize: 25
-              }} >
+              <Text style={styles.txtPname} >
                 {prod.pname}
               </Text>
               <Text style={styles.brandNameText} >
@@ -182,35 +144,31 @@ const product = ({ navigation }) => {
               </Text>
             </View>
             <ScrollView
-            horizontal
+              horizontal
             >
-            <View
-              style={styles.categoryContainer}
-            >
-              {
-                prod.subcategories.map(
-                  (item) => {
-                    return (
-                      <View
-                        key={item}
-                        style={styles.categoryContainerView}
-                      >
-                        <Text
-                          style={styles.productCategoryText} >
-                          {item}
-                        </Text>
-                      </View>
-                    )
-                  }
-                )
-              }
+              <View
+                style={styles.categoryContainer}
+              >
+                {
+                  prod.subcategories.map(
+                    (item) => {
+                      return (
+                        <View
+                          key={item}
+                          style={styles.categoryContainerView}
+                        >
+                          <Text
+                            style={styles.productCategoryText} >
+                            {item}
+                          </Text>
+                        </View>
+                      )
+                    }
+                  )
+                }
 
-            </View>
+              </View>
             </ScrollView>
-
-
-
-          
 
             <TouchableOpacity
               onPress={() => addTOcart()}
@@ -228,62 +186,27 @@ const product = ({ navigation }) => {
 
             />
 
-
-            {/**single review */}
-            {
-
-              (rev.email != "")
-              &&
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Comments', { "key": p.params.item.key })}
-
-              >
-
-                <View style={styles.reviewContainer}>
-
-                  <MaterialIcons
-
-                    style={
-                      {
-                        alignSelf: "flex-end",
-
-                      }
-                    }
-                    name={"read-more"}
-                    size={30}
-                  >
-                  </MaterialIcons>
-
-                  <View style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between"
-                  }}>
-
-                    <AddStar
-                      star={rev.star}
-                    />
-                    <Text style={{
-                      textAlign: 'center',
-                      marginHorizontal: 20,
-                      textAlignVertical: 'center'
-                    }}>{rev.date}</Text>
-
-
-                  </View>
-                  <Text style={{
-                    fontSize: 20,
-                    marginHorizontal: 20,
-                    fontWeight: 'bold'
-                  }}>{rev.username}</Text>
-
-                  <Text style={{ fontSize: 15, marginHorizontal: 20 }}>{rev.review}</Text>
-
-                </View>
-
-              </TouchableOpacity>
-
-            }
+            <TouchableOpacity
+            onPress={()=>navigation.navigate("Comments",{key:p.params.item.key})}
+            >
+            <View style={{
+              flexDirection:'row',
+              margin:20,
+              justifyContent:'space-between'
+            }}>
+              <Text
+              style={{
+                fontSize:20,
+                fontFamily:fonts.Federo_Regular
+              }}
+              >SEE REVIEW HERE </Text>
+              <FontAwesome5Icon
+              size={20}
+              name="chevron-right"
+              color="black"
+              ></FontAwesome5Icon>
+        </View>
+        </TouchableOpacity>
           </View>
 
           <View
@@ -347,7 +270,6 @@ const styles = StyleSheet.create
       ,
       discription:
       {
-
         margin: 20,
         fontFamily: "Federo-Regular",
         fontSize: 18
@@ -373,7 +295,13 @@ const styles = StyleSheet.create
         flexDirection: 'row',
         justifyContent: 'space-evenly'
       },
-
+      txtPname:
+      {
+        alignSelf: 'center',
+        fontFamily: "Merienda-Regular",
+        fontWeight: 'bold',
+        fontSize: 25
+      },
       materialContainer:
       {
         alignContent: "center",
@@ -384,7 +312,6 @@ const styles = StyleSheet.create
       },
       materialText:
       {
-
         fontSize: 20,
         fontFamily: fonts.Federo_Regular,
         margin: 20
@@ -394,7 +321,6 @@ const styles = StyleSheet.create
         backgroundColor: "#fff",
         borderRadius: 20,
         elevation: 15
-
       }
       ,
       materialTextName:
@@ -404,44 +330,38 @@ const styles = StyleSheet.create
         margin: 10,
         fontSize: 20,
         fontFamily: fonts.Federo_Regular
-
       },
       productCategoryText:
       {
-
         fontSize: 20,
         textAlignVertical: 'center',
         fontFamily: fonts.Federo_Regular,
         padding: 15,
-        
         color: "black",
         textAlign: 'center',
 
       },
-
-
-
       categoryContainer:
       {
         alignContent: "center",
         alignItems: 'center',
-        alignSelf:'center',
-
-        margin:20,
+        alignSelf: 'center',
+        margin: 20,
         flexDirection: "row",
-
         justifyContent: 'space-evenly',
 
-
       },
-
+      reviewContainer:
+      {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
+      },
       categoryContainerView:
       {
         backgroundColor: "#fff",
-       
-        alignItems:"center",
-        marginHorizontal:20,
-
+        alignItems: "center",
+        marginHorizontal: 20,
         borderRadius: 15
       },
 

@@ -15,6 +15,7 @@ import ProductFilter from "../../components/Product_list/ProductFilter";
 
 import LinearGradient from "react-native-linear-gradient";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import { fonts } from "../../constants/fonts";
 
 const Product_list = () => {
   const navigation = useNavigation()
@@ -186,11 +187,11 @@ const Product_list = () => {
               onPress={() => { setfilters({ ...filters, search: "" }), removeParams("search") }}
               style={styles.btnRemoveFilter}
             >
-                 <Text
-              style={styles.txtFilterlabel}
+              <Text
+                style={styles.txtFilterlabel}
               >{filters.search}</Text>
               <Text
-              style={styles.txtRemove}
+                style={styles.txtRemove}
               >
                 X
               </Text>
@@ -204,10 +205,10 @@ const Product_list = () => {
               style={styles.btnRemoveFilter}
             >
               <Text
-              style={styles.txtFilterlabel}
+                style={styles.txtFilterlabel}
               >{filters.brand}</Text>
               <Text
-              style={styles.txtRemove}
+                style={styles.txtRemove}
               >
                 X
               </Text>
@@ -220,11 +221,11 @@ const Product_list = () => {
               onPress={() => { setfilters({ ...filters, cat: "" }), removeParams("item") }}
               style={styles.btnRemoveFilter}
             >
-             <Text
-              style={styles.txtFilterlabel}
+              <Text
+                style={styles.txtFilterlabel}
               >{filters.cat}</Text>
               <Text
-              style={styles.txtRemove}
+                style={styles.txtRemove}
               >
                 X
               </Text>
@@ -237,34 +238,34 @@ const Product_list = () => {
               onPress={() => setfilters({ ...filters, material: "" })}
               style={styles.btnRemoveFilter}
             >
-             <Text
-              style={styles.txtFilterlabel}
+              <Text
+                style={styles.txtFilterlabel}
               >{filters.material}</Text>
               <Text
-              style={styles.txtRemove}
+                style={styles.txtRemove}
               >
                 X
               </Text>
             </TouchableOpacity>
           }
-           {
+          {
             filters.color != ""
             &&
             <TouchableOpacity
               onPress={() => setfilters({ ...filters, color: "" })}
-              style={[styles.btnRemoveColor,{backgroundColor:filters.color}]}
+              style={[styles.btnRemoveColor, { backgroundColor: filters.color }]}
             >
               <Text
-              style={[styles.txtFilterlabel,{color:filters.color==='white'?'black':'#fff'}]}
-            >{filters.color}</Text>
+                style={[styles.txtFilterlabel, { color: filters.color === 'white' ? 'black' : '#fff' }]}
+              >{filters.color}</Text>
               <Text
-              style={styles.txtRemove}
+                style={styles.txtRemove}
               >
                 X
               </Text>
             </TouchableOpacity>
           }
-            {
+          {
             filters.priceRange != ""
             &&
             <TouchableOpacity
@@ -272,10 +273,10 @@ const Product_list = () => {
               style={styles.btnRemoveFilter}
             >
               <Text
-              style={styles.txtFilterlabel}
+                style={styles.txtFilterlabel}
               >{filters.priceRange}</Text>
               <Text
-              style={styles.txtRemove}
+                style={styles.txtRemove}
               >
                 X
               </Text>
@@ -288,11 +289,11 @@ const Product_list = () => {
               onPress={() => setfilters({ ...filters, discountRange: "" })}
               style={styles.btnRemoveFilter}
             >
-               <Text
-              style={styles.txtFilterlabel}
+              <Text
+                style={styles.txtFilterlabel}
               >{filters.discountRange}</Text>
               <Text
-              style={styles.txtRemove}
+                style={styles.txtRemove}
               >
                 X
               </Text>
@@ -312,7 +313,7 @@ const Product_list = () => {
           </RefreshControl>
         }
 
-        style={[styles.listStyle,{marginTop:!isAllfiltersNull()?0:50}]}
+        style={[styles.listStyle, { marginTop: !isAllfiltersNull() ? 0 : 50 }]}
         data={product}
         numColumns={2}
         onEndReached={
@@ -330,13 +331,12 @@ const Product_list = () => {
       >
 
         <TouchableOpacity
-
           onPress={() => setisVisble(true)}
           style={styles.filterBtn}
         >
           <LinearGradient
             style={styles.filtersGradient}
-            colors={["blue",
+            colors={["violet",
               "skyblue"]}
           >
 
@@ -354,16 +354,6 @@ const Product_list = () => {
 
       </View>
 
-      <ActivityIndicator
-        animating={prodLoad ? true : false}
-        style={{
-          position: "absolute",
-          alignSelf: 'center',
-          top: '50%'
-        }}
-        size={30}
-      >
-      </ActivityIndicator>
       <Modal
         onBackButtonPress={() => setisVisble(false)}
         isVisible={isVisible}
@@ -406,8 +396,7 @@ const styles = StyleSheet.create
         elevation: 15,
         backgroundColor: "#fff",
         bottom: 20
-      }
-      ,
+      },
       listStyle:
       {
         flex: 1,
@@ -415,13 +404,14 @@ const styles = StyleSheet.create
       },
       filtersGradient:
       {
-        flex: 1, justifyContent: 'center',
-        alignItems: 'center', borderRadius: 50
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 50
       },
       filterBtn:
       {
         height: '100%',
-
         width: '100%'
       },
       modalContainer:
@@ -432,41 +422,41 @@ const styles = StyleSheet.create
       },
       txtRemove:
       {
-        color:'black',
-        marginHorizontal:5,
-        fontSize:18,
-        backgroundColor:'#fff',
-        textAlignVertical:'center',
-        paddingHorizontal:10
-        ,borderRadius:10
+        color: 'black',
+        marginHorizontal: 5,
+        fontSize: 18,
+        backgroundColor: '#fff',
+        textAlignVertical: 'center',
+        paddingHorizontal: 10
+        , borderRadius: 10
       },
       btnRemoveFilter:
       {
         height: 50,
-        padding:5,
-        margin:5,
+        padding: 5,
+        margin: 5,
         backgroundColor: 'black',
         elevation: 10,
-        flexDirection:'row',
-        justifyContent:'space-evenly',
-        alignItems:'center',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
         borderRadius: 10,
       },
       txtFilterlabel:
       {
-        color:'#fff',
-        fontSize:18
+        color: '#fff',
+        alignSelf: "center",
+        fontFamily: fonts.Genos_Regular,
+        fontSize: 18
       },
-      btnRemoveColor: 
+      btnRemoveColor:
       {
-        height:50,
-       
-        padding:10,
-        borderRadius:10,
-        margin:5,
-        flexDirection:'row'
+        height: 50,
+        padding: 10,
+        borderRadius: 10,
+        margin: 5,
+        flexDirection: 'row'
       }
-    
 
     }
   )

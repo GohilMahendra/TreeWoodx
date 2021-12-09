@@ -8,184 +8,132 @@ import AddStar from "./Addstar";
 import CountConverter from "../CountConverter";
 import ReviewCountPoll from "./ReviewCountPoll";
 
+const { height, width } = Dimensions.get('window')
 
 const ReviewRatings = ({ avg }) => {
 
-  var max = avg.total
-
   return (
     <View style={styles.Container}>
-      <View style={styles.ratingConatainer}>
+      <View
+        style={styles.detailsContainer}
+      >
+        <AddStar
+          star={avg.totalStar / avg.total}
+        ></AddStar>
 
-
-        <FontAwesome5Icon
-          style={styles.iconStyle}
-          size={20} color="#fff" name="star" solid={true}>
-          <Text>{parseFloat(avg.avg).toFixed(2)}</Text>
-        </FontAwesome5Icon>
-
-        <Text style={{
-          marginHorizontal: 10,
-          fontSize: 20
-        }}>Total {CountConverter(max)} Reviews</Text>
+        <Text
+          style={{
+            fontSize: 18
+          }}
+        >
+          Total {avg.total} Ratings
+        </Text>
       </View>
 
-      <View style={styles.ratingPollContainer}>
-        <View style={styles.ratingNumberContainer}>
-          <Text
-            style=
-            {
-              styles.reviewStarFONTS
-            }
-          >5</Text>
-          <Text
-            style={
-              styles.reviewStarFONTS
-            }
-          >4</Text>
-          <Text
-            style={
-              styles.reviewStarFONTS
-            }
-          >3</Text>
-          <Text
-            style={
-              styles.reviewStarFONTS
-            }
-          >2</Text>
-          <Text
-            style={
-              styles.reviewStarFONTS
-            }
-          >1</Text>
-        </View>
+      <View
+        style={styles.reviewContainer}
+      >
+        <Text>5</Text>
+        <ProgressBar
+          color={"green"}
+          progress={avg.five / avg.total}
+          style={{
+            width: width - 100,
+            height: 20,
 
-        <View style={styles.ProgressContainer}>
-          <ProgressBar
-            style={[ReviewRatingsStyles.progressBar, { marginTop: 0 }]}
-            progress={avg.five / max}
-            color={"green"}
-          />
+          }}
+        />
+        <Text>{avg.five}</Text>
+      </View>
+      <View
+        style={styles.reviewContainer}
+      >
+        <Text>4</Text>
+        <ProgressBar
+          color={"green"}
+          progress={avg.four / avg.total}
+          style={{
+            width: width - 100,
+            height: 20,
 
-          <ProgressBar
-            style={ReviewRatingsStyles.progressBar}
-            progress={avg.four / max}
-            color={"green"}
-          >
+          }}
+        />
+        <Text>{avg.four}</Text>
+      </View>
+      <View
+        style={styles.reviewContainer}
+      >
+        <Text>3</Text>
+        <ProgressBar
+          color={"green"}
+          progress={avg.three / avg.total}
+          style={{
+            width: width - 100,
+            height: 20,
 
-          </ProgressBar>
-          <ProgressBar
-            style={ReviewRatingsStyles.progressBar}
-            progress={avg.three / max}
-            color={"#7CFC00"}
-          >
-          </ProgressBar>
+          }}
+        />
+        <Text>{avg.three}</Text>
+      </View>
+      <View
+        style={styles.reviewContainer}
+      >
+        <Text>2</Text>
+        <ProgressBar
+          color={"orange"}
+          progress={avg.two / avg.total}
+          style={{
+            width: width - 100,
+            height: 20,
 
-          <ProgressBar
-            style={ReviewRatingsStyles.progressBar}
-            progress={avg.two / max}
-            color={"orange"}
-          >
-          </ProgressBar>
+          }}
+        />
+        <Text>{avg.two}</Text>
+      </View>
+      <View
+        style={styles.reviewContainer}
+      >
+        <Text>1</Text>
+        <ProgressBar
+          color={"red"}
+          progress={avg.one / avg.total}
+          style={{
+            width: width - 100,
+            height: 20,
 
-          <ProgressBar
-            style={ReviewRatingsStyles.progressBar}
-            progress={avg.one / max}
-            color={"red"}
-          />
-
-        </View>
-
-        <View
-          style={styles.countPollContainer}
-        >
-          <ReviewCountPoll
-            avg={avg}
-          >
-
-          </ReviewCountPoll>
-        </View>
+          }}
+        />
+        <Text>{avg.one}</Text>
       </View>
 
     </View>
 
+
   )
 }
-const ReviewRatingsStyles = StyleSheet.create(
-  {
-    progressBar: {
-
-      backgroundColor: '#fff',
-      borderRadius: 3,
-      marginTop: 20,
-      height: 10,
-      width: "80%"
-
-
-    }
-
-  }
-)
-
 const styles = StyleSheet.create
   (
     {
-      iconStyle:
-      {
-        padding: 10,
-        backgroundColor: "green",
-        borderRadius: 20
-      },
       Container:
       {
+        flex: 1,
+        padding: 10,
+        backgroundColor: '#fff',
+        elevation: 15
+      },
+      reviewContainer:
+      {
         flexDirection: 'row',
-        width: 70,
-        justifyContent: "space-evenly",
-        margin: 20,
-        marginTop: 0,
-        borderRadius: 15,
-        backgroundColor: "green",
-
+        margin: 10,
+        alignItems: 'center',
+        justifyContent: "space-between"
       },
-      ratingConatainer:
+      detailsContainer:
       {
-        borderRightColor: "grey",
-        alignItems: "center",
-        justifyContent: 'center',
-        borderBottomWidth: 1,
-        marginHorizontal: 20
-      },
-      countPollContainer:
-      {
-        width: '20%',
-        marginTop: 10
-
-      },
-      ratingNumberContainer:
-      {
-        width: "20%",
-        marginTop: 10
-      },
-
-      ratingPollContainer:
-
-      {
-        flexDirection: "row",
-        justifyContent: "center",
-        marginHorizontal: 10
-
-      },
-      ProgressContainer:
-      {
-        width: "60%",
-        marginTop: 20
-      },
-      reviewStarFONTS:
-      {
-
-        marginTop: 10
-
+        alignItems: 'center',
+        borderBottomWidth: 0.5,
       }
+
     }
   )
 export default ReviewRatings
