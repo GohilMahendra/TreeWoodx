@@ -42,18 +42,11 @@ const Login = () => {
 
         const subcription = auth().onAuthStateChanged
 
-          (async(user) => {
-            console.log(user, auth().currentUser)
-            if (user != null && auth().currentUser != null) {
+          ((user) => {
 
-               let isadmin =false
-              
-               isadmin=await isAdmin()
+            if (user) {
+              navigation.replace("Home")
 
-                if(isadmin)
-                navigation.navigate("Home")
-                else
-                navigation.navigate("Admin")
             }
           })
 

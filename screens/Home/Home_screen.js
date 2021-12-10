@@ -14,6 +14,7 @@ import ProductCard from "../../components/ProductCard";
 import FeaturedList from "../../components/Featured/FeaturedList";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadInitialProducts } from "../../redux/Actions/ProductActions";
+import { useIsFocused } from "@react-navigation/native";
 
 const Home_screen = ({ navigation }) => {
 
@@ -22,7 +23,7 @@ const Home_screen = ({ navigation }) => {
 
     const [category, setcategory] = useState("All")
 
-    
+
     const dispatch = useDispatch()
     //fetch categories
 
@@ -32,29 +33,9 @@ const Home_screen = ({ navigation }) => {
 
     }
 
+    
 
-    const backAction = () => {
-        Alert.alert("Hold on!", "Are you sure you want to Exit APP?", [
-            {
-                text: "Cancel",
-                onPress: () => null,
-                style: "cancel"
-            },
-            { text: "YES", onPress: () => BackHandler.exitApp() }
-        ]);
-        return true;
-    };
-    useEffect(
-        () => {
-            const subscription = BackHandler.addEventListener(
-                "hardwareBackPress",
-                backAction
-            )
-            return subscription.remove()
-        },
-        []
-
-    )
+   
     useEffect
         (
             () => {
@@ -92,30 +73,29 @@ const Home_screen = ({ navigation }) => {
                 </View>
 
                 <View
-                style={Homestyles.categoryContainer}
+                    style={Homestyles.categoryContainer}
                 >
                     <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
                     >
-                    {
-                        categories.map(
-                            item=>
-                            {
-                                return(
-                                    <TouchableOpacity
-                                    key={item}
-                                   onPress={() =>(item===category)?setcategory("All"):setcategory(item)}
-                                    style={[Homestyles.btnCategory,
-                                    {backgroundColor: (category === item) ? 'black' : '#fff',}]}>
-                                    <Text
-                                        style={[Homestyles.txtCategory
-                                        ,{color: (category === item) ? 'white' : 'black'}]}>{item}</Text>
-                                </TouchableOpacity>
-                                )
-                            }
-                        )
-                    }
+                        {
+                            categories.map(
+                                item => {
+                                    return (
+                                        <TouchableOpacity
+                                            key={item}
+                                            onPress={() => (item === category) ? setcategory("All") : setcategory(item)}
+                                            style={[Homestyles.btnCategory,
+                                            { backgroundColor: (category === item) ? 'black' : '#fff', }]}>
+                                            <Text
+                                                style={[Homestyles.txtCategory
+                                                    , { color: (category === item) ? 'white' : 'black' }]}>{item}</Text>
+                                        </TouchableOpacity>
+                                    )
+                                }
+                            )
+                        }
                     </ScrollView>
                 </View>
 
@@ -189,7 +169,7 @@ const Homestyles = StyleSheet.create(
         },
         categoryContainer:
         {
-            flexDirection:'row'
+            flexDirection: 'row'
         },
         catList:
         {
@@ -210,7 +190,7 @@ const Homestyles = StyleSheet.create(
             justifyContent: 'center',
             padding: 10,
             alignItems: 'center',
-          
+
             margin: 10,
         },
         browsemoreContainer:
@@ -228,7 +208,7 @@ const Homestyles = StyleSheet.create(
             textAlignVertical: "center",
             marginLeft: 20,
             fontSize: 20,
-        
+
         },
         searchBar:
         {

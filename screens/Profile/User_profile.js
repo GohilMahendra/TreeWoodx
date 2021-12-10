@@ -23,9 +23,15 @@ const User_profile = () => {
     const logout = async() => {
     
         dispatch(signOut())
+      
+    
 
-        if(auth().currentUser==null)
-        {
+    }
+
+    const logoutUser=async()=>
+    {
+        await logout()
+         
         navigation.reset({
             index:0,
             routes:[
@@ -35,9 +41,6 @@ const User_profile = () => {
             ]
         })
     }
-
-    }
-
     return (
         <View style={{ flex: 1 }}>
             <View
@@ -96,7 +99,7 @@ const User_profile = () => {
 
                     <TouchableOpacity
                         onPress={
-                            () => logout()
+                            () =>  logoutUser()
                         }
                     >
                         <View

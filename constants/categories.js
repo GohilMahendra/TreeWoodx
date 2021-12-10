@@ -42,11 +42,14 @@ export const color = [
     "white",
     "black",
     "silver",
+    "grey",
+    "baige",
     "red",
+    "brown",
+    "yellow",
     "violet",
     "blue",
     "green",
-   
     "multi",
     "other",
 

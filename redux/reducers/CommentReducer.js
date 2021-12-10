@@ -29,8 +29,10 @@ const initialstate = {
     commentsMoreLoading: false,
     avgLoading: false,
 
-    addcommentError:null,
+    addCommentLoad: false,
+    addCommnetsError: null,
 
+    addcommentError: null,
 
     avgError: null,
     commentsError: null,
@@ -59,7 +61,6 @@ const CommentReducer = (state = initialstate, action) => {
             }
 
         case LOAD_COMMENTS_SUCCESS:
-            console.log(action.payload.Reviews+"REVIEWS PASSED")
             return {
                 ...state,
                 Comments: action.payload.Reviews,
@@ -97,24 +98,44 @@ const CommentReducer = (state = initialstate, action) => {
                 commentsMoreLoading: false
             }
         case ADD_COMMENT_REQUEST:
+            return {
+                ...state,
+                addcommentError: null,
+                addCommentLoad: true
+            }
+
         case ADD_COMMENT_SUCCESS:
+            return {
+                ...state,
+                addCommentLoad: false
+            }
         case ADD_COMMENT_FAILED:
+            return {
+                ...state,
+                addcommentError: action.payload,
+                addCommentLoad: false
+            }
 
         case LOAD_EXTERNAL_DETAILS_REQUEST:
-            return {...state,
-                    avgLoading:false,
-                    avgError:null,
+            return {
+                ...state,
+                avgLoading: false,
+                avgError: null,
 
 
             }
         case LOAD_EXTERNAL_DETAILS_SUCCESS:
-            console.log(action.payload+" payload ")
+
             return {
-                ...state,avgLoading:false,
-                avg:action.payload
+                ...state, avgLoading: false,
+                avg: action.payload
             }
         case LOAD_EXTERNAL_DETAILS_FAILED:
-            console.log("ERROR")
+            return {
+                ...state,
+                avgLoading: false,
+                avgError: action.payload
+            }
 
         default:
             return state

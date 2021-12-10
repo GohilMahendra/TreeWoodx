@@ -1,69 +1,83 @@
 import { tsNullKeyword } from "@babel/types"
-import { ADD_FEATURED_SUCCESS, DELETE_FEATURED_FAILED, DELETE_FEATURED_REQUEST, DELETE_FEATURED_SUCCESS, LOAD_FEATURED_FAILED, LOAD_FEATURED_REQUEST, LOAD_FEATURED_SUCCESS } from "../Types/FeaturedTypes"
+import { ADD_FEATURED_FAILED, ADD_FEATURED_SUCCESS, DELETE_FEATURED_FAILED, DELETE_FEATURED_REQUEST, DELETE_FEATURED_SUCCESS, LOAD_FEATURED_FAILED, LOAD_FEATURED_REQUEST, LOAD_FEATURED_SUCCESS } from "../Types/FeaturedTypes"
 
 
 
-const initialstate={
-    
+const initialstate = {
 
+    featuredProducts: [],
+    featuredLoading: false,
+    featuredError: null,
 
-    featuredProducts:[],
+    addfeatureLoad: false,
+    addfeatureError: null,
 
-    featuredLoading:false,
+    deleteLoad: false,
+    deleteError: null
 
-    featuredError:null,
-
-
-    deleteSuccess:false,
-    deleteError:null
- 
-    
 }
 
 
-const FeaturedReducer=(state=initialstate,action)=>
+const FeaturedReducer = (state = initialstate, action) => {
 
-
-{
-
-    switch(action.type)
-    {
+    switch (action.type) {
         case LOAD_FEATURED_REQUEST:
-            return {...state,
-                featuredLoading:true,
-                featuredError:null}
-        case LOAD_FEATURED_SUCCESS:
-          
-            return {...state,
-                featuredProducts:action.payload,
-                featuredLoading:false}
-        case LOAD_FEATURED_FAILED:
-            return {...state,featuredLoading:false,
-                featuredError:action.payload}
-    
-        case DELETE_FEATURED_REQUEST:
-            return{
+            return {
                 ...state,
-                deleteSuccess:false,
-                deleteError:null
+                featuredLoading: true,
+                featuredError: null
+            }
+        case LOAD_FEATURED_SUCCESS:
+
+            return {
+                ...state,
+                featuredProducts: action.payload,
+                featuredLoading: false
+            }
+        case LOAD_FEATURED_FAILED:
+            return {
+                ...state, featuredLoading: false,
+                featuredError: action.payload
+            }
+
+        case DELETE_FEATURED_REQUEST:
+            return {
+                ...state,
+                deleteLoad: false,
+                deleteError: null
 
             }
         case DELETE_FEATURED_SUCCESS:
             return {
                 ...state,
-                deleteSuccess:true,
-        
+                deleteLoad: false,
+
             }
-             
+
         case DELETE_FEATURED_FAILED:
             return {
                 ...state,
-                deleteSuccess:false,
-                deleteError:action.payload
+                deleteLoad: false,
+                deleteError: action.payload
             }
         case ADD_FEATURED_SUCCESS:
-            return state
-        
+            return {
+                ...state,
+                addfeatureLoad: true,
+                addfeatureError: null
+            }
+        case ADD_FEATURED_SUCCESS:
+            return {
+                ...state,
+                addfeatureLoad: false,
+            }
+        case ADD_FEATURED_FAILED:
+            return {
+                ...state,
+                addfeatureLoad: false,
+                addfeatureError: action.payload
+            }
+
         default:
             return state
 

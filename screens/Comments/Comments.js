@@ -45,10 +45,8 @@ const Comments = () => {
         return (
 
             <ReviewCard
-
                 rev={item}
             >
-
             </ReviewCard>
         )
     }
@@ -78,7 +76,7 @@ const Comments = () => {
                         ></RefreshControl>
                     }
                     onEndReached={
-                        ()=>fetchMoreReviews()
+                        ()=>FetchMoreComments()
                     }
                     scrollEnabled={true}
                     renderItem={itembuilder}

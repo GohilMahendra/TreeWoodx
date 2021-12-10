@@ -37,8 +37,6 @@ const Samebrand = ({ brand, curruntID }) => {
                 style=
                 {
                     {
-
-
                         height: 200,
                         justifyContent: "center",
                         alignItems: "center"
@@ -109,12 +107,6 @@ const Samebrand = ({ brand, curruntID }) => {
 
 
     const SimilerItemBuilder = ({ item, index }) => {
-
-
-
-
-
-        // console.log(item.key)
         return (
             <TouchableOpacity
                 onPress={() => navigation.push("product", { item: item, name: item.pname })}
@@ -206,8 +198,8 @@ const styles = StyleSheet.create
                 textAlignVertical: 'center'
             },
             listContainer:
-            { 
-                flex: 1 
+            {
+                flex: 1
             }
 
 

@@ -19,6 +19,8 @@ const HomeTabNavigator = () => {
 
   const badge = useSelector(cart => cart.Cart.total)
 
+
+  console.log(bottomTab)
   useEffect
     (
       () => {
