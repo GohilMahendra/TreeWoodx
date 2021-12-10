@@ -28,7 +28,6 @@ workflows:
         # build Android;
         cd android;
         ./gradlew assembleRelease;
-        fi
 
     artifacts:
       - android/app/build/outputs/**/*.apk
