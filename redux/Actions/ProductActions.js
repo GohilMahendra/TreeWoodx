@@ -28,13 +28,19 @@ const MAX_FETCH_LIMIT = 2
 export const DeleteProduct = (pid) => {
 
     return async (dispatch) => {
-        firestore().collection('products').doc(pid).delete().
-            then(
-                suc => {
+      
+            try
+            {
+                const del= await firestore().collection('products').doc(pid).delete().
 
-                    console.log("DELETED SUCCESSFULLY!!YEY")
-                }
-            ).catch(err => console.log(err))
+                Alert.alert("Delete Success","Product with id "+pid+" deleted")
+            }
+            catch(err)
+            {
+                Alert.alert("Delete failed",""+err)
+
+            }
+      
 
     }
 }
@@ -179,35 +185,43 @@ const qryBuilder = (filters) => {
 
     let qry = firestore().collection('products')
 
+    let teststring=""
     if (filters.material != "" && filters.material != undefined && filters.material != null) {
 
+        teststring+=filters.material
         qry = qry.where('material', '==', filters.material)
     }
     if (filters.priceRange != "" && filters.priceRange != undefined && filters.priceRange != null) {
         qry = qry.where('priceRange', '==', filters.priceRange)
+        teststring+=filters.priceRange
 
     }
     if (filters.cat != "" && filters.cat != undefined && filters.cat != null) {
         qry = qry.where('cat', '==', filters.cat)
+        teststring+=filters.cat
 
     }
     if (filters.discountRange != "" && filters.discountRange != undefined && filters.discountRange != null) {
         qry = qry.where('discountRange', '==', filters.discountRange)
-
+        teststring+=filters.discountRange
     }
     if (filters.color != "" && filters.color != undefined && filters.color != null) {
         qry = qry.where('color', '==', filters.color)
+        teststring+=filters.color
 
     }
     if (filters.brand != "" && filters.brand != undefined && filters.brand != null) {
         qry = qry.where('brand', '==', filters.brand)
+        teststring+=filters.brand
 
     }
     if (filters.search != "" && filters.search != undefined && filters.search != null) {
         qry = qry.where('pname', '==', filters.search)
+        teststring+=filters.search
 
     }
 
+    console.log(teststring,"Teststring")
     return qry
 
 }
@@ -281,6 +295,7 @@ export const loadMoreProducts = (filters) => {
         try {
 
             const lastindex = getState().Products.lastindex
+            console.log(lastindex,"last indexs")
             if (lastindex == null) {
                 console.log("NULL INDEX END REACHED")
                 return
@@ -312,6 +327,8 @@ export const loadMoreProducts = (filters) => {
 
             products.forEach(function (child) {
 
+
+                console.log(child.data().cat)
                 list.push({
                     key: child.id,
                     pname: child.data().pname,

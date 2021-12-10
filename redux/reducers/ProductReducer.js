@@ -34,6 +34,7 @@ const initialstate = {
     lastindex: null,
 
     productsLoadError: null,
+
     HomeProductsLoadError: null,
     moreproductsLoadError: null,
 
@@ -89,7 +90,7 @@ const ProductReducer = (state = initialstate, action) => {
             }
 
         case LOAD_HOME_PRODUCTS_REQUEST:
-            console.log("REQUESTED HOMESCREEN")
+           
             return {
                 ...state,
                 homeprodLoad: true,
@@ -97,7 +98,7 @@ const ProductReducer = (state = initialstate, action) => {
             }
 
         case LOAD_HOME_PRODUCTS_SUCCESS:
-            console.log(action.payload + "PAYLOAD")
+          
             return {
                 ...state,
                 HomeProducts: action.payload,

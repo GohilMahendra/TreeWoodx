@@ -26,7 +26,6 @@ const Product_list = () => {
   const moreproductsLoad = useSelector(state => state.Products.moreproductsLoad)
   const lastindex = useSelector(state => state.Products.lastindex)
 
-
   const dispatch = useDispatch()
   const [isVisible, setisVisble] = useState(false)
 
@@ -79,13 +78,12 @@ const Product_list = () => {
               }
             )
         }
-        else if (p.params.search != undefined)
-          setfilters({ ...filters, search: p.params.search })
-        else if (p.params.brand != undefined)
-          setfilters({ ...filters, brand: p.params.brand })
+        else if (p.params.search != undefined && p.params.brand != undefined)
+          setfilters({ ...filters, search: p.params.search, brand: p.params.brand })
+
       }
     },
-    []
+    [p]
   )
 
 
@@ -94,10 +92,10 @@ const Product_list = () => {
     setfilters(val)
   }
 
-  const { height, width } = Dimensions.get('screen')
+  const { height, width } = Dimensions.get('window')
 
   const loadMoreProd = () => {
-    dispatch(loadMoreProducts(filters, lastindex))
+    dispatch(loadMoreProducts(filters))
 
   }
 
@@ -141,7 +139,7 @@ const Product_list = () => {
   }
 
   const getProducts = () => {
-    console.log(filters)
+
     dispatch(LoadProducts(filters))
   }
   const itembuilder = ({ item, index }) => {
@@ -161,6 +159,20 @@ const Product_list = () => {
     )
   }
 
+  const emptyScreen = () => {
+    return (
+      <View
+        style={{
+          position: "absolute",
+          top: height / 3,
+          borderStartWidth: 1,
+          margin: 20
+        }}
+      >
+        <Text>NO PRODUCTS FOUND</Text>
+      </View>
+    )
+  }
 
 
   return (
@@ -305,6 +317,7 @@ const Product_list = () => {
       }
 
       <FlatList
+        emptyScreen={emptyScreen}
         refreshControl={
           <RefreshControl
             onRefresh={getProducts}
@@ -312,6 +325,7 @@ const Product_list = () => {
           >
           </RefreshControl>
         }
+
 
         style={[styles.listStyle, { marginTop: !isAllfiltersNull() ? 0 : 50 }]}
         data={product}

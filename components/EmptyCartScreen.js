@@ -1,12 +1,14 @@
 
 import React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Dimensions, Image, StyleSheet } from "react-native";
 
 import { View, Text } from "react-native";
 
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 
 
+
+const {height,width}=Dimensions.get('window')
 
 const EmptyCartScreen = () => {
 
@@ -36,6 +38,7 @@ const styles = StyleSheet.create
 
                 justifyContent: "center",
                 alignItems: "center",
+                height:height/3,
                 flex: 1
             }
         }

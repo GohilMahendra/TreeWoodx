@@ -114,7 +114,7 @@ const HomeInnerStackNavigator = () => {
             <newnav.Screen
 
                 options={({ route }) => ({
-                    title: route.params.name != undefined ? route.params.name : "",
+                    title: route.params.search != undefined ? route.params.search :(route.params.brand)?route.params.brand: "",
                     headerTransparent: true,
                     //  headerShown:true,
                     headerRight: () => (

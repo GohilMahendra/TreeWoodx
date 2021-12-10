@@ -189,7 +189,8 @@ const styles = StyleSheet.create
       txtInput:
       {
         margin: 20,
-        borderRadius: 20,
+        paddingHorizontal:20,
+        borderRadius: 15,
         backgroundColor: '#f2f3f4'
       },
       btnSignIn:

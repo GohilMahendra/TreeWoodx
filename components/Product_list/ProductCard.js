@@ -19,17 +19,7 @@ const ProductCard = (props) => {
             item: item, name: item.pname
           })}
 
-      style={
-        {
-          backgroundColor: '#fff',
-          elevation: 5,
-          height: 350,
-          width: width / 2 - 10,
-          margin: 5,
-          borderRadius: 15,
-
-        }
-      }
+      style={[styles.Container, { width: width / 2 - 10, }]}
     >
 
       <Image
@@ -95,6 +85,16 @@ const ProductCard = (props) => {
 const styles = StyleSheet.create
   (
     {
+      Container:
+      {
+        backgroundColor: '#fff',
+        elevation: 5,
+        height: 350,
+
+        margin: 5,
+        borderRadius: 15,
+
+      },
       imgProduct:
       {
         //backgroundColor:"blue",
@@ -154,6 +154,7 @@ const styles = StyleSheet.create
         fontSize: 15,
         fontFamily: fonts.Federo_Regular
       },
+
       discountContinaer:
       {
         backgroundColor: "#90a955",

@@ -20,13 +20,14 @@ const ProductCard = (props) => {
             <View style={styles.ViewContainer}>
 
                 <FastImage
+
                     source={{
                         uri: item.pimage,
                         priority: FastImage.priority.normal
                     }}
                     style={styles.image}
 
-                    resizeMode={FastImage.resizeMode.contain}
+                    resizeMode={FastImage.resizeMode.cover}
 
                 ></FastImage>
 
@@ -38,6 +39,8 @@ const ProductCard = (props) => {
                 </View>
                 <View
                     style={styles.TextConatainer}>
+                          <Text
+                        style={[styles.texts,{color:"grey"}]}>{item.pbrand}</Text>
                     <Text
                         style={styles.texts}>{item.pname}</Text>
 
@@ -65,14 +68,14 @@ const styles = StyleSheet.create
                 height: 300,
                 alignItems: 'center',
                 margin: 20,
-                marginLeft: 0
+
             },
             image:
             {
 
-                flex: 1,
-                margin: 10,
-                borderRadius: 15
+                height:'60%',
+                width:"100%",
+                borderRadius: 10
 
             },
             ViewContainer:
@@ -81,18 +84,7 @@ const styles = StyleSheet.create
                 height: 300,
                 width: 200,
                 borderRadius: 10,
-                elevation: 22,
-                justifyContent: 'flex-end',
-
-                shadowColor: "#fff",
-                shadowOffset: {
-                    width: -15,
-                    height: 5,
-                },
-                shadowOpacity: 1,
-                shadowRadius: 10,
-
-                elevation: 7
+                elevation: 15,
             },
             txtbrand:
             {
@@ -109,15 +101,22 @@ const styles = StyleSheet.create
                 fontSize: 18
 
             },
+            TextConatainer:
+            {
+                alignItems:"center",
+                height:"40%",
+                justifyContent:"center",
+               
+            },
             discountContainer:
             {
                 position: 'absolute',
                 top: 10,
                 right: 20,
                 elevation: 10,
-                backgroundColor: 'green',
+                backgroundColor: '#90a955',
                 padding: 5,
-                borderRadius:10
+                borderRadius: 5
             }
 
         }

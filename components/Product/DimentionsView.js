@@ -33,6 +33,7 @@ const styles = StyleSheet.create
       Cotainer:
       {
         flexDirection: 'row',
+        margin:15,
         justifyContent: "space-evenly",
       },
       viewContainer:
@@ -47,7 +48,7 @@ const styles = StyleSheet.create
         shadowOpacity: 1, 
         shadowColor: '#455fff',
         shadowRadius: 20,
-         elevation: 30
+         elevation: 15
       }
 
     }

@@ -41,28 +41,16 @@ export const searchProd = (search, productSearch = false) => {
                     function (child) {
                         list.push({
                             pname: child.data().pname,
-                            pbrand: child.data().brand,
                             key: child.id,
-                            pmaterial: child.data().material,
-                            pcat: child.data().cat
+                            pbrand: child.data().brand
+
                         })
                     }
                 )
 
 
-            let temp = list
-
-            if (!temp == [] && temp != undefined) {
-                temp.forEach(
-                    (item) => {
-                        list.push({
-                            key: item.key + item.pbrand,
-                            pbrand: item.pbrand,
-                            pcat: item.pcat
-                        })
-                    }
-                )
-            }
+            
+          
 
             dispatch({ type: SEARCH_PRODUCT_AUTOCOMPLETE_SUCCESS, payload: list })
 
@@ -71,7 +59,7 @@ export const searchProd = (search, productSearch = false) => {
         catch (err) {
 
             console.log(err)
-            Alert.alert(""+err)
+            Alert.alert("" + err)
             dispatch({ type: SEARCH_PRODUCT_AUTOCOMPLETE_FAILED, payload: err })
         }
 

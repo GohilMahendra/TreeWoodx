@@ -5,7 +5,6 @@ import { View, Text } from "react-native";
 import { Appbar, ProgressBar } from "react-native-paper";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import AddStar from "./Addstar";
-import CountConverter from "../CountConverter";
 import ReviewCountPoll from "./ReviewCountPoll";
 
 const { height, width } = Dimensions.get('window')
