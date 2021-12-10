@@ -13,7 +13,7 @@ workflows:
         XCODE_WORKSPACE: 'treewoodx'
         XCODE_SCHEME: 'treewoodx'
 
-      node: latest
+      node: 12.16.3
       xcode: latest
       cocoapods: default
 
