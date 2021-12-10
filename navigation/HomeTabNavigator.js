@@ -33,13 +33,13 @@ const HomeTabNavigator = () => {
 
     <bottomTab.Navigator
       initialRouteName="Home"
-      
+
       tabBarOptions={
 
         {
-          keyboardHidesTabBar:true,
+          keyboardHidesTabBar: true,
           style: {
-            
+
             borderRadius: 20,
             backgroundColor: "#fff"
           }
@@ -85,7 +85,7 @@ const HomeTabNavigator = () => {
             tabBarIcon: ({ size, focused, color }) =>
               <FontAwesome5 size={size} color={color} name="user-edit">
               </FontAwesome5>,
-              tabBarLabel:"Profile"
+            tabBarLabel: "Profile"
           }
         }
       >

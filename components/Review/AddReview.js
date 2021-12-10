@@ -4,13 +4,17 @@ import { View, Text, StyleSheet, TextInput } from "react-native";
 
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AddComment } from "../../redux/Actions/CommentActions";
 import { fonts } from "../../constants/fonts";
+import { cos } from "react-native-reanimated";
+import { ActivityIndicator } from "react-native-paper";
 
 
 const AddReview = ({ pid, todaysdate }) => {
 
+
+  const addCommentLoad=useSelector(state=>state.Comment.addCommentLoad)
 
   const dispatch = useDispatch()
 
@@ -24,10 +28,10 @@ const AddReview = ({ pid, todaysdate }) => {
 
 
   const addRate = () => {
-    
     dispatch(AddComment(review, pid, todaysdate))
-
   }
+
+  
 
 
   return (
@@ -80,9 +84,14 @@ const AddReview = ({ pid, todaysdate }) => {
 
       <TouchableOpacity
 
+      disabled={addCommentLoad}
         onPress={() => addRate()}
         style={styles.addbtnReview}>
-        <Text style={styles.addbtnReviewText}>ADD REVIEW</Text>
+      {addCommentLoad?  <ActivityIndicator
+        size={30}
+        color="#fff"
+        ></ActivityIndicator>
+        :<Text style={styles.addbtnReviewText}>ADD REVIEW</Text>}
       </TouchableOpacity>
     </View>
 

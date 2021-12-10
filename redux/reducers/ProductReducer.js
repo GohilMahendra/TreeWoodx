@@ -49,7 +49,8 @@ const ProductReducer = (state = initialstate, action) => {
             return {
                 ...state,
                 productsLoadError: null,
-                prodLoad: true
+                prodLoad: true,
+                products:[]
             }
 
         case LOAD_PRODUCTS_SUCCESS:

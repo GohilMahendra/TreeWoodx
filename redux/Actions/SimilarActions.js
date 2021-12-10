@@ -65,7 +65,7 @@ Google playstore uses first method i found with their UI they donwload
 
 
 
-export const FetchSimilarProducts = (category) => {
+export const FetchSimilarProducts = (subcategories) => {
     return async (dispatch) => {
 
         try {
@@ -73,7 +73,7 @@ export const FetchSimilarProducts = (category) => {
             dispatch({ type: LOAD_SIMILAR_BY_PRODUCTS_REQUEST })
             const quary = firestore()
                 .collection('products')
-                .where('cat', "==", category)
+                .where('subcategories', "array-contains-any", subcategories)
                 .limit(MAX_FETCH_LIMIT)
 
             const products = await quary.get()
@@ -130,19 +130,22 @@ export const FetchSimilarProducts = (category) => {
     }
 }
 
-export const FetchMoreSimilarProducts = (category, lastindex) => {
-    return async (dispatch) => {
+export const FetchMoreSimilarProducts = (subcategories) => {
+    return async (dispatch,getState) => {
         try {
 
+
+
+            const lastindex=getState().Similar.lastKeyProduct
 
             if (lastindex == null) {
                 console.log("NULL INDEX")
                 return
             }
-            // dispatch({type:LOAD_MORE_SIMILAR_BY_PRODUCTS_REQUEST})
+            dispatch({type:LOAD_MORE_SIMILAR_BY_PRODUCTS_REQUEST})
             const quary = firestore()
                 .collection('products')
-                .where('cat', '==', category)
+                .where('subcategories', 'array-contains-any', subcategories)
                 .orderBy(firestore.FieldPath.documentId())
                 .startAfter(lastindex).limit(MAX_FETCH_LIMIT)
             const products = await quary.get()
@@ -201,8 +204,6 @@ export const FetchSimilarBrands = (Brand) => {
                 .limit(MAX_FETCH_LIMIT)
 
             const products = await quary.get()
-
-            console.log(products)
             var list = []
             products.forEach
                 (
@@ -223,7 +224,6 @@ export const FetchSimilarBrands = (Brand) => {
                     }
                 )
 
-            console.log(list)
 
 
             var lastkey = null
@@ -254,17 +254,19 @@ export const FetchSimilarBrands = (Brand) => {
     }
 }
 
-export const FetchMoreSimilarBrands = (Brand, lastindex) => {
-    return async (dispatch) => {
+export const FetchMoreSimilarBrands = (Brand) => {
+    return async (dispatch,getState) => {
         try {
 
-            dispatch({ type: LOAD_MORE_SIMILAR_BY_BRANDS_REQUEST })
-
+           const lastindex=getState().Similar.lastKeyBrand
+          
             if (lastindex == null) {
                 console.log("NULL INDEX")
                 return
             }
-            // dispatch({type:LOAD_MORE_SIMILAR_BY_PRODUCTS_REQUEST})
+
+            console.log(lastindex)
+            dispatch({ type: LOAD_MORE_SIMILAR_BY_BRANDS_REQUEST })
             const quary = firestore().collection('products')
                 .where('brand', '==', Brand)
                 .orderBy(firestore.FieldPath.documentId())

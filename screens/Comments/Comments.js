@@ -81,7 +81,7 @@ const Comments = () => {
                     scrollEnabled={true}
                     renderItem={itembuilder}
 
-                    keyExtractor={item => item.email}
+                    keyExtractor={item => item.key}
                 >
 
                 </FlatList>

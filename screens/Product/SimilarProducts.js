@@ -21,7 +21,7 @@ const SimilarProducts = ({ navigation }) => {
     const p = useRoute()
     const dispatch = useDispatch()
 
-    let name = p.params.categoryname
+    let subcategories = p.params.subcategories
 
     const products = useSelector(state => state.Similar.similarProducts)
 
@@ -35,16 +35,16 @@ const SimilarProducts = ({ navigation }) => {
     const moreProductsError=useSelector(state => state.Similar.moreProductsError)
   
     const fetchMoreProd = () => {
-        dispatch(FetchMoreSimilarProducts(name, lastindex))
+        dispatch(FetchMoreSimilarProducts(subcategories, lastindex))
 
     }
     const fetchProd=()=>
     {
-        if(name==undefined)
+        if(subcategories==undefined)
         {
             return
         }
-        dispatch(FetchSimilarProducts(name))
+        dispatch(FetchSimilarProducts(subcategories))
     }
 
     useEffect(

@@ -23,7 +23,7 @@ import {
 
 
 
-const MAX_FETCH_LIMIT = 2
+const MAX_FETCH_LIMIT = 1
 
 export const DeleteProduct = (pid) => {
 
@@ -294,6 +294,8 @@ export const loadMoreProducts = (filters) => {
 
         try {
 
+
+            console.log("called load more")
             const lastindex = getState().Products.lastindex
             console.log(lastindex,"last indexs")
             if (lastindex == null) {
@@ -328,7 +330,6 @@ export const loadMoreProducts = (filters) => {
             products.forEach(function (child) {
 
 
-                console.log(child.data().cat)
                 list.push({
                     key: child.id,
                     pname: child.data().pname,
@@ -342,7 +343,6 @@ export const loadMoreProducts = (filters) => {
             }
 
             )
-
 
             let lastkey = null
             if (list.length >= MAX_FETCH_LIMIT) {

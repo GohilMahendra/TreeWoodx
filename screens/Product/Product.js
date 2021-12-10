@@ -216,7 +216,7 @@ const product = ({ navigation }) => {
             {/**similar products */}
             <SimilarItems
 
-              category={prod.cat}
+              subcategories={prod.subcategories}
 
               curruntID={p.params.item.key}
 

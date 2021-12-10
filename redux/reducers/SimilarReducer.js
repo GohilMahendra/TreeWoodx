@@ -8,7 +8,7 @@ import {
     LOAD_SIMILAR_BY_BRANDS_REQUEST,
     LOAD_SIMILAR_BY_BRANDS_SUCCESS,
     LOAD_SIMILAR_BY_BRANDS_FAILED,
-   
+
     LOAD_MORE_SIMILAR_BY_BRANDS_FAILED,
     LOAD_MORE_SIMILAR_BY_BRANDS_REQUEST,
     LOAD_MORE_SIMILAR_BY_BRANDS_SUCCESS,
@@ -119,7 +119,7 @@ const SimilarReducer = (state = initialstate, action) => {
         case LOAD_MORE_SIMILAR_BY_BRANDS_SUCCESS:
             return {
                 ...state,
-                similarBrands: [...state.similarProducts, ...action.payload.Products],
+                similarBrands: [...state.similarBrands, ...action.payload.Products],
                 lastKeyBrand: action.payload.lastKey,
                 moreBrandsLoading: false
             }

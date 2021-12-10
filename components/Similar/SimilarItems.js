@@ -18,19 +18,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { FetchInitialSimilarProducts, FetchSimilarProducts } from "../../redux/Actions/SimilarActions";
 import { useNavigation } from "@react-navigation/core";
-const SimilarItems = ({ category, curruntID }) => {
-
-
-    if (category == undefined)
-        return
-
-
+const SimilarItems = ({ subcategories, curruntID }) => {
 
     const [loading, setloading] = useState(false)
     const [products, setproducts] = useState()
 
     const navigation = useNavigation()
-    const dispatch = useDispatch()
+
     const emptyScreen = () => {
         return (
 
@@ -58,7 +52,7 @@ const SimilarItems = ({ category, curruntID }) => {
             const products = await
                 firestore()
                     .collection('products')
-                    .where('cat', '==', category)
+                    .where('subcategories', 'array-contains-any', subcategories)
                     .limit(5)
                     .get()
 
@@ -129,9 +123,9 @@ const SimilarItems = ({ category, curruntID }) => {
 
                     onPress={() => navigation.push("SimilarProducts",
                         {
-                            categoryname: category,
-                            by: "category",
-                            name: category
+                            subcategories: subcategories,
+                            name:subcategories.toString()
+
                         }
                     )}
                     disabled={

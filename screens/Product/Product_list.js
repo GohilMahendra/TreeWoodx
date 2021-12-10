@@ -24,8 +24,7 @@ const Product_list = () => {
   const product = useSelector(state => state.Products.products)
   const prodLoad = useSelector(state => state.Products.prodLoad)
   const moreproductsLoad = useSelector(state => state.Products.moreproductsLoad)
-  const lastindex = useSelector(state => state.Products.lastindex)
-
+  
   const dispatch = useDispatch()
   const [isVisible, setisVisble] = useState(false)
 
@@ -67,8 +66,10 @@ const Product_list = () => {
     )
 
   useEffect(
+
     () => {
       if (p.params != undefined) {
+        
         if (p.params.item != undefined) {
 
           if (p.params.item != "All")
@@ -78,9 +79,11 @@ const Product_list = () => {
               }
             )
         }
-        else if (p.params.search != undefined && p.params.brand != undefined)
-          setfilters({ ...filters, search: p.params.search, brand: p.params.brand })
-
+         if (p.params.search != undefined && p.params.brand != undefined) 
+      {
+        console.log("product search")
+        setfilters({ ...filters, search: p.params.search, brand: p.params.brand })
+      }
       }
     },
     [p]
@@ -101,6 +104,7 @@ const Product_list = () => {
 
 
   const removeParams = (fieldname) => {
+
 
     if (p.params == undefined) {
       return
@@ -330,6 +334,14 @@ const Product_list = () => {
         style={[styles.listStyle, { marginTop: !isAllfiltersNull() ? 0 : 50 }]}
         data={product}
         numColumns={2}
+        ListFooterComponent={
+          moreproductsLoad&&
+          <ActivityIndicator
+          size={30}
+          color="#fff"
+          ></ActivityIndicator>
+        }
+        onEndReachedThreshold={0.3}
         onEndReached={
           () => loadMoreProd()
         }

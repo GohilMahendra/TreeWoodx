@@ -58,6 +58,8 @@ const CommentReducer = (state = initialstate, action) => {
                 ...state
                 , commentsLoading: true
                 , commentsError: null,
+                Comments:[]
+                
             }
 
         case LOAD_COMMENTS_SUCCESS:
@@ -67,6 +69,7 @@ const CommentReducer = (state = initialstate, action) => {
                 commentsLoading: false,
                 lastCommentIndex: action.payload.lastKey
             }
+
 
         case LOAD_COMMENTS_FAILED:
             return {
