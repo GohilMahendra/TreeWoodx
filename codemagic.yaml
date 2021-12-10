@@ -5,6 +5,10 @@ workflows:
   react-native:
     name: React Native App new
     environment:
+      groups:
+       
+        - google_play_credentials
+     
       vars:
         XCODE_WORKSPACE: 'treewoodx'
         XCODE_SCHEME: 'treewoodx'
@@ -16,8 +20,8 @@ workflows:
     scripts:
       - cd android && chmod +x gradlew
       - npm install
-      
-      - echo $ANDROID_FIREBASE_CONFIG | base64 --decode > $FCI_BUILD_DIR/android/app/google-services.json
+
+      - echo $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS | base64 --decode > $FCI_BUILD_DIR/android/app/google-services.json
 
       - echo "sdk.dir=$HOME/programs/android-sdk-macosx" > "$FCI_BUILD_DIR/android/local.properties"
       - |
