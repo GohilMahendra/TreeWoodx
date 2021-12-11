@@ -287,7 +287,7 @@ export const changeStatus = (status, id) => {
     }
     catch (err) {
       console.log(err)
-      Alert.alert(""+err)
+      Alert.alert("" + err)
       dispatch({ type: CHANGE_ORDERS_STATUS_FAILED, payload: err })
     }
 

@@ -11,7 +11,6 @@ export const categories=
       
     },
 
-
     {
         id:1,
         name:'Chair',
@@ -29,13 +28,17 @@ export const categories=
     },
     {
         id:4,
+        name:"Sofa"
+     
+    },
+    {
+        id:5,
         name:'Tv unit',
        
     },
     {
-        id:5,
+        id:6,
         name:'Cabinet',
-      
     },
   
 ]

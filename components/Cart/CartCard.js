@@ -19,7 +19,7 @@ const CartCard = (props) => {
 
     const { item, navigation, onRemovePress } = props
 
-    console.log(item.priceafterdisc)
+ //   console.log(item.priceafterdisc)
 
     const changeQuantity = (qty, pid) => {
 

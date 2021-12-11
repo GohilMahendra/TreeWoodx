@@ -34,7 +34,6 @@ const Home_screen = ({ navigation }) => {
     }
 
     
-
    
     useEffect
         (

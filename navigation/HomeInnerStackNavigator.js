@@ -25,8 +25,7 @@ const HomeInnerStackNavigator = () => {
     return (
         <newnav.Navigator
             initialRouteName="Homescreen"
-
-
+        
         >
             <newnav.Screen
 

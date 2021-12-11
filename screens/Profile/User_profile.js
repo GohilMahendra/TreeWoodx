@@ -13,34 +13,30 @@ const { height, width } = Dimensions.get('screen')
 const User_profile = () => {
 
 
-    const navigation=useNavigation()
-    const dispatch=useDispatch()
+    const navigation = useNavigation()
+    const dispatch = useDispatch()
 
-    const logoutError=useSelector(state=>state.Auth.logoutError)
-    const logoutLoading=useSelector(state=>state.Auth.logoutLoading)
+    const logoutError = useSelector(state => state.Auth.logoutError)
+    const logoutLoading = useSelector(state => state.Auth.logoutLoading)
 
 
-    const logout = async() => {
-    
+    const logout = async () => {
+
         dispatch(signOut())
-      
-    
 
-    }
-
-    const logoutUser=async()=>
-    {
-        await logout()
-         
         navigation.reset({
-            index:0,
-            routes:[
+            index: 0,
+            routes: [
                 {
-                    name:"Login"
+                    name: "Login"
                 }
             ]
         })
+
+
+
     }
+
     return (
         <View style={{ flex: 1 }}>
             <View
@@ -52,7 +48,7 @@ const User_profile = () => {
                             Color.navy, Color.baige
                         ]
                     }
-                    style={{flex:1}}
+                    style={{ flex: 1 }}
                 >
 
                 </LinearGradient>
@@ -69,21 +65,21 @@ const User_profile = () => {
                                 fontFamily: fonts.Federo_Regular
                             }
                         }
-                    >{auth().currentUser!=null?auth().currentUser.displayName.substr(0, 2):""}</Text>
+                    >{auth().currentUser != null ? auth().currentUser.displayName.substr(0, 2) : ""}</Text>
                 </View>
                 <View
-                style={styles.detailsContainer}
+                    style={styles.detailsContainer}
                 >
                     <Text
-                    style={styles.txtDetails}
-                    >{auth().currentUser!=null?auth().currentUser.displayName:""}</Text>
-                    <Text style={styles.txtDetails}>{auth().currentUser!=null?auth().currentUser.email:""}</Text>
+                        style={styles.txtDetails}
+                    >{auth().currentUser != null ? auth().currentUser.displayName : ""}</Text>
+                    <Text style={styles.txtDetails}>{auth().currentUser != null ? auth().currentUser.email : ""}</Text>
                 </View>
                 <View
                     style={styles.optionsContainer}
                 >
                     <TouchableOpacity
-                    onPress={()=>navigation.navigate("UserOrders")}
+                        onPress={() => navigation.navigate("UserOrders")}
                     >
                         <View
                             style={styles.userOptionsContainer}
@@ -95,23 +91,23 @@ const User_profile = () => {
                         </View>
                     </TouchableOpacity>
 
-                 
+
 
                     <TouchableOpacity
                         onPress={
-                            () =>  logoutUser()
+                            () => logout()
                         }
                     >
                         <View
                             style={[styles.userOptionsContainer
                                 , {
                                 backgroundColor: "red",
-                                alignItems:'center'
+                                alignItems: 'center'
                             }
                             ]}
                         >
                             <Text
-                                style={[styles.userOptionsText,{color:'#fff'}]}
+                                style={[styles.userOptionsText, { color: '#fff' }]}
                             >LOGOUT</Text>
 
                         </View>
@@ -134,14 +130,14 @@ const styles = StyleSheet.create
             optionsContainer:
             {
                 margin: 20,
-                justifyContent:"space-around"
+                justifyContent: "space-around"
             },
             userOptionsContainer:
             {
                 height: 50,
                 backgroundColor: '#fff',
                 padding: 10,
-                alignItems:'center',
+                alignItems: 'center',
                 justifyContent: 'center',
                 marginVertical: 10,
                 borderRadius: 15,
@@ -149,11 +145,11 @@ const styles = StyleSheet.create
             },
             detailsContainer:
             {
-                backgroundColor:'#fff',
-                alignItems:'center',
-                padding:20,
-                margin:10,
-                borderRadius:15
+                backgroundColor: '#fff',
+                alignItems: 'center',
+                padding: 20,
+                margin: 10,
+                borderRadius: 15
             },
             userOptionsText:
 
@@ -164,9 +160,9 @@ const styles = StyleSheet.create
             },
             txtDetails:
             {
-                fontFamily:fonts.Federo_Regular,
-                fontSize:20
-            
+                fontFamily: fonts.Federo_Regular,
+                fontSize: 20
+
             },
             profileContainer:
             {

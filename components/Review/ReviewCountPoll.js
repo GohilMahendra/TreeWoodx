@@ -6,8 +6,6 @@ import { View, Text } from "react-native";
 const ReviewCountPoll = ({ avg }) => {
 
 
-    console.log(JSON.stringify(avg) + 'POLL AVERAGE')
-
 
     return (
         <View>

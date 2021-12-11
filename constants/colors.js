@@ -20,7 +20,6 @@ export const Color={
 
 }
 
-
 export const colorThemes=[
     {
         gradient_color_1:"#B8E4F0",

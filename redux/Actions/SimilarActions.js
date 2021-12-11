@@ -131,18 +131,16 @@ export const FetchSimilarProducts = (subcategories) => {
 }
 
 export const FetchMoreSimilarProducts = (subcategories) => {
-    return async (dispatch,getState) => {
+    return async (dispatch, getState) => {
         try {
 
-
-
-            const lastindex=getState().Similar.lastKeyProduct
+            const lastindex = getState().Similar.lastKeyProduct
 
             if (lastindex == null) {
                 console.log("NULL INDEX")
                 return
             }
-            dispatch({type:LOAD_MORE_SIMILAR_BY_PRODUCTS_REQUEST})
+            dispatch({ type: LOAD_MORE_SIMILAR_BY_PRODUCTS_REQUEST })
             const quary = firestore()
                 .collection('products')
                 .where('subcategories', 'array-contains-any', subcategories)
@@ -255,11 +253,11 @@ export const FetchSimilarBrands = (Brand) => {
 }
 
 export const FetchMoreSimilarBrands = (Brand) => {
-    return async (dispatch,getState) => {
+    return async (dispatch, getState) => {
         try {
 
-           const lastindex=getState().Similar.lastKeyBrand
-          
+            const lastindex = getState().Similar.lastKeyBrand
+
             if (lastindex == null) {
                 console.log("NULL INDEX")
                 return

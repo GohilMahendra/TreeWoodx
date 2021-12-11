@@ -49,8 +49,8 @@ export const searchProd = (search, productSearch = false) => {
                 )
 
 
-            
-          
+
+
 
             dispatch({ type: SEARCH_PRODUCT_AUTOCOMPLETE_SUCCESS, payload: list })
 
