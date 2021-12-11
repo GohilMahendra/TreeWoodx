@@ -7,6 +7,12 @@ import {
     ADD_PRODUCT_REQUEST,
     ADD_PRODUCT_SUCCESS,
 
+    DELETE_PRODUCT_FAILED,
+
+    DELETE_PRODUCT_REQUEST,
+
+    DELETE_PRODUCT_SUCCESS,
+
     LOAD_HOME_PRODUCTS_FAILED,
     LOAD_HOME_PRODUCTS_REQUEST,
     LOAD_HOME_PRODUCTS_SUCCESS,
@@ -23,24 +29,30 @@ import {
 
 
 
-const MAX_FETCH_LIMIT = 1
+const MAX_FETCH_LIMIT = 4
 
 export const DeleteProduct = (pid) => {
 
     return async (dispatch) => {
-      
-            try
-            {
-                const del= await firestore().collection('products').doc(pid).delete().
 
-                Alert.alert("Delete Success","Product with id "+pid+" deleted")
-            }
-            catch(err)
-            {
-                Alert.alert("Delete failed",""+err)
+        try {
 
-            }
-      
+            dispatch({ type: DELETE_PRODUCT_REQUEST })
+            const del = await firestore()
+                .collection('products')
+                .doc(pid)
+                .delete()
+
+
+            dispatch({ type: DELETE_PRODUCT_SUCCESS, payload: { id: pid } })
+
+        }
+        catch (err) {
+            dispatch({ type: DELETE_PRODUCT_FAILED, payload: err })
+            Alert.alert("Delete failed", "" + err)
+
+        }
+
 
     }
 }
@@ -185,43 +197,43 @@ const qryBuilder = (filters) => {
 
     let qry = firestore().collection('products')
 
-    let teststring=""
+    let teststring = ""
     if (filters.material != "" && filters.material != undefined && filters.material != null) {
 
-        teststring+=filters.material
+        teststring += filters.material
         qry = qry.where('material', '==', filters.material)
     }
     if (filters.priceRange != "" && filters.priceRange != undefined && filters.priceRange != null) {
         qry = qry.where('priceRange', '==', filters.priceRange)
-        teststring+=filters.priceRange
+        teststring += filters.priceRange
 
     }
     if (filters.cat != "" && filters.cat != undefined && filters.cat != null) {
         qry = qry.where('cat', '==', filters.cat)
-        teststring+=filters.cat
+        teststring += filters.cat
 
     }
     if (filters.discountRange != "" && filters.discountRange != undefined && filters.discountRange != null) {
         qry = qry.where('discountRange', '==', filters.discountRange)
-        teststring+=filters.discountRange
+        teststring += filters.discountRange
     }
     if (filters.color != "" && filters.color != undefined && filters.color != null) {
         qry = qry.where('color', '==', filters.color)
-        teststring+=filters.color
+        teststring += filters.color
 
     }
     if (filters.brand != "" && filters.brand != undefined && filters.brand != null) {
         qry = qry.where('brand', '==', filters.brand)
-        teststring+=filters.brand
+        teststring += filters.brand
 
     }
     if (filters.search != "" && filters.search != undefined && filters.search != null) {
         qry = qry.where('pname', '==', filters.search)
-        teststring+=filters.search
+        teststring += filters.search
 
     }
 
-    console.log(teststring,"Teststring")
+    console.log(teststring, "Teststring")
     return qry
 
 }
@@ -297,7 +309,7 @@ export const loadMoreProducts = (filters) => {
 
             console.log("called load more")
             const lastindex = getState().Products.lastindex
-            console.log(lastindex,"last indexs")
+            console.log(lastindex, "last indexs")
             if (lastindex == null) {
                 console.log("NULL INDEX END REACHED")
                 return

@@ -77,7 +77,7 @@ const Admin_editProd = ({ navigation }) => {
 
     const fecthMore=()=>
     {
-        dispatch(loadMoreProducts(filters))
+       dispatch(loadMoreProducts(filters))
     }
 
 
@@ -96,7 +96,6 @@ const Admin_editProd = ({ navigation }) => {
 
     const moreproductsLoad= useSelector(state => state.Products.moreproductsLoad)
 
-    console.log(moreproductsLoad)
     const prodBuilder = ({ item, index }) => {
 
         return (
