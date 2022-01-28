@@ -16,7 +16,7 @@ import { changeStatus, getMoreOrders, getOrders } from '../../redux/Actions/Orde
 const OrderState = () => {
 
     const orders = useSelector(state => state.Orders.Orders)
-    const orderLoading = useSelector(state => state.Orders.orderLoading)
+    const orderLoading = useSelector(state => state.Orders.loadOrdersLoading)
 
     const dispatch = useDispatch()
 

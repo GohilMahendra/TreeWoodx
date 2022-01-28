@@ -3,6 +3,7 @@
 
 import { ActivityIndicatorComponent } from "react-native";
 import { stat } from "react-native-fs";
+import { DELETE_FEATURED_REQUEST } from "../Types/FeaturedTypes";
 import {
     LOAD_HOME_PRODUCTS_FAILED, LOAD_HOME_PRODUCTS_REQUEST,
     LOAD_HOME_PRODUCTS_SUCCESS,
@@ -15,6 +16,9 @@ import {
     ADD_PRODUCT_REQUEST,
     ADD_PRODUCT_SUCCESS,
     ADD_PRODUCT_FAILED,
+    DELETE_PRODUCT_REQUEST,
+    DELETE_PRODUCT_SUCCESS,
+    DELETE_PRODUCT_FAILED,
    
 } from "../Types/ProductTypes";
 
@@ -34,6 +38,10 @@ const initialstate = {
     lastindex: null,
 
     productsLoadError: null,
+
+
+    deleteProductLoading:false,
+    deleteProductError:null,
 
     HomeProductsLoadError: null,
     moreproductsLoadError: null,
@@ -130,6 +138,32 @@ const ProductReducer = (state = initialstate, action) => {
                 ...state,
                 addProductLoad: false,
                 addProductError: action.payload
+            }
+        case DELETE_PRODUCT_REQUEST:
+            return {
+                ...state,
+                deleteProductError:null,
+                deleteProductLoading:true
+            }
+        case DELETE_PRODUCT_SUCCESS:
+
+            let newArray = [...state.products]
+            const index = newArray.findIndex(item => item.key == action.payload.id)
+            
+           newArray.splice(index,1)
+
+            return {
+
+                ...state,
+                products:[...newArray],
+               
+                deleteProductLoading:false
+            }
+        case DELETE_PRODUCT_FAILED:
+            return {
+                ...state,
+                deleteProductError:action.payload,
+                deleteProductLoading:false
             }
 
         default:

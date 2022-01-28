@@ -16,6 +16,7 @@ import RootStackNavigator from './navigation/RootStackNavigater';
 
 const App=()=>
 {
+  console.disableYellowBox = true; 
   return(
     <Provider store={store}>
 

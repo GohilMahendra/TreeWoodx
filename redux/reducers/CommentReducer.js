@@ -58,8 +58,7 @@ const CommentReducer = (state = initialstate, action) => {
                 ...state
                 , commentsLoading: true
                 , commentsError: null,
-                Comments:[]
-                
+                               
             }
 
         case LOAD_COMMENTS_SUCCESS:

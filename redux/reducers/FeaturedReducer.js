@@ -1,4 +1,5 @@
 import { tsNullKeyword } from "@babel/types"
+import { Item } from "react-native-paper/lib/typescript/components/List/List"
 import { ADD_FEATURED_FAILED, ADD_FEATURED_SUCCESS, DELETE_FEATURED_FAILED, DELETE_FEATURED_REQUEST, DELETE_FEATURED_SUCCESS, LOAD_FEATURED_FAILED, LOAD_FEATURED_REQUEST, LOAD_FEATURED_SUCCESS } from "../Types/FeaturedTypes"
 
 
@@ -48,8 +49,15 @@ const FeaturedReducer = (state = initialstate, action) => {
 
             }
         case DELETE_FEATURED_SUCCESS:
+
+
+        let newArr=[...state.featuredProducts]
+
+        const index=newArr.findIndex(item=>item.key==action.payload.id)
+        newArr.splice(index,1)
             return {
                 ...state,
+                featuredProducts:newArr,
                 deleteLoad: false,
 
             }

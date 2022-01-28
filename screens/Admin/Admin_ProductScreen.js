@@ -77,7 +77,7 @@ const Admin_editProd = ({ navigation }) => {
 
     const fecthMore=()=>
     {
-        dispatch(loadMoreProducts(filters))
+       dispatch(loadMoreProducts(filters))
     }
 
 
@@ -96,9 +96,9 @@ const Admin_editProd = ({ navigation }) => {
 
     const moreproductsLoad= useSelector(state => state.Products.moreproductsLoad)
 
-    console.log(moreproductsLoad)
     const prodBuilder = ({ item, index }) => {
 
+        console.log(item.key)
         return (
 
             <ProductCardEditer
@@ -152,6 +152,7 @@ const Admin_editProd = ({ navigation }) => {
                     ()=>fecthMore()
                 }
                 renderItem={prodBuilder}
+                initialNumToRender={5}
                 ListFooterComponent={
                   moreproductsLoad &&  <ActivityIndicator
                     size={30}

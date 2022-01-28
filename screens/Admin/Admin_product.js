@@ -16,6 +16,7 @@ import { fonts } from "../../constants/fonts";
 import { useDispatch, useSelector } from "react-redux";
 import { AddProduct } from "../../redux/Actions/ProductActions";
 import { ActivityIndicator } from "react-native-paper";
+import LinearGradient from "react-native-linear-gradient";
 const { height, width } = Dimensions.get('window')
 const Admin_product = ({ navigation }) => {
 
@@ -35,7 +36,7 @@ const Admin_product = ({ navigation }) => {
 
   const addProductLoad = useSelector(state => state.Products.addProductLoad)
   const addProductError = useSelector(state => state.Products.addProductError)
- 
+
   const [prod, setprod] = useState
     (
 
@@ -462,15 +463,20 @@ const Admin_product = ({ navigation }) => {
             style={styles.btnSubmit}
 
           >
-            {addProductLoad
-              ?
-              <ActivityIndicator
-                size={30}
-                color="#fff"
-              />
-              :
-              <Text style={styles.txtSubmit}>SUBMIT</Text>
-            }
+            <LinearGradient
+              style={styles.btnGradient}
+              colors={['blue', 'skyblue']}
+            >
+              {addProductLoad
+                ?
+                <ActivityIndicator
+                  size={30}
+                  color="#fff"
+                />
+                :
+                <Text style={styles.txtSubmit}>SUBMIT</Text>
+              }
+            </LinearGradient>
           </TouchableOpacity>
 
 
@@ -502,8 +508,8 @@ const styles = StyleSheet.create
         width: width - 40,
         alignSelf: "center",
         borderRadius: 5,
-         borderWidth: 0.2,
-    
+        borderWidth: 0.2,
+
         textAlign: 'center',
         borderColor: "black"
       },
@@ -515,8 +521,8 @@ const styles = StyleSheet.create
         width: width - 40,
         alignSelf: "center",
         borderRadius: 10,
-      
-        borderWidth:0.2,
+
+        borderWidth: 0.2,
         textAlign: 'center',
 
       },
@@ -524,7 +530,7 @@ const styles = StyleSheet.create
       {
         flexDirection: "row",
         alignItems: "center",
-        margin:10,
+        margin: 10,
         justifyContent: 'space-evenly'
       },
       innerContainer:
@@ -542,9 +548,17 @@ const styles = StyleSheet.create
         textAlign: 'center',
         margin: 5,
         height: 50,
-        borderWidth:0.1,
+        borderWidth: 0.1,
         width: 100,
         borderRadius: 5,
+      },
+      btnGradient:
+      {
+        flex: 1,
+        paddingHorizontal: 50,
+        borderRadius: 15,
+        justifyContent: 'center',
+        alignItems: 'center'
       },
       dimensionsContainer:
       {
@@ -554,7 +568,7 @@ const styles = StyleSheet.create
       },
       btnSubmit:
       {
-        paddingHorizontal: 50,
+
         marginBottom: 0,
         margin: 20,
         backgroundColor: Color.purpleLight,
@@ -578,7 +592,7 @@ const styles = StyleSheet.create
       {
 
         height: 200,
-        borderWidth:0.1,
+        borderWidth: 0.1,
         marginHorizontal: 15,
         borderRadius: 5,
 

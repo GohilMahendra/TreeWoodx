@@ -132,10 +132,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+ dexOptions {
+    javaMaxHeapSize "4g"
+    }
+
     defaultConfig {
         applicationId "com.treewoodx"
         multiDexEnabled true
-        missingDimensionStrategy 'react-native-camera', 'general' 
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

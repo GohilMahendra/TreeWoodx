@@ -62,7 +62,7 @@ const Comments = () => {
                 <FlatList
                     data={Comments}
                     ListHeaderComponent={
-                       avg.total>0 && <ReviewRatings
+                      Comments.length>0 && <ReviewRatings
                             avg={avg}
                         >
                         </ReviewRatings>

@@ -59,9 +59,8 @@ export const deleteFeaturedProduct = (key) => {
             
             console.log(res)
             
-            dispatch({ type: DELETE_FEATURED_SUCCESS })
-            Alert.alert("Deleted Successfully","Refreash to see changes here!!")
-
+            dispatch({ type: DELETE_FEATURED_SUCCESS ,payload:{id:key}})
+            
         }
         catch (err) {
             console.log(err)
