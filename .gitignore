@@ -26,9 +26,9 @@ DerivedData
 build/
 .idea
 .gradle
-app/google-services.json
 local.properties
 *.iml
+google-services.json
 
 # node.js
 #
