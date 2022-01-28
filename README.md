@@ -32,11 +32,13 @@ Install in npm
 ## Screenshots
 
 <div>
+  <h2>admin</h2>
 <div align="center" margin="10px">
   <img src="screenshots/admin1.png" height="400px" margin="10px" idth="200px"/>
   <img src="screenshots/admin2.png" height="400px" margin="10px" width="200px"/>
   <img src="screenshots/admin3.png" height="400px" margin="10px" width="200px"/>
 </div>
+  <h2>user</h2>
   <div align="center" margin="10px">
   <img src="screenshots/user1.png" height="400px" margin="10px" width="200px"/>
   <img src="screenshots/user3.png" height="400px" margin="10px" width="200px"/>
