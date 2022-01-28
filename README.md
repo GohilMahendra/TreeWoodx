@@ -31,7 +31,7 @@ Install in npm
 
 ## Screenshots
 
-![App Screenshot](screenshots/admin.jpg)
+![App Screenshot](screenshots/admin.png)
 
 
 ## Roadmap
