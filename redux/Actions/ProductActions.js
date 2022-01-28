@@ -308,6 +308,10 @@ export const loadMoreProducts = (filters) => {
 
 
             const lastindex = getState().Products.lastindex
+<<<<<<< HEAD
+=======
+            console.log(lastindex, "last indexs")
+>>>>>>> 6047df146365800b5baead205bd063a6b8d90319
             if (lastindex == null) {
                 console.log("NULL INDEX END REACHED")
                 return
