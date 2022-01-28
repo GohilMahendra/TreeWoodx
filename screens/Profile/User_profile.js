@@ -65,7 +65,7 @@ const User_profile = () => {
                                 fontFamily: fonts.Federo_Regular
                             }
                         }
-                    >{auth().currentUser != null ? auth().currentUser.displayName.substr(0, 2) : ""}</Text>
+                    >{auth().currentUser != null ? auth().currentUser.displayName: ""}</Text>
                 </View>
                 <View
                     style={styles.detailsContainer}

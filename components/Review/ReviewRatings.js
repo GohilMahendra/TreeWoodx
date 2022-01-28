@@ -12,6 +12,8 @@ const { height, width } = Dimensions.get('window')
 const ReviewRatings = ({ avg }) => {
 
 
+
+  console.log(avg)
   return (
     <View style={styles.Container}>
       <View

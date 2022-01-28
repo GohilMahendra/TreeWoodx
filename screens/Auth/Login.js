@@ -45,7 +45,7 @@ const Login = () => {
           ((user) => {
 
             if (user) {
-              navigation.replace("Admin")
+              navigation.replace("Home")
 
             }
           })

@@ -2,12 +2,15 @@ import React from "react";
 import { Dimensions } from "react-native";
 
 import { View, Text, StyleSheet } from "react-native";
+import { configureFonts } from "react-native-paper";
 import { fonts } from "../../constants/fonts";
 
 
 import AddStar from "./Addstar";
 const ReviewCard = ({ rev }) => {
 
+
+  console.log(rev)
 
   return (
     <View style={styles.container}>
