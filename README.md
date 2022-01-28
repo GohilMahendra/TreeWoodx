@@ -15,6 +15,7 @@ ci/cd (https://docs.codemagic.io/yaml-quick-start/building-a-react-native-app/)
 Install in npm
 
 ```bash
+
   cd treewoodx
   npm install
   react-native run-android
@@ -30,7 +31,7 @@ Install in npm
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](screenshots/admin.jpg)
 
 
 ## Roadmap
