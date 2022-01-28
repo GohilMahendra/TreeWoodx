@@ -31,6 +31,9 @@ Install in npm
 
 ## Screenshots
 
+<div align="center">
+  <img src="screenshots/admin1.png" height="400px" width="200px"/>
+</div>
 ![App Screenshot](screenshots/admin.png)
 
 
