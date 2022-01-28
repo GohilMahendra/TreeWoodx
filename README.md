@@ -31,10 +31,27 @@ Install in npm
 
 ## Screenshots
 
+<div>
 <div align="center">
   <img src="screenshots/admin1.png" height="400px" width="200px"/>
+  <img src="screenshots/admin2.png" height="400px" width="200px"/>
+  <img src="screenshots/admin3.png" height="400px" width="200px"/>
 </div>
-![App Screenshot](screenshots/admin.png)
+  <div align="center">
+  <img src="screenshots/user1.png" height="400px" width="200px"/>
+  <img src="screenshots/user3.png" height="400px" width="200px"/>
+  <img src="screenshots/user4.png" height="400px" width="200px"/>
+  <img src="screenshots/user5.png" height="400px" width="200px"/>
+  <img src="screenshots/user6.png" height="400px" width="200px"/>  
+ </div>
+  <div align="center">
+  <img src="screenshots/user8.png" height="400px" width="200px"/>
+  <img src="screenshots/user9.png" height="400px" width="200px"/>
+  <img src="screenshots/user10.png" height="400px" width="200px"/>
+  <img src="screenshots/user11.png" height="400px" width="200px"/>
+  <img src="screenshots/user12.png" height="400px" width="200px"/>  
+ </div>  
+</div>
 
 
 ## Roadmap
