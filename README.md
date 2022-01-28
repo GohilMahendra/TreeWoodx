@@ -42,15 +42,19 @@ Install in npm
   <img src="screenshots/user3.png" height="400px" width="200px"/>
   <img src="screenshots/user4.png" height="400px" width="200px"/>
   <img src="screenshots/user5.png" height="400px" width="200px"/>
-  <img src="screenshots/user6.png" height="400px" width="200px"/>  
+  
  </div>
   <div align="center">
+  <img src="screenshots/user6.png" height="400px" width="200px"/> 
   <img src="screenshots/user8.png" height="400px" width="200px"/>
   <img src="screenshots/user9.png" height="400px" width="200px"/>
   <img src="screenshots/user10.png" height="400px" width="200px"/>
-  <img src="screenshots/user11.png" height="400px" width="200px"/>
-  <img src="screenshots/user12.png" height="400px" width="200px"/>  
+
  </div>  
+  <div align="center">
+    <img src="screenshots/user11.png" height="400px" width="150px"/>
+  <img src="screenshots/user12.png" height="400px" width="150px"/> 
+  </div> 
 </div>
 
 
