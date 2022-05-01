@@ -233,7 +233,6 @@ const qryBuilder = (filters) => {
 
     }
 
-    console.log(teststring, "Teststring")
     return qry
 
 }

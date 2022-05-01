@@ -19,7 +19,7 @@ const ProductCardEditer = (props) => {
     const { item } = props
 
     const dispatch = useDispatch()
-    const deleteProd = (productID) => {
+    const deleteProd = async(productID) => {
         dispatch(DeleteProduct(productID))
     }
 

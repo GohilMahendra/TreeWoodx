@@ -17,22 +17,21 @@ const Comments = () => {
 
     const dispatch = useDispatch()
 
-    const commentsLoading=useSelector(state => state.Comment.commentsLoading)
+    const commentsLoading = useSelector(state => state.Comment.commentsLoading)
     const avg = useSelector(state => state.Comment.avg)
     const Comments = useSelector(state => state.Comment.Comments)
 
     useEffect
         (
             () => {
-               
-              fetchComments()
+
+                fetchComments()
             },
             []
         )
- 
 
-    const fetchComments=()=>
-    {
+
+    const fetchComments = () => {
         dispatch(LoadExternalDetails(key))
         dispatch(FetchReviews(key))
     }
@@ -59,49 +58,49 @@ const Comments = () => {
         <View style={styles.Container}>
 
 
-                <FlatList
-                    data={Comments}
-                    ListHeaderComponent={
-                      Comments.length>0 && <ReviewRatings
-                            avg={avg}
-                        >
-                        </ReviewRatings>
-                    }
-                    style={{ flex: 1 }}
+            <FlatList
+                data={Comments}
+                ListHeaderComponent={
+                    Comments.length > 0 && <ReviewRatings
+                        avg={avg}
+                    >
+                    </ReviewRatings>
+                }
+                style={{ flex: 1 }}
 
-                    refreshControl={
-                        <RefreshControl
+                refreshControl={
+                    <RefreshControl
                         refreshing={commentsLoading}
-                        onRefresh={()=>fetchComments()}
-                        ></RefreshControl>
-                    }
-                    onEndReached={
-                        ()=>FetchMoreComments()
-                    }
-                    scrollEnabled={true}
-                    renderItem={itembuilder}
+                        onRefresh={() => fetchComments()}
+                    ></RefreshControl>
+                }
+                onEndReached={
+                    () => FetchMoreComments()
+                }
+                scrollEnabled={true}
+                renderItem={itembuilder}
 
-                    keyExtractor={item => item.key}
-                >
+                keyExtractor={item => item.key}
+            >
 
-                </FlatList>
+            </FlatList>
 
-        
+
         </View>
 
     )
 
 }
 
-const styles=StyleSheet.create
-(
-    {
-        Container:
+const styles = StyleSheet.create
+    (
         {
-            flex:1,
-            backgroundColor:"#fff"
-        }
+            Container:
+            {
+                flex: 1,
+                backgroundColor: "#fff"
+            }
 
-    }
-)
+        }
+    )
 export default Comments
