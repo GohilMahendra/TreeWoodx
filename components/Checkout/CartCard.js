@@ -8,12 +8,8 @@ import {
 } from 'react-native';
 
 import { fonts } from "../../constants/fonts";
-
-
 const CartCard = (props) => {
-
   const { item } = props
-
   return (
     <View
       style={styles.Container}
